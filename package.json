@@ -19,7 +19,9 @@
     "rehype-parse": "^8.0.3",
     "rehype-remark": "^9.1.0",
     "remark-stringify": "^10.0.2",
-    "unified": "^10.1.1"
+    "to-vfile": "^7.2.2",
+    "unified": "^10.1.1",
+    "vfile-reporter": "^7.0.2"
   },
   "devDependencies": {
     "prettier": "^2.0.5"
