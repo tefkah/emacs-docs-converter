@@ -1,0 +1,108 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- This is the GNU Emacs Lisp Reference Manual
+corresponding to Emacs version 27.2.
+
+Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
+Inc.
+
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.3 or
+any later version published by the Free Software Foundation; with the
+Invariant Sections being "GNU General Public License," with the
+Front-Cover Texts being "A GNU Manual," and with the Back-Cover
+Texts as in (a) below.  A copy of the license is included in the
+section entitled "GNU Free Documentation License."
+
+(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
+modify this GNU manual.  Buying copies from the FSF supports it in
+developing GNU and promoting software freedom." -->
+<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<link rev="made" href="mailto:bug-gnu-emacs@gnu.org">
+<link rel="icon" type="image/png" href="/graphics/gnu-head-mini.png">
+<meta name="ICBM" content="42.256233,-71.006581">
+<meta name="DC.title" content="gnu.org">
+
+<style type="text/css">
+@import url('/software/emacs/manual.css');
+</style>
+</head>
+
+<body lang="en">
+<span id="Replacing"></span><div class="header" style="background-color:#DDDDFF">
+<p>
+Next: <a href="Decompression.html" accesskey="n" rel="next">Decompression</a>, Previous: <a href="Transposition.html" accesskey="p" rel="prev">Transposition</a>, Up: <a href="Text.html" accesskey="u" rel="up">Text</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html" title="Index" rel="index">Index</a>]</p>
+</div>
+
+<span id="Replacing-Buffer-Text"></span><h3 class="section">32.23 Replacing Buffer Text</h3>
+
+<p>You can use the following function to replace the text of one buffer
+with the text of another buffer:
+</p>
+<dl>
+<dt id="index-replace_002dbuffer_002dcontents">Command: <strong>replace-buffer-contents</strong> <em>source &amp;optional max-secs max-costs</em></dt>
+<dd><p>This function replaces the accessible portion of the current buffer
+with the accessible portion of the buffer <var>source</var>.  <var>source</var>
+may either be a buffer object or the name of a buffer.  When
+<code>replace-buffer-contents</code> succeeds, the text of the accessible
+portion of the current buffer will be equal to the text of the
+accessible portion of the <var>source</var> buffer.
+</p>
+<p>This function attempts to keep point, markers, text properties, and
+overlays in the current buffer intact.  One potential case where this
+behavior is useful is external code formatting programs: they
+typically write the reformatted text into a temporary buffer or file,
+and using <code>delete-region</code> and <code>insert-buffer-substring</code>
+would destroy these properties.  However, the latter combination is
+typically faster (See <a href="Deletion.html">Deletion</a>, and <a href="Insertion.html">Insertion</a>).
+</p>
+<p>For its working, <code>replace-buffer-contents</code> needs to compare the
+contents of the original buffer with that of <var>source</var> which is a
+costly operation if the buffers are huge and there is a high number of
+differences between them.  In order to keep
+<code>replace-buffer-contents</code>&rsquo;s runtime in bounds, it has two
+optional arguments.
+</p>
+<p><var>max-secs</var> defines a hard boundary in terms of seconds.  If given
+and exceeded, it will fall back to <code>delete-region</code> and
+<code>insert-buffer-substring</code>.
+</p>
+<p><var>max-costs</var> defines the quality of the difference computation.  If
+the actual costs exceed this limit, heuristics are used to provide a
+faster but suboptimal solution.  The default value is 1000000.
+</p>
+<p><code>replace-buffer-contents</code> returns t if a non-destructive
+replacement could be performed.  Otherwise, i.e., if <var>max-secs</var>
+was exceeded, it returns nil.
+</p></dd></dl>
+
+<dl>
+<dt id="index-replace_002dregion_002dcontents">Function: <strong>replace-region-contents</strong> <em>beg end replace-fn &amp;optional max-secs max-costs</em></dt>
+<dd><p>This function replaces the region between <var>beg</var> and <var>end</var>
+using the given <var>replace-fn</var>.  The function <var>replace-fn</var> is
+run in the current buffer narrowed to the specified region and it
+should return either a string or a buffer replacing the region.
+</p>
+<p>The replacement is performed using <code>replace-buffer-contents</code> (see
+above) which also describes the <var>max-secs</var> and <var>max-costs</var>
+arguments and the return value.
+</p>
+<p>Note: If the replacement is a string, it will be placed in a temporary
+buffer so that <code>replace-buffer-contents</code> can operate on it.
+Therefore, if you already have the replacement in a buffer, it makes
+no sense to convert it to a string using <code>buffer-substring</code> or
+similar.
+</p></dd></dl>
+
+
+<div class="header" style="background-color:#DDDDFF">
+<p>
+Next: <a href="Decompression.html" accesskey="n" rel="next">Decompression</a>, Previous: <a href="Transposition.html" accesskey="p" rel="prev">Transposition</a>, Up: <a href="Text.html" accesskey="u" rel="up">Text</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

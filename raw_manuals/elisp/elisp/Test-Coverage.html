@@ -1,0 +1,85 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- This is the GNU Emacs Lisp Reference Manual
+corresponding to Emacs version 27.2.
+
+Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
+Inc.
+
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.3 or
+any later version published by the Free Software Foundation; with the
+Invariant Sections being "GNU General Public License," with the
+Front-Cover Texts being "A GNU Manual," and with the Back-Cover
+Texts as in (a) below.  A copy of the license is included in the
+section entitled "GNU Free Documentation License."
+
+(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
+modify this GNU manual.  Buying copies from the FSF supports it in
+developing GNU and promoting software freedom." -->
+<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<link rev="made" href="mailto:bug-gnu-emacs@gnu.org">
+<link rel="icon" type="image/png" href="/graphics/gnu-head-mini.png">
+<meta name="ICBM" content="42.256233,-71.006581">
+<meta name="DC.title" content="gnu.org">
+
+<style type="text/css">
+@import url('/software/emacs/manual.css');
+</style>
+</head>
+
+<body lang="en">
+<span id="Test-Coverage"></span><div class="header" style="background-color:#DDDDFF">
+<p>
+Next: <a href="Profiling.html" accesskey="n" rel="next">Profiling</a>, Previous: <a href="Syntax-Errors.html" accesskey="p" rel="prev">Syntax Errors</a>, Up: <a href="Debugging.html" accesskey="u" rel="up">Debugging</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html" title="Index" rel="index">Index</a>]</p>
+</div>
+
+<span id="Test-Coverage-1"></span><h3 class="section">18.4 Test Coverage</h3>
+<span id="index-coverage-testing"></span>
+
+<span id="index-testcover_002dstart"></span>
+<span id="index-testcover_002dmark_002dall"></span>
+<span id="index-testcover_002dnext_002dmark"></span>
+<p>You can do coverage testing for a file of Lisp code by loading the
+<code>testcover</code> library and using the command <kbd>M-x
+testcover-start <span class="key">RET</span> <var>file</var> <span class="key">RET</span></kbd> to instrument the
+code.  Then test your code by calling it one or more times.  Then use
+the command <kbd>M-x testcover-mark-all</kbd> to display colored highlights
+on the code to show where coverage is insufficient.  The command
+<kbd>M-x testcover-next-mark</kbd> will move point forward to the next
+highlighted spot.
+</p>
+<p>Normally, a red highlight indicates the form was never completely
+evaluated; a brown highlight means it always evaluated to the same
+value (meaning there has been little testing of what is done with the
+result).  However, the red highlight is skipped for forms that can&rsquo;t
+possibly complete their evaluation, such as <code>error</code>.  The brown
+highlight is skipped for forms that are expected to always evaluate to
+the same value, such as <code>(setq x 14)</code>.
+</p>
+<p>For difficult cases, you can add do-nothing macros to your code to
+give advice to the test coverage tool.
+</p>
+<dl>
+<dt id="index-1value">Macro: <strong>1value</strong> <em>form</em></dt>
+<dd><p>Evaluate <var>form</var> and return its value, but inform coverage testing
+that <var>form</var>&rsquo;s value should always be the same.
+</p></dd></dl>
+
+<dl>
+<dt id="index-noreturn">Macro: <strong>noreturn</strong> <em>form</em></dt>
+<dd><p>Evaluate <var>form</var>, informing coverage testing that <var>form</var> should
+never return.  If it ever does return, you get a run-time error.
+</p></dd></dl>
+
+<p>Edebug also has a coverage testing feature (see <a href="Coverage-Testing.html">Coverage Testing</a>).  These features partly duplicate each other, and it would
+be cleaner to combine them.
+</p>
+
+
+
+
+</body>
+</html>

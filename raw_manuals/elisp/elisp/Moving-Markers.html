@@ -1,0 +1,81 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- This is the GNU Emacs Lisp Reference Manual
+corresponding to Emacs version 27.2.
+
+Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
+Inc.
+
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.3 or
+any later version published by the Free Software Foundation; with the
+Invariant Sections being "GNU General Public License," with the
+Front-Cover Texts being "A GNU Manual," and with the Back-Cover
+Texts as in (a) below.  A copy of the license is included in the
+section entitled "GNU Free Documentation License."
+
+(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
+modify this GNU manual.  Buying copies from the FSF supports it in
+developing GNU and promoting software freedom." -->
+<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<link rev="made" href="mailto:bug-gnu-emacs@gnu.org">
+<link rel="icon" type="image/png" href="/graphics/gnu-head-mini.png">
+<meta name="ICBM" content="42.256233,-71.006581">
+<meta name="DC.title" content="gnu.org">
+
+<style type="text/css">
+@import url('/software/emacs/manual.css');
+</style>
+</head>
+
+<body lang="en">
+<span id="Moving-Markers"></span><div class="header" style="background-color:#DDDDFF">
+<p>
+Next: <a href="The-Mark.html" accesskey="n" rel="next">The Mark</a>, Previous: <a href="Marker-Insertion-Types.html" accesskey="p" rel="prev">Marker Insertion Types</a>, Up: <a href="Markers.html" accesskey="u" rel="up">Markers</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html" title="Index" rel="index">Index</a>]</p>
+</div>
+
+<span id="Moving-Marker-Positions"></span><h3 class="section">31.6 Moving Marker Positions</h3>
+<span id="index-moving-markers"></span>
+<span id="index-marker_002c-how-to-move-position"></span>
+
+<p>This section describes how to change the position of an existing
+marker.  When you do this, be sure you know whether the marker is used
+outside of your program, and, if so, what effects will result from
+moving it&mdash;otherwise, confusing things may happen in other parts of
+Emacs.
+</p>
+<dl>
+<dt id="index-set_002dmarker">Function: <strong>set-marker</strong> <em>marker position &amp;optional buffer</em></dt>
+<dd><p>This function moves <var>marker</var> to <var>position</var>
+in <var>buffer</var>.  If <var>buffer</var> is not provided, it defaults to
+the current buffer.
+</p>
+<p>If <var>position</var> is <code>nil</code> or a marker that points nowhere, then
+<var>marker</var> is set to point nowhere.
+</p>
+<p>The value returned is <var>marker</var>.
+</p>
+<div class="example">
+<pre class="example">(setq m (point-marker))
+     &rArr; #&lt;marker at 4714 in markers.texi&gt;
+</pre><pre class="example">(set-marker m 55)
+     &rArr; #&lt;marker at 55 in markers.texi&gt;
+</pre><pre class="example">(setq b (get-buffer &quot;foo&quot;))
+     &rArr; #&lt;buffer foo&gt;
+</pre><pre class="example">(set-marker m 0 b)
+     &rArr; #&lt;marker at 1 in foo&gt;
+</pre></div>
+</dd></dl>
+
+<dl>
+<dt id="index-move_002dmarker">Function: <strong>move-marker</strong> <em>marker position &amp;optional buffer</em></dt>
+<dd><p>This is another name for <code>set-marker</code>.
+</p></dd></dl>
+
+
+
+
+</body>
+</html>

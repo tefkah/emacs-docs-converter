@@ -1,0 +1,101 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- This is the GNU Emacs Lisp Reference Manual
+corresponding to Emacs version 27.2.
+
+Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
+Inc.
+
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.3 or
+any later version published by the Free Software Foundation; with the
+Invariant Sections being "GNU General Public License," with the
+Front-Cover Texts being "A GNU Manual," and with the Back-Cover
+Texts as in (a) below.  A copy of the license is included in the
+section entitled "GNU Free Documentation License."
+
+(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
+modify this GNU manual.  Buying copies from the FSF supports it in
+developing GNU and promoting software freedom." -->
+<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<link rev="made" href="mailto:bug-gnu-emacs@gnu.org">
+<link rel="icon" type="image/png" href="/graphics/gnu-head-mini.png">
+<meta name="ICBM" content="42.256233,-71.006581">
+<meta name="DC.title" content="gnu.org">
+
+<style type="text/css">
+@import url('/software/emacs/manual.css');
+</style>
+</head>
+
+<body lang="en">
+<span id="Frame-Font"></span><div class="header" style="background-color:#DDDDFF">
+<p>
+Next: <a href="Frame-Position.html" accesskey="n" rel="next">Frame Position</a>, Previous: <a href="Frame-Layout.html" accesskey="p" rel="prev">Frame Layout</a>, Up: <a href="Frame-Geometry.html" accesskey="u" rel="up">Frame Geometry</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html" title="Index" rel="index">Index</a>]</p>
+</div>
+
+<span id="Frame-Font-1"></span><h4 class="subsection">29.3.2 Frame Font</h4>
+<span id="index-default-font"></span>
+<span id="index-default-character-size"></span>
+<span id="index-default-character-width"></span>
+<span id="index-default-width-of-character"></span>
+<span id="index-default-character-height"></span>
+<span id="index-default-height-of-character"></span>
+<p>Each frame has a <em>default font</em> which specifies the default
+character size for that frame.  This size is meant when retrieving or
+changing the size of a frame in terms of columns or lines
+(see <a href="Size-Parameters.html">Size Parameters</a>).  It is also used when resizing (see <a href="Window-Sizes.html">Window Sizes</a>) or splitting (see <a href="Splitting-Windows.html">Splitting Windows</a>) windows.
+</p>
+<span id="index-line-height"></span>
+<span id="index-column-width"></span>
+<span id="index-canonical-character-height"></span>
+<span id="index-canonical-character-width"></span>
+<p>The terms <em>line height</em> and <em>canonical character height</em> are
+sometimes used instead of &ldquo;default character height&rdquo;.  Similarly, the
+terms <em>column width</em> and <em>canonical character width</em> are used
+instead of &ldquo;default character width&rdquo;.
+</p>
+<dl>
+<dt id="index-frame_002dchar_002dheight">Function: <strong>frame-char-height</strong> <em>&amp;optional frame</em></dt>
+<dt id="index-frame_002dchar_002dwidth">Function: <strong>frame-char-width</strong> <em>&amp;optional frame</em></dt>
+<dd><p>These functions return the default height and width of a character in
+<var>frame</var>, measured in pixels.  Together, these values establish the
+size of the default font on <var>frame</var>.  The values depend on the
+choice of font for <var>frame</var>, see <a href="Font-and-Color-Parameters.html">Font and Color Parameters</a>.
+</p></dd></dl>
+
+<p>The default font can be also set directly with the following function:
+</p>
+<dl>
+<dt id="index-set_002dframe_002dfont">Command: <strong>set-frame-font</strong> <em>font &amp;optional keep-size frames</em></dt>
+<dd><p>This sets the default font to <var>font</var>.  When called interactively, it
+prompts for the name of a font, and uses that font on the selected
+frame.  When called from Lisp, <var>font</var> should be a font name (a
+string), a font object, font entity, or a font spec.
+</p>
+<p>If the optional argument <var>keep-size</var> is <code>nil</code>, this keeps the
+number of frame lines and columns fixed.  (If non-<code>nil</code>, the option
+<code>frame-inhibit-implied-resize</code> described in the next section will
+override this.)  If <var>keep-size</var> is non-<code>nil</code> (or with a prefix
+argument), it tries to keep the size of the display area of the current
+frame fixed by adjusting the number of lines and columns.
+</p>
+<p>If the optional argument <var>frames</var> is <code>nil</code>, this applies the
+font to the selected frame only.  If <var>frames</var> is non-<code>nil</code>, it
+should be a list of frames to act upon, or <code>t</code> meaning all existing
+and all future graphical frames.
+</p></dd></dl>
+
+
+
+<div class="header" style="background-color:#DDDDFF">
+<p>
+Next: <a href="Frame-Position.html" accesskey="n" rel="next">Frame Position</a>, Previous: <a href="Frame-Layout.html" accesskey="p" rel="prev">Frame Layout</a>, Up: <a href="Frame-Geometry.html" accesskey="u" rel="up">Frame Geometry</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

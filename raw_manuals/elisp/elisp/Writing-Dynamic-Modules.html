@@ -1,0 +1,101 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- This is the GNU Emacs Lisp Reference Manual
+corresponding to Emacs version 27.2.
+
+Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
+Inc.
+
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.3 or
+any later version published by the Free Software Foundation; with the
+Invariant Sections being "GNU General Public License," with the
+Front-Cover Texts being "A GNU Manual," and with the Back-Cover
+Texts as in (a) below.  A copy of the license is included in the
+section entitled "GNU Free Documentation License."
+
+(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
+modify this GNU manual.  Buying copies from the FSF supports it in
+developing GNU and promoting software freedom." -->
+<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<link rev="made" href="mailto:bug-gnu-emacs@gnu.org">
+<link rel="icon" type="image/png" href="/graphics/gnu-head-mini.png">
+<meta name="ICBM" content="42.256233,-71.006581">
+<meta name="DC.title" content="gnu.org">
+
+<style type="text/css">
+@import url('/software/emacs/manual.css');
+</style>
+</head>
+
+<body lang="en">
+<span id="Writing-Dynamic-Modules"></span><div class="header" style="background-color:#DDDDFF">
+<p>
+Next: <a href="Object-Internals.html" accesskey="n" rel="next">Object Internals</a>, Previous: <a href="Writing-Emacs-Primitives.html" accesskey="p" rel="prev">Writing Emacs Primitives</a>, Up: <a href="GNU-Emacs-Internals.html" accesskey="u" rel="up">GNU Emacs Internals</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html" title="Index" rel="index">Index</a>]</p>
+</div>
+
+<span id="Writing-Dynamically_002dLoaded-Modules"></span><h3 class="section">E.8 Writing Dynamically-Loaded Modules</h3>
+<span id="index-writing-emacs-modules"></span>
+<span id="index-dynamic-modules_002c-writing"></span>
+
+<span id="index-module-API"></span>
+<p>This section describes the Emacs module <acronym>API</acronym> and how to use
+it as part of writing extension modules for Emacs.  The module
+<acronym>API</acronym> is defined in the C programming language, therefore the
+description and the examples in this section assume the module is
+written in C.  For other programming languages, you will need to use
+the appropriate bindings, interfaces and facilities for calling C code.
+Emacs C code requires a C99 or later compiler (see <a href="C-Dialect.html">C Dialect</a>), and
+so the code examples in this section also follow that standard.
+</p>
+<p>Writing a module and integrating it into Emacs comprises the following
+tasks:
+</p>
+<ul>
+<li> Writing initialization code for the module.
+
+</li><li> Writing one or more module functions.
+
+</li><li> Communicating values and objects between Emacs and your module
+functions.
+
+</li><li> Handling of error conditions and nonlocal exits.
+</li></ul>
+
+<p>The following subsections describe these tasks and the <acronym>API</acronym>
+itself in more detail.
+</p>
+<p>Once your module is written, compile it to produce a shared library,
+according to the conventions of the underlying platform.  Then place
+the shared library in a directory mentioned in <code>load-path</code>
+(see <a href="Library-Search.html">Library Search</a>), where Emacs will find it.
+</p>
+<p>If you wish to verify the conformance of a module to the Emacs dynamic
+module <acronym>API</acronym>, invoke Emacs with the <kbd>--module-assertions</kbd>
+option.  See <a href="https://www.gnu.org/software/emacs/manual/html_node/emacs/Initial-Options.html#Initial-Options">Initial Options</a> in <cite>The GNU Emacs Manual</cite>.
+</p>
+<table class="menu" border="0" cellspacing="0">
+<tr><td align="left" valign="top">&bull; <a href="Module-Initialization.html" accesskey="1">Module Initialization</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Module-Functions.html" accesskey="2">Module Functions</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Module-Values.html" accesskey="3">Module Values</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Module-Misc.html" accesskey="4">Module Misc</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Module-Nonlocal.html" accesskey="5">Module Nonlocal</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+</table>
+
+
+<div class="header" style="background-color:#DDDDFF">
+<p>
+Next: <a href="Object-Internals.html" accesskey="n" rel="next">Object Internals</a>, Previous: <a href="Writing-Emacs-Primitives.html" accesskey="p" rel="prev">Writing Emacs Primitives</a>, Up: <a href="GNU-Emacs-Internals.html" accesskey="u" rel="up">GNU Emacs Internals</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

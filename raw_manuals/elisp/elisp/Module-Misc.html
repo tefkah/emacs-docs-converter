@@ -1,0 +1,157 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- This is the GNU Emacs Lisp Reference Manual
+corresponding to Emacs version 27.2.
+
+Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
+Inc.
+
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.3 or
+any later version published by the Free Software Foundation; with the
+Invariant Sections being "GNU General Public License," with the
+Front-Cover Texts being "A GNU Manual," and with the Back-Cover
+Texts as in (a) below.  A copy of the license is included in the
+section entitled "GNU Free Documentation License."
+
+(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
+modify this GNU manual.  Buying copies from the FSF supports it in
+developing GNU and promoting software freedom." -->
+<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<link rev="made" href="mailto:bug-gnu-emacs@gnu.org">
+<link rel="icon" type="image/png" href="/graphics/gnu-head-mini.png">
+<meta name="ICBM" content="42.256233,-71.006581">
+<meta name="DC.title" content="gnu.org">
+
+<style type="text/css">
+@import url('/software/emacs/manual.css');
+</style>
+</head>
+
+<body lang="en">
+<span id="Module-Misc"></span><div class="header" style="background-color:#DDDDFF">
+<p>
+Next: <a href="Module-Nonlocal.html" accesskey="n" rel="next">Module Nonlocal</a>, Previous: <a href="Module-Values.html" accesskey="p" rel="prev">Module Values</a>, Up: <a href="Writing-Dynamic-Modules.html" accesskey="u" rel="up">Writing Dynamic Modules</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html" title="Index" rel="index">Index</a>]</p>
+</div>
+
+<span id="Miscellaneous-Convenience-Functions-for-Modules"></span><h4 class="subsection">E.8.4 Miscellaneous Convenience Functions for Modules</h4>
+
+<p>This subsection describes a few convenience functions provided by
+the module <acronym>API</acronym>.  Like the functions described in previous
+subsections, all of them are actually function pointers, and need to
+be called via the <code>emacs_env</code> pointer.  Description of functions
+that were introduced after Emacs 25 calls out the first version where
+they became available.
+</p>
+<dl>
+<dt id="index-eq-1">Function: <em>bool</em> <strong>eq</strong> <em>(emacs_env *<var>env</var>, emacs_value <var>val1</var>, emacs_value <var>val2</var>)</em></dt>
+<dd><p>This function returns <code>true</code> if the Lisp objects represented by
+<var>val1</var> and <var>val2</var> are identical, <code>false</code> otherwise.  This
+is the same as the Lisp function <code>eq</code> (see <a href="Equality-Predicates.html">Equality Predicates</a>), but avoids the need to intern the objects represented by
+the arguments.
+</p>
+<p>There are no <acronym>API</acronym> functions for other equality predicates, so
+you will need to use <code>intern</code> and <code>funcall</code>, described
+below, to perform more complex equality tests.
+</p></dd></dl>
+
+<dl>
+<dt id="index-is_005fnot_005fnil">Function: <em>bool</em> <strong>is_not_nil</strong> <em>(emacs_env *<var>env</var>, emacs_value <var>val</var>)</em></dt>
+<dd><p>This function tests whether the Lisp object represented by <var>val</var>
+is non-<code>nil</code>; it returns <code>true</code> or <code>false</code> accordingly.
+</p>
+<p>Note that you could implement an equivalent test by using
+<code>intern</code> to get an <code>emacs_value</code> representing <code>nil</code>,
+then use <code>eq</code>, described above, to test for equality.  But using
+this function is more convenient.
+</p></dd></dl>
+
+<dl>
+<dt id="index-type_005fof">Function: <em>emacs_value</em> <strong>type_of</strong> <em>(emacs_env *<var>env</var>, emacs_value <code>object</code>)</em></dt>
+<dd><p>This function returns the type of <var>object</var> as a value that
+represents a symbol: <code>string</code> for a string, <code>integer</code> for an
+integer, <code>process</code> for a process, etc.  See <a href="Type-Predicates.html">Type Predicates</a>.
+You can use <code>intern</code> and <code>eq</code> to compare against known type
+symbols, if your code needs to depend on the object type.
+</p></dd></dl>
+
+<span id="intern"></span><dl>
+<dt id="index-intern-1">Function: <em>emacs_value</em> <strong>intern</strong> <em>(emacs_env *<var>env</var>, const char *name)</em></dt>
+<dd><p>This function returns an interned Emacs symbol whose name is
+<var>name</var>, which should be an <acronym>ASCII</acronym> null-terminated string.
+It creates a new symbol if one does not already exist.
+</p>
+<p>Together with <code>funcall</code>, described below, this function provides
+a means for invoking any Lisp-callable Emacs function, provided that
+its name is a pure <acronym>ASCII</acronym> string.  For example, here&rsquo;s how to
+intern a symbol whose name <code>name_str</code> is non-<acronym>ASCII</acronym>, by
+calling the more powerful Emacs <code>intern</code> function
+(see <a href="Creating-Symbols.html">Creating Symbols</a>):
+</p>
+<div class="example">
+<pre class="example">emacs_value fintern = env-&gt;intern (env, &quot;intern&quot;);
+emacs_value sym_name =
+  env-&gt;make_string (env, name_str, strlen (name_str));
+emacs_value intern_args[] = { sym_name, env-&gt;intern (env, &quot;nil&quot;) };
+emacs_value symbol = env-&gt;funcall (env, fintern, 2, intern_args);
+</pre></div>
+
+</dd></dl>
+
+<dl>
+<dt id="index-funcall-1">Function: <em>emacs_value</em> <strong>funcall</strong> <em>(emacs_env *<var>env</var>, emacs_value <var>func</var>, ptrdiff_t <var>nargs</var>, emacs_value *<var>args</var>)</em></dt>
+<dd><p>This function calls the specified <var>func</var> passing it <var>nargs</var>
+arguments from the array pointed to by <var>args</var>.  The argument
+<var>func</var> can be a function symbol (e.g., returned by <code>intern</code>
+described above), a module function returned by <code>make_function</code>
+(see <a href="Module-Functions.html">Module Functions</a>), a subroutine written in C, etc.  If
+<var>nargs</var> is zero, <var>args</var> can be a <code>NULL</code> pointer.
+</p>
+<p>The function returns the value that <var>func</var> returned.
+</p></dd></dl>
+
+<p>If your module includes potentially long-running code, it is a good
+idea to check from time to time in that code whether the user wants to
+quit, e.g., by typing <kbd>C-g</kbd> (see <a href="Quitting.html">Quitting</a>).  The following
+function, which is available since Emacs 26.1, is provided for that
+purpose.
+</p>
+<span id="should_005fquit"></span><dl>
+<dt id="index-should_005fquit">Function: <em>bool</em> <strong>should_quit</strong> <em>(emacs_env *<var>env</var>)</em></dt>
+<dd><p>This function returns <code>true</code> if the user wants to quit.  In that
+case, we recommend that your module function aborts any on-going
+processing and returns as soon as possible.  In most cases, use
+<code>process_input</code> instead.
+</p></dd></dl>
+
+<p>To process input events in addition to checking whether the user wants
+to quit, use the following function, which is available since Emacs
+27.1.
+</p>
+<span id="process_005finput"></span><dl>
+<dt id="index-emacs_005fprocess_005finput_005fresult">Function: <em>enum</em> <strong>emacs_process_input_result</strong> <em>process_input (emacs_env *<var>env</var>)</em></dt>
+<dd><p>This function processes pending input events.  It returns
+<code>emacs_process_input_quit</code> if the user wants to quit or an error
+occurred while processing signals.  In that case, we recommend that
+your module function aborts any on-going processing and returns as
+soon as possible.  If the module code may continue running,
+<code>process_input</code> returns <code>emacs_process_input_continue</code>.  The
+return value is <code>emacs_process_input_continue</code> if and only if
+there is no pending nonlocal exit in <code>env</code>.  If the module
+continues after calling <code>process_input</code>, global state such as
+variable values and buffer content may have been modified in arbitrary
+ways.
+</p></dd></dl>
+
+
+<div class="header" style="background-color:#DDDDFF">
+<p>
+Next: <a href="Module-Nonlocal.html" accesskey="n" rel="next">Module Nonlocal</a>, Previous: <a href="Module-Values.html" accesskey="p" rel="prev">Module Values</a>, Up: <a href="Writing-Dynamic-Modules.html" accesskey="u" rel="up">Writing Dynamic Modules</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

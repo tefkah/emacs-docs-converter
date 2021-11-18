@@ -1,0 +1,73 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- This is the GNU Emacs Lisp Reference Manual
+corresponding to Emacs version 27.2.
+
+Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
+Inc.
+
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.3 or
+any later version published by the Free Software Foundation; with the
+Invariant Sections being "GNU General Public License," with the
+Front-Cover Texts being "A GNU Manual," and with the Back-Cover
+Texts as in (a) below.  A copy of the license is included in the
+section entitled "GNU Free Documentation License."
+
+(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
+modify this GNU manual.  Buying copies from the FSF supports it in
+developing GNU and promoting software freedom." -->
+<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<link rev="made" href="mailto:bug-gnu-emacs@gnu.org">
+<link rel="icon" type="image/png" href="/graphics/gnu-head-mini.png">
+<meta name="ICBM" content="42.256233,-71.006581">
+<meta name="DC.title" content="gnu.org">
+
+<style type="text/css">
+@import url('/software/emacs/manual.css');
+</style>
+</head>
+
+<body lang="en">
+<span id="Processes-and-Threads"></span><div class="header" style="background-color:#DDDDFF">
+<p>
+Previous: <a href="Accepting-Output.html" accesskey="p" rel="prev">Accepting Output</a>, Up: <a href="Output-from-Processes.html" accesskey="u" rel="up">Output from Processes</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html" title="Index" rel="index">Index</a>]</p>
+</div>
+
+<span id="Processes-and-Threads-1"></span><h4 class="subsection">38.9.5 Processes and Threads</h4>
+<span id="index-processes_002c-threads"></span>
+
+<p>Because threads were a relatively late addition to Emacs Lisp, and
+due to the way dynamic binding was sometimes used in conjunction with
+<code>accept-process-output</code>, by default a process is locked to the
+thread that created it.  When a process is locked to a thread, output
+from the process can only be accepted by that thread.
+</p>
+<p>A Lisp program can specify to which thread a process is to be
+locked, or instruct Emacs to unlock a process, in which case its
+output can be processed by any thread.  Only a single thread will wait
+for output from a given process at one time&mdash;once one thread begins
+waiting for output, the process is temporarily locked until
+<code>accept-process-output</code> or <code>sit-for</code> returns.
+</p>
+<p>If the thread exits, all the processes locked to it are unlocked.
+</p>
+<dl>
+<dt id="index-process_002dthread">Function: <strong>process-thread</strong> <em>process</em></dt>
+<dd><p>Return the thread to which <var>process</var> is locked.  If <var>process</var>
+is unlocked, return <code>nil</code>.
+</p></dd></dl>
+
+<dl>
+<dt id="index-set_002dprocess_002dthread">Function: <strong>set-process-thread</strong> <em>process thread</em></dt>
+<dd><p>Set the locking thread of <var>process</var> to <var>thread</var>.  <var>thread</var>
+may be <code>nil</code>, in which case the process is unlocked.
+</p></dd></dl>
+
+
+
+
+</body>
+</html>

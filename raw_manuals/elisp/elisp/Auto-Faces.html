@@ -1,0 +1,78 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- This is the GNU Emacs Lisp Reference Manual
+corresponding to Emacs version 27.2.
+
+Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
+Inc.
+
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.3 or
+any later version published by the Free Software Foundation; with the
+Invariant Sections being "GNU General Public License," with the
+Front-Cover Texts being "A GNU Manual," and with the Back-Cover
+Texts as in (a) below.  A copy of the license is included in the
+section entitled "GNU Free Documentation License."
+
+(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
+modify this GNU manual.  Buying copies from the FSF supports it in
+developing GNU and promoting software freedom." -->
+<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<link rev="made" href="mailto:bug-gnu-emacs@gnu.org">
+<link rel="icon" type="image/png" href="/graphics/gnu-head-mini.png">
+<meta name="ICBM" content="42.256233,-71.006581">
+<meta name="DC.title" content="gnu.org">
+
+<style type="text/css">
+@import url('/software/emacs/manual.css');
+</style>
+</head>
+
+<body lang="en">
+<span id="Auto-Faces"></span><div class="header" style="background-color:#DDDDFF">
+<p>
+Next: <a href="Basic-Faces.html" accesskey="n" rel="next">Basic Faces</a>, Previous: <a href="Face-Functions.html" accesskey="p" rel="prev">Face Functions</a>, Up: <a href="Faces.html" accesskey="u" rel="up">Faces</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html" title="Index" rel="index">Index</a>]</p>
+</div>
+
+<span id="Automatic-Face-Assignment"></span><h4 class="subsection">39.12.7 Automatic Face Assignment</h4>
+<span id="index-automatic-face-assignment"></span>
+<span id="index-faces_002c-automatic-choice"></span>
+
+<p>This hook is used for automatically assigning faces to text in the
+buffer.  It is part of the implementation of Jit-Lock mode, used by
+Font-Lock.
+</p>
+<dl>
+<dt id="index-fontification_002dfunctions">Variable: <strong>fontification-functions</strong></dt>
+<dd><p>This variable holds a list of functions that are called by Emacs
+redisplay as needed, just before doing redisplay.  They are called even
+when Font Lock Mode isn&rsquo;t enabled.  When Font Lock Mode is enabled, this
+variable usually holds just one function, <code>jit-lock-function</code>.
+</p>
+<p>The functions are called in the order listed, with one argument, a
+buffer position <var>pos</var>.  Collectively they should attempt to assign
+faces to the text in the current buffer starting at <var>pos</var>.
+</p>
+<p>The functions should record the faces they assign by setting the
+<code>face</code> property.  They should also add a non-<code>nil</code>
+<code>fontified</code> property to all the text they have assigned faces to.
+That property tells redisplay that faces have been assigned to that text
+already.
+</p>
+<p>It is probably a good idea for the functions to do nothing if the
+character after <var>pos</var> already has a non-<code>nil</code> <code>fontified</code>
+property, but this is not required.  If one function overrides the
+assignments made by a previous one, the properties after the last
+function finishes are the ones that really matter.
+</p>
+<p>For efficiency, we recommend writing these functions so that they
+usually assign faces to around 400 to 600 characters at each call.
+</p></dd></dl>
+
+
+
+
+</body>
+</html>

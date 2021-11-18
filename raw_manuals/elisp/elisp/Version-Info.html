@@ -1,0 +1,126 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- This is the GNU Emacs Lisp Reference Manual
+corresponding to Emacs version 27.2.
+
+Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
+Inc.
+
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.3 or
+any later version published by the Free Software Foundation; with the
+Invariant Sections being "GNU General Public License," with the
+Front-Cover Texts being "A GNU Manual," and with the Back-Cover
+Texts as in (a) below.  A copy of the license is included in the
+section entitled "GNU Free Documentation License."
+
+(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
+modify this GNU manual.  Buying copies from the FSF supports it in
+developing GNU and promoting software freedom." -->
+<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<link rev="made" href="mailto:bug-gnu-emacs@gnu.org">
+<link rel="icon" type="image/png" href="/graphics/gnu-head-mini.png">
+<meta name="ICBM" content="42.256233,-71.006581">
+<meta name="DC.title" content="gnu.org">
+
+<style type="text/css">
+@import url('/software/emacs/manual.css');
+</style>
+</head>
+
+<body lang="en">
+<span id="Version-Info"></span><div class="header" style="background-color:#DDDDFF">
+<p>
+Next: <a href="Acknowledgments.html" accesskey="n" rel="next">Acknowledgments</a>, Previous: <a href="Conventions.html" accesskey="p" rel="prev">Conventions</a>, Up: <a href="Introduction.html" accesskey="u" rel="up">Introduction</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html" title="Index" rel="index">Index</a>]</p>
+</div>
+
+<span id="Version-Information"></span><h3 class="section">1.4 Version Information</h3>
+
+<p>These facilities provide information about which version of Emacs is
+in use.
+</p>
+<dl>
+<dt id="index-emacs_002dversion">Command: <strong>emacs-version</strong> <em>&amp;optional here</em></dt>
+<dd><p>This function returns a string describing the version of Emacs that is
+running.  It is useful to include this string in bug reports.
+</p>
+<div class="example">
+<pre class="example">(emacs-version)
+  &rArr; &quot;GNU Emacs 26.1 (build 1, x86_64-unknown-linux-gnu,
+             GTK+ Version 3.16) of 2017-06-01&quot;
+</pre></div>
+
+<p>If <var>here</var> is non-<code>nil</code>, it inserts the text in the buffer
+before point, and returns <code>nil</code>.  When this function is called
+interactively, it prints the same information in the echo area, but
+giving a prefix argument makes <var>here</var> non-<code>nil</code>.
+</p></dd></dl>
+
+<dl>
+<dt id="index-emacs_002dbuild_002dtime">Variable: <strong>emacs-build-time</strong></dt>
+<dd><p>The value of this variable indicates the time at which Emacs was
+built.  It uses the style of
+<code>current-time</code> (see <a href="Time-of-Day.html">Time of Day</a>), or is <code>nil</code>
+if the information is not available.
+</p>
+<div class="example">
+<pre class="example">emacs-build-time
+     &rArr; (20614 63694 515336 438000)
+</pre></div>
+</dd></dl>
+
+<dl>
+<dt id="index-emacs_002dversion-1">Variable: <strong>emacs-version</strong></dt>
+<dd><p>The value of this variable is the version of Emacs being run.  It is a
+string such as <code>&quot;26.1&quot;</code>.  A value with three numeric components,
+such as <code>&quot;26.0.91&quot;</code>, indicates an unreleased test version.
+(Prior to Emacs 26.1, the string includes an extra final component
+with the integer that is now stored in <code>emacs-build-number</code>;
+e.g., <code>&quot;25.1.1&quot;</code>.)
+</p></dd></dl>
+
+<dl>
+<dt id="index-emacs_002dmajor_002dversion">Variable: <strong>emacs-major-version</strong></dt>
+<dd><p>The major version number of Emacs, as an integer.  For Emacs version
+23.1, the value is 23.
+</p></dd></dl>
+
+<dl>
+<dt id="index-emacs_002dminor_002dversion">Variable: <strong>emacs-minor-version</strong></dt>
+<dd><p>The minor version number of Emacs, as an integer.  For Emacs version
+23.1, the value is 1.
+</p></dd></dl>
+
+<dl>
+<dt id="index-emacs_002dbuild_002dnumber">Variable: <strong>emacs-build-number</strong></dt>
+<dd><p>An integer that increments each time Emacs is built in the same
+directory (without cleaning).  This is only of relevance when
+developing Emacs.
+</p></dd></dl>
+
+<dl>
+<dt id="index-emacs_002drepository_002dversion">Variable: <strong>emacs-repository-version</strong></dt>
+<dd><p>A string that gives the repository revision from which Emacs was
+built.  If Emacs was built outside revision control, the value is
+<code>nil</code>.
+</p></dd></dl>
+
+<dl>
+<dt id="index-emacs_002drepository_002dbranch">Variable: <strong>emacs-repository-branch</strong></dt>
+<dd><p>A string that gives the repository branch from which Emacs was built.
+In the most cases this is <code>&quot;master&quot;</code>.  If Emacs was built outside
+revision control, the value is <code>nil</code>.
+</p></dd></dl>
+
+
+<div class="header" style="background-color:#DDDDFF">
+<p>
+Next: <a href="Acknowledgments.html" accesskey="n" rel="next">Acknowledgments</a>, Previous: <a href="Conventions.html" accesskey="p" rel="prev">Conventions</a>, Up: <a href="Introduction.html" accesskey="u" rel="up">Introduction</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

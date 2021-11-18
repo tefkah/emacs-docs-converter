@@ -1,0 +1,103 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- This is the GNU Emacs Lisp Reference Manual
+corresponding to Emacs version 27.2.
+
+Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
+Inc.
+
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.3 or
+any later version published by the Free Software Foundation; with the
+Invariant Sections being "GNU General Public License," with the
+Front-Cover Texts being "A GNU Manual," and with the Back-Cover
+Texts as in (a) below.  A copy of the license is included in the
+section entitled "GNU Free Documentation License."
+
+(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
+modify this GNU manual.  Buying copies from the FSF supports it in
+developing GNU and promoting software freedom." -->
+<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<link rev="made" href="mailto:bug-gnu-emacs@gnu.org">
+<link rel="icon" type="image/png" href="/graphics/gnu-head-mini.png">
+<meta name="ICBM" content="42.256233,-71.006581">
+<meta name="DC.title" content="gnu.org">
+
+<style type="text/css">
+@import url('/software/emacs/manual.css');
+</style>
+</head>
+
+<body lang="en">
+<span id="Load-Suffixes"></span><div class="header" style="background-color:#DDDDFF">
+<p>
+Next: <a href="Library-Search.html" accesskey="n" rel="next">Library Search</a>, Previous: <a href="How-Programs-Do-Loading.html" accesskey="p" rel="prev">How Programs Do Loading</a>, Up: <a href="Loading.html" accesskey="u" rel="up">Loading</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html" title="Index" rel="index">Index</a>]</p>
+</div>
+
+<span id="Load-Suffixes-1"></span><h3 class="section">16.2 Load Suffixes</h3>
+<p>We now describe some technical details about the exact suffixes that
+<code>load</code> tries.
+</p>
+<dl>
+<dt id="index-load_002dsuffixes">Variable: <strong>load-suffixes</strong></dt>
+<dd><p>This is a list of suffixes indicating (compiled or source) Emacs Lisp
+files.  It should not include the empty string.  <code>load</code> uses
+these suffixes in order when it appends Lisp suffixes to the specified
+file name.  The standard value is <code>(&quot;.elc&quot; &quot;.el&quot;)</code> which produces
+the behavior described in the previous section.
+</p></dd></dl>
+
+<dl>
+<dt id="index-load_002dfile_002drep_002dsuffixes">Variable: <strong>load-file-rep-suffixes</strong></dt>
+<dd><p>This is a list of suffixes that indicate representations of the same
+file.  This list should normally start with the empty string.
+When <code>load</code> searches for a file it appends the suffixes in this
+list, in order, to the file name, before searching for another file.
+</p>
+<p>Enabling Auto Compression mode appends the suffixes in
+<code>jka-compr-load-suffixes</code> to this list and disabling Auto
+Compression mode removes them again.  The standard value of
+<code>load-file-rep-suffixes</code> if Auto Compression mode is disabled is
+<code>(&quot;&quot;)</code>.  Given that the standard value of
+<code>jka-compr-load-suffixes</code> is <code>(&quot;.gz&quot;)</code>, the standard value
+of <code>load-file-rep-suffixes</code> if Auto Compression mode is enabled
+is <code>(&quot;&quot; &quot;.gz&quot;)</code>.
+</p></dd></dl>
+
+<dl>
+<dt id="index-get_002dload_002dsuffixes">Function: <strong>get-load-suffixes</strong></dt>
+<dd><p>This function returns the list of all suffixes that <code>load</code> should
+try, in order, when its <var>must-suffix</var> argument is non-<code>nil</code>.
+This takes both <code>load-suffixes</code> and <code>load-file-rep-suffixes</code>
+into account.  If <code>load-suffixes</code>, <code>jka-compr-load-suffixes</code>
+and <code>load-file-rep-suffixes</code> all have their standard values, this
+function returns <code>(&quot;.elc&quot; &quot;.elc.gz&quot; &quot;.el&quot; &quot;.el.gz&quot;)</code> if Auto
+Compression mode is enabled and <code>(&quot;.elc&quot; &quot;.el&quot;)</code> if Auto
+Compression mode is disabled.
+</p></dd></dl>
+
+<p>To summarize, <code>load</code> normally first tries the suffixes in the
+value of <code>(get-load-suffixes)</code> and then those in
+<code>load-file-rep-suffixes</code>.  If <var>nosuffix</var> is non-<code>nil</code>,
+it skips the former group, and if <var>must-suffix</var> is non-<code>nil</code>,
+it skips the latter group.
+</p>
+<dl>
+<dt id="index-load_002dprefer_002dnewer">User Option: <strong>load-prefer-newer</strong></dt>
+<dd><p>If this option is non-<code>nil</code>, then rather than stopping at the
+first suffix that exists, <code>load</code> tests them all, and uses
+whichever file is the newest.
+</p></dd></dl>
+
+
+<div class="header" style="background-color:#DDDDFF">
+<p>
+Next: <a href="Library-Search.html" accesskey="n" rel="next">Library Search</a>, Previous: <a href="How-Programs-Do-Loading.html" accesskey="p" rel="prev">How Programs Do Loading</a>, Up: <a href="Loading.html" accesskey="u" rel="up">Loading</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

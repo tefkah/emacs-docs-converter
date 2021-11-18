@@ -1,0 +1,152 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- This is the GNU Emacs Lisp Reference Manual
+corresponding to Emacs version 27.2.
+
+Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
+Inc.
+
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.3 or
+any later version published by the Free Software Foundation; with the
+Invariant Sections being "GNU General Public License," with the
+Front-Cover Texts being "A GNU Manual," and with the Back-Cover
+Texts as in (a) below.  A copy of the license is included in the
+section entitled "GNU Free Documentation License."
+
+(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
+modify this GNU manual.  Buying copies from the FSF supports it in
+developing GNU and promoting software freedom." -->
+<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<link rev="made" href="mailto:bug-gnu-emacs@gnu.org">
+<link rel="icon" type="image/png" href="/graphics/gnu-head-mini.png">
+<meta name="ICBM" content="42.256233,-71.006581">
+<meta name="DC.title" content="gnu.org">
+
+<style type="text/css">
+@import url('/software/emacs/manual.css');
+</style>
+</head>
+
+<body lang="en">
+<span id="Yes_002dor_002dNo-Queries"></span><div class="header" style="background-color:#DDDDFF">
+<p>
+Next: <a href="Multiple-Queries.html" accesskey="n" rel="next">Multiple Queries</a>, Previous: <a href="Completion.html" accesskey="p" rel="prev">Completion</a>, Up: <a href="Minibuffers.html" accesskey="u" rel="up">Minibuffers</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html" title="Index" rel="index">Index</a>]</p>
+</div>
+
+<span id="Yes_002dor_002dNo-Queries-1"></span><h3 class="section">20.7 Yes-or-No Queries</h3>
+<span id="index-asking-the-user-questions"></span>
+<span id="index-querying-the-user"></span>
+<span id="index-yes_002dor_002dno-questions"></span>
+
+<p>This section describes functions used to ask the user a yes-or-no
+question.  The function <code>y-or-n-p</code> can be answered with a single
+character; it is useful for questions where an inadvertent wrong answer
+will not have serious consequences.  <code>yes-or-no-p</code> is suitable for
+more momentous questions, since it requires three or four characters to
+answer.
+</p>
+<p>If either of these functions is called in a command that was invoked
+using the mouse&mdash;more precisely, if <code>last-nonmenu-event</code>
+(see <a href="Command-Loop-Info.html">Command Loop Info</a>) is either <code>nil</code> or a list&mdash;then it
+uses a dialog box or pop-up menu to ask the question.  Otherwise, it
+uses keyboard input.  You can force use either of the mouse or of keyboard
+input by binding <code>last-nonmenu-event</code> to a suitable value around
+the call.
+</p>
+<p>Both <code>yes-or-no-p</code> and <code>y-or-n-p</code> use the minibuffer.
+</p>
+<dl>
+<dt id="index-y_002dor_002dn_002dp">Function: <strong>y-or-n-p</strong> <em>prompt</em></dt>
+<dd><p>This function asks the user a question, expecting input in the minibuffer.
+It returns <code>t</code> if the user types <kbd>y</kbd>, <code>nil</code> if the user
+types <kbd>n</kbd>.  This function also accepts <tt class="key">SPC</tt> to mean yes and
+<tt class="key">DEL</tt> to mean no.  It accepts <kbd>C-]</kbd> and <kbd>C-g</kbd> to quit,
+because the question uses the minibuffer and for that reason the user
+might try to use <kbd>C-]</kbd> to get out.  The answer is a single
+character, with no <tt class="key">RET</tt> needed to terminate it.  Upper and lower
+case are equivalent.
+</p>
+<p>&ldquo;Asking the question&rdquo; means printing <var>prompt</var> in the minibuffer,
+followed by the string &lsquo;<samp>(y&nbsp;or&nbsp;n)&nbsp;</samp>&rsquo;<!-- /@w -->.  If the input is not one of
+the expected answers (<kbd>y</kbd>, <kbd>n</kbd>, <kbd><span class="key">SPC</span></kbd>,
+<kbd><span class="key">DEL</span></kbd>, or something that quits), the function responds
+&lsquo;<samp>Please answer y or n.</samp>&rsquo;, and repeats the request.
+</p>
+<p>This function actually uses the minibuffer, but does not allow editing
+of the answer.  The cursor moves to the minibuffer while the question
+is being asked.
+</p>
+<p>The answers and their meanings, even &lsquo;<samp>y</samp>&rsquo; and &lsquo;<samp>n</samp>&rsquo;, are not
+hardwired, and are specified by the keymap <code>query-replace-map</code>
+(see <a href="Search-and-Replace.html">Search and Replace</a>).  In particular, if the user enters the
+special responses <code>recenter</code>, <code>scroll-up</code>,
+<code>scroll-down</code>, <code>scroll-other-window</code>, or
+<code>scroll-other-window-down</code> (respectively bound to <kbd>C-l</kbd>,
+<kbd>C-v</kbd>, <kbd>M-v</kbd>, <kbd>C-M-v</kbd> and <kbd>C-M-S-v</kbd> in
+<code>query-replace-map</code>), this function performs the specified window
+recentering or scrolling operation, and poses the question again.
+</p></dd></dl>
+
+<dl>
+<dt id="index-y_002dor_002dn_002dp_002dwith_002dtimeout">Function: <strong>y-or-n-p-with-timeout</strong> <em>prompt seconds default</em></dt>
+<dd><p>Like <code>y-or-n-p</code>, except that if the user fails to answer within
+<var>seconds</var> seconds, this function stops waiting and returns
+<var>default</var>.  It works by setting up a timer; see <a href="Timers.html">Timers</a>.
+The argument <var>seconds</var> should be a number.
+</p></dd></dl>
+
+<dl>
+<dt id="index-yes_002dor_002dno_002dp">Function: <strong>yes-or-no-p</strong> <em>prompt</em></dt>
+<dd><p>This function asks the user a question, expecting input in the
+minibuffer.  It returns <code>t</code> if the user enters &lsquo;<samp>yes</samp>&rsquo;,
+<code>nil</code> if the user types &lsquo;<samp>no</samp>&rsquo;.  The user must type <tt class="key">RET</tt> to
+finalize the response.  Upper and lower case are equivalent.
+</p>
+<p><code>yes-or-no-p</code> starts by displaying <var>prompt</var> in the minibuffer,
+followed by &lsquo;<samp>(yes&nbsp;or&nbsp;no)&nbsp;</samp>&rsquo;<!-- /@w -->.  The user must type one of the
+expected responses; otherwise, the function responds &lsquo;<samp>Please answer
+yes or no.</samp>&rsquo;, waits about two seconds and repeats the request.
+</p>
+<p><code>yes-or-no-p</code> requires more work from the user than
+<code>y-or-n-p</code> and is appropriate for more crucial decisions.
+</p>
+<p>Here is an example:
+</p>
+<div class="example">
+<pre class="example">(yes-or-no-p &quot;Do you really want to remove everything? &quot;)
+
+;; <span class="roman">After evaluation of the preceding expression,</span>
+;;   <span class="roman">the following prompt appears,</span>
+;;   <span class="roman">with an empty minibuffer:</span>
+</pre><pre class="example">
+
+</pre><pre class="example">---------- Buffer: minibuffer ----------
+Do you really want to remove everything? (yes or no)
+---------- Buffer: minibuffer ----------
+</pre></div>
+
+<p>If the user first types <kbd>y <span class="key">RET</span></kbd>, which is invalid because this
+function demands the entire word &lsquo;<samp>yes</samp>&rsquo;, it responds by displaying
+these prompts, with a brief pause between them:
+</p>
+<div class="example">
+<pre class="example">---------- Buffer: minibuffer ----------
+Please answer yes or no.
+Do you really want to remove everything? (yes or no)
+---------- Buffer: minibuffer ----------
+</pre></div>
+</dd></dl>
+
+
+<div class="header" style="background-color:#DDDDFF">
+<p>
+Next: <a href="Multiple-Queries.html" accesskey="n" rel="next">Multiple Queries</a>, Previous: <a href="Completion.html" accesskey="p" rel="prev">Completion</a>, Up: <a href="Minibuffers.html" accesskey="u" rel="up">Minibuffers</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

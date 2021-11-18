@@ -1,0 +1,182 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- This is the GNU Emacs Lisp Reference Manual
+corresponding to Emacs version 27.2.
+
+Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
+Inc.
+
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.3 or
+any later version published by the Free Software Foundation; with the
+Invariant Sections being "GNU General Public License," with the
+Front-Cover Texts being "A GNU Manual," and with the Back-Cover
+Texts as in (a) below.  A copy of the license is included in the
+section entitled "GNU Free Documentation License."
+
+(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
+modify this GNU manual.  Buying copies from the FSF supports it in
+developing GNU and promoting software freedom." -->
+<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<link rev="made" href="mailto:bug-gnu-emacs@gnu.org">
+<link rel="icon" type="image/png" href="/graphics/gnu-head-mini.png">
+<meta name="ICBM" content="42.256233,-71.006581">
+<meta name="DC.title" content="gnu.org">
+
+<style type="text/css">
+@import url('/software/emacs/manual.css');
+</style>
+</head>
+
+<body lang="en">
+<span id="Misc-Network"></span><div class="header" style="background-color:#DDDDFF">
+<p>
+Next: <a href="Serial-Ports.html" accesskey="n" rel="next">Serial Ports</a>, Previous: <a href="Low_002dLevel-Network.html" accesskey="p" rel="prev">Low-Level Network</a>, Up: <a href="Processes.html" accesskey="u" rel="up">Processes</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html" title="Index" rel="index">Index</a>]</p>
+</div>
+
+<span id="Misc-Network-Facilities"></span><h3 class="section">38.18 Misc Network Facilities</h3>
+
+<p>These additional functions are useful for creating and operating
+on network connections.  Note that they are supported only on some
+systems.
+</p>
+<dl>
+<dt id="index-network_002dinterface_002dlist">Function: <strong>network-interface-list</strong> <em>&amp;optional full family</em></dt>
+<dd><p>This function returns a list describing the network interfaces of the
+machine you are using.  The value is an alist whose elements have the
+form <code>(<var>ifname</var> . <var>address</var>)</code>.  <var>ifname</var> is a string
+naming the interface, <var>address</var> has the same form as the
+<var>local-address</var> and <var>remote-address</var> arguments to
+<code>make-network-process</code>, i.e. a vector of integers.  By default
+both IPv4 and IPv6 addresses are returned if possible.
+</p>
+<p>Optional argument <var>full</var> non-<code>nil</code> means to instead return a
+list of one or more elements of the form <code>(<var>ifname</var>&nbsp;<var>addr</var>&nbsp;<var>bcast</var>&nbsp;<var>netmask</var>)</code><!-- /@w -->.  <var>ifname</var> is a non-unique
+string naming the interface.  <var>addr</var>, <var>bcast</var>, and
+<var>netmask</var> are vectors of integers detailing the IP address,
+broadcast address, and network mask.
+</p>
+<p>Optional argument <var>family</var> specified as symbol <code>ipv4</code> or
+<code>ipv6</code> restricts the returned information to IPv4 and IPv6
+addresses respectively, independently of the value of <var>full</var>.
+Specifying <code>ipv6</code> when IPv6 support is not available will result
+in an error being signaled.
+</p>
+<p>Some examples:
+</p>
+<div class="example">
+<pre class="example">(network-interface-list) &rArr;
+((&quot;vmnet8&quot; .
+  [172 16 76 1 0])
+ (&quot;vmnet1&quot; .
+  [172 16 206 1 0])
+ (&quot;lo0&quot; .
+  [65152 0 0 0 0 0 0 1 0])
+ (&quot;lo0&quot; .
+  [0 0 0 0 0 0 0 1 0])
+ (&quot;lo0&quot; .
+  [127 0 0 1 0]))
+</pre></div>
+
+<div class="example">
+<pre class="example">(network-interface-list t) &rArr;
+((&quot;vmnet8&quot;
+  [172 16 76 1 0]
+  [172 16 76 255 0]
+  [255 255 255 0 0])
+ (&quot;vmnet1&quot;
+  [172 16 206 1 0]
+  [172 16 206 255 0]
+  [255 255 255 0 0])
+ (&quot;lo0&quot;
+  [65152 0 0 0 0 0 0 1 0]
+  [65152 0 0 0 65535 65535 65535 65535 0]
+  [65535 65535 65535 65535 0 0 0 0 0])
+ (&quot;lo0&quot;
+  [0 0 0 0 0 0 0 1 0]
+  [0 0 0 0 0 0 0 1 0]
+  [65535 65535 65535 65535 65535 65535 65535 65535 0])
+ (&quot;lo0&quot;
+  [127 0 0 1 0]
+  [127 255 255 255 0]
+  [255 0 0 0 0]))
+</pre></div>
+</dd></dl>
+
+<dl>
+<dt id="index-network_002dinterface_002dinfo">Function: <strong>network-interface-info</strong> <em>ifname</em></dt>
+<dd><p>This function returns information about the network interface named
+<var>ifname</var>.  The value is a list of the form
+<code>(<var>addr</var> <var>bcast</var> <var>netmask</var> <var>hwaddr</var> <var>flags</var>)</code>.
+</p>
+<dl compact="compact">
+<dt><var>addr</var></dt>
+<dd><p>The Internet protocol address.
+</p></dd>
+<dt><var>bcast</var></dt>
+<dd><p>The broadcast address.
+</p></dd>
+<dt><var>netmask</var></dt>
+<dd><p>The network mask.
+</p></dd>
+<dt><var>hwaddr</var></dt>
+<dd><p>The layer 2 address (Ethernet MAC address, for instance).
+</p></dd>
+<dt><var>flags</var></dt>
+<dd><p>The current flags of the interface.
+</p></dd>
+</dl>
+
+<p>Note that this function returns only IPv4 information.
+</p></dd></dl>
+
+<dl>
+<dt id="index-format_002dnetwork_002daddress">Function: <strong>format-network-address</strong> <em>address &amp;optional omit-port</em></dt>
+<dd><p>This function converts the Lisp representation of a network address to
+a string.
+</p>
+<p>A five-element vector <code>[<var>a</var> <var>b</var> <var>c</var> <var>d</var> <var>p</var>]</code>
+represents an IPv4 address <var>a</var>.<var>b</var>.<var>c</var>.<var>d</var> and port
+number <var>p</var>.  <code>format-network-address</code> converts that to the
+string <code>&quot;<var>a</var>.<var>b</var>.<var>c</var>.<var>d</var>:<var>p</var>&quot;</code>.
+</p>
+<p>A nine-element vector <code>[<var>a</var> <var>b</var> <var>c</var> <var>d</var> <var>e</var>
+<var>f</var> <var>g</var> <var>h</var> <var>p</var>]</code> represents an IPv6 address along
+with a port number.  <code>format-network-address</code> converts that to
+the string
+<code>&quot;[<var>a</var>:<var>b</var>:<var>c</var>:<var>d</var>:<var>e</var>:<var>f</var>:<var>g</var>:<var>h</var>]:<var>p</var>&quot;</code>.
+</p>
+<p>If the vector does not include the port number, <var>p</var>, or if
+<var>omit-port</var> is non-<code>nil</code>, the result does not include the
+<code>:<var>p</var></code> suffix.
+</p></dd></dl>
+
+<dl>
+<dt id="index-network_002dlookup_002daddress_002dinfo">Function: <strong>network-lookup-address-info</strong> <em>name &amp;optional family</em></dt>
+<dd><p>This function is used to perform hostname lookups on <var>name</var>, which
+is expected to be an ASCII-only string, otherwise an error is
+signaled. Call <code>puny-encode-domain</code> on <var>name</var>
+first if you wish to lookup internationalized hostnames.
+</p>
+<p>If successful it returns a list of Lisp representations of network
+addresses, otherwise it returns <code>nil</code>.  In the latter case, it
+also displays the error message hopefully explaining what went wrong.
+</p>
+<p>By default both IPv4 and IPv6 lookups are attempted.  The optional
+argument <var>family</var> controls this behavior, specifying the symbol
+<code>ipv4</code> or <code>ipv6</code> restricts lookups to IPv4 and IPv6
+respectively.
+</p></dd></dl>
+
+
+<div class="header" style="background-color:#DDDDFF">
+<p>
+Next: <a href="Serial-Ports.html" accesskey="n" rel="next">Serial Ports</a>, Previous: <a href="Low_002dLevel-Network.html" accesskey="p" rel="prev">Low-Level Network</a>, Up: <a href="Processes.html" accesskey="u" rel="up">Processes</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

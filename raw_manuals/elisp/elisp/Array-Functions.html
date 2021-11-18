@@ -1,0 +1,141 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- This is the GNU Emacs Lisp Reference Manual
+corresponding to Emacs version 27.2.
+
+Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
+Inc.
+
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.3 or
+any later version published by the Free Software Foundation; with the
+Invariant Sections being "GNU General Public License," with the
+Front-Cover Texts being "A GNU Manual," and with the Back-Cover
+Texts as in (a) below.  A copy of the license is included in the
+section entitled "GNU Free Documentation License."
+
+(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
+modify this GNU manual.  Buying copies from the FSF supports it in
+developing GNU and promoting software freedom." -->
+<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<link rev="made" href="mailto:bug-gnu-emacs@gnu.org">
+<link rel="icon" type="image/png" href="/graphics/gnu-head-mini.png">
+<meta name="ICBM" content="42.256233,-71.006581">
+<meta name="DC.title" content="gnu.org">
+
+<style type="text/css">
+@import url('/software/emacs/manual.css');
+</style>
+</head>
+
+<body lang="en">
+<span id="Array-Functions"></span><div class="header" style="background-color:#DDDDFF">
+<p>
+Next: <a href="Vectors.html" accesskey="n" rel="next">Vectors</a>, Previous: <a href="Arrays.html" accesskey="p" rel="prev">Arrays</a>, Up: <a href="Sequences-Arrays-Vectors.html" accesskey="u" rel="up">Sequences Arrays Vectors</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html" title="Index" rel="index">Index</a>]</p>
+</div>
+
+<span id="Functions-that-Operate-on-Arrays"></span><h3 class="section">6.3 Functions that Operate on Arrays</h3>
+
+<p>In this section, we describe the functions that accept all types of
+arrays.
+</p>
+<dl>
+<dt id="index-arrayp">Function: <strong>arrayp</strong> <em>object</em></dt>
+<dd><p>This function returns <code>t</code> if <var>object</var> is an array (i.e., a
+vector, a string, a bool-vector or a char-table).
+</p>
+<div class="example">
+<pre class="example">(arrayp [a])
+     &rArr; t
+(arrayp &quot;asdf&quot;)
+     &rArr; t
+(arrayp (syntax-table))    ;; <span class="roman">A char-table.</span>
+     &rArr; t
+</pre></div>
+</dd></dl>
+
+<dl>
+<dt id="index-aref">Function: <strong>aref</strong> <em>arr index</em></dt>
+<dd><span id="index-array-elements"></span>
+<p>This function returns the <var>index</var>th element of the array or record
+<var>arr</var>.  The first element is at index zero.
+</p>
+<div class="example">
+<pre class="example">(setq primes [2 3 5 7 11 13])
+     &rArr; [2 3 5 7 11 13]
+(aref primes 4)
+     &rArr; 11
+</pre><pre class="example">(aref &quot;abcdefg&quot; 1)
+     &rArr; 98           ; <span class="roman">&lsquo;<samp>b</samp>&rsquo; is <acronym>ASCII</acronym> code 98.</span>
+</pre></div>
+
+<p>See also the function <code>elt</code>, in <a href="Sequence-Functions.html">Sequence Functions</a>.
+</p></dd></dl>
+
+<dl>
+<dt id="index-aset">Function: <strong>aset</strong> <em>array index object</em></dt>
+<dd><p>This function sets the <var>index</var>th element of <var>array</var> to be
+<var>object</var>.  It returns <var>object</var>.
+</p>
+<div class="example">
+<pre class="example">(setq w (vector 'foo 'bar 'baz))
+     &rArr; [foo bar baz]
+(aset w 0 'fu)
+     &rArr; fu
+w
+     &rArr; [fu bar baz]
+</pre><pre class="example">
+
+</pre><pre class="example">;; <span class="roman"><code>copy-sequence</code> copies the string to be modified later.</span>
+(setq x (copy-sequence &quot;asdfasfd&quot;))
+     &rArr; &quot;asdfasfd&quot;
+(aset x 3 ?Z)
+     &rArr; 90
+x
+     &rArr; &quot;asdZasfd&quot;
+</pre></div>
+
+<p>The <var>array</var> should be mutable.  See <a href="Mutability.html">Mutability</a>.
+</p>
+<p>If <var>array</var> is a string and <var>object</var> is not a character, a
+<code>wrong-type-argument</code> error results.  The function converts a
+unibyte string to multibyte if necessary to insert a character.
+</p></dd></dl>
+
+<dl>
+<dt id="index-fillarray">Function: <strong>fillarray</strong> <em>array object</em></dt>
+<dd><p>This function fills the array <var>array</var> with <var>object</var>, so that
+each element of <var>array</var> is <var>object</var>.  It returns <var>array</var>.
+</p>
+<div class="example">
+<pre class="example">(setq a (copy-sequence [a b c d e f g]))
+     &rArr; [a b c d e f g]
+(fillarray a 0)
+     &rArr; [0 0 0 0 0 0 0]
+a
+     &rArr; [0 0 0 0 0 0 0]
+</pre><pre class="example">(setq s (copy-sequence &quot;When in the course&quot;))
+     &rArr; &quot;When in the course&quot;
+(fillarray s ?-)
+     &rArr; &quot;------------------&quot;
+</pre></div>
+
+<p>If <var>array</var> is a string and <var>object</var> is not a character, a
+<code>wrong-type-argument</code> error results.
+</p></dd></dl>
+
+<p>The general sequence functions <code>copy-sequence</code> and <code>length</code>
+are often useful for objects known to be arrays.  See <a href="Sequence-Functions.html">Sequence Functions</a>.
+</p>
+
+<div class="header" style="background-color:#DDDDFF">
+<p>
+Next: <a href="Vectors.html" accesskey="n" rel="next">Vectors</a>, Previous: <a href="Arrays.html" accesskey="p" rel="prev">Arrays</a>, Up: <a href="Sequences-Arrays-Vectors.html" accesskey="u" rel="up">Sequences Arrays Vectors</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

@@ -1,0 +1,87 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- This is the GNU Emacs Lisp Reference Manual
+corresponding to Emacs version 27.2.
+
+Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
+Inc.
+
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.3 or
+any later version published by the Free Software Foundation; with the
+Invariant Sections being "GNU General Public License," with the
+Front-Cover Texts being "A GNU Manual," and with the Back-Cover
+Texts as in (a) below.  A copy of the license is included in the
+section entitled "GNU Free Documentation License."
+
+(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
+modify this GNU manual.  Buying copies from the FSF supports it in
+developing GNU and promoting software freedom." -->
+<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<link rev="made" href="mailto:bug-gnu-emacs@gnu.org">
+<link rel="icon" type="image/png" href="/graphics/gnu-head-mini.png">
+<meta name="ICBM" content="42.256233,-71.006581">
+<meta name="DC.title" content="gnu.org">
+
+<style type="text/css">
+@import url('/software/emacs/manual.css');
+</style>
+</head>
+
+<body lang="en">
+<span id="Images"></span><div class="header" style="background-color:#DDDDFF">
+<p>
+Next: <a href="Xwidgets.html" accesskey="n" rel="next">Xwidgets</a>, Previous: <a href="Display-Property.html" accesskey="p" rel="prev">Display Property</a>, Up: <a href="Display.html" accesskey="u" rel="up">Display</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html" title="Index" rel="index">Index</a>]</p>
+</div>
+
+<span id="Images-1"></span><h3 class="section">39.17 Images</h3>
+<span id="index-images-in-buffers"></span>
+
+<p>To display an image in an Emacs buffer, you must first create an image
+descriptor, then use it as a display specifier in the <code>display</code>
+property of text that is displayed (see <a href="Display-Property.html">Display Property</a>).
+</p>
+<p>Emacs is usually able to display images when it is run on a
+graphical terminal.  Images cannot be displayed in a text terminal, on
+certain graphical terminals that lack the support for this, or if
+Emacs is compiled without image support.  You can use the function
+<code>display-images-p</code> to determine if images can in principle be
+displayed (see <a href="Display-Feature-Testing.html">Display Feature Testing</a>).
+</p>
+<table class="menu" border="0" cellspacing="0">
+<tr><td align="left" valign="top">&bull; <a href="Image-Formats.html" accesskey="1">Image Formats</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Supported image formats.
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Image-Descriptors.html" accesskey="2">Image Descriptors</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">How to specify an image for use in <code>:display</code>.
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="XBM-Images.html" accesskey="3">XBM Images</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Special features for XBM format.
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="XPM-Images.html" accesskey="4">XPM Images</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Special features for XPM format.
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="ImageMagick-Images.html" accesskey="5">ImageMagick Images</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Special features available through ImageMagick.
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="SVG-Images.html" accesskey="6">SVG Images</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Creating and manipulating SVG images.
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Other-Image-Types.html" accesskey="7">Other Image Types</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Various other formats are supported.
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Defining-Images.html" accesskey="8">Defining Images</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Convenient ways to define an image for later use.
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Showing-Images.html" accesskey="9">Showing Images</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Convenient ways to display an image once it is defined.
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Multi_002dFrame-Images.html">Multi-Frame Images</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Some images contain more than one frame.
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Image-Cache.html">Image Cache</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Internal mechanisms of image display.
+</td></tr>
+</table>
+
+
+<div class="header" style="background-color:#DDDDFF">
+<p>
+Next: <a href="Xwidgets.html" accesskey="n" rel="next">Xwidgets</a>, Previous: <a href="Display-Property.html" accesskey="p" rel="prev">Display Property</a>, Up: <a href="Display.html" accesskey="u" rel="up">Display</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

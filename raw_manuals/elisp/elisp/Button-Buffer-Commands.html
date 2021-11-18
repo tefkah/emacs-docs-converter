@@ -1,0 +1,117 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- This is the GNU Emacs Lisp Reference Manual
+corresponding to Emacs version 27.2.
+
+Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
+Inc.
+
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.3 or
+any later version published by the Free Software Foundation; with the
+Invariant Sections being "GNU General Public License," with the
+Front-Cover Texts being "A GNU Manual," and with the Back-Cover
+Texts as in (a) below.  A copy of the license is included in the
+section entitled "GNU Free Documentation License."
+
+(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
+modify this GNU manual.  Buying copies from the FSF supports it in
+developing GNU and promoting software freedom." -->
+<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<link rev="made" href="mailto:bug-gnu-emacs@gnu.org">
+<link rel="icon" type="image/png" href="/graphics/gnu-head-mini.png">
+<meta name="ICBM" content="42.256233,-71.006581">
+<meta name="DC.title" content="gnu.org">
+
+<style type="text/css">
+@import url('/software/emacs/manual.css');
+</style>
+</head>
+
+<body lang="en">
+<span id="Button-Buffer-Commands"></span><div class="header" style="background-color:#DDDDFF">
+<p>
+Previous: <a href="Manipulating-Buttons.html" accesskey="p" rel="prev">Manipulating Buttons</a>, Up: <a href="Buttons.html" accesskey="u" rel="up">Buttons</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html" title="Index" rel="index">Index</a>]</p>
+</div>
+
+<span id="Button-Buffer-Commands-1"></span><h4 class="subsection">39.19.5 Button Buffer Commands</h4>
+<span id="index-button-buffer-commands"></span>
+
+<p>These are commands and functions for locating and operating on
+buttons in an Emacs buffer.
+</p>
+<p><code>push-button</code> is the command that a user uses to actually push
+a button, and is bound by default in the button itself to <tt class="key">RET</tt>
+and to <tt class="key">mouse-2</tt> using a local keymap in the button&rsquo;s overlay or
+text properties.  Commands that are useful outside the buttons itself,
+such as <code>forward-button</code> and <code>backward-button</code> are
+additionally available in the keymap stored in
+<code>button-buffer-map</code>; a mode which uses buttons may want to use
+<code>button-buffer-map</code> as a parent keymap for its keymap.
+</p>
+<p>If the button has a non-<code>nil</code> <code>follow-link</code> property, and
+<code>mouse-1-click-follows-link</code> is set, a quick <tt class="key">mouse-1</tt> click
+will also activate the <code>push-button</code> command.
+See <a href="Clickable-Text.html">Clickable Text</a>.
+</p>
+<dl>
+<dt id="index-push_002dbutton">Command: <strong>push-button</strong> <em>&amp;optional pos use-mouse-action</em></dt>
+<dd><p>Perform the action specified by a button at location <var>pos</var>.
+<var>pos</var> may be either a buffer position or a mouse-event.  If
+<var>use-mouse-action</var> is non-<code>nil</code>, or <var>pos</var> is a
+mouse-event (see <a href="Mouse-Events.html">Mouse Events</a>), try to invoke the button&rsquo;s
+<code>mouse-action</code> property instead of <code>action</code>; if the button
+has no <code>mouse-action</code> property, use <code>action</code> as normal.
+<var>pos</var> defaults to point, except when <code>push-button</code> is invoked
+interactively as the result of a mouse-event, in which case, the mouse
+event&rsquo;s position is used.  If there&rsquo;s no button at <var>pos</var>, do
+nothing and return <code>nil</code>, otherwise return <code>t</code>.
+</p></dd></dl>
+
+<dl>
+<dt id="index-forward_002dbutton">Command: <strong>forward-button</strong> <em>n &amp;optional wrap display-message no-error</em></dt>
+<dd><p>Move to the <var>n</var>th next button, or <var>n</var>th previous button if
+<var>n</var> is negative.  If <var>n</var> is zero, move to the start of any
+button at point.  If <var>wrap</var> is non-<code>nil</code>, moving past either
+end of the buffer continues from the other end.  If
+<var>display-message</var> is non-<code>nil</code>, the button&rsquo;s help-echo string
+is displayed.  Any button with a non-<code>nil</code> <code>skip</code> property
+is skipped over.  Returns the button found, and signals an error if no
+buttons can be found.  If <var>no-error</var> is non-<code>nil</code>, return nil
+instead of signaling the error.
+</p></dd></dl>
+
+<dl>
+<dt id="index-backward_002dbutton">Command: <strong>backward-button</strong> <em>n &amp;optional wrap display-message no-error</em></dt>
+<dd><p>Move to the <var>n</var>th previous button, or <var>n</var>th next button if
+<var>n</var> is negative.  If <var>n</var> is zero, move to the start of any
+button at point.  If <var>wrap</var> is non-<code>nil</code>, moving past either
+end of the buffer continues from the other end.  If
+<var>display-message</var> is non-<code>nil</code>, the button&rsquo;s help-echo string
+is displayed.  Any button with a non-<code>nil</code> <code>skip</code> property
+is skipped over.  Returns the button found, and signals an error if no
+buttons can be found.  If <var>no-error</var> is non-<code>nil</code>, return nil
+instead of signaling the error.
+</p></dd></dl>
+
+<dl>
+<dt id="index-next_002dbutton">Function: <strong>next-button</strong> <em>pos &amp;optional count-current</em></dt>
+<dt id="index-previous_002dbutton">Function: <strong>previous-button</strong> <em>pos &amp;optional count-current</em></dt>
+<dd><p>Return the next button after (for <code>next-button</code>) or before (for
+<code>previous-button</code>) position <var>pos</var> in the current buffer.  If
+<var>count-current</var> is non-<code>nil</code>, count any button at <var>pos</var>
+in the search, instead of starting at the next button.
+</p></dd></dl>
+
+
+<div class="header" style="background-color:#DDDDFF">
+<p>
+Previous: <a href="Manipulating-Buttons.html" accesskey="p" rel="prev">Manipulating Buttons</a>, Up: <a href="Buttons.html" accesskey="u" rel="up">Buttons</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

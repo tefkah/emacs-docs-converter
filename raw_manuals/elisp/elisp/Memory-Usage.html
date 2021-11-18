@@ -1,0 +1,97 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- This is the GNU Emacs Lisp Reference Manual
+corresponding to Emacs version 27.2.
+
+Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
+Inc.
+
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.3 or
+any later version published by the Free Software Foundation; with the
+Invariant Sections being "GNU General Public License," with the
+Front-Cover Texts being "A GNU Manual," and with the Back-Cover
+Texts as in (a) below.  A copy of the license is included in the
+section entitled "GNU Free Documentation License."
+
+(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
+modify this GNU manual.  Buying copies from the FSF supports it in
+developing GNU and promoting software freedom." -->
+<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<link rev="made" href="mailto:bug-gnu-emacs@gnu.org">
+<link rel="icon" type="image/png" href="/graphics/gnu-head-mini.png">
+<meta name="ICBM" content="42.256233,-71.006581">
+<meta name="DC.title" content="gnu.org">
+
+<style type="text/css">
+@import url('/software/emacs/manual.css');
+</style>
+</head>
+
+<body lang="en">
+<span id="Memory-Usage"></span><div class="header" style="background-color:#DDDDFF">
+<p>
+Next: <a href="C-Dialect.html" accesskey="n" rel="next">C Dialect</a>, Previous: <a href="Stack_002dallocated-Objects.html" accesskey="p" rel="prev">Stack-allocated Objects</a>, Up: <a href="GNU-Emacs-Internals.html" accesskey="u" rel="up">GNU Emacs Internals</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html" title="Index" rel="index">Index</a>]</p>
+</div>
+
+<span id="Memory-Usage-1"></span><h3 class="section">E.5 Memory Usage</h3>
+<span id="index-memory-usage-1"></span>
+
+<p>These functions and variables give information about the total amount
+of memory allocation that Emacs has done, broken down by data type.
+Note the difference between these and the values returned by
+<code>garbage-collect</code>; those count objects that currently exist, but
+these count the number or size of all allocations, including those for
+objects that have since been freed.
+</p>
+<dl>
+<dt id="index-cons_002dcells_002dconsed">Variable: <strong>cons-cells-consed</strong></dt>
+<dd><p>The total number of cons cells that have been allocated so far
+in this Emacs session.
+</p></dd></dl>
+
+<dl>
+<dt id="index-floats_002dconsed">Variable: <strong>floats-consed</strong></dt>
+<dd><p>The total number of floats that have been allocated so far
+in this Emacs session.
+</p></dd></dl>
+
+<dl>
+<dt id="index-vector_002dcells_002dconsed">Variable: <strong>vector-cells-consed</strong></dt>
+<dd><p>The total number of vector cells that have been allocated so far
+in this Emacs session.
+This includes vector-like objects such as markers and overlays, plus
+certain objects not visible to users.
+</p></dd></dl>
+
+<dl>
+<dt id="index-symbols_002dconsed">Variable: <strong>symbols-consed</strong></dt>
+<dd><p>The total number of symbols that have been allocated so far
+in this Emacs session.
+</p></dd></dl>
+
+<dl>
+<dt id="index-string_002dchars_002dconsed">Variable: <strong>string-chars-consed</strong></dt>
+<dd><p>The total number of string characters that have been allocated so far
+in this session.
+</p></dd></dl>
+
+<dl>
+<dt id="index-intervals_002dconsed">Variable: <strong>intervals-consed</strong></dt>
+<dd><p>The total number of intervals that have been allocated so far
+in this Emacs session.
+</p></dd></dl>
+
+<dl>
+<dt id="index-strings_002dconsed">Variable: <strong>strings-consed</strong></dt>
+<dd><p>The total number of strings that have been allocated so far in this
+Emacs session.
+</p></dd></dl>
+
+
+
+
+</body>
+</html>

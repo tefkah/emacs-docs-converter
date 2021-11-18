@@ -1,0 +1,135 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- This is the GNU Emacs Lisp Reference Manual
+corresponding to Emacs version 27.2.
+
+Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
+Inc.
+
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.3 or
+any later version published by the Free Software Foundation; with the
+Invariant Sections being "GNU General Public License," with the
+Front-Cover Texts being "A GNU Manual," and with the Back-Cover
+Texts as in (a) below.  A copy of the license is included in the
+section entitled "GNU Free Documentation License."
+
+(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
+modify this GNU manual.  Buying copies from the FSF supports it in
+developing GNU and promoting software freedom." -->
+<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<link rev="made" href="mailto:bug-gnu-emacs@gnu.org">
+<link rel="icon" type="image/png" href="/graphics/gnu-head-mini.png">
+<meta name="ICBM" content="42.256233,-71.006581">
+<meta name="DC.title" content="gnu.org">
+
+<style type="text/css">
+@import url('/software/emacs/manual.css');
+</style>
+</head>
+
+<body lang="en">
+<span id="Syntax-Table-Internals"></span><div class="header" style="background-color:#DDDDFF">
+<p>
+Next: <a href="Categories.html" accesskey="n" rel="next">Categories</a>, Previous: <a href="Parsing-Expressions.html" accesskey="p" rel="prev">Parsing Expressions</a>, Up: <a href="Syntax-Tables.html" accesskey="u" rel="up">Syntax Tables</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html" title="Index" rel="index">Index</a>]</p>
+</div>
+
+<span id="Syntax-Table-Internals-1"></span><h3 class="section">35.7 Syntax Table Internals</h3>
+<span id="index-syntax-table-internals"></span>
+
+<p>Syntax tables are implemented as char-tables (see <a href="Char_002dTables.html">Char-Tables</a>),
+but most Lisp programs don&rsquo;t work directly with their elements.
+Syntax tables do not store syntax data as syntax descriptors
+(see <a href="Syntax-Descriptors.html">Syntax Descriptors</a>); they use an internal format, which is
+documented in this section.  This internal format can also be assigned
+as syntax properties (see <a href="Syntax-Properties.html">Syntax Properties</a>).
+</p>
+<span id="index-syntax-code"></span>
+<span id="index-raw-syntax-descriptor"></span>
+<p>Each entry in a syntax table is a <em>raw syntax descriptor</em>: a
+cons cell of the form <code>(<var>syntax-code</var>
+. <var>matching-char</var>)</code>.  <var>syntax-code</var> is an integer which
+encodes the syntax class and syntax flags, according to the table
+below.  <var>matching-char</var>, if non-<code>nil</code>, specifies a matching
+character (similar to the second character in a syntax descriptor).
+</p>
+<span id="index-syntax-tables-_0028accessing-elements-of_0029"></span>
+<p>Use <code>aref</code> (see <a href="Array-Functions.html">Array Functions</a>) to get the raw syntax
+descriptor of a character, e.g. <code>(aref&nbsp;<span class="nolinebreak">(syntax-table)</span>&nbsp;ch)</code><!-- /@w -->.
+</p>
+<p>Here are the syntax codes corresponding to the various syntax
+classes:
+</p>
+<table>
+<tr><td width="20%"><i>Code</i></td><td width="30%"><i>Class</i></td><td width="20%"><i>Code</i></td><td width="30%"><i>Class</i></td></tr>
+<tr><td width="20%">0</td><td width="30%">whitespace</td><td width="20%">8</td><td width="30%">paired delimiter</td></tr>
+<tr><td width="20%">1</td><td width="30%">punctuation</td><td width="20%">9</td><td width="30%">escape</td></tr>
+<tr><td width="20%">2</td><td width="30%">word</td><td width="20%">10</td><td width="30%">character quote</td></tr>
+<tr><td width="20%">3</td><td width="30%">symbol</td><td width="20%">11</td><td width="30%">comment-start</td></tr>
+<tr><td width="20%">4</td><td width="30%">open parenthesis</td><td width="20%">12</td><td width="30%">comment-end</td></tr>
+<tr><td width="20%">5</td><td width="30%">close parenthesis</td><td width="20%">13</td><td width="30%">inherit</td></tr>
+<tr><td width="20%">6</td><td width="30%">expression prefix</td><td width="20%">14</td><td width="30%">generic comment</td></tr>
+<tr><td width="20%">7</td><td width="30%">string quote</td><td width="20%">15</td><td width="30%">generic string</td></tr>
+</table>
+
+<p>For example, in the standard syntax table, the entry for &lsquo;<samp>(</samp>&rsquo; is
+<code>(4 . 41)</code>.  41 is the character code for &lsquo;<samp>)</samp>&rsquo;.
+</p>
+<p>Syntax flags are encoded in higher order bits, starting 16 bits from
+the least significant bit.  This table gives the power of two which
+corresponds to each syntax flag.
+</p>
+<table>
+<tr><td width="15%"><i>Prefix</i></td><td width="30%"><i>Flag</i></td><td width="15%"><i>Prefix</i></td><td width="30%"><i>Flag</i></td></tr>
+<tr><td width="15%">&lsquo;<samp>1</samp>&rsquo;</td><td width="30%"><code>(ash 1 16)</code></td><td width="15%">&lsquo;<samp>p</samp>&rsquo;</td><td width="30%"><code>(ash 1 20)</code></td></tr>
+<tr><td width="15%">&lsquo;<samp>2</samp>&rsquo;</td><td width="30%"><code>(ash 1 17)</code></td><td width="15%">&lsquo;<samp>b</samp>&rsquo;</td><td width="30%"><code>(ash 1 21)</code></td></tr>
+<tr><td width="15%">&lsquo;<samp>3</samp>&rsquo;</td><td width="30%"><code>(ash 1 18)</code></td><td width="15%">&lsquo;<samp>n</samp>&rsquo;</td><td width="30%"><code>(ash 1 22)</code></td></tr>
+<tr><td width="15%">&lsquo;<samp>4</samp>&rsquo;</td><td width="30%"><code>(ash 1 19)</code></td><td width="15%">&lsquo;<samp>c</samp>&rsquo;</td><td width="30%"><code>(ash 1 23)</code></td></tr>
+</table>
+
+<dl>
+<dt id="index-string_002dto_002dsyntax">Function: <strong>string-to-syntax</strong> <em>desc</em></dt>
+<dd><p>Given a syntax descriptor <var>desc</var> (a string), this function returns
+the corresponding raw syntax descriptor.
+</p></dd></dl>
+
+<dl>
+<dt id="index-syntax_002dafter">Function: <strong>syntax-after</strong> <em>pos</em></dt>
+<dd><p>This function returns the raw syntax descriptor for the character in
+the buffer after position <var>pos</var>, taking account of syntax
+properties as well as the syntax table.  If <var>pos</var> is outside the
+buffer&rsquo;s accessible portion (see <a href="Narrowing.html">accessible portion</a>),
+the return value is <code>nil</code>.
+</p></dd></dl>
+
+<dl>
+<dt id="index-syntax_002dclass">Function: <strong>syntax-class</strong> <em>syntax</em></dt>
+<dd><p>This function returns the syntax code for the raw syntax descriptor
+<var>syntax</var>.  More precisely, it takes the raw syntax descriptor&rsquo;s
+<var>syntax-code</var> component, masks off the high 16 bits which record
+the syntax flags, and returns the resulting integer.
+</p>
+<p>If <var>syntax</var> is <code>nil</code>, the return value is <code>nil</code>.  This
+is so that the expression
+</p>
+<div class="example">
+<pre class="example">(syntax-class (syntax-after pos))
+</pre></div>
+
+<p>evaluates to <code>nil</code> if <code>pos</code> is outside the buffer&rsquo;s
+accessible portion, without throwing errors or returning an incorrect
+code.
+</p></dd></dl>
+
+
+<div class="header" style="background-color:#DDDDFF">
+<p>
+Next: <a href="Categories.html" accesskey="n" rel="next">Categories</a>, Previous: <a href="Parsing-Expressions.html" accesskey="p" rel="prev">Parsing Expressions</a>, Up: <a href="Syntax-Tables.html" accesskey="u" rel="up">Syntax Tables</a> &nbsp; [<a href="index.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Index.html" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>
