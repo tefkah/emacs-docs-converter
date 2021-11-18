@@ -5,14 +5,15 @@ import rehypeParse from 'rehype-parse'
 import rehypeRemark from 'rehype-remark'
 import remarkStringify from 'remark-stringify'
 
-const file = readSync('example.html')
+//const file = readSync('example.html')
 
-unified()
-  .use(rehypeParse, { emitParseErrors: true, duplicateAttribute: false })
-  .use(rehypeRemark)
-  .use(remarkStringify)
-  .process(file)
-  .then((file) => {
-    console.error(reporter(file))
-    console.log(String(file))
-  })
+export const mdProcessor = (file: string) =>
+  unified()
+    .use(rehypeParse, { emitParseErrors: true, duplicateAttribute: false })
+    .use(rehypeRemark)
+    .use(remarkStringify)
+    .process(file)
+    .then((file) => {
+      console.error(reporter(file))
+      return String(file)
+    })
