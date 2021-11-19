@@ -1,22 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
 
 Previous: [Test Coverage](Test-Coverage.html), Up: [Debugging](Debugging.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
@@ -30,7 +12,7 @@ The profiler report buffer shows, on each line, a function that was called, foll
 
 Press `j` or `mouse-2` to jump to the definition of a function at point. Press `d` to view a function’s documentation. You can save a profile to a file using `C-x C-w`. You can compare two profiles using `=`.
 
-The `elp` library offers an alternative approach, which is useful when you know in advance which Lisp function(s) you want to profile. Using that library, you begin by setting `elp-function-list` to the list of function symbols—those are the functions you want to profile. Then type `M-x elp-instrument-list RET nil RET`<!-- /@w --> to arrange for profiling those functions. After running the code you want to profile, invoke `M-x elp-results`<!-- /@w --> to display the current results. See the file `elp.el` for more detailed instructions. This approach is limited to profiling functions written in Lisp, it cannot profile Emacs primitives.
+The `elp` library offers an alternative approach, which is useful when you know in advance which Lisp function(s) you want to profile. Using that library, you begin by setting `elp-function-list` to the list of function symbols—those are the functions you want to profile. Then type `M-x elp-instrument-list RET nil RET` to arrange for profiling those functions. After running the code you want to profile, invoke `M-x elp-results` to display the current results. See the file `elp.el` for more detailed instructions. This approach is limited to profiling functions written in Lisp, it cannot profile Emacs primitives.
 
 You can measure the time it takes to evaluate individual Emacs Lisp forms using the `benchmark` library. See the macros `benchmark-run`, `benchmark-run-compiled` and `benchmark-progn` in `benchmark.el`. You can also use the `benchmark` command for timing forms interactively.
 

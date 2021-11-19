@@ -1,22 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
 
 Next: [Deferred Eval](Deferred-Eval.html), Previous: [Backquote](Backquote.html), Up: [Evaluation](Evaluation.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
@@ -36,19 +18,21 @@ It is generally cleaner and more flexible to store a function in a data structur
 
     Since `eval` is a function, the argument expression that appears in a call to `eval` is evaluated twice: once as preparation before `eval` is called, and again by the `eval` function itself. Here is an example:
 
-        (setq foo 'bar)
-             ⇒ bar
+    ```lisp
+    (setq foo 'bar)
+         ⇒ bar
+    ```
 
-    <!---->
-
-        (setq bar 'baz)
-             ⇒ baz
-        ;; Here eval receives argument foo
-        (eval 'foo)
-             ⇒ bar
-        ;; Here eval receives argument bar, which is the value of foo
-        (eval foo)
-             ⇒ baz
+    ```lisp
+    (setq bar 'baz)
+         ⇒ baz
+    ;; Here eval receives argument foo
+    (eval 'foo)
+         ⇒ bar
+    ;; Here eval receives argument bar, which is the value of foo
+    (eval foo)
+         ⇒ baz
+    ```
 
     The number of currently active calls to `eval` is limited to `max-lisp-eval-depth` (see below).
 
@@ -92,37 +76,41 @@ It is generally cleaner and more flexible to store a function in a data structur
 
     The value of this variable is a list of the values returned by all the expressions that were read, evaluated, and printed from buffers (including the minibuffer) by the standard Emacs commands which do this. (Note that this does *not* include evaluation in `*ielm*` buffers, nor evaluation using `C-j`, `C-x C-e`, and similar evaluation commands in `lisp-interaction-mode`.) The elements are ordered most recent first.
 
-        (setq x 1)
-             ⇒ 1
+    ```lisp
+    (setq x 1)
+         ⇒ 1
+    ```
 
-    <!---->
+    ```lisp
+    (list 'A (1+ 2) auto-save-default)
+         ⇒ (A 3 t)
+    ```
 
-        (list 'A (1+ 2) auto-save-default)
-             ⇒ (A 3 t)
-
-    <!---->
-
-        values
-             ⇒ ((A 3 t) 1 …)
+    ```lisp
+    values
+         ⇒ ((A 3 t) 1 …)
+    ```
 
     This variable is useful for referring back to values of forms recently evaluated. It is generally a bad idea to print the value of `values` itself, since this may be very long. Instead, examine particular elements, like this:
 
-        ;; Refer to the most recent evaluation result.
-        (nth 0 values)
-             ⇒ (A 3 t)
+    ```lisp
+    ;; Refer to the most recent evaluation result.
+    (nth 0 values)
+         ⇒ (A 3 t)
+    ```
 
-    <!---->
+    ```lisp
+    ;; That put a new element on,
+    ;;   so all elements move back one.
+    (nth 1 values)
+         ⇒ (A 3 t)
+    ```
 
-        ;; That put a new element on,
-        ;;   so all elements move back one.
-        (nth 1 values)
-             ⇒ (A 3 t)
-
-    <!---->
-
-        ;; This gets the element that was next-to-most-recent
-        ;;   before this example.
-        (nth 3 values)
-             ⇒ 1
+    ```lisp
+    ;; This gets the element that was next-to-most-recent
+    ;;   before this example.
+    (nth 3 values)
+         ⇒ 1
+    ```
 
 Next: [Deferred Eval](Deferred-Eval.html), Previous: [Backquote](Backquote.html), Up: [Evaluation](Evaluation.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]

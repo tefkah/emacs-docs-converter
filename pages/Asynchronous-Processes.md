@@ -1,22 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
 
 Next: [Deleting Processes](Deleting-Processes.html), Previous: [Synchronous Processes](Synchronous-Processes.html), Up: [Processes](Processes.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
@@ -46,7 +28,7 @@ An asynchronous process is controlled either via a *pty* (pseudo-terminal) or a 
 
     *   :coding `coding`
 
-        If `coding` is a symbol, it specifies the coding system to be used for both reading and writing of data from and to the connection. If `coding` is a cons cell `(decoding . encoding)`<!-- /@w -->, then `decoding` will be used for reading and `encoding` for writing. The coding system used for encoding the data written to the program is also used for encoding the command-line arguments (but not the program itself, whose file name is encoded as any other file name; see [file-name-coding-system](Encoding-and-I_002fO.html)).
+        If `coding` is a symbol, it specifies the coding system to be used for both reading and writing of data from and to the connection. If `coding` is a cons cell `(decoding . encoding)`, then `decoding` will be used for reading and `encoding` for writing. The coding system used for encoding the data written to the program is also used for encoding the command-line arguments (but not the program itself, whose file name is encoded as any other file name; see [file-name-coding-system](Encoding-and-I_002fO.html)).
 
         If `coding` is `nil`, the default rules for finding the coding system will apply. See [Default Coding Systems](Default-Coding-Systems.html).
 
@@ -110,7 +92,7 @@ An asynchronous process is controlled either via a *pty* (pseudo-terminal) or a 
 
     *   :coding `coding`
 
-        If `coding` is a symbol, it specifies the coding system to be used for both reading and writing of data from and to the connection. If `coding` is a cons cell `(decoding . encoding)`<!-- /@w -->, then `decoding` will be used for reading and `encoding` for writing.
+        If `coding` is a symbol, it specifies the coding system to be used for both reading and writing of data from and to the connection. If `coding` is a cons cell `(decoding . encoding)`, then `decoding` will be used for reading and `encoding` for writing.
 
         If `coding` is `nil`, the default rules for finding the coding system will apply. See [Default Coding Systems](Default-Coding-Systems.html).
 
@@ -144,26 +126,30 @@ An asynchronous process is controlled either via a *pty* (pseudo-terminal) or a 
 
     In the example below, the first process is started and runs (rather, sleeps) for 100 seconds (the output buffer ‘`foo`’ is created immediately). Meanwhile, the second process is started, and given the name ‘`my-process<1>`’ for the sake of uniqueness. It inserts the directory listing at the end of the buffer ‘`foo`’, before the first process finishes. Then it finishes, and a message to that effect is inserted in the buffer. Much later, the first process finishes, and another message is inserted in the buffer for it.
 
-        (start-process "my-process" "foo" "sleep" "100")
-             ⇒ #<process my-process>
-
+    ```lisp
+    (start-process "my-process" "foo" "sleep" "100")
+         ⇒ #<process my-process>
     ```
+
+    ```lisp
     ```
 
-        (start-process "my-process" "foo" "ls" "-l" "/bin")
-             ⇒ #<process my-process<1>>
+    ```lisp
+    (start-process "my-process" "foo" "ls" "-l" "/bin")
+         ⇒ #<process my-process<1>>
 
-        ---------- Buffer: foo ----------
-        total 8336
-        -rwxr-xr-x 1 root root 971384 Mar 30 10:14 bash
-        -rwxr-xr-x 1 root root 146920 Jul  5  2011 bsd-csh
-        …
-        -rwxr-xr-x 1 root root 696880 Feb 28 15:55 zsh4
+    ---------- Buffer: foo ----------
+    total 8336
+    -rwxr-xr-x 1 root root 971384 Mar 30 10:14 bash
+    -rwxr-xr-x 1 root root 146920 Jul  5  2011 bsd-csh
+    …
+    -rwxr-xr-x 1 root root 696880 Feb 28 15:55 zsh4
 
-        Process my-process<1> finished
+    Process my-process<1> finished
 
-        Process my-process finished
-        ---------- Buffer: foo ----------
+    Process my-process finished
+    ---------- Buffer: foo ----------
+    ```
 
 <!---->
 
@@ -203,8 +189,10 @@ An asynchronous process is controlled either via a *pty* (pseudo-terminal) or a 
 
     Note that the value of this variable is ignored when `make-process` is called with a non-`nil` value of the `:stderr` parameter; in that case, Emacs will communicate with the process using pipes. It is also ignored if ptys are unavailable (MS-Windows).
 
-        (let ((process-connection-type nil))  ; use a pipe
-          (start-process …))
+    ```lisp
+    (let ((process-connection-type nil))  ; use a pipe
+      (start-process …))
+    ```
 
     To determine whether a given subprocess actually got a pipe or a pty, use the function `process-tty-name` (see [Process Information](Process-Information.html)).
 

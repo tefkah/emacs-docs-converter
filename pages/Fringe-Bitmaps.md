@@ -1,22 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
 
 Next: [Customizing Bitmaps](Customizing-Bitmaps.html), Previous: [Fringe Cursors](Fringe-Cursors.html), Up: [Fringes](Fringes.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
@@ -26,17 +8,21 @@ The *fringe bitmaps* are the actual bitmaps which represent the logical fringe i
 
 Lisp programs can also directly display a bitmap in the left or right fringe, by using a `display` property for one of the characters appearing in the line (see [Other Display Specs](Other-Display-Specs.html)). Such a display specification has the form
 
-    (fringe bitmap [face])
+```lisp
+(fringe bitmap [face])
+```
 
 `fringe` is either the symbol `left-fringe` or `right-fringe`. `bitmap` is a symbol identifying the bitmap to display. The optional `face` names a face whose foreground and background colors are to be used to display the bitmap, using the attributes of the `fringe` face for colors that `face` didn’t specify. If `face` is omitted, that means to use the attributes of the `default` face for the colors which the `fringe` face didn’t specify. For predictable results that don’t depend on the attributes of the `default` and `fringe` faces, we recommend you never omit `face`, but always provide a specific face. In particular, if you want the bitmap to be always displayed in the `fringe` face, use `fringe` as `face`.
 
 For instance, to display an arrow in the left fringe, using the `warning` face, you could say something like:
 
-    (overlay-put
-     (make-overlay (point) (point))
-     'before-string (propertize
-                     "x" 'display
-                     `(left-fringe right-arrow warning)))
+```lisp
+(overlay-put
+ (make-overlay (point) (point))
+ 'before-string (propertize
+                 "x" 'display
+                 `(left-fringe right-arrow warning)))
+```
 
 Here is a list of the standard fringe bitmaps defined in Emacs, and how they are currently used in Emacs (via `fringe-indicator-alist` and `fringe-cursor-alist`):
 

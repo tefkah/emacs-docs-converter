@@ -1,22 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
 
 Next: [Variables with Restricted Values](Variables-with-Restricted-Values.html), Previous: [Connection Local Variables](Connection-Local-Variables.html), Up: [Variables](Variables.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
@@ -46,8 +28,10 @@ You can make two variables synonyms and declare one obsolete at the same time us
 
     This macro marks the variable `obsolete-name` as obsolete and also makes it an alias for the variable `current-name`. It is equivalent to the following:
 
-        (defvaralias obsolete-name current-name docstring)
-        (make-obsolete-variable obsolete-name current-name when)
+    ```lisp
+    (defvaralias obsolete-name current-name docstring)
+    (make-obsolete-variable obsolete-name current-name when)
+    ```
 
 <!---->
 
@@ -57,28 +41,28 @@ You can make two variables synonyms and declare one obsolete at the same time us
 
     This function signals a `cyclic-variable-indirection` error if there is a loop in the chain of symbols.
 
-<!---->
+```lisp
+(defvaralias 'foo 'bar)
+(indirect-variable 'foo)
+     ⇒ bar
+(indirect-variable 'bar)
+     ⇒ bar
+(setq bar 2)
+bar
+     ⇒ 2
+```
 
-    (defvaralias 'foo 'bar)
-    (indirect-variable 'foo)
-         ⇒ bar
-    (indirect-variable 'bar)
-         ⇒ bar
-    (setq bar 2)
-    bar
-         ⇒ 2
+```lisp
+foo
+     ⇒ 2
+```
 
-<!---->
-
-    foo
-         ⇒ 2
-
-<!---->
-
-    (setq foo 0)
-    bar
-         ⇒ 0
-    foo
-         ⇒ 0
+```lisp
+(setq foo 0)
+bar
+     ⇒ 0
+foo
+     ⇒ 0
+```
 
 Next: [Variables with Restricted Values](Variables-with-Restricted-Values.html), Previous: [Connection Local Variables](Connection-Local-Variables.html), Up: [Variables](Variables.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]

@@ -1,22 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
 
 Next: [POSIX Regexps](POSIX-Regexps.html), Previous: [Regular Expressions](Regular-Expressions.html), Up: [Searching and Matching](Searching-and-Matching.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
@@ -52,21 +34,25 @@ These search functions convert the regular expression to multibyte if the buffer
 
     In the following example, point is initially before the ‘`T`’. Evaluating the search call moves point to the end of that line (between the ‘`t`’ of ‘`hat`’ and the newline).
 
-        ---------- Buffer: foo ----------
-        I read "∗The cat in the hat
-        comes back" twice.
-        ---------- Buffer: foo ----------
-
+    ```lisp
+    ---------- Buffer: foo ----------
+    I read "∗The cat in the hat
+    comes back" twice.
+    ---------- Buffer: foo ----------
     ```
+
+    ```lisp
     ```
 
-        (re-search-forward "[a-z]+" nil t 5)
-             ⇒ 27
+    ```lisp
+    (re-search-forward "[a-z]+" nil t 5)
+         ⇒ 27
 
-        ---------- Buffer: foo ----------
-        I read "The cat in the hat∗
-        comes back" twice.
-        ---------- Buffer: foo ----------
+    ---------- Buffer: foo ----------
+    I read "The cat in the hat∗
+    comes back" twice.
+    ---------- Buffer: foo ----------
+    ```
 
 <!---->
 
@@ -86,29 +72,35 @@ These search functions convert the regular expression to multibyte if the buffer
 
     For example,
 
-        (string-match
-         "quick" "The quick brown fox jumped quickly.")
-             ⇒ 4
+    ```lisp
+    (string-match
+     "quick" "The quick brown fox jumped quickly.")
+         ⇒ 4
+    ```
 
-    <!---->
-
-        (string-match
-         "quick" "The quick brown fox jumped quickly." 8)
-             ⇒ 27
+    ```lisp
+    (string-match
+     "quick" "The quick brown fox jumped quickly." 8)
+         ⇒ 27
+    ```
 
     The index of the first character of the string is 0, the index of the second character is 1, and so on.
 
     If this function finds a match, the index of the first character beyond the match is available as `(match-end 0)`. See [Match Data](Match-Data.html).
 
-        (string-match
-         "quick" "The quick brown fox jumped quickly." 8)
-             ⇒ 27
-
+    ```lisp
+    (string-match
+     "quick" "The quick brown fox jumped quickly." 8)
+         ⇒ 27
     ```
+
+    ```lisp
     ```
 
-        (match-end 0)
-             ⇒ 32
+    ```lisp
+    (match-end 0)
+         ⇒ 32
+    ```
 
 <!---->
 
@@ -126,13 +118,15 @@ These search functions convert the regular expression to multibyte if the buffer
 
     In this example, point is located directly before the ‘`T`’. If it were anywhere else, the result would be `nil`.
 
-        ---------- Buffer: foo ----------
-        I read "∗The cat in the hat
-        comes back" twice.
-        ---------- Buffer: foo ----------
+    ```lisp
+    ---------- Buffer: foo ----------
+    I read "∗The cat in the hat
+    comes back" twice.
+    ---------- Buffer: foo ----------
 
-        (looking-at "The cat in the hat$")
-             ⇒ t
+    (looking-at "The cat in the hat$")
+         ⇒ t
+    ```
 
 <!---->
 
@@ -142,15 +136,17 @@ These search functions convert the regular expression to multibyte if the buffer
 
     Because regular expression matching works only going forward, this is implemented by searching backwards from point for a match that ends at point. That can be quite slow if it has to search a long distance. You can bound the time required by specifying a non-`nil` value for `limit`, which says not to search before `limit`. In this case, the match that is found must begin at or after `limit`. Here’s an example:
 
-        ---------- Buffer: foo ----------
-        I read "∗The cat in the hat
-        comes back" twice.
-        ---------- Buffer: foo ----------
+    ```lisp
+    ---------- Buffer: foo ----------
+    I read "∗The cat in the hat
+    comes back" twice.
+    ---------- Buffer: foo ----------
 
-        (looking-back "read \"" 3)
-             ⇒ t
-        (looking-back "read \"" 4)
-             ⇒ nil
+    (looking-back "read \"" 3)
+         ⇒ t
+    (looking-back "read \"" 4)
+         ⇒ nil
+    ```
 
     If `greedy` is non-`nil`, this function extends the match backwards as far as possible, stopping when a single additional previous character cannot be part of a match for `regexp`. When the match is extended, its starting position is allowed to occur before `limit`.
 

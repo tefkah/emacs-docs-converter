@@ -1,22 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
 
 Next: [Remapping Commands](Remapping-Commands.html), Previous: [Functions for Key Lookup](Functions-for-Key-Lookup.html), Up: [Keymaps](Keymaps.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
@@ -44,57 +26,65 @@ The functions below signal an error if `keymap` is not a keymap, or if `key` is 
 
 This example creates a sparse keymap and makes a number of bindings in it:
 
-    (setq map (make-sparse-keymap))
-        ⇒ (keymap)
-
-<!---->
-
-    (define-key map "\C-f" 'forward-char)
-        ⇒ forward-char
-
-<!---->
-
-    map
-        ⇒ (keymap (6 . forward-char))
-
-```
+```lisp
+(setq map (make-sparse-keymap))
+    ⇒ (keymap)
 ```
 
-    ;; Build sparse submap for C-x and bind f in that.
-    (define-key map (kbd "C-x f") 'forward-word)
-        ⇒ forward-word
-
-<!---->
-
-    map
-    ⇒ (keymap
-        (24 keymap                ; C-x
-            (102 . forward-word)) ;      f
-        (6 . forward-char))       ; C-f
-
-```
+```lisp
+(define-key map "\C-f" 'forward-char)
+    ⇒ forward-char
 ```
 
-    ;; Bind C-p to the ctl-x-map.
-    (define-key map (kbd "C-p") ctl-x-map)
-    ;; ctl-x-map
-    ⇒ [nil … find-file … backward-kill-sentence]
-
-```
+```lisp
+map
+    ⇒ (keymap (6 . forward-char))
 ```
 
-    ;; Bind C-f to foo in the ctl-x-map.
-    (define-key map (kbd "C-p C-f") 'foo)
-    ⇒ 'foo
+```lisp
+```
 
-<!---->
+```lisp
+;; Build sparse submap for C-x and bind f in that.
+(define-key map (kbd "C-x f") 'forward-word)
+    ⇒ forward-word
+```
 
-    map
-    ⇒ (keymap     ; Note foo in ctl-x-map.
-        (16 keymap [nil … foo … backward-kill-sentence])
-        (24 keymap
-            (102 . forward-word))
-        (6 . forward-char))
+```lisp
+map
+⇒ (keymap
+    (24 keymap                ; C-x
+        (102 . forward-word)) ;      f
+    (6 . forward-char))       ; C-f
+```
+
+```lisp
+```
+
+```lisp
+;; Bind C-p to the ctl-x-map.
+(define-key map (kbd "C-p") ctl-x-map)
+;; ctl-x-map
+⇒ [nil … find-file … backward-kill-sentence]
+```
+
+```lisp
+```
+
+```lisp
+;; Bind C-f to foo in the ctl-x-map.
+(define-key map (kbd "C-p C-f") 'foo)
+⇒ 'foo
+```
+
+```lisp
+map
+⇒ (keymap     ; Note foo in ctl-x-map.
+    (16 keymap [nil … foo … backward-kill-sentence])
+    (24 keymap
+        (102 . forward-word))
+    (6 . forward-char))
+```
 
 Note that storing a new binding for `C-p C-f` actually works by changing an entry in `ctl-x-map`, and this has the effect of changing the bindings of both `C-p C-f` and `C-x C-f` in the default global map.
 
@@ -106,35 +96,43 @@ The function `substitute-key-definition` scans a keymap for keys that have a cer
 
     For example, this redefines `C-x C-f`, if you do it in an Emacs with standard bindings:
 
-        (substitute-key-definition
-         'find-file 'find-file-read-only (current-global-map))
+    ```lisp
+    (substitute-key-definition
+     'find-file 'find-file-read-only (current-global-map))
+    ```
 
     If `oldmap` is non-`nil`, that changes the behavior of `substitute-key-definition`: the bindings in `oldmap` determine which keys to rebind. The rebindings still happen in `keymap`, not in `oldmap`. Thus, you can change one map under the control of the bindings in another. For example,
 
-        (substitute-key-definition
-          'delete-backward-char 'my-funny-delete
-          my-map global-map)
+    ```lisp
+    (substitute-key-definition
+      'delete-backward-char 'my-funny-delete
+      my-map global-map)
+    ```
 
     puts the special deletion command in `my-map` for whichever keys are globally bound to the standard deletion command.
 
     Here is an example showing a keymap before and after substitution:
 
-        (setq map (list 'keymap
-                        (cons ?1 olddef-1)
-                        (cons ?2 olddef-2)
-                        (cons ?3 olddef-1)))
-        ⇒ (keymap (49 . olddef-1) (50 . olddef-2) (51 . olddef-1))
-
+    ```lisp
+    (setq map (list 'keymap
+                    (cons ?1 olddef-1)
+                    (cons ?2 olddef-2)
+                    (cons ?3 olddef-1)))
+    ⇒ (keymap (49 . olddef-1) (50 . olddef-2) (51 . olddef-1))
     ```
+
+    ```lisp
     ```
 
-        (substitute-key-definition 'olddef-1 'newdef map)
-        ⇒ nil
+    ```lisp
+    (substitute-key-definition 'olddef-1 'newdef map)
+    ⇒ nil
+    ```
 
-    <!---->
-
-        map
-        ⇒ (keymap (49 . newdef) (50 . olddef-2) (51 . newdef))
+    ```lisp
+    map
+    ⇒ (keymap (49 . newdef) (50 . olddef-2) (51 . newdef))
+    ```
 
 <!---->
 
@@ -150,11 +148,13 @@ The function `substitute-key-definition` scans a keymap for keys that have a cer
 
     This function can be used to initialize the local keymap of a major mode for which insertion of text is not desirable. But usually such a mode should be derived from `special-mode` (see [Basic Major Modes](Basic-Major-Modes.html)); then its keymap will automatically inherit from `special-mode-map`, which is already suppressed. Here is how `special-mode-map` is defined:
 
-        (defvar special-mode-map
-          (let ((map (make-sparse-keymap)))
-            (suppress-keymap map)
-            (define-key map "q" 'quit-window)
-            …
-            map))
+    ```lisp
+    (defvar special-mode-map
+      (let ((map (make-sparse-keymap)))
+        (suppress-keymap map)
+        (define-key map "q" 'quit-window)
+        …
+        map))
+    ```
 
 Next: [Remapping Commands](Remapping-Commands.html), Previous: [Functions for Key Lookup](Functions-for-Key-Lookup.html), Up: [Keymaps](Keymaps.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]

@@ -1,22 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
 
 Next: [Controlling Active Maps](Controlling-Active-Maps.html), Previous: [Active Keymaps](Active-Keymaps.html), Up: [Keymaps](Keymaps.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
@@ -24,18 +6,20 @@ Next: [Controlling Active Maps](Controlling-Active-Maps.html), Previous: [Active
 
 Here is a pseudo-Lisp summary of how Emacs searches the active keymaps:
 
-    (or (if overriding-terminal-local-map
-            (find-in overriding-terminal-local-map))
-        (if overriding-local-map
-            (find-in overriding-local-map)
-          (or (find-in (get-char-property (point) 'keymap))
-              (find-in-any emulation-mode-map-alists)
-              (find-in-any minor-mode-overriding-map-alist)
-              (find-in-any minor-mode-map-alist)
-              (if (get-text-property (point) 'local-map)
-                  (find-in (get-char-property (point) 'local-map))
-                (find-in (current-local-map)))))
-        (find-in (current-global-map)))
+```lisp
+(or (if overriding-terminal-local-map
+        (find-in overriding-terminal-local-map))
+    (if overriding-local-map
+        (find-in overriding-local-map)
+      (or (find-in (get-char-property (point) 'keymap))
+          (find-in-any emulation-mode-map-alists)
+          (find-in-any minor-mode-overriding-map-alist)
+          (find-in-any minor-mode-map-alist)
+          (if (get-text-property (point) 'local-map)
+              (find-in (get-char-property (point) 'local-map))
+            (find-in (current-local-map)))))
+    (find-in (current-global-map)))
+```
 
 Here, `find-in` and `find-in-any` are pseudo functions that search in one keymap and in an alist of keymaps, respectively. Note that the `set-transient-map` function works by setting `overriding-terminal-local-map` (see [Controlling Active Maps](Controlling-Active-Maps.html)).
 

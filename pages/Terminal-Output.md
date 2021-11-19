@@ -1,22 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
 
 Next: [Sound Output](Sound-Output.html), Previous: [Terminal Input](Terminal-Input.html), Up: [System Interface](System-Interface.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
@@ -40,8 +22,10 @@ If you are running across a network, and different parts of the network work at 
 
     One use of this function is to define function keys on terminals that have downloadable function key definitions. For example, this is how (on certain terminals) to define function key 4 to move forward four characters (by transmitting the characters `C-u C-f` to the computer):
 
-        (send-string-to-terminal "\eF4\^U\^F")
-             ⇒ nil
+    ```lisp
+    (send-string-to-terminal "\eF4\^U\^F")
+         ⇒ nil
+    ```
 
 <!---->
 
@@ -49,8 +33,10 @@ If you are running across a network, and different parts of the network work at 
 
     This function is used to open a *termscript file* that will record all the characters sent by Emacs to the terminal. It returns `nil`. Termscript files are useful for investigating problems where Emacs garbles the screen, problems that are due to incorrect Termcap entries or to undesirable settings of terminal options more often than to actual Emacs bugs. Once you are certain which characters were actually output, you can determine reliably whether they correspond to the Termcap specifications in use.
 
-        (open-termscript "../junk/termscript")
-             ⇒ nil
+    ```lisp
+    (open-termscript "../junk/termscript")
+         ⇒ nil
+    ```
 
     You close the termscript file by calling this function with an argument of `nil`.
 

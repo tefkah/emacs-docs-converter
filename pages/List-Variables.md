@@ -1,22 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
 
 Next: [Modifying Lists](Modifying-Lists.html), Previous: [Building Lists](Building-Lists.html), Up: [Lists](Lists.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
@@ -26,16 +8,18 @@ These functions, and one macro, provide convenient ways to modify a list which i
 
 *   Macro: **push** *element listname*
 
-    This macro creates a new list whose CAR is `element` and whose CDR is the list specified by `listname`, and saves that list in `listname`. In the simplest case, `listname` is an unquoted symbol naming a list, and this macro is equivalent to `(setq listname (cons element listname))`<!-- /@w -->.
+    This macro creates a new list whose CAR is `element` and whose CDR is the list specified by `listname`, and saves that list in `listname`. In the simplest case, `listname` is an unquoted symbol naming a list, and this macro is equivalent to `(setq listname (cons element listname))`.
 
-        (setq l '(a b))
-             ⇒ (a b)
-        (push 'c l)
-             ⇒ (c a b)
-        l
-             ⇒ (c a b)
+    ```lisp
+    (setq l '(a b))
+         ⇒ (a b)
+    (push 'c l)
+         ⇒ (c a b)
+    l
+         ⇒ (c a b)
+    ```
 
-    More generally, `listname` can be a generalized variable. In that case, this macro does the equivalent of `(setf listname (cons element listname))`<!-- /@w -->. See [Generalized Variables](Generalized-Variables.html).
+    More generally, `listname` can be a generalized variable. In that case, this macro does the equivalent of `(setf listname (cons element listname))`. See [Generalized Variables](Generalized-Variables.html).
 
     For the `pop` macro, which removes the first element from a list, See [List Elements](List-Elements.html).
 
@@ -53,23 +37,27 @@ Two functions modify lists that are the values of variables.
 
 Here’s a scenario showing how to use `add-to-list`:
 
-    (setq foo '(a b))
-         ⇒ (a b)
+```lisp
+(setq foo '(a b))
+     ⇒ (a b)
 
-    (add-to-list 'foo 'c)     ;; Add c.
-         ⇒ (c a b)
+(add-to-list 'foo 'c)     ;; Add c.
+     ⇒ (c a b)
 
-    (add-to-list 'foo 'b)     ;; No effect.
-         ⇒ (c a b)
+(add-to-list 'foo 'b)     ;; No effect.
+     ⇒ (c a b)
 
-    foo                       ;; foo was changed.
-         ⇒ (c a b)
+foo                       ;; foo was changed.
+     ⇒ (c a b)
+```
 
 An equivalent expression for `(add-to-list 'var value)` is this:
 
-    (if (member value var)
-        var
-      (setq var (cons value var)))
+```lisp
+(if (member value var)
+    var
+  (setq var (cons value var)))
+```
 
 *   Function: **add-to-ordered-list** *symbol element \&optional order*
 
@@ -87,28 +75,30 @@ An equivalent expression for `(add-to-list 'var value)` is this:
 
 Here’s a scenario showing how to use `add-to-ordered-list`:
 
-    (setq foo '())
-         ⇒ nil
+```lisp
+(setq foo '())
+     ⇒ nil
 
-    (add-to-ordered-list 'foo 'a 1)     ;; Add a.
-         ⇒ (a)
+(add-to-ordered-list 'foo 'a 1)     ;; Add a.
+     ⇒ (a)
 
-    (add-to-ordered-list 'foo 'c 3)     ;; Add c.
-         ⇒ (a c)
+(add-to-ordered-list 'foo 'c 3)     ;; Add c.
+     ⇒ (a c)
 
-    (add-to-ordered-list 'foo 'b 2)     ;; Add b.
-         ⇒ (a b c)
+(add-to-ordered-list 'foo 'b 2)     ;; Add b.
+     ⇒ (a b c)
 
-    (add-to-ordered-list 'foo 'b 4)     ;; Move b.
-         ⇒ (a c b)
+(add-to-ordered-list 'foo 'b 4)     ;; Move b.
+     ⇒ (a c b)
 
-    (add-to-ordered-list 'foo 'd)       ;; Append d.
-         ⇒ (a c b d)
+(add-to-ordered-list 'foo 'd)       ;; Append d.
+     ⇒ (a c b d)
 
-    (add-to-ordered-list 'foo 'e)       ;; Add e.
-         ⇒ (a c b e d)
+(add-to-ordered-list 'foo 'e)       ;; Add e.
+     ⇒ (a c b e d)
 
-    foo                       ;; foo was changed.
-         ⇒ (a c b e d)
+foo                       ;; foo was changed.
+     ⇒ (a c b e d)
+```
 
 Next: [Modifying Lists](Modifying-Lists.html), Previous: [Building Lists](Building-Lists.html), Up: [Lists](Lists.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]

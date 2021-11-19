@@ -1,22 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
 
 Next: [Deleting Windows](Deleting-Windows.html), Previous: [Preserving Window Sizes](Preserving-Window-Sizes.html), Up: [Windows](Windows.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
@@ -46,36 +28,40 @@ This section describes functions for creating a new window by *splitting* an exi
 
 As an example, here is a sequence of `split-window` calls that yields the window configuration discussed in [Windows and Frames](Windows-and-Frames.html). This example demonstrates splitting a live window as well as splitting an internal window. We begin with a frame containing a single window (a live root window), which we denote by `W4`. Calling `(split-window W4)` yields this window configuration:
 
-         ______________________________________
-        | ____________________________________ |
-        ||                                    ||
-        ||                                    ||
-        ||                                    ||
-        ||_________________W4_________________||
-        | ____________________________________ |
-        ||                                    ||
-        ||                                    ||
-        ||                                    ||
-        ||_________________W5_________________||
-        |__________________W3__________________|
+```lisp
+     ______________________________________
+    | ____________________________________ |
+    ||                                    ||
+    ||                                    ||
+    ||                                    ||
+    ||_________________W4_________________||
+    | ____________________________________ |
+    ||                                    ||
+    ||                                    ||
+    ||                                    ||
+    ||_________________W5_________________||
+    |__________________W3__________________|
+```
 
 The `split-window` call has created a new live window, denoted by `W5`. It has also created a new internal window, denoted by `W3`, which becomes the root window and the parent of both `W4` and `W5`.
 
 Next, we call `(split-window W3 nil 'left)`, passing the internal window `W3` as the argument. The result:
 
-         ______________________________________
-        | ______  ____________________________ |
-        ||      || __________________________ ||
-        ||      |||                          |||
-        ||      |||                          |||
-        ||      |||                          |||
-        ||      |||____________W4____________|||
-        ||      || __________________________ ||
-        ||      |||                          |||
-        ||      |||                          |||
-        ||      |||____________W5____________|||
-        ||__W2__||_____________W3_____________ |
-        |__________________W1__________________|
+```lisp
+     ______________________________________
+    | ______  ____________________________ |
+    ||      || __________________________ ||
+    ||      |||                          |||
+    ||      |||                          |||
+    ||      |||                          |||
+    ||      |||____________W4____________|||
+    ||      || __________________________ ||
+    ||      |||                          |||
+    ||      |||                          |||
+    ||      |||____________W5____________|||
+    ||__W2__||_____________W3_____________ |
+    |__________________W1__________________|
+```
 
 A new live window `W2` is created, to the left of the internal window `W3`. A new internal window `W1` is created, becoming the new root window.
 

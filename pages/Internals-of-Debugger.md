@@ -1,22 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
 
 Previous: [Invoking the Debugger](Invoking-the-Debugger.html), Up: [Debugger](Debugger.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
@@ -40,38 +22,42 @@ This section describes functions and variables used internally by the debugger.
 
     Each line of the backtrace represents one function call. The line shows the function followed by a list of the values of the function’s arguments if they are all known; if they are still being computed, the line consists of a list containing the function and its unevaluated arguments. Long lists or deeply nested structures may be elided.
 
-        (with-output-to-temp-buffer "backtrace-output"
-          (let ((var 1))
-            (save-excursion
-              (setq var (eval '(progn
-                                 (1+ var)
-                                 (list 'testing (backtrace))))))))
+    ```lisp
+    (with-output-to-temp-buffer "backtrace-output"
+      (let ((var 1))
+        (save-excursion
+          (setq var (eval '(progn
+                             (1+ var)
+                             (list 'testing (backtrace))))))))
 
-             ⇒ (testing nil)
-
+         ⇒ (testing nil)
     ```
+
+    ```lisp
     ```
 
-        ----------- Buffer: backtrace-output ------------
-          backtrace()
-          (list 'testing (backtrace))
+    ```lisp
+    ----------- Buffer: backtrace-output ------------
+      backtrace()
+      (list 'testing (backtrace))
+    ```
 
-    <!---->
+    ```lisp
+      (progn ...)
+      eval((progn (1+ var) (list 'testing (backtrace))))
+      (setq ...)
+      (save-excursion ...)
+      (let ...)
+      (with-output-to-temp-buffer ...)
+      eval((with-output-to-temp-buffer ...))
+      eval-last-sexp-1(nil)
+    ```
 
-          (progn ...)
-          eval((progn (1+ var) (list 'testing (backtrace))))
-          (setq ...)
-          (save-excursion ...)
-          (let ...)
-          (with-output-to-temp-buffer ...)
-          eval((with-output-to-temp-buffer ...))
-          eval-last-sexp-1(nil)
-
-    <!---->
-
-          eval-last-sexp(nil)
-          call-interactively(eval-last-sexp)
-        ----------- Buffer: backtrace-output ------------
+    ```lisp
+      eval-last-sexp(nil)
+      call-interactively(eval-last-sexp)
+    ----------- Buffer: backtrace-output ------------
+    ```
 
 <!---->
 
@@ -81,26 +67,28 @@ This section describes functions and variables used internally by the debugger.
 
     With `debugger-stack-frame-as-list` non-`nil`, the above example would look as follows:
 
-        ----------- Buffer: backtrace-output ------------
-          (backtrace)
-          (list 'testing (backtrace))
+    ```lisp
+    ----------- Buffer: backtrace-output ------------
+      (backtrace)
+      (list 'testing (backtrace))
+    ```
 
-    <!---->
+    ```lisp
+      (progn ...)
+      (eval (progn (1+ var) (list 'testing (backtrace))))
+      (setq ...)
+      (save-excursion ...)
+      (let ...)
+      (with-output-to-temp-buffer ...)
+      (eval (with-output-to-temp-buffer ...))
+      (eval-last-sexp-1 nil)
+    ```
 
-          (progn ...)
-          (eval (progn (1+ var) (list 'testing (backtrace))))
-          (setq ...)
-          (save-excursion ...)
-          (let ...)
-          (with-output-to-temp-buffer ...)
-          (eval (with-output-to-temp-buffer ...))
-          (eval-last-sexp-1 nil)
-
-    <!---->
-
-          (eval-last-sexp nil)
-          (call-interactively eval-last-sexp)
-        ----------- Buffer: backtrace-output ------------
+    ```lisp
+      (eval-last-sexp nil)
+      (call-interactively eval-last-sexp)
+    ----------- Buffer: backtrace-output ------------
+    ```
 
 <!---->
 

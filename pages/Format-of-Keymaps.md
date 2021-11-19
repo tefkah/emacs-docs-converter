@@ -1,22 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
 
 Next: [Creating Keymaps](Creating-Keymaps.html), Previous: [Keymap Basics](Keymap-Basics.html), Up: [Keymaps](Keymaps.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
@@ -70,51 +52,55 @@ This conversion applies only to characters, not to function keys or other input 
 
 Here as an example is the local keymap for Lisp mode, a sparse keymap. It defines bindings for `DEL`, `C-c C-z`, `C-M-q`, and `C-M-x` (the actual value also contains a menu binding, which is omitted here for the sake of brevity).
 
-    lisp-mode-map
-    ⇒
+```lisp
+lisp-mode-map
+⇒
+```
 
-<!---->
+```lisp
+(keymap
+ (3 keymap
+    ;; C-c C-z
+    (26 . run-lisp))
+```
 
-    (keymap
-     (3 keymap
-        ;; C-c C-z
-        (26 . run-lisp))
+```lisp
+ (27 keymap
+     ;; C-M-x, treated as ESC C-x
+     (24 . lisp-send-defun))
+```
 
-<!---->
+```lisp
+ ;; This part is inherited from lisp-mode-shared-map.
+ keymap
+ ;; DEL
+ (127 . backward-delete-char-untabify)
+```
 
-     (27 keymap
-         ;; C-M-x, treated as ESC C-x
-         (24 . lisp-send-defun))
-
-<!---->
-
-     ;; This part is inherited from lisp-mode-shared-map.
-     keymap
-     ;; DEL
-     (127 . backward-delete-char-untabify)
-
-<!---->
-
-     (27 keymap
-         ;; C-M-q, treated as ESC C-q
-         (17 . indent-sexp)))
+```lisp
+ (27 keymap
+     ;; C-M-q, treated as ESC C-q
+     (17 . indent-sexp)))
+```
 
 *   Function: **keymapp** *object*
 
     This function returns `t` if `object` is a keymap, `nil` otherwise. More precisely, this function tests for a list whose CAR is `keymap`, or for a symbol whose function definition satisfies `keymapp`.
 
-        (keymapp '(keymap))
-            ⇒ t
+    ```lisp
+    (keymapp '(keymap))
+        ⇒ t
+    ```
 
-    <!---->
+    ```lisp
+    (fset 'foo '(keymap))
+    (keymapp 'foo)
+        ⇒ t
+    ```
 
-        (fset 'foo '(keymap))
-        (keymapp 'foo)
-            ⇒ t
-
-    <!---->
-
-        (keymapp (current-global-map))
-            ⇒ t
+    ```lisp
+    (keymapp (current-global-map))
+        ⇒ t
+    ```
 
 Next: [Creating Keymaps](Creating-Keymaps.html), Previous: [Keymap Basics](Keymap-Basics.html), Up: [Keymaps](Keymaps.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]

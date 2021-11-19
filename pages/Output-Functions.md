@@ -1,22 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
 
 Next: [Output Variables](Output-Variables.html), Previous: [Output Streams](Output-Streams.html), Up: [Read and Print](Read-and-Print.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
@@ -30,10 +12,12 @@ If the text is to be read back into Lisp, then you should print with quoting cha
 
 Lisp objects can refer to themselves. Printing a self-referential object in the normal way would require an infinite amount of text, and the attempt could cause infinite recursion. Emacs detects such recursion and prints ‘`#level`’ instead of recursively printing an object already being printed. For example, here ‘`#0`’ indicates a recursive reference to the object at level 0 of the current print operation:
 
-    (setq foo (list nil))
-         ⇒ (nil)
-    (setcar foo foo)
-         ⇒ (#0)
+```lisp
+(setq foo (list nil))
+     ⇒ (nil)
+(setcar foo foo)
+     ⇒ (#0)
+```
 
 In the functions below, `stream` stands for an output stream. (See the previous section for a description of output streams. Also See [external-debugging-output](Output-Streams.html#external_002ddebugging_002doutput), a useful stream value for debugging.) If `stream` is `nil` or omitted, it defaults to the value of `standard-output`.
 
@@ -41,16 +25,18 @@ In the functions below, `stream` stands for an output stream. (See the previous 
 
     The `print` function is a convenient way of printing. It outputs the printed representation of `object` to `stream`, printing in addition one newline before `object` and another after it. Quoting characters are used. `print` returns `object`. For example:
 
-        (progn (print 'The\ cat\ in)
-               (print "the hat")
-               (print " came back"))
-             -|
-             -| The\ cat\ in
-             -|
-             -| "the hat"
-             -|
-             -| " came back"
-             ⇒ " came back"
+    ```lisp
+    (progn (print 'The\ cat\ in)
+           (print "the hat")
+           (print " came back"))
+         -|
+         -| The\ cat\ in
+         -|
+         -| "the hat"
+         -|
+         -| " came back"
+         ⇒ " came back"
+    ```
 
 <!---->
 
@@ -58,11 +44,13 @@ In the functions below, `stream` stands for an output stream. (See the previous 
 
     This function outputs the printed representation of `object` to `stream`. It does not print newlines to separate output as `print` does, but it does use quoting characters just like `print`. It returns `object`.
 
-        (progn (prin1 'The\ cat\ in)
-               (prin1 "the hat")
-               (prin1 " came back"))
-             -| The\ cat\ in"the hat"" came back"
-             ⇒ " came back"
+    ```lisp
+    (progn (prin1 'The\ cat\ in)
+           (prin1 "the hat")
+           (prin1 " came back"))
+         -| The\ cat\ in"the hat"" came back"
+         ⇒ " came back"
+    ```
 
 <!---->
 
@@ -72,11 +60,13 @@ In the functions below, `stream` stands for an output stream. (See the previous 
 
     This function is intended to produce output that is readable by people, not by `read`, so it doesn’t insert quoting characters and doesn’t put double-quotes around the contents of strings. It does not add any spacing between calls.
 
-        (progn
-          (princ 'The\ cat)
-          (princ " in the \"hat\""))
-             -| The cat in the "hat"
-             ⇒ " in the \"hat\""
+    ```lisp
+    (progn
+      (princ 'The\ cat)
+      (princ " in the \"hat\""))
+         -| The cat in the "hat"
+         ⇒ " in the \"hat\""
+    ```
 
 <!---->
 
@@ -96,23 +86,27 @@ In the functions below, `stream` stands for an output stream. (See the previous 
 
     This function returns a string containing the text that `prin1` would have printed for the same argument.
 
-        (prin1-to-string 'foo)
-             ⇒ "foo"
+    ```lisp
+    (prin1-to-string 'foo)
+         ⇒ "foo"
+    ```
 
-    <!---->
-
-        (prin1-to-string (mark-marker))
-             ⇒ "#<marker at 2773 in strings.texi>"
+    ```lisp
+    (prin1-to-string (mark-marker))
+         ⇒ "#<marker at 2773 in strings.texi>"
+    ```
 
     If `noescape` is non-`nil`, that inhibits use of quoting characters in the output. (This argument is supported in Emacs versions 19 and later.)
 
-        (prin1-to-string "foo")
-             ⇒ "\"foo\""
+    ```lisp
+    (prin1-to-string "foo")
+         ⇒ "\"foo\""
+    ```
 
-    <!---->
-
-        (prin1-to-string "foo" t)
-             ⇒ "foo"
+    ```lisp
+    (prin1-to-string "foo" t)
+         ⇒ "foo"
+    ```
 
     See `format`, in [Formatting Strings](Formatting-Strings.html), for other ways to obtain the printed representation of a Lisp object as a string.
 
@@ -124,9 +118,11 @@ In the functions below, `stream` stands for an output stream. (See the previous 
 
     For example, if the current buffer name is ‘`foo`’,
 
-        (with-output-to-string
-          (princ "The buffer is ")
-          (princ (buffer-name)))
+    ```lisp
+    (with-output-to-string
+      (princ "The buffer is ")
+      (princ (buffer-name)))
+    ```
 
     returns `"The buffer is foo"`.
 

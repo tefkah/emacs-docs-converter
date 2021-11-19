@@ -1,22 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
 
 Next: [Group Definitions](Group-Definitions.html), Up: [Customization](Customization.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
@@ -110,14 +92,18 @@ Packages distributed as part of Emacs that use the `:package-version` keyword mu
 
     This alist provides a mapping for the versions of Emacs that are associated with versions of a package listed in the `:package-version` keyword. Its elements are:
 
-        (package (pversion . eversion)…)
+    ```lisp
+    (package (pversion . eversion)…)
+    ```
 
     For each `package`, which is a symbol, there are one or more elements that contain a package version `pversion` with an associated Emacs version `eversion`. These versions are strings. For example, the MH-E package updates this alist with the following:
 
-        (add-to-list 'customize-package-emacs-version-alist
-                     '(MH-E ("6.0" . "22.1") ("6.1" . "22.1") ("7.0" . "22.1")
-                            ("7.1" . "22.1") ("7.2" . "22.1") ("7.3" . "22.1")
-                            ("7.4" . "22.1") ("8.0" . "22.1")))
+    ```lisp
+    (add-to-list 'customize-package-emacs-version-alist
+                 '(MH-E ("6.0" . "22.1") ("6.1" . "22.1") ("7.0" . "22.1")
+                        ("7.1" . "22.1") ("7.2" . "22.1") ("7.3" . "22.1")
+                        ("7.4" . "22.1") ("8.0" . "22.1")))
+    ```
 
     The value of `package` needs to be unique and it needs to match the `package` value appearing in the `:package-version` keyword. Since the user might see the value in an error message, a good choice is the official name of the package, such as MH-E or Gnus.
 

@@ -1,22 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
 
 Next: [File Notifications](File-Notifications.html), Previous: [Session Management](Session-Management.html), Up: [System Interface](System-Interface.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
@@ -126,34 +108,42 @@ Emacs is able to send *notifications* on systems that support the freedesktop.or
 
     This function returns a notification id, an integer, which can be used to manipulate the notification item with `notifications-close-notification` or the `:replaces-id` argument of another `notifications-notify` call. For example:
 
-        (defun my-on-action-function (id key)
-          (message "Message %d, key \"%s\" pressed" id key))
-             ⇒ my-on-action-function
-
-    ```
-    ```
-
-        (defun my-on-close-function (id reason)
-          (message "Message %d, closed due to \"%s\"" id reason))
-             ⇒ my-on-close-function
-
-    ```
+    ```lisp
+    (defun my-on-action-function (id key)
+      (message "Message %d, key \"%s\" pressed" id key))
+         ⇒ my-on-action-function
     ```
 
-        (notifications-notify
-         :title "Title"
-         :body "This is <b>important</b>."
-         :actions '("Confirm" "I agree" "Refuse" "I disagree")
-         :on-action 'my-on-action-function
-         :on-close 'my-on-close-function)
-             ⇒ 22
-
-    ```
+    ```lisp
     ```
 
-        A message window opens on the desktop.  Press ``I agree''.
-             ⇒ Message 22, key "Confirm" pressed
-                Message 22, closed due to "dismissed"
+    ```lisp
+    (defun my-on-close-function (id reason)
+      (message "Message %d, closed due to \"%s\"" id reason))
+         ⇒ my-on-close-function
+    ```
+
+    ```lisp
+    ```
+
+    ```lisp
+    (notifications-notify
+     :title "Title"
+     :body "This is <b>important</b>."
+     :actions '("Confirm" "I agree" "Refuse" "I disagree")
+     :on-action 'my-on-action-function
+     :on-close 'my-on-close-function)
+         ⇒ 22
+    ```
+
+    ```lisp
+    ```
+
+    ```lisp
+    A message window opens on the desktop.  Press ``I agree''.
+         ⇒ Message 22, key "Confirm" pressed
+            Message 22, closed due to "dismissed"
+    ```
 
 <!---->
 

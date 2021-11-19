@@ -1,22 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
 
 Next: [Generic Modes](Generic-Modes.html), Previous: [Mode Hooks](Mode-Hooks.html), Up: [Major Modes](Major-Modes.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
@@ -70,7 +52,7 @@ The derived mode should also define a *listing command*. This, not the mode comm
 
     This buffer-local variable specifies the entries displayed in the Tabulated List buffer. Its value should be either a list, or a function.
 
-    If the value is a list, each list element corresponds to one entry, and should have the form `(id contents)`<!-- /@w -->, where
+    If the value is a list, each list element corresponds to one entry, and should have the form `(id contents)`, where
 
     *   `id` is either `nil`, or a Lisp object that identifies the entry. If the latter, the cursor stays on the same entry when re-sorting entries. Comparison is done with `equal`.
 

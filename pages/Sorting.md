@@ -1,22 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
 
 Next: [Columns](Columns.html), Previous: [Auto Filling](Auto-Filling.html), Up: [Text](Text.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
@@ -48,41 +30,45 @@ The sorting functions described in this section all rearrange text in a buffer. 
 
     As an example of `sort-subr`, here is the complete function definition for `sort-lines`:
 
-        ;; Note that the first two lines of doc string
-        ;; are effectively one line when viewed by a user.
-        (defun sort-lines (reverse beg end)
-          "Sort lines in region alphabetically;\
-         argument means descending order.
-        Called from a program, there are three arguments:
+    ```lisp
+    ;; Note that the first two lines of doc string
+    ;; are effectively one line when viewed by a user.
+    (defun sort-lines (reverse beg end)
+      "Sort lines in region alphabetically;\
+     argument means descending order.
+    Called from a program, there are three arguments:
+    ```
 
-    <!---->
+    ```lisp
+    REVERSE (non-nil means reverse order),\
+     BEG and END (region to sort).
+    The variable `sort-fold-case' determines\
+     whether alphabetic case affects
+    the sort order."
+    ```
 
-        REVERSE (non-nil means reverse order),\
-         BEG and END (region to sort).
-        The variable `sort-fold-case' determines\
-         whether alphabetic case affects
-        the sort order."
-
-    <!---->
-
-          (interactive "P\nr")
-          (save-excursion
-            (save-restriction
-              (narrow-to-region beg end)
-              (goto-char (point-min))
-              (let ((inhibit-field-text-motion t))
-                (sort-subr reverse 'forward-line 'end-of-line)))))
+    ```lisp
+      (interactive "P\nr")
+      (save-excursion
+        (save-restriction
+          (narrow-to-region beg end)
+          (goto-char (point-min))
+          (let ((inhibit-field-text-motion t))
+            (sort-subr reverse 'forward-line 'end-of-line)))))
+    ```
 
     Here `forward-line` moves point to the start of the next record, and `end-of-line` moves point to the end of record. We do not pass the arguments `startkeyfun` and `endkeyfun`, because the entire record is used as the sort key.
 
     The `sort-paragraphs` function is very much the same, except that its `sort-subr` call looks like this:
 
-        (sort-subr reverse
-                   (lambda ()
-                     (while (and (not (eobp))
-                                 (looking-at paragraph-separate))
-                       (forward-line 1)))
-                   'forward-paragraph)
+    ```lisp
+    (sort-subr reverse
+               (lambda ()
+                 (while (and (not (eobp))
+                             (looking-at paragraph-separate))
+                   (forward-line 1)))
+               'forward-paragraph)
+    ```
 
     Markers pointing into any sort records are left with no useful position after `sort-subr` returns.
 
@@ -122,9 +108,11 @@ The sorting functions described in this section all rearrange text in a buffer. 
 
     For example, if you plan to sort all the lines in the region by the first word on each line starting with the letter ‘`f`’, you should set `record-regexp` to ‘`^.*$`’ and set `key-regexp` to ‘`\<f\w*\>`’. The resulting expression looks like this:
 
-        (sort-regexp-fields nil "^.*$" "\\<f\\w*\\>"
-                            (region-beginning)
-                            (region-end))
+    ```lisp
+    (sort-regexp-fields nil "^.*$" "\\<f\\w*\\>"
+                        (region-beginning)
+                        (region-end))
+    ```
 
     If you call `sort-regexp-fields` interactively, it prompts for `record-regexp` and `key-regexp` in the minibuffer.
 
@@ -150,7 +138,7 @@ The sorting functions described in this section all rearrange text in a buffer. 
 
 *   Command: **sort-fields** *field start end*
 
-    This command sorts lines in the region between `start` and `end`, comparing them alphabetically by the `field`th field of each line. Fields are separated by whitespace and numbered starting from 1. If `field` is negative, sorting is by the -`field`th<!-- /@w --> field from the end of the line. This command is useful for sorting tables.
+    This command sorts lines in the region between `start` and `end`, comparing them alphabetically by the `field`th field of each line. Fields are separated by whitespace and numbered starting from 1. If `field` is negative, sorting is by the -`field`th field from the end of the line. This command is useful for sorting tables.
 
 <!---->
 
@@ -158,7 +146,7 @@ The sorting functions described in this section all rearrange text in a buffer. 
 
     This command sorts lines in the region between `start` and `end`, comparing them numerically by the `field`th field of each line. Fields are separated by whitespace and numbered starting from 1. The specified field must contain a number in each line of the region. Numbers starting with 0 are treated as octal, and numbers starting with ‘`0x`’ are treated as hexadecimal.
 
-    If `field` is negative, sorting is by the -`field`th<!-- /@w --> field from the end of the line. This command is useful for sorting tables.
+    If `field` is negative, sorting is by the -`field`th field from the end of the line. This command is useful for sorting tables.
 
 <!---->
 

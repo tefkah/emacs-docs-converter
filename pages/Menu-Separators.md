@@ -1,22 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
 
 Next: [Alias Menu Items](Alias-Menu-Items.html), Previous: [Extended Menu Items](Extended-Menu-Items.html), Up: [Defining Menus](Defining-Menus.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
@@ -24,7 +6,9 @@ Next: [Alias Menu Items](Alias-Menu-Items.html), Previous: [Extended Menu Items]
 
 A menu separator is a kind of menu item that doesn’t display any text—instead, it divides the menu into subparts with a horizontal line. A separator looks like this in the menu keymap:
 
-    (menu-item separator-type)
+```lisp
+(menu-item separator-type)
+```
 
 where `separator-type` is a string starting with two or more dashes.
 
@@ -93,7 +77,9 @@ You can use a longer form to specify keywords such as `:enable` and `:visible` f
 
 For example:
 
-    (menu-item "--" nil :visible (boundp 'foo))
+```lisp
+(menu-item "--" nil :visible (boundp 'foo))
+```
 
 Some systems and display toolkits don’t really handle all of these separator types. If you use a type that isn’t supported, the menu displays a similar kind of separator that is supported.
 

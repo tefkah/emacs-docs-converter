@@ -1,22 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
 
 Next: [Splicing into Lists](Splicing-into-Lists.html), Previous: [Simple Types](Simple-Types.html), Up: [Customization Types](Customization-Types.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
@@ -24,11 +6,15 @@ Next: [Splicing into Lists](Splicing-into-Lists.html), Previous: [Simple Types](
 
 When none of the simple types is appropriate, you can use composite types, which build new types from other types or from specified data. The specified types or data are called the *arguments* of the composite type. The composite type normally looks like this:
 
-    (constructor arguments…)
+```lisp
+(constructor arguments…)
+```
 
 but you can also add keyword-value pairs before the arguments, like this:
 
-    (constructor {keyword value}… arguments…)
+```lisp
+(constructor {keyword value}… arguments…)
+```
 
 Here is a table of constructors and how to use them to write composite types:
 
@@ -64,48 +50,62 @@ Here is a table of constructors and how to use them to write composite types:
 
     The argument to the `:options` keywords should be a list of specifications for reasonable keys in the alist. Ordinarily, they are simply atoms, which stand for themselves. For example:
 
-        :options '("foo" "bar" "baz")
+    ```lisp
+    :options '("foo" "bar" "baz")
+    ```
 
     specifies that there are three known keys, namely `"foo"`, `"bar"` and `"baz"`, which will always be shown first.
 
     You may want to restrict the value type for specific keys, for example, the value associated with the `"bar"` key can only be an integer. You can specify this by using a list instead of an atom in the list. The first element will specify the key, like before, while the second element will specify the value type. For example:
 
-        :options '("foo" ("bar" integer) "baz")
+    ```lisp
+    :options '("foo" ("bar" integer) "baz")
+    ```
 
     Finally, you may want to change how the key is presented. By default, the key is simply shown as a `const`, since the user cannot change the special keys specified with the `:options` keyword. However, you may want to use a more specialized type for presenting the key, like `function-item` if you know it is a symbol with a function binding. This is done by using a customization type specification instead of a symbol for the key.
 
-        :options '("foo"
-                   ((function-item some-function) integer)
-                   "baz")
+    ```lisp
+    :options '("foo"
+               ((function-item some-function) integer)
+               "baz")
+    ```
 
     Many alists use lists with two elements, instead of cons cells. For example,
 
-        (defcustom list-alist
-          '(("foo" 1) ("bar" 2) ("baz" 3))
-          "Each element is a list of the form (KEY VALUE).")
+    ```lisp
+    (defcustom list-alist
+      '(("foo" 1) ("bar" 2) ("baz" 3))
+      "Each element is a list of the form (KEY VALUE).")
+    ```
 
     instead of
 
-        (defcustom cons-alist
-          '(("foo" . 1) ("bar" . 2) ("baz" . 3))
-          "Each element is a cons-cell (KEY . VALUE).")
+    ```lisp
+    (defcustom cons-alist
+      '(("foo" . 1) ("bar" . 2) ("baz" . 3))
+      "Each element is a cons-cell (KEY . VALUE).")
+    ```
 
     Because of the way lists are implemented on top of cons cells, you can treat `list-alist` in the example above as a cons cell alist, where the value type is a list with a single element containing the real value.
 
-        (defcustom list-alist '(("foo" 1) ("bar" 2) ("baz" 3))
-          "Each element is a list of the form (KEY VALUE)."
-          :type '(alist :value-type (group integer)))
+    ```lisp
+    (defcustom list-alist '(("foo" 1) ("bar" 2) ("baz" 3))
+      "Each element is a list of the form (KEY VALUE)."
+      :type '(alist :value-type (group integer)))
+    ```
 
     The `group` widget is used here instead of `list` only because the formatting is better suited for the purpose.
 
     Similarly, you can have alists with more values associated with each key, using variations of this trick:
 
-        (defcustom person-data '(("brian"  50 t)
-                                 ("dorith" 55 nil)
-                                 ("ken"    52 t))
-          "Alist of basic info about people.
-        Each element has the form (NAME AGE MALE-FLAG)."
-          :type '(alist :value-type (group integer boolean)))
+    ```lisp
+    (defcustom person-data '(("brian"  50 t)
+                             ("dorith" 55 nil)
+                             ("ken"    52 t))
+      "Alist of basic info about people.
+    Each element has the form (NAME AGE MALE-FLAG)."
+      :type '(alist :value-type (group integer boolean)))
+    ```
 
 *   `(plist :key-type key-type :value-type value-type)`
 
@@ -119,8 +119,10 @@ Here is a table of constructors and how to use them to write composite types:
 
     Normally the strings in this menu are determined automatically from the choices; however, you can specify different strings for the menu by including the `:tag` keyword in the alternatives. For example, if an integer stands for a number of spaces, while a string is text to use verbatim, you might write the customization type this way,
 
-        (choice (integer :tag "Number of spaces")
-                (string :tag "Literal text"))
+    ```lisp
+    (choice (integer :tag "Number of spaces")
+            (string :tag "Literal text"))
+    ```
 
     so that the menu offers ‘`Number of spaces`’ and ‘`Literal text`’.
 
@@ -128,8 +130,10 @@ Here is a table of constructors and how to use them to write composite types:
 
     If some values are covered by more than one of the alternatives, customize will choose the first alternative that the value fits. This means you should always list the most specific types first, and the most general last. Here’s an example of proper usage:
 
-        (choice (const :tag "Off" nil)
-                symbol (sexp :tag "Other"))
+    ```lisp
+    (choice (const :tag "Off" nil)
+            symbol (sexp :tag "Other"))
+    ```
 
     This way, the special value `nil` is not treated like other symbols, and symbols are not treated like other Lisp expressions.
 
@@ -145,9 +149,11 @@ Here is a table of constructors and how to use them to write composite types:
 
     `:tag` is often used with `const`, inside of `choice`. For example,
 
-        (choice (const :tag "Yes" t)
-                (const :tag "No" nil)
-                (const :tag "Ask" foo))
+    ```lisp
+    (choice (const :tag "Yes" t)
+            (const :tag "No" nil)
+            (const :tag "Ask" foo))
+    ```
 
     describes a variable for which `t` means yes, `nil` means no, and `foo` means “ask”.
 
@@ -157,9 +163,11 @@ Here is a table of constructors and how to use them to write composite types:
 
     The main use of `other` is as the last element of `choice`. For example,
 
-        (choice (const :tag "Yes" t)
-                (const :tag "No" nil)
-                (other :tag "Ask" foo))
+    ```lisp
+    (choice (const :tag "Yes" t)
+            (const :tag "No" nil)
+            (other :tag "Ask" foo))
+    ```
 
     describes a variable for which `t` means yes, `nil` means no, and anything else means “ask”. If the user chooses ‘`Ask`’ from the menu of alternatives, that specifies the value `foo`; but any other value (not `t`, `nil` or `foo`) displays as ‘`Ask`’, just like `foo`.
 
@@ -179,12 +187,16 @@ Here is a table of constructors and how to use them to write composite types:
 
     Most often, the `types` in a `set` are `const` types, as shown here:
 
-        (set (const :bold) (const :italic))
+    ```lisp
+    (set (const :bold) (const :italic))
+    ```
 
     Sometimes they describe possible elements in an alist:
 
-        (set (cons :tag "Height" (const height) integer)
-             (cons :tag "Width" (const width) integer))
+    ```lisp
+    (set (cons :tag "Height" (const height) integer)
+         (cons :tag "Width" (const width) integer))
+    ```
 
     That lets the user specify a height value optionally and a width value optionally.
 
@@ -201,8 +213,10 @@ Here is a table of constructors and how to use them to write composite types:
 
     For example,
 
-        (restricted-sexp :match-alternatives
-                         (integerp 't 'nil))
+    ```lisp
+    (restricted-sexp :match-alternatives
+                     (integerp 't 'nil))
+    ```
 
     allows integers, `t` and `nil` as legitimate values.
 

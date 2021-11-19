@@ -1,22 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
 
 Previous: [Running Hooks](Running-Hooks.html), Up: [Hooks](Hooks.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
@@ -24,7 +6,9 @@ Previous: [Running Hooks](Running-Hooks.html), Up: [Hooks](Hooks.html)   \[[Con
 
 Here’s an example that adds a function to a mode hook to turn on Auto Fill mode when in Lisp Interaction mode:
 
-    (add-hook 'lisp-interaction-mode-hook 'auto-fill-mode)
+```lisp
+(add-hook 'lisp-interaction-mode-hook 'auto-fill-mode)
+```
 
 The value of a hook variable should be a list of functions. You can manipulate that list using the normal Lisp facilities, but the modular way is to use the functions `add-hook` and `remove-hook`, defined below. They take care to handle some unusual situations and avoid problems.
 
@@ -34,7 +18,9 @@ It works to put a `lambda`-expression function on a hook, but we recommend avoid
 
     This function is the handy way to add function `function` to hook variable `hook`. You can use it for abnormal hooks as well as for normal hooks. `function` can be any Lisp function that can accept the proper number of arguments for `hook`. For example,
 
-        (add-hook 'text-mode-hook 'my-text-hook-function)
+    ```lisp
+    (add-hook 'text-mode-hook 'my-text-hook-function)
+    ```
 
     adds `my-text-hook-function` to the hook called `text-mode-hook`.
 

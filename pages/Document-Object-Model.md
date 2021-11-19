@@ -1,22 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
 
 Up: [Parsing HTML/XML](Parsing-HTML_002fXML.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
@@ -24,11 +6,13 @@ Up: [Parsing HTML/XML](Parsing-HTML_002fXML.html)   \[[Contents](index.html#SEC
 
 The DOM returned by `libxml-parse-html-region` (and the other XML parsing functions) is a tree structure where each node has a node name (called a *tag*), and optional key/value *attribute* list, and then a list of *child nodes*. The child nodes are either strings or DOM objects.
 
-    (body ((width . "101"))
-     (div ((class . "thing"))
-      "Foo"
-      (div nil
-       "Yes")))
+```lisp
+(body ((width . "101"))
+ (div ((class . "thing"))
+  "Foo"
+  (div nil
+   "Yes")))
+```
 
 *   Function: **dom-node** *tag \&optional attributes \&rest children*
 
@@ -46,8 +30,10 @@ Simple accessors:
 
     Return the value of `attribute` in the node. A common usage would be:
 
-        (dom-attr img 'href)
-        => "https://fsf.org/logo.png"
+    ```lisp
+    (dom-attr img 'href)
+    => "https://fsf.org/logo.png"
+    ```
 
 *   `dom-children node`
 
@@ -101,8 +87,10 @@ The following are functions for searching for elements in the DOM. They all retu
 
     Return all nodes in `dom` that are of type `tag`. A typical use would be:
 
-        (dom-by-tag dom 'td)
-        => '((td ...) (td ...) (td ...))
+    ```lisp
+    (dom-by-tag dom 'td)
+    => '((td ...) (td ...) (td ...))
+    ```
 
 *   `dom-by-class dom match`
 

@@ -1,22 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
 
 Next: [Specification List](Specification-List.html), Up: [Edebug and Macros](Edebug-and-Macros.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
@@ -26,11 +8,13 @@ When Edebug instruments an expression that calls a Lisp macro, it needs addition
 
 Therefore, you must define an Edebug specification for each macro that Edebug will encounter, to explain the format of calls to that macro. To do this, add a `debug` declaration to the macro definition. Here is a simple example that shows the specification for the `for` example macro (see [Argument Evaluation](Argument-Evaluation.html)).
 
-    (defmacro for (var from init to final do &rest body)
-      "Execute a simple \"for\" loop.
-    For example, (for i from 1 to 10 do (print i))."
-      (declare (debug (symbolp "from" form "to" form "do" &rest form)))
-      ...)
+```lisp
+(defmacro for (var from init to final do &rest body)
+  "Execute a simple \"for\" loop.
+For example, (for i from 1 to 10 do (print i))."
+  (declare (debug (symbolp "from" form "to" form "do" &rest form)))
+  ...)
+```
 
 The Edebug specification says which parts of a call to the macro are forms to be evaluated. For simple macros, the specification often looks very similar to the formal argument list of the macro definition, but specifications are much more general than macro arguments. See [Defining Macros](Defining-Macros.html), for more explanation of the `declare` form.
 

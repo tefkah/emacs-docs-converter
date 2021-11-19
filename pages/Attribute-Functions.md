@@ -1,22 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
 
 Next: [Displaying Faces](Displaying-Faces.html), Previous: [Defining Faces](Defining-Faces.html), Up: [Faces](Faces.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
@@ -36,8 +18,10 @@ This section describes functions for directly accessing and modifying the attrib
 
     For example,
 
-        (face-attribute 'bold :weight)
-             ⇒ bold
+    ```lisp
+    (face-attribute 'bold :weight)
+         ⇒ bold
+    ```
 
 <!---->
 
@@ -49,14 +33,16 @@ This section describes functions for directly accessing and modifying the attrib
 
     For example:
 
-        (face-attribute-relative-p :height 2.0)
-             ⇒ t
+    ```lisp
+    (face-attribute-relative-p :height 2.0)
+         ⇒ t
+    ```
 
 <!---->
 
 *   Function: **face-all-attributes** *face \&optional frame*
 
-    This function returns an alist of attributes of `face`. The elements of the result are name-value pairs of the form `(attr-name . attr-value)`<!-- /@w -->. Optional argument `frame` specifies the frame whose definition of `face` to return; if omitted or `nil`, the returned value describes the default attributes of `face` for newly created frames.
+    This function returns an alist of attributes of `face`. The elements of the result are name-value pairs of the form `(attr-name . attr-value)`. Optional argument `frame` specifies the frame whose definition of `face` to return; if omitted or `nil`, the returned value describes the default attributes of `face` for newly created frames.
 
 <!---->
 
@@ -72,7 +58,9 @@ Normally, Emacs uses the face specs of each face to automatically calculate its 
 
     The extra arguments `arguments` specify the attributes to set, and the values for them. They should consist of alternating attribute names (such as `:family` or `:underline`) and values. Thus,
 
-        (set-face-attribute 'foo nil :weight 'bold :slant 'italic)
+    ```lisp
+    (set-face-attribute 'foo nil :weight 'bold :slant 'italic)
+    ```
 
     sets the attribute `:weight` to `bold` and the attribute `:slant` to `italic`.
 

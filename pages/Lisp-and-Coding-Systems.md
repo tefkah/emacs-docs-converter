@@ -1,22 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
 
 Next: [User-Chosen Coding Systems](User_002dChosen-Coding-Systems.html), Previous: [Encoding and I/O](Encoding-and-I_002fO.html), Up: [Coding Systems](Coding-Systems.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
@@ -46,8 +28,10 @@ Here are the Lisp facilities for working with coding systems:
 
     This function returns the type of end-of-line (a.k.a. *eol*) conversion used by `coding-system`. If `coding-system` specifies a certain eol conversion, the return value is an integer 0, 1, or 2, standing for `unix`, `dos`, and `mac`, respectively. If `coding-system` doesn’t specify eol conversion explicitly, the return value is a vector of coding systems, each one with one of the possible eol conversion types, like this:
 
-        (coding-system-eol-type 'latin-1)
-             ⇒ [latin-1-unix latin-1-dos latin-1-mac]
+    ```lisp
+    (coding-system-eol-type 'latin-1)
+         ⇒ [latin-1-unix latin-1-dos latin-1-mac]
+    ```
 
     If this function returns a vector, Emacs will decide, as part of the text encoding or decoding process, what eol conversion to use. For decoding, the end-of-line format of the text is auto-detected, and the eol conversion is set to match it (e.g., DOS-style CRLF format will imply `dos` eol conversion). For encoding, the eol conversion is taken from the appropriate default coding system (e.g., default value of `buffer-file-coding-system` for `buffer-file-coding-system`), or from the default eol conversion appropriate for the underlying platform.
 

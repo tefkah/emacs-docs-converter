@@ -1,22 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
 
 Next: [Comment Tips](Comment-Tips.html), Previous: [Warning Tips](Warning-Tips.html), Up: [Tips](Tips.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
@@ -44,12 +26,16 @@ Here are some tips and conventions for the writing of documentation strings. You
 
 *   When a function’s documentation string mentions the value of an argument of the function, use the argument name in capital letters as if it were a name for that value. Thus, the documentation string of the function `eval` refers to its first argument as ‘`FORM`’, because the actual argument name is `form`:
 
-        Evaluate FORM and return its value.
+    ```lisp
+    Evaluate FORM and return its value.
+    ```
 
     Also write metasyntactic variables in capital letters, such as when you show the decomposition of a list or vector into subunits, some of which may vary. ‘`KEY`’ and ‘`VALUE`’ in the following example illustrate this practice:
 
-        The argument TABLE should be an alist whose elements
-        have the form (KEY . VALUE).  Here, KEY is ...
+    ```lisp
+    The argument TABLE should be an alist whose elements
+    have the form (KEY . VALUE).  Here, KEY is ...
+    ```
 
 *   Never change the case of a Lisp symbol when you mention it in a doc string. If the symbol’s name is `foo`, write “foo”, not “Foo” (which is a different symbol).
 
@@ -63,7 +49,9 @@ Here are some tips and conventions for the writing of documentation strings. You
 
 *   When a documentation string refers to a Lisp symbol, write it as it would be printed (which usually means in lower case), surrounding it with curved single quotes (`‘..’`). There are two exceptions: write `t` and `nil` without surrounding punctuation. For example:
 
-         CODE can be ‘lambda’, nil, or t.
+    ```lisp
+     CODE can be ‘lambda’, nil, or t.
+    ```
 
     See [Quotation Marks](https://www.gnu.org/software/emacs/manual/html_node/emacs/Quotation-Marks.html#Quotation-Marks) in The GNU Emacs Manual, for how to enter curved single quotes.
 
@@ -71,15 +59,19 @@ Here are some tips and conventions for the writing of documentation strings. You
 
     Help mode automatically creates a hyperlink when a documentation string uses a single-quoted symbol name, if the symbol has either a function or a variable definition. You do not need to do anything special to make use of this feature. However, when a symbol has both a function definition and a variable definition, and you want to refer to just one of them, you can specify which one by writing one of the words ‘`variable`’, ‘`option`’, ‘`function`’, or ‘`command`’, immediately before the symbol name. (Case makes no difference in recognizing these indicator words.) For example, if you write
 
-        This function sets the variable `buffer-file-name'.
+    ```lisp
+    This function sets the variable `buffer-file-name'.
+    ```
 
     then the hyperlink will refer only to the variable documentation of `buffer-file-name`, and not to its function documentation.
 
     If a symbol has a function definition and/or a variable definition, but those are irrelevant to the use of the symbol that you are documenting, you can write the words ‘`symbol`’ or ‘`program`’ before the symbol name to prevent making any hyperlink. For example,
 
-        If the argument KIND-OF-RESULT is the symbol `list',
-        this function returns a list of all the objects
-        that satisfy the criterion.
+    ```lisp
+    If the argument KIND-OF-RESULT is the symbol `list',
+    this function returns a list of all the objects
+    that satisfy the criterion.
+    ```
 
     does not make a hyperlink to the documentation, irrelevant here, of the function `list`.
 
@@ -89,12 +81,16 @@ Here are some tips and conventions for the writing of documentation strings. You
 
     To make a hyperlink to Info documentation, write the single-quoted name of the Info node (or anchor), preceded by ‘`info node`’, ‘`Info node`’, ‘`info anchor`’ or ‘`Info anchor`’. The Info file name defaults to ‘`emacs`’. For example,
 
-        See Info node `Font Lock' and Info node `(elisp)Font Lock Basics'.
+    ```lisp
+    See Info node `Font Lock' and Info node `(elisp)Font Lock Basics'.
+    ```
 
     Finally, to create a hyperlink to URLs, write the single-quoted URL, preceded by ‘`URL`’. For example,
 
-        The home page for the GNU project has more information (see URL
-        `https://www.gnu.org/').
+    ```lisp
+    The home page for the GNU project has more information (see URL
+    `https://www.gnu.org/').
+    ```
 
 *   Don’t write key sequences directly in documentation strings. Instead, use the ‘`\\[…]`’ construct to stand for them. For example, instead of writing ‘`C-f`’, write the construct ‘`\\[forward-char]`’. When Emacs displays the documentation string, it substitutes whatever key is currently bound to `forward-char`. (This is normally ‘`C-f`’, but it may be some other character if the user has moved key bindings.) See [Keys in Documentation](Keys-in-Documentation.html).
 
@@ -112,11 +108,13 @@ Here are some tips and conventions for the writing of documentation strings. You
 
 *   Avoid using “iff” (a mathematics term meaning “if and only if”), since many people are unfamiliar with it and mistake it for a typo. In most cases, the meaning is clear with just “if”. Otherwise, try to find an alternate phrasing that conveys the meaning.
 
-*   Try to avoid using abbreviations such as “e.g.” (for “for example”), “i.e.” (for “that is”), “no.” (for “number”), “c.f.” (for “in contrast to”) and “w.r.t.” (for “with respect to”) as much as possible. It is almost always clearer and easier to read the expanded version.[27](#FOOT27)
+*   Try to avoid using abbreviations such as “e.g.” (for “for example”), “i.e.” (for “that is”), “no.” (for “number”), “c.f.” (for “in contrast to”) and “w\.r.t.” (for “with respect to”) as much as possible. It is almost always clearer and easier to read the expanded version.[27](#FOOT27)
 
 *   When a command is meaningful only in a certain mode or situation, do mention that in the documentation string. For example, the documentation of `dired-find-file` is:
 
-        In Dired, visit the file or directory named on this line.
+    ```lisp
+    In Dired, visit the file or directory named on this line.
+    ```
 
 *   When you define a variable that represents an option users might want to set, use `defcustom`. See [Defining Variables](Defining-Variables.html).
 
@@ -124,8 +122,10 @@ Here are some tips and conventions for the writing of documentation strings. You
 
 *   If a line in a documentation string begins with an open-parenthesis, consider writing a backslash before the open-parenthesis, like this:
 
-        The argument FOO can be either a number
-        \(a buffer position) or a string (a file name).
+    ```lisp
+    The argument FOO can be either a number
+    \(a buffer position) or a string (a file name).
+    ```
 
     This avoids a bug in Emacs versions older than 27.1, where the ‘`(`’ was treated as the start of a defun (see [Defuns](https://www.gnu.org/software/emacs/manual/html_node/emacs/Defuns.html#Defuns) in The GNU Emacs Manual). If you do not anticipate anyone editing your code with older Emacs versions, there is no need for this work-around.
 

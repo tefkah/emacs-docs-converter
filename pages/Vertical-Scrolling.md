@@ -1,22 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
 
 Next: [Horizontal Scrolling](Horizontal-Scrolling.html), Previous: [Textual Scrolling](Textual-Scrolling.html), Up: [Windows](Windows.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
@@ -32,8 +14,10 @@ What fraction of a line the vertical scrolling covers, or how many lines, depend
 
     This function returns the current vertical scroll position of `window`. The default for `window` is the selected window. If `pixels-p` is non-`nil`, the return value is measured in pixels, rather than in units of the normal line height.
 
-        (window-vscroll)
-             ⇒ 0
+    ```lisp
+    (window-vscroll)
+         ⇒ 0
+    ```
 
 <!---->
 
@@ -45,8 +29,10 @@ What fraction of a line the vertical scrolling covers, or how many lines, depend
 
     The return value is the result of this rounding.
 
-        (set-window-vscroll (selected-window) 1.2)
-             ⇒ 1.13
+    ```lisp
+    (set-window-vscroll (selected-window) 1.2)
+         ⇒ 1.13
+    ```
 
     If `pixels-p` is non-`nil`, `lines` specifies a number of pixels. In this case, the return value is `lines`.
 

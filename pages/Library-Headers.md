@@ -1,22 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
 
 Previous: [Comment Tips](Comment-Tips.html), Up: [Tips](Tips.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
@@ -24,29 +6,35 @@ Previous: [Comment Tips](Comment-Tips.html), Up: [Tips](Tips.html)   \[[Content
 
 Emacs has conventions for using special comments in Lisp libraries to divide them into sections and give information such as who wrote them. Using a standard format for these items makes it easier for tools (and people) to extract the relevant information. This section explains these conventions, starting with an example:
 
-    ;;; foo.el --- Support for the Foo programming language  -*- lexical-binding: t; -*-
+```lisp
+;;; foo.el --- Support for the Foo programming language  -*- lexical-binding: t; -*-
 
-    ;; Copyright (C) 2010-2021 Your Name
-
+;; Copyright (C) 2010-2021 Your Name
 ```
+
+```lisp
 
 ;; Author: Your Name <yourname@example.com>
 ;; Maintainer: Someone Else <someone@example.com>
 ;; Created: 14 Jul 2010
 ```
 
-    ;; Keywords: languages
-    ;; URL: https://example.com/foo
+```lisp
+;; Keywords: languages
+;; URL: https://example.com/foo
 
-    ;; This file is not part of GNU Emacs.
+;; This file is not part of GNU Emacs.
 
-    ;; This file is free software…
-    …
-    ;; along with this file.  If not, see <https://www.gnu.org/licenses/>.
+;; This file is free software…
+…
+;; along with this file.  If not, see <https://www.gnu.org/licenses/>.
+```
 
 The very first line should have this format:
 
-    ;;; filename --- description  -*- lexical-binding: t; -*-
+```lisp
+;;; filename --- description  -*- lexical-binding: t; -*-
+```
 
 The description should be contained in one line. If the file needs to set more variables in the ‘`-*-`’ specification, add it after `lexical-binding`. If this would make the first line too long, use a Local Variables section at the end of the file.
 
@@ -58,9 +46,11 @@ After the copyright notice come several *header comment* lines, each beginning w
 
     This line states the name and email address of at least the principal author of the library. If there are multiple authors, list them on continuation lines led by `;;` and a tab or at least two spaces. We recommend including a contact email address, of the form ‘`<…>`’. For example:
 
-        ;; Author: Your Name <yourname@example.com>
-        ;;      Someone Else <someone@example.com>
-        ;;      Another Person <another@example.com>
+    ```lisp
+    ;; Author: Your Name <yourname@example.com>
+    ;;      Someone Else <someone@example.com>
+    ;;      Another Person <another@example.com>
+    ```
 
 *   ‘`Maintainer`’
 
@@ -99,7 +89,9 @@ After the copyright notice come several *header comment* lines, each beginning w
 
     Its format is a list of lists on a single line. The `car` of each sub-list is the name of a package, as a symbol. The `cadr` of each sub-list is the minimum acceptable version number, as a string that can be parsed by `version-to-list`. An entry that lacks a version (i.e., an entry which is just a symbol, or a sub-list of one element) is equivalent to entry with version "0". For instance:
 
-        ;; Package-Requires: ((gnus "1.0") (bubbles "2.7.2") cl-lib (seq))
+    ```lisp
+    ;; Package-Requires: ((gnus "1.0") (bubbles "2.7.2") cl-lib (seq))
+    ```
 
     The package code automatically defines a package named ‘`emacs`’ with the version number of the currently running Emacs. This can be used to require a minimal version of Emacs for a package.
 

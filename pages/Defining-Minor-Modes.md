@@ -1,22 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
 
 Previous: [Keymaps and Minor Modes](Keymaps-and-Minor-Modes.html), Up: [Minor Modes](Minor-Modes.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
@@ -36,7 +18,9 @@ The macro `define-minor-mode` offers a convenient way of implementing a mode in 
 
     The optional argument `keymap` specifies the keymap for the minor mode. If non-`nil`, it should be a variable name (whose value is a keymap), a keymap, or an alist of the form
 
-        (key-sequence . definition)
+    ```lisp
+    (key-sequence . definition)
+    ```
 
     where each `key-sequence` and `definition` are arguments suitable for passing to `define-key` (see [Changing Key Bindings](Changing-Key-Bindings.html)). If `keymap` is a keymap or an alist, this also defines the variable `mode-map`.
 
@@ -82,41 +66,45 @@ The name `easy-mmode-define-minor-mode` is an alias for this macro.
 
 Here is an example of using `define-minor-mode`:
 
-    (define-minor-mode hungry-mode
-      "Toggle Hungry mode.
-    Interactively with no argument, this command toggles the mode.
-    A positive prefix argument enables the mode, any other prefix
-    argument disables it.  From Lisp, argument omitted or nil enables
-    the mode, `toggle' toggles the state.
+```lisp
+(define-minor-mode hungry-mode
+  "Toggle Hungry mode.
+Interactively with no argument, this command toggles the mode.
+A positive prefix argument enables the mode, any other prefix
+argument disables it.  From Lisp, argument omitted or nil enables
+the mode, `toggle' toggles the state.
 
-    When Hungry mode is enabled, the control delete key
-    gobbles all preceding whitespace except the last.
-    See the command \\[hungry-electric-delete]."
-     ;; The initial value.
-     nil
-     ;; The indicator for the mode line.
-     " Hungry"
-     ;; The minor mode bindings.
-     '(([C-backspace] . hungry-electric-delete)))
+When Hungry mode is enabled, the control delete key
+gobbles all preceding whitespace except the last.
+See the command \\[hungry-electric-delete]."
+ ;; The initial value.
+ nil
+ ;; The indicator for the mode line.
+ " Hungry"
+ ;; The minor mode bindings.
+ '(([C-backspace] . hungry-electric-delete)))
+```
 
 This defines a minor mode named “Hungry mode”, a command named `hungry-mode` to toggle it, a variable named `hungry-mode` which indicates whether the mode is enabled, and a variable named `hungry-mode-map` which holds the keymap that is active when the mode is enabled. It initializes the keymap with a key binding for `C-DEL`. There are no `body` forms—many minor modes don’t need any.
 
 Here’s an equivalent way to write it:
 
-    (define-minor-mode hungry-mode
-      "Toggle Hungry mode.
-    ...rest of documentation as before..."
-     ;; The initial value.
-     :init-value nil
-     ;; The indicator for the mode line.
-     :lighter " Hungry"
-     ;; The minor mode bindings.
-     :keymap
-     '(([C-backspace] . hungry-electric-delete)
-       ([C-M-backspace]
-        . (lambda ()
-            (interactive)
-            (hungry-electric-delete t)))))
+```lisp
+(define-minor-mode hungry-mode
+  "Toggle Hungry mode.
+...rest of documentation as before..."
+ ;; The initial value.
+ :init-value nil
+ ;; The indicator for the mode line.
+ :lighter " Hungry"
+ ;; The minor mode bindings.
+ :keymap
+ '(([C-backspace] . hungry-electric-delete)
+   ([C-M-backspace]
+    . (lambda ()
+        (interactive)
+        (hungry-electric-delete t)))))
+```
 
 *   Macro: **define-globalized-minor-mode** *global-mode mode turn-on keyword-args… body…*
 

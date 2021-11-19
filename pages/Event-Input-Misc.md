@@ -1,22 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
 
 Previous: [Quoted Character Input](Quoted-Character-Input.html), Up: [Reading Input](Reading-Input.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
@@ -36,9 +18,9 @@ This section describes how to peek ahead at events without using them up, how to
 
     Normally you add events to the front of this list, so that the events most recently unread will be reread first.
 
-    Events read from this list are not normally added to the current command’s key sequence (as returned by, e.g., `this-command-keys`), as the events will already have been added once as they were read for the first time. An element of the form `(t . event)`<!-- /@w --> forces `event` to be added to the current command’s key sequence.
+    Events read from this list are not normally added to the current command’s key sequence (as returned by, e.g., `this-command-keys`), as the events will already have been added once as they were read for the first time. An element of the form `(t . event)` forces `event` to be added to the current command’s key sequence.
 
-    Elements read from this list are normally recorded by the record-keeping features (see [Recording Input](Recording-Input.html)) and while defining a keyboard macro (see [Keyboard Macros](Keyboard-Macros.html)). However, an element of the form `(no-record . event)`<!-- /@w --> causes `event` to be processed normally without recording it.
+    Elements read from this list are normally recorded by the record-keeping features (see [Recording Input](Recording-Input.html)) and while defining a keyboard macro (see [Keyboard Macros](Keyboard-Macros.html)). However, an element of the form `(no-record . event)` causes `event` to be processed normally without recording it.
 
 <!---->
 
@@ -62,12 +44,14 @@ This section describes how to peek ahead at events without using them up, how to
 
     In the example below, the Lisp program reads the character `1`, ASCII code 49. It becomes the value of `last-input-event`, while `C-e` (we assume `C-x C-e` command is used to evaluate this expression) remains the value of `last-command-event`.
 
-        (progn (print (read-char))
-               (print last-command-event)
-               last-input-event)
-             -| 49
-             -| 5
-             ⇒ 49
+    ```lisp
+    (progn (print (read-char))
+           (print last-command-event)
+           last-input-event)
+         -| 49
+         -| 5
+         ⇒ 49
+    ```
 
 <!---->
 
@@ -79,9 +63,11 @@ This section describes how to peek ahead at events without using them up, how to
 
     If you want to be able to distinguish all possible values computed by `body` from both kinds of abort conditions, write the code like this:
 
-        (while-no-input
-          (list
-            (progn . body)))
+    ```lisp
+    (while-no-input
+      (list
+        (progn . body)))
+    ```
 
 <!---->
 
@@ -97,8 +83,10 @@ This section describes how to peek ahead at events without using them up, how to
 
     In the following example, the user may type a number of characters right after starting the evaluation of the form. After the `sleep-for` finishes sleeping, `discard-input` discards any characters typed during the sleep.
 
-        (progn (sleep-for 2)
-               (discard-input))
-             ⇒ nil
+    ```lisp
+    (progn (sleep-for 2)
+           (discard-input))
+         ⇒ nil
+    ```
 
 Previous: [Quoted Character Input](Quoted-Character-Input.html), Up: [Reading Input](Reading-Input.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]

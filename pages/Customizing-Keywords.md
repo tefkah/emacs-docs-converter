@@ -1,22 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
 
 Next: [Other Font Lock Variables](Other-Font-Lock-Variables.html), Previous: [Search-based Fontification](Search_002dbased-Fontification.html), Up: [Font Lock Mode](Font-Lock-Mode.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
@@ -46,17 +28,21 @@ You can use `font-lock-add-keywords` to add additional search-based fontificatio
 
 For example, the following code adds two fontification patterns for C mode: one to fontify the word ‘`FIXME`’, even in comments, and another to fontify the words ‘`and`’, ‘`or`’ and ‘`not`’ as keywords.
 
-    (font-lock-add-keywords 'c-mode
-     '(("\\<\\(FIXME\\):" 1 font-lock-warning-face prepend)
-       ("\\<\\(and\\|or\\|not\\)\\>" . font-lock-keyword-face)))
+```lisp
+(font-lock-add-keywords 'c-mode
+ '(("\\<\\(FIXME\\):" 1 font-lock-warning-face prepend)
+   ("\\<\\(and\\|or\\|not\\)\\>" . font-lock-keyword-face)))
+```
 
 This example affects only C mode proper. To add the same patterns to C mode *and* all modes derived from it, do this instead:
 
-    (add-hook 'c-mode-hook
-     (lambda ()
-      (font-lock-add-keywords nil
-       '(("\\<\\(FIXME\\):" 1 font-lock-warning-face prepend)
-         ("\\<\\(and\\|or\\|not\\)\\>" .
-          font-lock-keyword-face)))))
+```lisp
+(add-hook 'c-mode-hook
+ (lambda ()
+  (font-lock-add-keywords nil
+   '(("\\<\\(FIXME\\):" 1 font-lock-warning-face prepend)
+     ("\\<\\(and\\|or\\|not\\)\\>" .
+      font-lock-keyword-face)))))
+```
 
 Next: [Other Font Lock Variables](Other-Font-Lock-Variables.html), Previous: [Search-based Fontification](Search_002dbased-Fontification.html), Up: [Font Lock Mode](Font-Lock-Mode.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]

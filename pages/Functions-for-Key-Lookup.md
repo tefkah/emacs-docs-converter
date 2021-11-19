@@ -1,22 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
 
 Next: [Changing Key Bindings](Changing-Key-Bindings.html), Previous: [Key Lookup](Key-Lookup.html), Up: [Keymaps](Keymaps.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
@@ -28,18 +10,20 @@ Here are the functions and variables pertaining to key lookup.
 
     This function returns the definition of `key` in `keymap`. All the other functions described in this chapter that look up keys use `lookup-key`. Here are examples:
 
-        (lookup-key (current-global-map) "\C-x\C-f")
-            ⇒ find-file
+    ```lisp
+    (lookup-key (current-global-map) "\C-x\C-f")
+        ⇒ find-file
+    ```
 
-    <!---->
+    ```lisp
+    (lookup-key (current-global-map) (kbd "C-x C-f"))
+        ⇒ find-file
+    ```
 
-        (lookup-key (current-global-map) (kbd "C-x C-f"))
-            ⇒ find-file
-
-    <!---->
-
-        (lookup-key (current-global-map) "\C-x\C-f12345")
-            ⇒ 2
+    ```lisp
+    (lookup-key (current-global-map) "\C-x\C-f12345")
+        ⇒ 2
+    ```
 
     If the string or vector `key` is not a valid key sequence according to the prefix keys specified in `keymap`, it must be too long and have extra events at the end that do not fit into a single key sequence. Then the value is a number, the number of events at the front of `key` that compose a complete key.
 
@@ -47,13 +31,15 @@ Here are the functions and variables pertaining to key lookup.
 
     If `key` contains a meta character (not a function key), that character is implicitly replaced by a two-character sequence: the value of `meta-prefix-char`, followed by the corresponding non-meta character. Thus, the first example below is handled by conversion into the second example.
 
-        (lookup-key (current-global-map) "\M-f")
-            ⇒ forward-word
+    ```lisp
+    (lookup-key (current-global-map) "\M-f")
+        ⇒ forward-word
+    ```
 
-    <!---->
-
-        (lookup-key (current-global-map) "\ef")
-            ⇒ forward-word
+    ```lisp
+    (lookup-key (current-global-map) "\ef")
+        ⇒ forward-word
+    ```
 
     The `keymap` argument can also be a list of keymaps.
 
@@ -99,32 +85,34 @@ Here are the functions and variables pertaining to key lookup.
 
     As long as the value of `meta-prefix-char` remains 27, key lookup translates `M-b` into `ESC b`, which is normally defined as the `backward-word` command. However, if you were to set `meta-prefix-char` to 24, the code for `C-x`, then Emacs will translate `M-b` into `C-x b`, whose standard binding is the `switch-to-buffer` command. (Don’t actually do this!) Here is an illustration of what would happen:
 
-        meta-prefix-char                    ; The default value.
-             ⇒ 27
+    ```lisp
+    meta-prefix-char                    ; The default value.
+         ⇒ 27
+    ```
 
-    <!---->
+    ```lisp
+    (key-binding "\M-b")
+         ⇒ backward-word
+    ```
 
-        (key-binding "\M-b")
-             ⇒ backward-word
+    ```lisp
+    ?\C-x                               ; The print representation
+         ⇒ 24                          ;   of a character.
+    ```
 
-    <!---->
+    ```lisp
+    (setq meta-prefix-char 24)
+         ⇒ 24
+    ```
 
-        ?\C-x                               ; The print representation
-             ⇒ 24                          ;   of a character.
+    ```lisp
+    (key-binding "\M-b")
+         ⇒ switch-to-buffer            ; Now, typing M-b is
+                                        ;   like typing C-x b.
 
-    <!---->
-
-        (setq meta-prefix-char 24)
-             ⇒ 24
-
-    <!---->
-
-        (key-binding "\M-b")
-             ⇒ switch-to-buffer            ; Now, typing M-b is
-                                            ;   like typing C-x b.
-
-        (setq meta-prefix-char 27)          ; Avoid confusion!
-             ⇒ 27                          ; Restore the default value!
+    (setq meta-prefix-char 27)          ; Avoid confusion!
+         ⇒ 27                          ; Restore the default value!
+    ```
 
     This translation of one event into two happens only for characters, not for other kinds of input events. Thus, `M-F1`, a function key, is not converted into `ESC F1`.
 

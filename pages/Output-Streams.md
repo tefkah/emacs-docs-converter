@@ -1,22 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
 
 Next: [Output Functions](Output-Functions.html), Previous: [Input Functions](Input-Functions.html), Up: [Read and Print](Read-and-Print.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
@@ -52,94 +34,120 @@ Many of the valid output streams are also valid as input streams. The difference
 
 Here is an example of a buffer used as an output stream. Point is initially located as shown immediately before the ‘`h`’ in ‘`the`’. At the end, point is located directly before that same ‘`h`’.
 
-    ---------- Buffer: foo ----------
-    This is t∗he contents of foo.
-    ---------- Buffer: foo ----------
-
+```lisp
+---------- Buffer: foo ----------
+This is t∗he contents of foo.
+---------- Buffer: foo ----------
 ```
+
+```lisp
 
 (print "This is the output" (get-buffer "foo"))
      ⇒ "This is the output"
 ```
 
-    ---------- Buffer: foo ----------
-    This is t
-    "This is the output"
-    ∗he contents of foo.
-    ---------- Buffer: foo ----------
+```lisp
+---------- Buffer: foo ----------
+This is t
+"This is the output"
+∗he contents of foo.
+---------- Buffer: foo ----------
+```
 
 Now we show a use of a marker as an output stream. Initially, the marker is in buffer `foo`, between the ‘`t`’ and the ‘`h`’ in the word ‘`the`’. At the end, the marker has advanced over the inserted text so that it remains positioned before the same ‘`h`’. Note that the location of point, shown in the usual fashion, has no effect.
 
-    ---------- Buffer: foo ----------
-    This is the ∗output
-    ---------- Buffer: foo ----------
-
-```
-```
-
-    (setq m (copy-marker 10))
-         ⇒ #<marker at 10 in foo>
-
-```
+```lisp
+---------- Buffer: foo ----------
+This is the ∗output
+---------- Buffer: foo ----------
 ```
 
-    (print "More output for foo." m)
-         ⇒ "More output for foo."
-
-```
+```lisp
 ```
 
-    ---------- Buffer: foo ----------
-    This is t
-    "More output for foo."
-    he ∗output
-    ---------- Buffer: foo ----------
-
-```
+```lisp
+(setq m (copy-marker 10))
+     ⇒ #<marker at 10 in foo>
 ```
 
-    m
-         ⇒ #<marker at 34 in foo>
+```lisp
+```
+
+```lisp
+(print "More output for foo." m)
+     ⇒ "More output for foo."
+```
+
+```lisp
+```
+
+```lisp
+---------- Buffer: foo ----------
+This is t
+"More output for foo."
+he ∗output
+---------- Buffer: foo ----------
+```
+
+```lisp
+```
+
+```lisp
+m
+     ⇒ #<marker at 34 in foo>
+```
 
 The following example shows output to the echo area:
 
-    (print "Echo Area output" t)
-         ⇒ "Echo Area output"
-    ---------- Echo Area ----------
-    "Echo Area output"
-    ---------- Echo Area ----------
+```lisp
+(print "Echo Area output" t)
+     ⇒ "Echo Area output"
+---------- Echo Area ----------
+"Echo Area output"
+---------- Echo Area ----------
+```
 
 Finally, we show the use of a function as an output stream. The function `eat-output` takes each character that it is given and conses it onto the front of the list `last-output` (see [Building Lists](Building-Lists.html)). At the end, the list contains all the characters output, but in reverse order.
 
-    (setq last-output nil)
-         ⇒ nil
-
-```
-```
-
-    (defun eat-output (c)
-      (setq last-output (cons c last-output)))
-         ⇒ eat-output
-
-```
+```lisp
+(setq last-output nil)
+     ⇒ nil
 ```
 
-    (print "This is the output" #'eat-output)
-         ⇒ "This is the output"
-
-```
+```lisp
 ```
 
-    last-output
-         ⇒ (10 34 116 117 112 116 117 111 32 101 104
-        116 32 115 105 32 115 105 104 84 34 10)
+```lisp
+(defun eat-output (c)
+  (setq last-output (cons c last-output)))
+     ⇒ eat-output
+```
+
+```lisp
+```
+
+```lisp
+(print "This is the output" #'eat-output)
+     ⇒ "This is the output"
+```
+
+```lisp
+```
+
+```lisp
+last-output
+     ⇒ (10 34 116 117 112 116 117 111 32 101 104
+    116 32 115 105 32 115 105 104 84 34 10)
+```
 
 Now we can put the output in the proper order by reversing the list:
 
-    (concat (nreverse last-output))
-         ⇒ "
-    \"This is the output\"
-    "
+```lisp
+(concat (nreverse last-output))
+     ⇒ "
+\"This is the output\"
+"
+```
 
 Calling `concat` converts the list to a string so you can see its contents more clearly.
 
@@ -149,8 +157,10 @@ Calling `concat` converts the list to a string so you can see its contents more 
 
     For example
 
-        (print "This is the output" #'external-debugging-output)
-        -| This is the output
-        ⇒ "This is the output"
+    ```lisp
+    (print "This is the output" #'external-debugging-output)
+    -| This is the output
+    ⇒ "This is the output"
+    ```
 
 Next: [Output Functions](Output-Functions.html), Previous: [Input Functions](Input-Functions.html), Up: [Read and Print](Read-and-Print.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]

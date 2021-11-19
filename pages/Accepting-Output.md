@@ -1,22 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
 
 Next: [Processes and Threads](Processes-and-Threads.html), Previous: [Decoding Output](Decoding-Output.html), Up: [Output from Processes](Output-from-Processes.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
@@ -38,18 +20,24 @@ Output from asynchronous subprocesses normally arrives only while Emacs is waiti
 
 If a connection from a process contains buffered data, `accept-process-output` can return non-`nil` even after the process has exited. Therefore, although the following loop:
 
-    ;; This loop contains a bug.
-    (while (process-live-p process)
-      (accept-process-output process))
+```lisp
+;; This loop contains a bug.
+(while (process-live-p process)
+  (accept-process-output process))
+```
 
 will often read all output from `process`, it has a race condition and can miss some output if `process-live-p` returns `nil` while the connection still contains data. Better is to write the loop like this:
 
-    (while (accept-process-output process))
+```lisp
+(while (accept-process-output process))
+```
 
 If you have passed a non-`nil` `stderr` to `make-process`, it will have a standard error process. See [Asynchronous Processes](Asynchronous-Processes.html). In that case, waiting for process output from the main process doesn’t wait for output from the standard error process. To make sure you have received both all of standard output and all of standard error from a process, use the following code:
 
-    (while (accept-process-output process))
-    (while (accept-process-output stderr-process))
+```lisp
+(while (accept-process-output process))
+(while (accept-process-output stderr-process))
+```
 
 Reading pending standard error from a process running on a remote host is not possible this way.
 

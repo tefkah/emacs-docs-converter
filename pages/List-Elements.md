@@ -1,22 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
 
 Next: [Building Lists](Building-Lists.html), Previous: [List-related Predicates](List_002drelated-Predicates.html), Up: [Lists](Lists.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
@@ -28,13 +10,15 @@ Next: [Building Lists](Building-Lists.html), Previous: [List-related Predicates]
 
     As a special case, if `cons-cell` is `nil`, this function returns `nil`. Therefore, any list is a valid argument. An error is signaled if the argument is not a cons cell or `nil`.
 
-        (car '(a b c))
-             ⇒ a
+    ```lisp
+    (car '(a b c))
+         ⇒ a
+    ```
 
-    <!---->
-
-        (car '())
-             ⇒ nil
+    ```lisp
+    (car '())
+         ⇒ nil
+    ```
 
 <!---->
 
@@ -44,13 +28,15 @@ Next: [Building Lists](Building-Lists.html), Previous: [List-related Predicates]
 
     As a special case, if `cons-cell` is `nil`, this function returns `nil`; therefore, any list is a valid argument. An error is signaled if the argument is not a cons cell or `nil`.
 
-        (cdr '(a b c))
-             ⇒ (b c)
+    ```lisp
+    (cdr '(a b c))
+         ⇒ (b c)
+    ```
 
-    <!---->
-
-        (cdr '())
-             ⇒ nil
+    ```lisp
+    (cdr '())
+         ⇒ nil
+    ```
 
 <!---->
 
@@ -58,12 +44,14 @@ Next: [Building Lists](Building-Lists.html), Previous: [List-related Predicates]
 
     This function lets you take the CAR of a cons cell while avoiding errors for other data types. It returns the CAR of `object` if `object` is a cons cell, `nil` otherwise. This is in contrast to `car`, which signals an error if `object` is not a list.
 
-        (car-safe object)
-        ≡
-        (let ((x object))
-          (if (consp x)
-              (car x)
-            nil))
+    ```lisp
+    (car-safe object)
+    ≡
+    (let ((x object))
+      (if (consp x)
+          (car x)
+        nil))
+    ```
 
 <!---->
 
@@ -71,12 +59,14 @@ Next: [Building Lists](Building-Lists.html), Previous: [List-related Predicates]
 
     This function lets you take the CDR of a cons cell while avoiding errors for other data types. It returns the CDR of `object` if `object` is a cons cell, `nil` otherwise. This is in contrast to `cdr`, which signals an error if `object` is not a list.
 
-        (cdr-safe object)
-        ≡
-        (let ((x object))
-          (if (consp x)
-              (cdr x)
-            nil))
+    ```lisp
+    (cdr-safe object)
+    ≡
+    (let ((x object))
+      (if (consp x)
+          (cdr x)
+        nil))
+    ```
 
 <!---->
 
@@ -84,14 +74,16 @@ Next: [Building Lists](Building-Lists.html), Previous: [List-related Predicates]
 
     This macro provides a convenient way to examine the CAR of a list, and take it off the list, all at once. It operates on the list stored in `listname`. It removes the first element from the list, saves the CDR into `listname`, then returns the removed element.
 
-    In the simplest case, `listname` is an unquoted symbol naming a list; in that case, this macro is equivalent to `(prog1 (car listname) (setq listname (cdr listname)))`<!-- /@w -->.
+    In the simplest case, `listname` is an unquoted symbol naming a list; in that case, this macro is equivalent to `(prog1 (car listname) (setq listname (cdr listname)))`.
 
-        x
-             ⇒ (a b c)
-        (pop x)
-             ⇒ a
-        x
-             ⇒ (b c)
+    ```lisp
+    x
+         ⇒ (a b c)
+    (pop x)
+         ⇒ a
+    x
+         ⇒ (b c)
+    ```
 
     More generally, `listname` can be a generalized variable. In that case, this macro saves into `listname` using `setf`. See [Generalized Variables](Generalized-Variables.html).
 
@@ -103,15 +95,17 @@ Next: [Building Lists](Building-Lists.html), Previous: [List-related Predicates]
 
     This function returns the `n`th element of `list`. Elements are numbered starting with zero, so the CAR of `list` is element number zero. If the length of `list` is `n` or less, the value is `nil`.
 
-        (nth 2 '(1 2 3 4))
-             ⇒ 3
+    ```lisp
+    (nth 2 '(1 2 3 4))
+         ⇒ 3
+    ```
 
-    <!---->
+    ```lisp
+    (nth 10 '(1 2 3 4))
+         ⇒ nil
 
-        (nth 10 '(1 2 3 4))
-             ⇒ nil
-
-        (nth n x) ≡ (car (nthcdr n x))
+    (nth n x) ≡ (car (nthcdr n x))
+    ```
 
     The function `elt` is similar, but applies to any kind of sequence. For historical reasons, it takes its arguments in the opposite order. See [Sequence Functions](Sequence-Functions.html).
 
@@ -123,18 +117,20 @@ Next: [Building Lists](Building-Lists.html), Previous: [List-related Predicates]
 
     If `n` is zero, `nthcdr` returns all of `list`. If the length of `list` is `n` or less, `nthcdr` returns `nil`.
 
-        (nthcdr 1 '(1 2 3 4))
-             ⇒ (2 3 4)
+    ```lisp
+    (nthcdr 1 '(1 2 3 4))
+         ⇒ (2 3 4)
+    ```
 
-    <!---->
+    ```lisp
+    (nthcdr 10 '(1 2 3 4))
+         ⇒ nil
+    ```
 
-        (nthcdr 10 '(1 2 3 4))
-             ⇒ nil
-
-    <!---->
-
-        (nthcdr 0 '(1 2 3 4))
-             ⇒ (1 2 3 4)
+    ```lisp
+    (nthcdr 0 '(1 2 3 4))
+         ⇒ (1 2 3 4)
+    ```
 
 <!---->
 

@@ -1,22 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
 
 Next: [Overlay Properties](Overlay-Properties.html), Up: [Overlays](Overlays.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
@@ -92,54 +74,56 @@ This section describes the functions to create, delete and move overlays, and to
 
 Here are some examples:
 
-    ;; Create an overlay.
-    (setq foo (make-overlay 1 10))
-         ⇒ #<overlay from 1 to 10 in display.texi>
-    (overlay-start foo)
-         ⇒ 1
-    (overlay-end foo)
-         ⇒ 10
-    (overlay-buffer foo)
-         ⇒ #<buffer display.texi>
-    ;; Give it a property we can check later.
-    (overlay-put foo 'happy t)
-         ⇒ t
-    ;; Verify the property is present.
-    (overlay-get foo 'happy)
-         ⇒ t
-    ;; Move the overlay.
-    (move-overlay foo 5 20)
-         ⇒ #<overlay from 5 to 20 in display.texi>
-    (overlay-start foo)
-         ⇒ 5
-    (overlay-end foo)
-         ⇒ 20
-    ;; Delete the overlay.
-    (delete-overlay foo)
-         ⇒ nil
-    ;; Verify it is deleted.
-    foo
-         ⇒ #<overlay in no buffer>
-    ;; A deleted overlay has no position.
-    (overlay-start foo)
-         ⇒ nil
-    (overlay-end foo)
-         ⇒ nil
-    (overlay-buffer foo)
-         ⇒ nil
-    ;; Undelete the overlay.
-    (move-overlay foo 1 20)
-         ⇒ #<overlay from 1 to 20 in display.texi>
-    ;; Verify the results.
-    (overlay-start foo)
-         ⇒ 1
-    (overlay-end foo)
-         ⇒ 20
-    (overlay-buffer foo)
-         ⇒ #<buffer display.texi>
-    ;; Moving and deleting the overlay does not change its properties.
-    (overlay-get foo 'happy)
-         ⇒ t
+```lisp
+;; Create an overlay.
+(setq foo (make-overlay 1 10))
+     ⇒ #<overlay from 1 to 10 in display.texi>
+(overlay-start foo)
+     ⇒ 1
+(overlay-end foo)
+     ⇒ 10
+(overlay-buffer foo)
+     ⇒ #<buffer display.texi>
+;; Give it a property we can check later.
+(overlay-put foo 'happy t)
+     ⇒ t
+;; Verify the property is present.
+(overlay-get foo 'happy)
+     ⇒ t
+;; Move the overlay.
+(move-overlay foo 5 20)
+     ⇒ #<overlay from 5 to 20 in display.texi>
+(overlay-start foo)
+     ⇒ 5
+(overlay-end foo)
+     ⇒ 20
+;; Delete the overlay.
+(delete-overlay foo)
+     ⇒ nil
+;; Verify it is deleted.
+foo
+     ⇒ #<overlay in no buffer>
+;; A deleted overlay has no position.
+(overlay-start foo)
+     ⇒ nil
+(overlay-end foo)
+     ⇒ nil
+(overlay-buffer foo)
+     ⇒ nil
+;; Undelete the overlay.
+(move-overlay foo 1 20)
+     ⇒ #<overlay from 1 to 20 in display.texi>
+;; Verify the results.
+(overlay-start foo)
+     ⇒ 1
+(overlay-end foo)
+     ⇒ 20
+(overlay-buffer foo)
+     ⇒ #<buffer display.texi>
+;; Moving and deleting the overlay does not change its properties.
+(overlay-get foo 'happy)
+     ⇒ t
+```
 
 Emacs stores the overlays of each buffer in two lists, divided around an arbitrary center position. One list extends backwards through the buffer from that center position, and the other extends forwards from that center position. The center position can be anywhere in the buffer.
 

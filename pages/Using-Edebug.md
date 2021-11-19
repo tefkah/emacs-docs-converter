@@ -1,22 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
 
 Next: [Instrumenting](Instrumenting.html), Up: [Edebug](Edebug.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
@@ -32,24 +14,30 @@ An arrow in the left fringe indicates the line where the function is executing. 
 
 If you instrument the definition of `fac` (shown below) and then execute `(fac 3)`, here is what you would normally see. Point is at the open-parenthesis before `if`.
 
-    (defun fac (n)
-    =>∗(if (< 0 n)
-          (* n (fac (1- n)))
-        1))
+```lisp
+(defun fac (n)
+=>∗(if (< 0 n)
+      (* n (fac (1- n)))
+    1))
+```
 
 The places within a function where Edebug can stop execution are called *stop points*. These occur both before and after each subexpression that is a list, and also after each variable reference. Here we use periods to show the stop points in the function `fac`:
 
-    (defun fac (n)
-      .(if .(< 0 n.).
-          .(* n. .(fac .(1- n.).).).
-        1).)
+```lisp
+(defun fac (n)
+  .(if .(< 0 n.).
+      .(* n. .(fac .(1- n.).).).
+    1).)
+```
 
 The special commands of Edebug are available in the source code buffer in addition to the commands of Emacs Lisp mode. For example, you can type the Edebug command `SPC` to execute until the next stop point. If you type `SPC` once after entry to `fac`, here is the display you will see:
 
-    (defun fac (n)
-    =>(if ∗(< 0 n)
-          (* n (fac (1- n)))
-        1))
+```lisp
+(defun fac (n)
+=>(if ∗(< 0 n)
+      (* n (fac (1- n)))
+    1))
+```
 
 When Edebug stops execution after an expression, it displays the expression’s value in the echo area.
 

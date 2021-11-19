@@ -1,22 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
 
 Next: [Module Nonlocal](Module-Nonlocal.html), Previous: [Module Values](Module-Values.html), Up: [Writing Dynamic Modules](Writing-Dynamic-Modules.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
@@ -52,11 +34,13 @@ This subsection describes a few convenience functions provided by the module API
 
     Together with `funcall`, described below, this function provides a means for invoking any Lisp-callable Emacs function, provided that its name is a pure ASCII string. For example, here’s how to intern a symbol whose name `name_str` is non-ASCII, by calling the more powerful Emacs `intern` function (see [Creating Symbols](Creating-Symbols.html)):
 
-        emacs_value fintern = env->intern (env, "intern");
-        emacs_value sym_name =
-          env->make_string (env, name_str, strlen (name_str));
-        emacs_value intern_args[] = { sym_name, env->intern (env, "nil") };
-        emacs_value symbol = env->funcall (env, fintern, 2, intern_args);
+    ```lisp
+    emacs_value fintern = env->intern (env, "intern");
+    emacs_value sym_name =
+      env->make_string (env, name_str, strlen (name_str));
+    emacs_value intern_args[] = { sym_name, env->intern (env, "nil") };
+    emacs_value symbol = env->funcall (env, fintern, 2, intern_args);
+    ```
 
 <!---->
 

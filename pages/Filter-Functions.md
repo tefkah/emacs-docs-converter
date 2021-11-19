@@ -1,22 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
 
 Next: [Decoding Output](Decoding-Output.html), Previous: [Process Buffers](Process-Buffers.html), Up: [Output from Processes](Output-from-Processes.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
@@ -34,23 +16,27 @@ If an error happens during execution of a filter function, it is caught automati
 
 Many filter functions sometimes (or always) insert the output in the process’s buffer, mimicking the actions of the default filter. Such filter functions need to make sure that they save the current buffer, select the correct buffer (if different) before inserting output, and then restore the original buffer. They should also check whether the buffer is still alive, update the process marker, and in some cases update the value of point. Here is how to do these things:
 
-    (defun ordinary-insertion-filter (proc string)
-      (when (buffer-live-p (process-buffer proc))
-        (with-current-buffer (process-buffer proc)
-          (let ((moving (= (point) (process-mark proc))))
+```lisp
+(defun ordinary-insertion-filter (proc string)
+  (when (buffer-live-p (process-buffer proc))
+    (with-current-buffer (process-buffer proc)
+      (let ((moving (= (point) (process-mark proc))))
+```
 
-<!---->
-
-            (save-excursion
-              ;; Insert the text, advancing the process marker.
-              (goto-char (process-mark proc))
-              (insert string)
-              (set-marker (process-mark proc) (point)))
-            (if moving (goto-char (process-mark proc)))))))
+```lisp
+        (save-excursion
+          ;; Insert the text, advancing the process marker.
+          (goto-char (process-mark proc))
+          (insert string)
+          (set-marker (process-mark proc) (point)))
+        (if moving (goto-char (process-mark proc)))))))
+```
 
 To make the filter force the process buffer to be visible whenever new text arrives, you could insert a line like the following just before the `with-current-buffer` construct:
 
-    (display-buffer (process-buffer proc))
+```lisp
+(display-buffer (process-buffer proc))
+```
 
 To force point to the end of the new output, no matter where it was previously, eliminate the variable `moving` from the example and call `goto-char` unconditionally. Note that this doesn’t necessarily move the window point. The default filter actually uses `insert-before-markers` which moves all markers, including the window point. This may move unrelated markers, so it’s generally better to move the window point explicitly, or set its insertion type to `t` (see [Window Point](Window-Point.html)).
 
@@ -72,36 +58,38 @@ In case the process’s output needs to be passed to several filters, you can us
 
 Here is an example of the use of a filter function:
 
-    (defun keep-output (process output)
-       (setq kept (cons output kept)))
-         ⇒ keep-output
+```lisp
+(defun keep-output (process output)
+   (setq kept (cons output kept)))
+     ⇒ keep-output
+```
 
-<!---->
+```lisp
+(setq kept nil)
+     ⇒ nil
+```
 
-    (setq kept nil)
-         ⇒ nil
+```lisp
+(set-process-filter (get-process "shell") 'keep-output)
+     ⇒ keep-output
+```
 
-<!---->
+```lisp
+(process-send-string "shell" "ls ~/other\n")
+     ⇒ nil
+kept
+     ⇒ ("lewis@slug:$ "
+```
 
-    (set-process-filter (get-process "shell") 'keep-output)
-         ⇒ keep-output
-
-<!---->
-
-    (process-send-string "shell" "ls ~/other\n")
-         ⇒ nil
-    kept
-         ⇒ ("lewis@slug:$ "
-
-<!---->
-
-    "FINAL-W87-SHORT.MSS    backup.otl              kolstad.mss~
-    address.txt             backup.psf              kolstad.psf
-    backup.bib~             david.mss               resume-Dec-86.mss~
-    backup.err              david.psf               resume-Dec.psf
-    backup.mss              dland                   syllabus.mss
-    "
-    "#backups.mss#          backup.mss~             kolstad.mss
-    ")
+```lisp
+"FINAL-W87-SHORT.MSS    backup.otl              kolstad.mss~
+address.txt             backup.psf              kolstad.psf
+backup.bib~             david.mss               resume-Dec-86.mss~
+backup.err              david.psf               resume-Dec.psf
+backup.mss              dland                   syllabus.mss
+"
+"#backups.mss#          backup.mss~             kolstad.mss
+")
+```
 
 Next: [Decoding Output](Decoding-Output.html), Previous: [Process Buffers](Process-Buffers.html), Up: [Output from Processes](Output-from-Processes.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]

@@ -1,22 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
 
 Next: [Error Symbols](Error-Symbols.html), Previous: [Processing of Errors](Processing-of-Errors.html), Up: [Errors](Errors.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
@@ -24,9 +6,11 @@ Next: [Error Symbols](Error-Symbols.html), Previous: [Processing of Errors](Proc
 
 The usual effect of signaling an error is to terminate the command that is running and return immediately to the Emacs editor command loop. You can arrange to trap errors occurring in a part of your program by establishing an error handler, with the special form `condition-case`. A simple example looks like this:
 
-    (condition-case nil
-        (delete-file filename)
-      (error nil))
+```lisp
+(condition-case nil
+    (delete-file filename)
+  (error nil))
+```
 
 This deletes the file named `filename`, catching any error and returning `nil` if an error occurs. (You can use the macro `ignore-errors` for a simple case like this; see below.)
 
@@ -42,9 +26,11 @@ If an error is handled by some `condition-case` form, this ordinarily prevents t
 
 If you want to be able to debug errors that are caught by a `condition-case`, set the variable `debug-on-signal` to a non-`nil` value. You can also specify that a particular handler should let the debugger run first, by writing `debug` among the conditions, like this:
 
-    (condition-case nil
-        (delete-file filename)
-      ((debug error) nil))
+```lisp
+(condition-case nil
+    (delete-file filename)
+  ((debug error) nil))
+```
 
 The effect of `debug` here is only to prevent `condition-case` from suppressing the call to the debugger. Any given error will invoke the debugger only if `debug-on-error` and the other usual filtering mechanisms say it should. See [Error Debugging](Error-Debugging.html).
 
@@ -64,13 +50,15 @@ Error signaling and handling have some resemblance to `throw` and `catch` (see [
 
     Each of the `handlers` is a list of the form `(conditions body…)`. Here `conditions` is an error condition name to be handled, or a list of condition names (which can include `debug` to allow the debugger to run before the handler). A condition name of `t` matches any condition. `body` is one or more Lisp expressions to be executed when this handler handles an error. Here are examples of handlers:
 
-        (error nil)
+    ```lisp
+    (error nil)
 
-        (arith-error (message "Division by zero"))
+    (arith-error (message "Division by zero"))
 
-        ((arith-error file-error)
-         (message
-          "Either division by zero or failure to open a file"))
+    ((arith-error file-error)
+     (message
+      "Either division by zero or failure to open a file"))
+    ```
 
     Each error that occurs has an *error symbol* that describes what kind of error it is, and which describes also a list of condition names (see [Error Symbols](Error-Symbols.html)). Emacs searches all the active `condition-case` forms for a handler that specifies one or more of these condition names; the innermost matching `condition-case` handles the error. Within this `condition-case`, the first applicable handler handles the error.
 
@@ -82,7 +70,9 @@ Error signaling and handling have some resemblance to `throw` and `catch` (see [
 
     Sometimes it is necessary to re-throw a signal caught by `condition-case`, for some outer-level handler to catch. Here’s how to do that:
 
-          (signal (car err) (cdr err))
+    ```lisp
+      (signal (car err) (cdr err))
+    ```
 
     where `err` is the error description variable, the first argument to `condition-case` whose error condition you want to re-throw. See [Definition of signal](Signaling-Errors.html#Definition-of-signal).
 
@@ -94,50 +84,60 @@ Error signaling and handling have some resemblance to `throw` and `catch` (see [
 
 Here is an example of using `condition-case` to handle the error that results from dividing by zero. The handler displays the error message (but without a beep), then returns a very large number.
 
-    (defun safe-divide (dividend divisor)
-      (condition-case err
-          ;; Protected form.
-          (/ dividend divisor)
-
-<!---->
-
-        ;; The handler.
-        (arith-error                        ; Condition.
-         ;; Display the usual message for this error.
-         (message "%s" (error-message-string err))
-         1000000)))
-    ⇒ safe-divide
-
-```
+```lisp
+(defun safe-divide (dividend divisor)
+  (condition-case err
+      ;; Protected form.
+      (/ dividend divisor)
 ```
 
-    (safe-divide 5 0)
-         -| Arithmetic error: (arith-error)
-    ⇒ 1000000
+```lisp
+    ;; The handler.
+    (arith-error                        ; Condition.
+     ;; Display the usual message for this error.
+     (message "%s" (error-message-string err))
+     1000000)))
+⇒ safe-divide
+```
+
+```lisp
+```
+
+```lisp
+(safe-divide 5 0)
+     -| Arithmetic error: (arith-error)
+⇒ 1000000
+```
 
 The handler specifies condition name `arith-error` so that it will handle only division-by-zero errors. Other kinds of errors will not be handled (by this `condition-case`). Thus:
 
-    (safe-divide nil 3)
-         error→ Wrong type argument: number-or-marker-p, nil
+```lisp
+(safe-divide nil 3)
+     error→ Wrong type argument: number-or-marker-p, nil
+```
 
 Here is a `condition-case` that catches all kinds of errors, including those from `error`:
 
-    (setq baz 34)
-         ⇒ 34
-
+```lisp
+(setq baz 34)
+     ⇒ 34
 ```
+
+```lisp
 ```
 
-    (condition-case err
-        (if (eq baz 35)
-            t
-          ;; This is a call to the function error.
-          (error "Rats!  The variable %s was %s, not 35" 'baz baz))
-      ;; This is the handler; it is not a form.
-      (error (princ (format "The error was: %s" err))
-             2))
-    -| The error was: (error "Rats!  The variable baz was 34, not 35")
-    ⇒ 2
+```lisp
+(condition-case err
+    (if (eq baz 35)
+        t
+      ;; This is a call to the function error.
+      (error "Rats!  The variable %s was %s, not 35" 'baz baz))
+  ;; This is the handler; it is not a form.
+  (error (princ (format "The error was: %s" err))
+         2))
+-| The error was: (error "Rats!  The variable baz was 34, not 35")
+⇒ 2
+```
 
 *   Macro: **ignore-errors** *body…*
 
@@ -145,8 +145,10 @@ Here is a `condition-case` that catches all kinds of errors, including those fro
 
     Here’s the example at the beginning of this subsection rewritten using `ignore-errors`:
 
-          (ignore-errors
-           (delete-file filename))
+    ```lisp
+      (ignore-errors
+       (delete-file filename))
+    ```
 
 <!---->
 
@@ -154,8 +156,10 @@ Here is a `condition-case` that catches all kinds of errors, including those fro
 
     This macro is like `ignore-errors`, but will only ignore the specific error condition specified.
 
-          (ignore-error end-of-file
-            (read ""))
+    ```lisp
+      (ignore-error end-of-file
+        (read ""))
+    ```
 
     `condition` can also be a list of error conditions.
 

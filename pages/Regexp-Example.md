@@ -1,22 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
 
 Next: [Rx Notation](Rx-Notation.html), Previous: [Syntax of Regexps](Syntax-of-Regexps.html), Up: [Regular Expressions](Regular-Expressions.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
@@ -26,9 +8,11 @@ Here is a complicated regexp which was formerly used by Emacs to recognize the e
 
 Below, we show first the regexp as a string in Lisp syntax (to distinguish spaces from tab characters), and then the result of evaluating it. The string constant begins and ends with a double-quote. ‘`\"`’ stands for a double-quote as part of the string, ‘`\\`’ for a backslash as part of the string, ‘`\t`’ for a tab and ‘`\n`’ for a newline.
 
-    "[.?!][]\"')}]*\\($\\| $\\|\t\\|  \\)[ \t\n]*"
-         ⇒ "[.?!][]\"')}]*\\($\\| $\\|  \\|  \\)[
-    ]*"
+```lisp
+"[.?!][]\"')}]*\\($\\| $\\|\t\\|  \\)[ \t\n]*"
+     ⇒ "[.?!][]\"')}]*\\($\\| $\\|  \\|  \\)[
+]*"
+```
 
 In the output, tab and newline appear as themselves.
 
@@ -52,13 +36,15 @@ This regular expression contains four parts in succession and can be deciphered 
 
 In the `rx` notation (see [Rx Notation](Rx-Notation.html)), the regexp could be written
 
-    (rx (any ".?!")                    ; Punctuation ending sentence.
-        (zero-or-more (any "\"')]}"))  ; Closing quotes or brackets.
-        (or line-end
-            (seq " " line-end)
-            "\t"
-            "  ")                      ; Two spaces.
-        (zero-or-more (any "\t\n ")))  ; Optional extra whitespace.
+```lisp
+(rx (any ".?!")                    ; Punctuation ending sentence.
+    (zero-or-more (any "\"')]}"))  ; Closing quotes or brackets.
+    (or line-end
+        (seq " " line-end)
+        "\t"
+        "  ")                      ; Two spaces.
+    (zero-or-more (any "\t\n ")))  ; Optional extra whitespace.
+```
 
 Since `rx` regexps are just S-expressions, they can be formatted and commented as such.
 

@@ -1,22 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
 
 Next: [Line Height](Line-Height.html), Previous: [Overlays](Overlays.html), Up: [Display](Display.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
@@ -48,10 +30,12 @@ Since not all characters have the same width, these functions let you check the 
 
     If `ellipsis` is non-`nil`, it should be a string which will replace the end of `string` (including any padding) if it extends beyond `width`, unless the display width of `string` is equal to or less than the display width of `ellipsis`. If `ellipsis` is non-`nil` and not a string, it stands for the value of the variable `truncate-string-ellipsis`.
 
-        (truncate-string-to-width "\tab\t" 12 4)
-             ⇒ "ab"
-        (truncate-string-to-width "\tab\t" 12 4 ?\s)
-             ⇒ "    ab  "
+    ```lisp
+    (truncate-string-to-width "\tab\t" 12 4)
+         ⇒ "ab"
+    (truncate-string-to-width "\tab\t" 12 4 ?\s)
+         ⇒ "    ab  "
+    ```
 
 The following function returns the size in pixels of text as if it were displayed in a given window. This function is used by `fit-window-to-buffer` and `fit-frame-to-buffer` (see [Resizing Windows](Resizing-Windows.html)) to make a window exactly as large as the text it contains.
 

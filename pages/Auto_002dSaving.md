@@ -1,22 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
 
 Next: [Reverting](Reverting.html), Previous: [Backup Files](Backup-Files.html), Up: [Backups and Auto-Saving](Backups-and-Auto_002dSaving.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
@@ -28,8 +10,10 @@ Emacs periodically saves all files that you are visiting; this is called *auto-s
 
     This buffer-local variable is the name of the file used for auto-saving the current buffer. It is `nil` if the buffer should not be auto-saved.
 
-        buffer-auto-save-file-name
-             ⇒ "/xcssun/users/rms/lewis/#backups.texi#"
+    ```lisp
+    buffer-auto-save-file-name
+         ⇒ "/xcssun/users/rms/lewis/#backups.texi#"
+    ```
 
 <!---->
 
@@ -45,24 +29,28 @@ Emacs periodically saves all files that you are visiting; this is called *auto-s
 
     This function returns a non-`nil` value if `filename` is a string that could be the name of an auto-save file. It assumes the usual naming convention for auto-save files: a name that begins and ends with hash marks (‘`#`’) is a possible auto-save file name. The argument `filename` should not contain a directory part.
 
-        (make-auto-save-file-name)
-             ⇒ "/xcssun/users/rms/lewis/#backups.texi#"
+    ```lisp
+    (make-auto-save-file-name)
+         ⇒ "/xcssun/users/rms/lewis/#backups.texi#"
+    ```
 
-    <!---->
+    ```lisp
+    (auto-save-file-name-p "#backups.texi#")
+         ⇒ 0
+    ```
 
-        (auto-save-file-name-p "#backups.texi#")
-             ⇒ 0
-
-    <!---->
-
-        (auto-save-file-name-p "backups.texi")
-             ⇒ nil
+    ```lisp
+    (auto-save-file-name-p "backups.texi")
+         ⇒ nil
+    ```
 
     The standard definition of this function is as follows:
 
-        (defun auto-save-file-name-p (filename)
-          "Return non-nil if FILENAME can be yielded by..."
-          (string-match "^#.*#$" filename))
+    ```lisp
+    (defun auto-save-file-name-p (filename)
+      "Return non-nil if FILENAME can be yielded by..."
+      (string-match "^#.*#$" filename))
+    ```
 
     This function exists so that you can customize it if you wish to change the naming convention for auto-save files. If you redefine it, be sure to redefine the function `make-auto-save-file-name` correspondingly.
 
@@ -72,25 +60,29 @@ Emacs periodically saves all files that you are visiting; this is called *auto-s
 
     This function returns the file name to use for auto-saving the current buffer. This is just the file name with hash marks (‘`#`’) prepended and appended to it. This function does not look at the variable `auto-save-visited-file-name` (described below); callers of this function should check that variable first.
 
-        (make-auto-save-file-name)
-             ⇒ "/xcssun/users/rms/lewis/#backups.texi#"
+    ```lisp
+    (make-auto-save-file-name)
+         ⇒ "/xcssun/users/rms/lewis/#backups.texi#"
+    ```
 
     Here is a simplified version of the standard definition of this function:
 
-        (defun make-auto-save-file-name ()
-          "Return file name to use for auto-saves \
-        of current buffer.."
-          (if buffer-file-name
+    ```lisp
+    (defun make-auto-save-file-name ()
+      "Return file name to use for auto-saves \
+    of current buffer.."
+      (if buffer-file-name
+    ```
 
-    <!---->
-
-              (concat
-               (file-name-directory buffer-file-name)
-               "#"
-               (file-name-nondirectory buffer-file-name)
-               "#")
-            (expand-file-name
-             (concat "#%" (buffer-name) "#"))))
+    ```lisp
+          (concat
+           (file-name-directory buffer-file-name)
+           "#"
+           (file-name-nondirectory buffer-file-name)
+           "#")
+        (expand-file-name
+         (concat "#%" (buffer-name) "#"))))
+    ```
 
     This exists as a separate function so that you can redefine it to customize the naming convention for auto-save files. Be sure to change `auto-save-file-name-p` in a corresponding way.
 

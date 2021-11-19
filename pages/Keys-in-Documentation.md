@@ -1,22 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
 
 Next: [Text Quoting Style](Text-Quoting-Style.html), Previous: [Accessing Documentation](Accessing-Documentation.html), Up: [Documentation](Documentation.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
@@ -66,25 +48,31 @@ Here is a list of the special sequences and what they mean:
 
     If a command has multiple bindings, this function normally uses the first one it finds. You can specify one particular key binding by assigning an `:advertised-binding` symbol property to the command, like this:
 
-        (put 'undo :advertised-binding [?\C-/])
+    ```lisp
+    (put 'undo :advertised-binding [?\C-/])
+    ```
 
     The `:advertised-binding` property also affects the binding shown in menu items (see [Menu Bar](Menu-Bar.html)). The property is ignored if it specifies a key binding that the command does not actually have.
 
 Here are examples of the special sequences:
 
-    (substitute-command-keys
-       "To abort recursive edit, type `\\[abort-recursive-edit]'.")
-    ⇒ "To abort recursive edit, type ‘C-]’."
-
+```lisp
+(substitute-command-keys
+   "To abort recursive edit, type `\\[abort-recursive-edit]'.")
+⇒ "To abort recursive edit, type ‘C-]’."
 ```
+
+```lisp
 ```
 
-    (substitute-command-keys
-       "The keys that are defined for the minibuffer here are:
-      \\{minibuffer-local-must-match-map}")
-    ⇒ "The keys that are defined for the minibuffer here are:
-
+```lisp
+(substitute-command-keys
+   "The keys that are defined for the minibuffer here are:
+  \\{minibuffer-local-must-match-map}")
+⇒ "The keys that are defined for the minibuffer here are:
 ```
+
+```lisp
 
 ?               minibuffer-completion-help
 SPC             minibuffer-complete-word
@@ -95,10 +83,12 @@ C-g             abort-recursive-edit
 "
 ```
 
-    (substitute-command-keys
-       "To abort a recursive edit from the minibuffer, type \
-    `\\<minibuffer-local-must-match-map>\\[abort-recursive-edit]'.")
-    ⇒ "To abort a recursive edit from the minibuffer, type ‘C-g’."
+```lisp
+(substitute-command-keys
+   "To abort a recursive edit from the minibuffer, type \
+`\\<minibuffer-local-must-match-map>\\[abort-recursive-edit]'.")
+⇒ "To abort a recursive edit from the minibuffer, type ‘C-g’."
+```
 
 There are other special conventions for the text in documentation strings—for instance, you can refer to functions, variables, and sections of this manual. See [Documentation Tips](Documentation-Tips.html), for details.
 

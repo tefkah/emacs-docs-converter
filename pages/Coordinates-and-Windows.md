@@ -1,22 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
 
 Next: [Mouse Window Auto-selection](Mouse-Window-Auto_002dselection.html), Previous: [Horizontal Scrolling](Horizontal-Scrolling.html), Up: [Windows](Windows.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
@@ -134,11 +116,13 @@ The following functions return window positions in pixels, relative to the origi
 
     Combined with `set-mouse-absolute-pixel-position`, this function can be used to move the mouse pointer to an arbitrary buffer position visible in some window:
 
-        (let ((edges (window-absolute-body-pixel-edges))
-              (position (pos-visible-in-window-p nil nil t)))
-          (set-mouse-absolute-pixel-position
-           (+ (nth 0 edges) (nth 0 position))
-           (+ (nth 1 edges) (nth 1 position))))
+    ```lisp
+    (let ((edges (window-absolute-body-pixel-edges))
+          (position (pos-visible-in-window-p nil nil t)))
+      (set-mouse-absolute-pixel-position
+       (+ (nth 0 edges) (nth 0 position))
+       (+ (nth 1 edges) (nth 1 position))))
+    ```
 
     On a graphical terminal this form “warps” the mouse cursor to the upper left corner of the glyph at the selected window’s point. A position calculated this way can be also used to show a tooltip window there.
 
@@ -152,9 +136,11 @@ The following function returns the screen coordinates of a buffer position visib
 
     This means that in order to move the mouse pointer to the position of point in the selected window, it’s sufficient to write:
 
-        (let ((position (window-absolute-pixel-position)))
-          (set-mouse-absolute-pixel-position
-           (car position) (cdr position)))
+    ```lisp
+    (let ((position (window-absolute-pixel-position)))
+      (set-mouse-absolute-pixel-position
+       (car position) (cdr position)))
+    ```
 
 The following function returns the largest rectangle that can be inscribed in a window without covering text displayed in that window.
 

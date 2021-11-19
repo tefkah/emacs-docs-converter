@@ -1,22 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
 
 Previous: [Lexical Binding](Lexical-Binding.html), Up: [Variable Scoping](Variable-Scoping.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
@@ -36,22 +18,24 @@ Even when lexical binding is enabled, certain variables will continue to be dyna
 
 Using `defvar` without a value, it is possible to bind a variable dynamically just in one file, or in just one part of a file while still binding it lexically elsewhere. For example:
 
-    (let (_)
-      (defvar x)      ; Let-bindings of x will be dynamic within this let.
-      (let ((x -99))  ; This is a dynamic binding of x.
-        (defun get-dynamic-x ()
-          x)))
+```lisp
+(let (_)
+  (defvar x)      ; Let-bindings of x will be dynamic within this let.
+  (let ((x -99))  ; This is a dynamic binding of x.
+    (defun get-dynamic-x ()
+      x)))
 
-    (let ((x 'lexical)) ; This is a lexical binding of x.
-      (defun get-lexical-x ()
-        x))
+(let ((x 'lexical)) ; This is a lexical binding of x.
+  (defun get-lexical-x ()
+    x))
 
-    (let (_)
-      (defvar x)
-      (let ((x 'dynamic))
-        (list (get-lexical-x)
-              (get-dynamic-x))))
-        ⇒ (lexical dynamic)
+(let (_)
+  (defvar x)
+  (let ((x 'dynamic))
+    (list (get-lexical-x)
+          (get-dynamic-x))))
+    ⇒ (lexical dynamic)
+```
 
 *   Function: **special-variable-p** *symbol*
 

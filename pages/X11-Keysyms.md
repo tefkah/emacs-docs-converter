@@ -1,22 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
 
 Next: [Batch Mode](Batch-Mode.html), Previous: [Sound Output](Sound-Output.html), Up: [System Interface](System-Interface.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
@@ -44,5 +26,7 @@ You can specify which keysyms Emacs should use for the Control, Meta, Alt, Hyper
 
     The name of the keysym that should stand for the Control modifier (respectively, for Alt, Meta, Hyper, and Super). For example, here is how to swap the Meta and Alt modifiers within Emacs:
 
-        (setq x-alt-keysym 'meta)
-        (setq x-meta-keysym 'alt)
+    ```lisp
+    (setq x-alt-keysym 'meta)
+    (setq x-meta-keysym 'alt)
+    ```

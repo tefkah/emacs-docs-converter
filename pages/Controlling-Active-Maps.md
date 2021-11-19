@@ -1,22 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
 
 Next: [Key Lookup](Key-Lookup.html), Previous: [Searching Keymaps](Searching-Keymaps.html), Up: [Keymaps](Keymaps.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
@@ -34,9 +16,11 @@ Next: [Key Lookup](Key-Lookup.html), Previous: [Searching Keymaps](Searching-Key
 
     This function returns the current global keymap. This is the same as the value of `global-map` unless you change one or the other. The return value is a reference, not a copy; if you use `define-key` or other functions on it you will alter global bindings.
 
-        (current-global-map)
-        ⇒ (keymap [set-mark-command beginning-of-line …
-                    delete-backward-char])
+    ```lisp
+    (current-global-map)
+    ⇒ (keymap [set-mark-command beginning-of-line …
+                delete-backward-char])
+    ```
 
 <!---->
 
@@ -44,17 +28,19 @@ Next: [Key Lookup](Key-Lookup.html), Previous: [Searching Keymaps](Searching-Key
 
     This function returns the current buffer’s local keymap, or `nil` if it has none. In the following example, the keymap for the `*scratch*` buffer (using Lisp Interaction mode) is a sparse keymap in which the entry for `ESC`, ASCII code 27, is another sparse keymap.
 
-        (current-local-map)
-        ⇒ (keymap
-            (10 . eval-print-last-sexp)
-            (9 . lisp-indent-line)
-            (127 . backward-delete-char-untabify)
+    ```lisp
+    (current-local-map)
+    ⇒ (keymap
+        (10 . eval-print-last-sexp)
+        (9 . lisp-indent-line)
+        (127 . backward-delete-char-untabify)
+    ```
 
-    <!---->
-
-            (27 keymap
-                (24 . eval-defun)
-                (17 . indent-sexp)))
+    ```lisp
+        (27 keymap
+            (24 . eval-defun)
+            (17 . indent-sexp)))
+    ```
 
 `current-local-map` returns a reference to the local keymap, not a copy of it; if you use `define-key` or other functions on it you will alter local bindings.
 
@@ -82,7 +68,9 @@ Next: [Key Lookup](Key-Lookup.html), Previous: [Searching Keymaps](Searching-Key
 
     This variable is an alist describing keymaps that may or may not be active according to the values of certain variables. Its elements look like this:
 
-        (variable . keymap)
+    ```lisp
+    (variable . keymap)
+    ```
 
     The keymap `keymap` is active whenever `variable` has a non-`nil` value. Typically `variable` is the variable that enables or disables a minor mode. See [Keymaps and Minor Modes](Keymaps-and-Minor-Modes.html).
 

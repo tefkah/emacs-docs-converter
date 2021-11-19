@@ -1,22 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
 
 Next: [Comparing Text](Comparing-Text.html), Previous: [Near Point](Near-Point.html), Up: [Text](Text.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
@@ -30,28 +12,34 @@ This section describes functions that allow a Lisp program to convert any portio
 
     Here’s an example which assumes Font-Lock mode is not enabled:
 
-        ---------- Buffer: foo ----------
-        This is the contents of buffer foo
+    ```lisp
+    ---------- Buffer: foo ----------
+    This is the contents of buffer foo
 
-        ---------- Buffer: foo ----------
-
+    ---------- Buffer: foo ----------
     ```
+
+    ```lisp
     ```
 
-        (buffer-substring 1 10)
-             ⇒ "This is t"
+    ```lisp
+    (buffer-substring 1 10)
+         ⇒ "This is t"
+    ```
 
-    <!---->
-
-        (buffer-substring (point-max) 10)
-             ⇒ "he contents of buffer foo\n"
+    ```lisp
+    (buffer-substring (point-max) 10)
+         ⇒ "he contents of buffer foo\n"
+    ```
 
     If the text being copied has any text properties, these are copied into the string along with the characters they belong to. See [Text Properties](Text-Properties.html). However, overlays (see [Overlays](Overlays.html)) in the buffer and their properties are ignored, not copied.
 
     For example, if Font-Lock mode is enabled, you might get results like these:
 
-        (buffer-substring 1 10)
-             ⇒ #("This is t" 0 1 (fontified t) 1 9 (fontified t))
+    ```lisp
+    (buffer-substring 1 10)
+         ⇒ #("This is t" 0 1 (fontified t) 1 9 (fontified t))
+    ```
 
 <!---->
 
@@ -117,16 +105,18 @@ The following two variables are obsoleted by `filter-buffer-substring-function`,
 
     When the optional argument `no-properties` is non-`nil`, this function strips text properties from the return value.
 
-        ---------- Buffer: foo ----------
-        Gentlemen may cry ``Pea∗ce! Peace!,''
-        but there is no peace.
-        ---------- Buffer: foo ----------
+    ```lisp
+    ---------- Buffer: foo ----------
+    Gentlemen may cry ``Pea∗ce! Peace!,''
+    but there is no peace.
+    ---------- Buffer: foo ----------
 
-        (thing-at-point 'word)
-             ⇒ "Peace"
-        (thing-at-point 'line)
-             ⇒ "Gentlemen may cry ``Peace! Peace!,''\n"
-        (thing-at-point 'whitespace)
-             ⇒ nil
+    (thing-at-point 'word)
+         ⇒ "Peace"
+    (thing-at-point 'line)
+         ⇒ "Gentlemen may cry ``Peace! Peace!,''\n"
+    (thing-at-point 'whitespace)
+         ⇒ nil
+    ```
 
 Next: [Comparing Text](Comparing-Text.html), Previous: [Near Point](Near-Point.html), Up: [Text](Text.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]

@@ -1,22 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
 
 Next: [Arrays](Arrays.html), Up: [Sequences Arrays Vectors](Sequences-Arrays-Vectors.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
@@ -36,28 +18,30 @@ This section describes functions that accept any kind of sequence.
 
     See [Definition of safe-length](List-Elements.html#Definition-of-safe_002dlength), for the related function `safe-length`.
 
-        (length '(1 2 3))
-            ⇒ 3
+    ```lisp
+    (length '(1 2 3))
+        ⇒ 3
+    ```
 
-    <!---->
+    ```lisp
+    (length ())
+        ⇒ 0
+    ```
 
-        (length ())
-            ⇒ 0
+    ```lisp
+    (length "foobar")
+        ⇒ 6
+    ```
 
-    <!---->
+    ```lisp
+    (length [1 2 3])
+        ⇒ 3
+    ```
 
-        (length "foobar")
-            ⇒ 6
-
-    <!---->
-
-        (length [1 2 3])
-            ⇒ 3
-
-    <!---->
-
-        (length (make-bool-vector 5 nil))
-            ⇒ 5
+    ```lisp
+    (length (make-bool-vector 5 nil))
+        ⇒ 5
+    ```
 
 See also `string-bytes`, in [Text Representations](Text-Representations.html).
 
@@ -67,29 +51,31 @@ If you need to compute the width of a string on display, you should use `string-
 
     This function returns the element of `sequence` indexed by `index`. Legitimate values of `index` are integers ranging from 0 up to one less than the length of `sequence`. If `sequence` is a list, out-of-range values behave as for `nth`. See [Definition of nth](List-Elements.html#Definition-of-nth). Otherwise, out-of-range values trigger an `args-out-of-range` error.
 
-        (elt [1 2 3 4] 2)
-             ⇒ 3
+    ```lisp
+    (elt [1 2 3 4] 2)
+         ⇒ 3
+    ```
 
-    <!---->
+    ```lisp
+    (elt '(1 2 3 4) 2)
+         ⇒ 3
+    ```
 
-        (elt '(1 2 3 4) 2)
-             ⇒ 3
+    ```lisp
+    ;; We use string to show clearly which character elt returns.
+    (string (elt "1234" 2))
+         ⇒ "3"
+    ```
 
-    <!---->
+    ```lisp
+    (elt [1 2 3 4] 4)
+         error→ Args out of range: [1 2 3 4], 4
+    ```
 
-        ;; We use string to show clearly which character elt returns.
-        (string (elt "1234" 2))
-             ⇒ "3"
-
-    <!---->
-
-        (elt [1 2 3 4] 4)
-             error→ Args out of range: [1 2 3 4], 4
-
-    <!---->
-
-        (elt [1 2 3 4] -1)
-             error→ Args out of range: [1 2 3 4], -1
+    ```lisp
+    (elt [1 2 3 4] -1)
+         error→ Args out of range: [1 2 3 4], -1
+    ```
 
     This function generalizes `aref` (see [Array Functions](Array-Functions.html)) and `nth` (see [Definition of nth](List-Elements.html#Definition-of-nth)).
 
@@ -107,50 +93,58 @@ If you need to compute the width of a string on display, you should use `string-
 
     See also `append` in [Building Lists](Building-Lists.html), `concat` in [Creating Strings](Creating-Strings.html), and `vconcat` in [Vector Functions](Vector-Functions.html), for other ways to copy sequences.
 
-        (setq bar (list 1 2))
-             ⇒ (1 2)
-
-    <!---->
-
-        (setq x (vector 'foo bar))
-             ⇒ [foo (1 2)]
-
-    <!---->
-
-        (setq y (copy-sequence x))
-             ⇒ [foo (1 2)]
-
-    ```
+    ```lisp
+    (setq bar (list 1 2))
+         ⇒ (1 2)
     ```
 
-        (eq x y)
-             ⇒ nil
-
-    <!---->
-
-        (equal x y)
-             ⇒ t
-
-    <!---->
-
-        (eq (elt x 1) (elt y 1))
-             ⇒ t
-
-    ```
+    ```lisp
+    (setq x (vector 'foo bar))
+         ⇒ [foo (1 2)]
     ```
 
-        ;; Replacing an element of one sequence.
-        (aset x 0 'quux)
-        x ⇒ [quux (1 2)]
-        y ⇒ [foo (1 2)]
-
-    ```
+    ```lisp
+    (setq y (copy-sequence x))
+         ⇒ [foo (1 2)]
     ```
 
-        ;; Modifying the inside of a shared element.
-        (setcar (aref x 1) 69)
-        x ⇒ [quux (69 2)]
-        y ⇒ [foo (69 2)]
+    ```lisp
+    ```
+
+    ```lisp
+    (eq x y)
+         ⇒ nil
+    ```
+
+    ```lisp
+    (equal x y)
+         ⇒ t
+    ```
+
+    ```lisp
+    (eq (elt x 1) (elt y 1))
+         ⇒ t
+    ```
+
+    ```lisp
+    ```
+
+    ```lisp
+    ;; Replacing an element of one sequence.
+    (aset x 0 'quux)
+    x ⇒ [quux (1 2)]
+    y ⇒ [foo (1 2)]
+    ```
+
+    ```lisp
+    ```
+
+    ```lisp
+    ;; Modifying the inside of a shared element.
+    (setcar (aref x 1) 69)
+    x ⇒ [quux (69 2)]
+    y ⇒ [foo (69 2)]
+    ```
 
 <!---->
 
@@ -158,39 +152,41 @@ If you need to compute the width of a string on display, you should use `string-
 
     This function creates a new sequence whose elements are the elements of `sequence`, but in reverse order. The original argument `sequence` is *not* altered. Note that char-tables cannot be reversed.
 
-        (setq x '(1 2 3 4))
-             ⇒ (1 2 3 4)
+    ```lisp
+    (setq x '(1 2 3 4))
+         ⇒ (1 2 3 4)
+    ```
 
-    <!---->
+    ```lisp
+    (reverse x)
+         ⇒ (4 3 2 1)
+    x
+         ⇒ (1 2 3 4)
+    ```
 
-        (reverse x)
-             ⇒ (4 3 2 1)
-        x
-             ⇒ (1 2 3 4)
+    ```lisp
+    (setq x [1 2 3 4])
+         ⇒ [1 2 3 4]
+    ```
 
-    <!---->
+    ```lisp
+    (reverse x)
+         ⇒ [4 3 2 1]
+    x
+         ⇒ [1 2 3 4]
+    ```
 
-        (setq x [1 2 3 4])
-             ⇒ [1 2 3 4]
+    ```lisp
+    (setq x "xyzzy")
+         ⇒ "xyzzy"
+    ```
 
-    <!---->
-
-        (reverse x)
-             ⇒ [4 3 2 1]
-        x
-             ⇒ [1 2 3 4]
-
-    <!---->
-
-        (setq x "xyzzy")
-             ⇒ "xyzzy"
-
-    <!---->
-
-        (reverse x)
-             ⇒ "yzzyx"
-        x
-             ⇒ "xyzzy"
+    ```lisp
+    (reverse x)
+         ⇒ "yzzyx"
+    x
+         ⇒ "xyzzy"
+    ```
 
 <!---->
 
@@ -200,45 +196,53 @@ If you need to compute the width of a string on display, you should use `string-
 
     For example:
 
-        (setq x (list 'a 'b 'c))
-             ⇒ (a b c)
+    ```lisp
+    (setq x (list 'a 'b 'c))
+         ⇒ (a b c)
+    ```
 
-    <!---->
+    ```lisp
+    x
+         ⇒ (a b c)
+    (nreverse x)
+         ⇒ (c b a)
+    ```
 
-        x
-             ⇒ (a b c)
-        (nreverse x)
-             ⇒ (c b a)
-
-    <!---->
-
-        ;; The cons cell that was first is now last.
-        x
-             ⇒ (a)
+    ```lisp
+    ;; The cons cell that was first is now last.
+    x
+         ⇒ (a)
+    ```
 
     To avoid confusion, we usually store the result of `nreverse` back in the same variable which held the original list:
 
-        (setq x (nreverse x))
+    ```lisp
+    (setq x (nreverse x))
+    ```
 
     Here is the `nreverse` of our favorite example, `(a b c)`, presented graphically:
 
-        Original list head:                       Reversed list:
-         -------------        -------------        ------------
-        | car  | cdr  |      | car  | cdr  |      | car | cdr  |
-        |   a  |  nil |<--   |   b  |   o  |<--   |   c |   o  |
-        |      |      |   |  |      |   |  |   |  |     |   |  |
-         -------------    |   --------- | -    |   -------- | -
-                          |             |      |            |
-                           -------------        ------------
+    ```lisp
+    Original list head:                       Reversed list:
+     -------------        -------------        ------------
+    | car  | cdr  |      | car  | cdr  |      | car | cdr  |
+    |   a  |  nil |<--   |   b  |   o  |<--   |   c |   o  |
+    |      |      |   |  |      |   |  |   |  |     |   |  |
+     -------------    |   --------- | -    |   -------- | -
+                      |             |      |            |
+                       -------------        ------------
+    ```
 
     For the vector, it is even simpler because you don’t need setq:
 
-        (setq x (copy-sequence [1 2 3 4]))
-             ⇒ [1 2 3 4]
-        (nreverse x)
-             ⇒ [4 3 2 1]
-        x
-             ⇒ [4 3 2 1]
+    ```lisp
+    (setq x (copy-sequence [1 2 3 4]))
+         ⇒ [1 2 3 4]
+    (nreverse x)
+         ⇒ [4 3 2 1]
+    x
+         ⇒ [4 3 2 1]
+    ```
 
     Note that unlike `reverse`, this function doesn’t work with strings. Although you can alter string data by using `aset`, it is strongly encouraged to treat strings as immutable even when they are mutable. See [Mutability](Mutability.html).
 
@@ -256,37 +260,43 @@ If you need to compute the width of a string on display, you should use `string-
 
     Sorting does not change the CARs of the cons cells in `sequence`; the cons cell that originally contained the element `a` in `sequence` still has `a` in its CAR after sorting, but it now appears in a different position in the list due to the change of CDRs. For example:
 
-        (setq nums (list 1 3 2 6 5 4 0))
-             ⇒ (1 3 2 6 5 4 0)
+    ```lisp
+    (setq nums (list 1 3 2 6 5 4 0))
+         ⇒ (1 3 2 6 5 4 0)
+    ```
 
-    <!---->
+    ```lisp
+    (sort nums #'<)
+         ⇒ (0 1 2 3 4 5 6)
+    ```
 
-        (sort nums #'<)
-             ⇒ (0 1 2 3 4 5 6)
-
-    <!---->
-
-        nums
-             ⇒ (1 2 3 4 5 6)
+    ```lisp
+    nums
+         ⇒ (1 2 3 4 5 6)
+    ```
 
     **Warning**: Note that the list in `nums` no longer contains 0; this is the same cons cell that it was before, but it is no longer the first one in the list. Don’t assume a variable that formerly held the argument now holds the entire sorted list! Instead, save the result of `sort` and use that. Most often we store the result back into the variable that held the original list:
 
-        (setq nums (sort nums #'<))
+    ```lisp
+    (setq nums (sort nums #'<))
+    ```
 
     For the better understanding of what stable sort is, consider the following vector example. After sorting, all items whose `car` is 8 are grouped at the beginning of `vector`, but their relative order is preserved. All items whose `car` is 9 are grouped at the end of `vector`, but their relative order is also preserved:
 
-        (setq
-          vector
-          (vector '(8 . "xxx") '(9 . "aaa") '(8 . "bbb") '(9 . "zzz")
-                  '(9 . "ppp") '(8 . "ttt") '(8 . "eee") '(9 . "fff")))
-             ⇒ [(8 . "xxx") (9 . "aaa") (8 . "bbb") (9 . "zzz")
-                 (9 . "ppp") (8 . "ttt") (8 . "eee") (9 . "fff")]
+    ```lisp
+    (setq
+      vector
+      (vector '(8 . "xxx") '(9 . "aaa") '(8 . "bbb") '(9 . "zzz")
+              '(9 . "ppp") '(8 . "ttt") '(8 . "eee") '(9 . "fff")))
+         ⇒ [(8 . "xxx") (9 . "aaa") (8 . "bbb") (9 . "zzz")
+             (9 . "ppp") (8 . "ttt") (8 . "eee") (9 . "fff")]
+    ```
 
-    <!---->
-
-        (sort vector (lambda (x y) (< (car x) (car y))))
-             ⇒ [(8 . "xxx") (8 . "bbb") (8 . "ttt") (8 . "eee")
-                 (9 . "aaa") (9 . "zzz") (9 . "ppp") (9 . "fff")]
+    ```lisp
+    (sort vector (lambda (x y) (< (car x) (car y))))
+         ⇒ [(8 . "xxx") (8 . "bbb") (8 . "ttt") (8 . "eee")
+             (9 . "aaa") (9 . "zzz") (9 . "ppp") (9 . "fff")]
+    ```
 
     See [Sorting](Sorting.html), for more functions that perform sorting. See `documentation` in [Accessing Documentation](Accessing-Documentation.html), for a useful example of `sort`.
 
@@ -300,15 +310,19 @@ The `seq.el` library can be extended to work with additional types of sequential
 
     This function returns the element of `sequence` at the specified `index`, which is an integer whose valid value range is zero to one less than the length of `sequence`. For out-of-range values on built-in sequence types, `seq-elt` behaves like `elt`. For the details, see [Definition of elt](#Definition-of-elt).
 
-        (seq-elt [1 2 3 4] 2)
-        ⇒ 3
+    ```lisp
+    (seq-elt [1 2 3 4] 2)
+    ⇒ 3
+    ```
 
     `seq-elt` returns places settable using `setf` (see [Setting Generalized Variables](Setting-Generalized-Variables.html)).
 
-        (setq vec [1 2 3 4])
-        (setf (seq-elt vec 2) 5)
-        vec
-        ⇒ [1 2 5 4]
+    ```lisp
+    (setq vec [1 2 3 4])
+    (setf (seq-elt vec 2) 5)
+    vec
+    ⇒ [1 2 5 4]
+    ```
 
 <!---->
 
@@ -322,13 +336,15 @@ The `seq.el` library can be extended to work with additional types of sequential
 
     This function returns non-`nil` if `object` is a sequence (a list or array), or any additional type of sequence defined via `seq.el` generic functions. This is an extensible variant of `sequencep`.
 
-        (seqp [1 2])
-        ⇒ t
+    ```lisp
+    (seqp [1 2])
+    ⇒ t
+    ```
 
-    <!---->
-
-        (seqp 2)
-        ⇒ nil
+    ```lisp
+    (seqp 2)
+    ⇒ nil
+    ```
 
 <!---->
 
@@ -336,13 +352,15 @@ The `seq.el` library can be extended to work with additional types of sequential
 
     This function returns all but the first `n` (an integer) elements of `sequence`. If `n` is negative or zero, the result is `sequence`.
 
-        (seq-drop [1 2 3 4 5 6] 3)
-        ⇒ [4 5 6]
+    ```lisp
+    (seq-drop [1 2 3 4 5 6] 3)
+    ⇒ [4 5 6]
+    ```
 
-    <!---->
-
-        (seq-drop "hello world" -4)
-        ⇒ "hello world"
+    ```lisp
+    (seq-drop "hello world" -4)
+    ⇒ "hello world"
+    ```
 
 <!---->
 
@@ -350,13 +368,15 @@ The `seq.el` library can be extended to work with additional types of sequential
 
     This function returns the first `n` (an integer) elements of `sequence`. If `n` is negative or zero, the result is `nil`.
 
-        (seq-take '(1 2 3 4) 3)
-        ⇒ (1 2 3)
+    ```lisp
+    (seq-take '(1 2 3 4) 3)
+    ⇒ (1 2 3)
+    ```
 
-    <!---->
-
-        (seq-take [1 2 3 4] 0)
-        ⇒ []
+    ```lisp
+    (seq-take [1 2 3 4] 0)
+    ⇒ []
+    ```
 
 <!---->
 
@@ -364,13 +384,15 @@ The `seq.el` library can be extended to work with additional types of sequential
 
     This function returns the members of `sequence` in order, stopping before the first one for which `predicate` returns `nil`.
 
-        (seq-take-while (lambda (elt) (> elt 0)) '(1 2 3 -1 -2))
-        ⇒ (1 2 3)
+    ```lisp
+    (seq-take-while (lambda (elt) (> elt 0)) '(1 2 3 -1 -2))
+    ⇒ (1 2 3)
+    ```
 
-    <!---->
-
-        (seq-take-while (lambda (elt) (> elt 0)) [-1 4 6])
-        ⇒ []
+    ```lisp
+    (seq-take-while (lambda (elt) (> elt 0)) [-1 4 6])
+    ⇒ []
+    ```
 
 <!---->
 
@@ -378,13 +400,15 @@ The `seq.el` library can be extended to work with additional types of sequential
 
     This function returns the members of `sequence` in order, starting from the first one for which `predicate` returns `nil`.
 
-        (seq-drop-while (lambda (elt) (> elt 0)) '(1 2 3 -1 -2))
-        ⇒ (-1 -2)
+    ```lisp
+    (seq-drop-while (lambda (elt) (> elt 0)) '(1 2 3 -1 -2))
+    ⇒ (-1 -2)
+    ```
 
-    <!---->
-
-        (seq-drop-while (lambda (elt) (< elt 0)) [1 4 6])
-        ⇒ [1 4 6]
+    ```lisp
+    (seq-drop-while (lambda (elt) (< elt 0)) [1 4 6])
+    ⇒ [1 4 6]
+    ```
 
 <!---->
 
@@ -398,13 +422,15 @@ The `seq.el` library can be extended to work with additional types of sequential
 
     This function returns the result of applying `function` to each element of `sequence`. The returned value is a list.
 
-        (seq-map #'1+ '(2 4 6))
-        ⇒ (3 5 7)
+    ```lisp
+    (seq-map #'1+ '(2 4 6))
+    ⇒ (3 5 7)
+    ```
 
-    <!---->
-
-        (seq-map #'symbol-name [foo bar])
-        ⇒ ("foo" "bar")
+    ```lisp
+    (seq-map #'symbol-name [foo bar])
+    ⇒ ("foo" "bar")
+    ```
 
 <!---->
 
@@ -412,10 +438,12 @@ The `seq.el` library can be extended to work with additional types of sequential
 
     This function returns the result of applying `function` to each element of `sequence` and its index within `seq`. The returned value is a list.
 
-        (seq-map-indexed (lambda (elt idx)
-                           (list idx elt))
-                         '(a b c))
-        ⇒ ((0 a) (1 b) (2 c))
+    ```lisp
+    (seq-map-indexed (lambda (elt idx)
+                       (list idx elt))
+                     '(a b c))
+    ⇒ ((0 a) (1 b) (2 c))
+    ```
 
 <!---->
 
@@ -423,13 +451,15 @@ The `seq.el` library can be extended to work with additional types of sequential
 
     This function returns the result of applying `function` to each element of `sequences`. The arity (see [subr-arity](What-Is-a-Function.html)) of `function` must match the number of sequences. Mapping stops at the end of the shortest sequence, and the returned value is a list.
 
-        (seq-mapn #'+ '(2 4 6) '(20 40 60))
-        ⇒ (22 44 66)
+    ```lisp
+    (seq-mapn #'+ '(2 4 6) '(20 40 60))
+    ⇒ (22 44 66)
+    ```
 
-    <!---->
-
-        (seq-mapn #'concat '("moskito" "bite") ["bee" "sting"])
-        ⇒ ("moskitobee" "bitesting")
+    ```lisp
+    (seq-mapn #'concat '("moskito" "bite") ["bee" "sting"])
+    ⇒ ("moskitobee" "bitesting")
+    ```
 
 <!---->
 
@@ -437,13 +467,15 @@ The `seq.el` library can be extended to work with additional types of sequential
 
     This function returns a list of all the elements in `sequence` for which `predicate` returns non-`nil`.
 
-        (seq-filter (lambda (elt) (> elt 0)) [1 -1 3 -3 5])
-        ⇒ (1 3 5)
+    ```lisp
+    (seq-filter (lambda (elt) (> elt 0)) [1 -1 3 -3 5])
+    ⇒ (1 3 5)
+    ```
 
-    <!---->
-
-        (seq-filter (lambda (elt) (> elt 0)) '(-1 -3 -5))
-        ⇒ nil
+    ```lisp
+    (seq-filter (lambda (elt) (> elt 0)) '(-1 -3 -5))
+    ⇒ nil
+    ```
 
 <!---->
 
@@ -451,13 +483,15 @@ The `seq.el` library can be extended to work with additional types of sequential
 
     This function returns a list of all the elements in `sequence` for which `predicate` returns `nil`.
 
-        (seq-remove (lambda (elt) (> elt 0)) [1 -1 3 -3 5])
-        ⇒ (-1 -3)
+    ```lisp
+    (seq-remove (lambda (elt) (> elt 0)) [1 -1 3 -3 5])
+    ⇒ (-1 -3)
+    ```
 
-    <!---->
-
-        (seq-remove (lambda (elt) (< elt 0)) '(-1 -3 -5))
-        ⇒ nil
+    ```lisp
+    (seq-remove (lambda (elt) (< elt 0)) '(-1 -3 -5))
+    ⇒ nil
+    ```
 
 <!---->
 
@@ -469,18 +503,20 @@ The `seq.el` library can be extended to work with additional types of sequential
 
     If `sequence` is empty, this returns `initial-value` without calling `function`.
 
-        (seq-reduce #'+ [1 2 3 4] 0)
-        ⇒ 10
+    ```lisp
+    (seq-reduce #'+ [1 2 3 4] 0)
+    ⇒ 10
+    ```
 
-    <!---->
+    ```lisp
+    (seq-reduce #'+ '(1 2 3 4) 5)
+    ⇒ 15
+    ```
 
-        (seq-reduce #'+ '(1 2 3 4) 5)
-        ⇒ 15
-
-    <!---->
-
-        (seq-reduce #'+ '() 3)
-        ⇒ 3
+    ```lisp
+    (seq-reduce #'+ '() 3)
+    ⇒ 3
+    ```
 
 <!---->
 
@@ -488,23 +524,25 @@ The `seq.el` library can be extended to work with additional types of sequential
 
     This function returns the first non-`nil` value returned by applying `predicate` to each element of `sequence` in turn.
 
-        (seq-some #'numberp ["abc" 1 nil])
-        ⇒ t
+    ```lisp
+    (seq-some #'numberp ["abc" 1 nil])
+    ⇒ t
+    ```
 
-    <!---->
+    ```lisp
+    (seq-some #'numberp ["abc" "def"])
+    ⇒ nil
+    ```
 
-        (seq-some #'numberp ["abc" "def"])
-        ⇒ nil
+    ```lisp
+    (seq-some #'null ["abc" 1 nil])
+    ⇒ t
+    ```
 
-    <!---->
-
-        (seq-some #'null ["abc" 1 nil])
-        ⇒ t
-
-    <!---->
-
-        (seq-some #'1+ [2 4 6])
-        ⇒ 3
+    ```lisp
+    (seq-some #'1+ [2 4 6])
+    ⇒ 3
+    ```
 
 <!---->
 
@@ -514,13 +552,15 @@ The `seq.el` library can be extended to work with additional types of sequential
 
     Note that this function has an ambiguity if the found element is identical to `default`, as in that case it cannot be known whether an element was found or not.
 
-        (seq-find #'numberp ["abc" 1 nil])
-        ⇒ 1
+    ```lisp
+    (seq-find #'numberp ["abc" 1 nil])
+    ⇒ 1
+    ```
 
-    <!---->
-
-        (seq-find #'numberp ["abc" "def"])
-        ⇒ nil
+    ```lisp
+    (seq-find #'numberp ["abc" "def"])
+    ⇒ nil
+    ```
 
 <!---->
 
@@ -528,13 +568,15 @@ The `seq.el` library can be extended to work with additional types of sequential
 
     This function returns non-`nil` if applying `predicate` to every element of `sequence` returns non-`nil`.
 
-        (seq-every-p #'numberp [2 4 6])
-        ⇒ t
+    ```lisp
+    (seq-every-p #'numberp [2 4 6])
+    ⇒ t
+    ```
 
-    <!---->
-
-        (seq-every-p #'numberp [2 4 "6"])
-        ⇒ nil
+    ```lisp
+    (seq-every-p #'numberp [2 4 "6"])
+    ⇒ nil
+    ```
 
 <!---->
 
@@ -542,13 +584,15 @@ The `seq.el` library can be extended to work with additional types of sequential
 
     This function returns non-`nil` if `sequence` is empty.
 
-        (seq-empty-p "not empty")
-        ⇒ nil
+    ```lisp
+    (seq-empty-p "not empty")
+    ⇒ nil
+    ```
 
-    <!---->
-
-        (seq-empty-p "")
-        ⇒ t
+    ```lisp
+    (seq-empty-p "")
+    ⇒ t
+    ```
 
 <!---->
 
@@ -556,8 +600,10 @@ The `seq.el` library can be extended to work with additional types of sequential
 
     This function returns the number of elements in `sequence` for which `predicate` returns non-`nil`.
 
-        (seq-count (lambda (elt) (> elt 0)) [-1 2 0 3 -2])
-        ⇒ 2
+    ```lisp
+    (seq-count (lambda (elt) (> elt 0)) [-1 2 0 3 -2])
+    ⇒ 2
+    ```
 
 <!---->
 
@@ -571,8 +617,10 @@ The `seq.el` library can be extended to work with additional types of sequential
 
     This function is similar to `seq-sort`, but the elements of `sequence` are transformed by applying `function` on them before being sorted. `function` is a function of one argument.
 
-        (seq-sort-by #'seq-length #'> ["a" "ab" "abc"])
-        ⇒ ["abc" "ab" "a"]
+    ```lisp
+    (seq-sort-by #'seq-length #'> ["a" "ab" "abc"])
+    ⇒ ["abc" "ab" "a"]
+    ```
 
 <!---->
 
@@ -580,13 +628,15 @@ The `seq.el` library can be extended to work with additional types of sequential
 
     This function returns non-`nil` if at least one element in `sequence` is equal to `elt`. If the optional argument `function` is non-`nil`, it is a function of two arguments to use instead of the default `equal`.
 
-        (seq-contains-p '(symbol1 symbol2) 'symbol1)
-        ⇒ t
+    ```lisp
+    (seq-contains-p '(symbol1 symbol2) 'symbol1)
+    ⇒ t
+    ```
 
-    <!---->
-
-        (seq-contains-p '(symbol1 symbol2) 'symbol3)
-        ⇒ nil
+    ```lisp
+    (seq-contains-p '(symbol1 symbol2) 'symbol3)
+    ⇒ nil
+    ```
 
 <!---->
 
@@ -594,23 +644,25 @@ The `seq.el` library can be extended to work with additional types of sequential
 
     This function checks whether `sequence1` and `sequence2` contain the same elements, regardless of the order. If the optional argument `testfn` is non-`nil`, it is a function of two arguments to use instead of the default `equal`.
 
-        (seq-set-equal-p '(a b c) '(c b a))
-        ⇒ t
+    ```lisp
+    (seq-set-equal-p '(a b c) '(c b a))
+    ⇒ t
+    ```
 
-    <!---->
+    ```lisp
+    (seq-set-equal-p '(a b c) '(c b))
+    ⇒ nil
+    ```
 
-        (seq-set-equal-p '(a b c) '(c b))
-        ⇒ nil
+    ```lisp
+    (seq-set-equal-p '("a" "b" "c") '("c" "b" "a"))
+    ⇒ t
+    ```
 
-    <!---->
-
-        (seq-set-equal-p '("a" "b" "c") '("c" "b" "a"))
-        ⇒ t
-
-    <!---->
-
-        (seq-set-equal-p '("a" "b" "c") '("c" "b" "a") #'eq)
-        ⇒ nil
+    ```lisp
+    (seq-set-equal-p '("a" "b" "c") '("c" "b" "a") #'eq)
+    ⇒ nil
+    ```
 
 <!---->
 
@@ -618,13 +670,15 @@ The `seq.el` library can be extended to work with additional types of sequential
 
     This function returns the index of the first element in `sequence` that is equal to `elt`. If the optional argument `function` is non-`nil`, it is a function of two arguments to use instead of the default `equal`.
 
-        (seq-position '(a b c) 'b)
-        ⇒ 1
+    ```lisp
+    (seq-position '(a b c) 'b)
+    ⇒ 1
+    ```
 
-    <!---->
-
-        (seq-position '(a b c) 'd)
-        ⇒ nil
+    ```lisp
+    (seq-position '(a b c) 'd)
+    ⇒ nil
+    ```
 
 <!---->
 
@@ -632,13 +686,15 @@ The `seq.el` library can be extended to work with additional types of sequential
 
     This function returns a list of the elements of `sequence` with duplicates removed. If the optional argument `function` is non-`nil`, it is a function of two arguments to use instead of the default `equal`.
 
-        (seq-uniq '(1 2 2 1 3))
-        ⇒ (1 2 3)
+    ```lisp
+    (seq-uniq '(1 2 2 1 3))
+    ⇒ (1 2 3)
+    ```
 
-    <!---->
-
-        (seq-uniq '(1 2 2.0 1.0) #'=)
-        ⇒ (1 2)
+    ```lisp
+    (seq-uniq '(1 2 2.0 1.0) #'=)
+    ⇒ (1 2)
+    ```
 
 <!---->
 
@@ -646,18 +702,20 @@ The `seq.el` library can be extended to work with additional types of sequential
 
     This function returns a subset of `sequence` from `start` to `end`, both integers (`end` defaults to the last element). If `start` or `end` is negative, it counts from the end of `sequence`.
 
-        (seq-subseq '(1 2 3 4 5) 1)
-        ⇒ (2 3 4 5)
+    ```lisp
+    (seq-subseq '(1 2 3 4 5) 1)
+    ⇒ (2 3 4 5)
+    ```
 
-    <!---->
+    ```lisp
+    (seq-subseq '[1 2 3 4 5] 1 3)
+    ⇒ [2 3]
+    ```
 
-        (seq-subseq '[1 2 3 4 5] 1 3)
-        ⇒ [2 3]
-
-    <!---->
-
-        (seq-subseq '[1 2 3 4 5] -3 -1)
-        ⇒ [3 4]
+    ```lisp
+    (seq-subseq '[1 2 3 4 5] -3 -1)
+    ⇒ [3 4]
+    ```
 
 <!---->
 
@@ -665,13 +723,15 @@ The `seq.el` library can be extended to work with additional types of sequential
 
     This function returns a sequence of type `type` made of the concatenation of `sequences`. `type` may be: `vector`, `list` or `string`.
 
-        (seq-concatenate 'list '(1 2) '(3 4) [5 6])
-        ⇒ (1 2 3 4 5 6)
+    ```lisp
+    (seq-concatenate 'list '(1 2) '(3 4) [5 6])
+    ⇒ (1 2 3 4 5 6)
+    ```
 
-    <!---->
-
-        (seq-concatenate 'string "Hello " "world")
-        ⇒ "Hello world"
+    ```lisp
+    (seq-concatenate 'string "Hello " "world")
+    ⇒ "Hello world"
+    ```
 
 <!---->
 
@@ -679,8 +739,10 @@ The `seq.el` library can be extended to work with additional types of sequential
 
     This function returns the result of applying `seq-concatenate` to the result of applying `function` to each element of `sequence`. The result is a sequence of type `type`, or a list if `type` is `nil`.
 
-        (seq-mapcat #'seq-reverse '((3 2 1) (6 5 4)))
-        ⇒ (1 2 3 4 5 6)
+    ```lisp
+    (seq-mapcat #'seq-reverse '((3 2 1) (6 5 4)))
+    ⇒ (1 2 3 4 5 6)
+    ```
 
 <!---->
 
@@ -688,8 +750,10 @@ The `seq.el` library can be extended to work with additional types of sequential
 
     This function returns a list of the elements of `sequence` grouped into sub-sequences of length `n`. The last sequence may contain less elements than `n`. `n` must be an integer. If `n` is a negative integer or 0, the return value is `nil`.
 
-        (seq-partition '(0 1 2 3 4 5 6 7) 3)
-        ⇒ ((0 1 2) (3 4 5) (6 7))
+    ```lisp
+    (seq-partition '(0 1 2 3 4 5 6 7) 3)
+    ⇒ ((0 1 2) (3 4 5) (6 7))
+    ```
 
 <!---->
 
@@ -697,8 +761,10 @@ The `seq.el` library can be extended to work with additional types of sequential
 
     This function returns a list of the elements that appear both in `sequence1` and `sequence2`. If the optional argument `function` is non-`nil`, it is a function of two arguments to use to compare elements instead of the default `equal`.
 
-        (seq-intersection [2 3 4 5] [1 3 5 6 7])
-        ⇒ (3 5)
+    ```lisp
+    (seq-intersection [2 3 4 5] [1 3 5 6 7])
+    ⇒ (3 5)
+    ```
 
 <!---->
 
@@ -706,8 +772,10 @@ The `seq.el` library can be extended to work with additional types of sequential
 
     This function returns a list of the elements that appear in `sequence1` but not in `sequence2`. If the optional argument `function` is non-`nil`, it is a function of two arguments to use to compare elements instead of the default `equal`.
 
-        (seq-difference '(2 3 4 5) [1 3 5 6 7])
-        ⇒ (2 4)
+    ```lisp
+    (seq-difference '(2 3 4 5) [1 3 5 6 7])
+    ⇒ (2 4)
+    ```
 
 <!---->
 
@@ -715,13 +783,15 @@ The `seq.el` library can be extended to work with additional types of sequential
 
     This function separates the elements of `sequence` into an alist whose keys are the result of applying `function` to each element of `sequence`. Keys are compared using `equal`.
 
-        (seq-group-by #'integerp '(1 2.1 3 2 3.2))
-        ⇒ ((t 1 3 2) (nil 2.1 3.2))
+    ```lisp
+    (seq-group-by #'integerp '(1 2.1 3 2 3.2))
+    ⇒ ((t 1 3 2) (nil 2.1 3.2))
+    ```
 
-    <!---->
-
-        (seq-group-by #'car '((a 1) (b 2) (a 3) (c 4)))
-        ⇒ ((b (b 2)) (a (a 1) (a 3)) (c (c 4)))
+    ```lisp
+    (seq-group-by #'car '((a 1) (b 2) (a 3) (c 4)))
+    ⇒ ((b (b 2)) (a (a 1) (a 3)) (c (c 4)))
+    ```
 
 <!---->
 
@@ -729,18 +799,20 @@ The `seq.el` library can be extended to work with additional types of sequential
 
     This function converts the sequence `sequence` into a sequence of type `type`. `type` can be one of the following symbols: `vector`, `string` or `list`.
 
-        (seq-into [1 2 3] 'list)
-        ⇒ (1 2 3)
+    ```lisp
+    (seq-into [1 2 3] 'list)
+    ⇒ (1 2 3)
+    ```
 
-    <!---->
+    ```lisp
+    (seq-into nil 'vector)
+    ⇒ []
+    ```
 
-        (seq-into nil 'vector)
-        ⇒ []
-
-    <!---->
-
-        (seq-into "hello" 'vector)
-        ⇒ [104 101 108 108 111]
+    ```lisp
+    (seq-into "hello" 'vector)
+    ⇒ [104 101 108 108 111]
+    ```
 
 <!---->
 
@@ -748,13 +820,15 @@ The `seq.el` library can be extended to work with additional types of sequential
 
     This function returns the smallest element of `sequence`. The elements of `sequence` must be numbers or markers (see [Markers](Markers.html)).
 
-        (seq-min [3 1 2])
-        ⇒ 1
+    ```lisp
+    (seq-min [3 1 2])
+    ⇒ 1
+    ```
 
-    <!---->
-
-        (seq-min "Hello")
-        ⇒ 72
+    ```lisp
+    (seq-min "Hello")
+    ⇒ 72
+    ```
 
 <!---->
 
@@ -762,13 +836,15 @@ The `seq.el` library can be extended to work with additional types of sequential
 
     This function returns the largest element of `sequence`. The elements of `sequence` must be numbers or markers.
 
-        (seq-max [1 3 2])
-        ⇒ 3
+    ```lisp
+    (seq-max [1 3 2])
+    ⇒ 3
+    ```
 
-    <!---->
-
-        (seq-max "Hello")
-        ⇒ 111
+    ```lisp
+    (seq-max "Hello")
+    ⇒ 111
+    ```
 
 <!---->
 
@@ -784,30 +860,32 @@ The `seq.el` library can be extended to work with additional types of sequential
 
     The `var-sequence` sequence can also include the `&rest` marker followed by a variable name to be bound to the rest of `val-sequence`.
 
-        (seq-let [first second] [1 2 3 4]
-          (list first second))
-        ⇒ (1 2)
+    ```lisp
+    (seq-let [first second] [1 2 3 4]
+      (list first second))
+    ⇒ (1 2)
+    ```
 
-    <!---->
+    ```lisp
+    (seq-let (_ a _ b) '(1 2 3 4)
+      (list a b))
+    ⇒ (2 4)
+    ```
 
-        (seq-let (_ a _ b) '(1 2 3 4)
-          (list a b))
-        ⇒ (2 4)
+    ```lisp
+    (seq-let [a [b [c]]] [1 [2 [3]]]
+      (list a b c))
+    ⇒ (1 2 3)
+    ```
 
-    <!---->
+    ```lisp
+    (seq-let [a b &rest others] [1 2 3 4]
+      others)
+    ```
 
-        (seq-let [a [b [c]]] [1 [2 [3]]]
-          (list a b c))
-        ⇒ (1 2 3)
-
-    <!---->
-
-        (seq-let [a b &rest others] [1 2 3 4]
-          others)
-
-    <!---->
-
-        ⇒ [3 4]
+    ```lisp
+    ⇒ [3 4]
+    ```
 
     The `pcase` patterns provide an alternative facility for destructuring binding, see [Destructuring with pcase Patterns](Destructuring-with-pcase-Patterns.html).
 
@@ -817,16 +895,18 @@ The `seq.el` library can be extended to work with additional types of sequential
 
     This function returns an element of `sequence` taken at random.
 
-        (seq-random-elt [1 2 3 4])
-        ⇒ 3
-        (seq-random-elt [1 2 3 4])
-        ⇒ 2
-        (seq-random-elt [1 2 3 4])
-        ⇒ 4
-        (seq-random-elt [1 2 3 4])
-        ⇒ 2
-        (seq-random-elt [1 2 3 4])
-        ⇒ 1
+    ```lisp
+    (seq-random-elt [1 2 3 4])
+    ⇒ 3
+    (seq-random-elt [1 2 3 4])
+    ⇒ 2
+    (seq-random-elt [1 2 3 4])
+    ⇒ 4
+    (seq-random-elt [1 2 3 4])
+    ⇒ 2
+    (seq-random-elt [1 2 3 4])
+    ⇒ 1
+    ```
 
     If `sequence` is empty, this function signals an error.
 

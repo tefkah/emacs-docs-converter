@@ -1,22 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
 
 Next: [Event Mod](Event-Mod.html), Previous: [Key Sequence Input](Key-Sequence-Input.html), Up: [Reading Input](Reading-Input.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
@@ -46,8 +28,10 @@ If you need a function to read a character using the minibuffer, use `read-char-
 
     Here is what happens if you call `read-event` and then press the right-arrow function key:
 
-        (read-event)
-             ⇒ right
+    ```lisp
+    (read-event)
+         ⇒ right
+    ```
 
 <!---->
 
@@ -59,21 +43,25 @@ If you need a function to read a character using the minibuffer, use `read-char-
 
     In the first example below, the user types the character `1` (ASCII code 49). The second example shows a keyboard macro definition that calls `read-char` from the minibuffer using `eval-expression`. `read-char` reads the keyboard macro’s very next character, which is `1`. Then `eval-expression` displays its return value in the echo area.
 
-        (read-char)
-             ⇒ 49
-
+    ```lisp
+    (read-char)
+         ⇒ 49
     ```
+
+    ```lisp
     ```
 
-        ;; We assume here you use M-: to evaluate this.
-        (symbol-function 'foo)
-             ⇒ "^[:(read-char)^M1"
+    ```lisp
+    ;; We assume here you use M-: to evaluate this.
+    (symbol-function 'foo)
+         ⇒ "^[:(read-char)^M1"
+    ```
 
-    <!---->
-
-        (execute-kbd-macro 'foo)
-             -| 49
-             ⇒ nil
+    ```lisp
+    (execute-kbd-macro 'foo)
+         -| 49
+         ⇒ nil
+    ```
 
 <!---->
 
@@ -111,11 +99,13 @@ We emphasize that, unlike `read-key-sequence`, the functions `read-event`, `read
 
     The return value is the matching value from `choices`.
 
-        (read-multiple-choice
-         "Continue connecting?"
-         '((?a "always" "Accept certificate for this and future sessions.")
-           (?s "session only" "Accept certificate this session only.")
-           (?n "no" "Refuse to use certificate, close connection.")))
+    ```lisp
+    (read-multiple-choice
+     "Continue connecting?"
+     '((?a "always" "Accept certificate for this and future sessions.")
+       (?s "session only" "Accept certificate this session only.")
+       (?n "no" "Refuse to use certificate, close connection.")))
+    ```
 
     The `read-multiple-choice-face` face is used to highlight the matching characters in the name string on graphical terminals.
 

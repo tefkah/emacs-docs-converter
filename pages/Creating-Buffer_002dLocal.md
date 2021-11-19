@@ -1,22 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
 
 Next: [Default Value](Default-Value.html), Previous: [Intro to Buffer-Local](Intro-to-Buffer_002dLocal.html), Up: [Buffer-Local Variables](Buffer_002dLocal-Variables.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
@@ -28,37 +10,41 @@ Next: [Default Value](Default-Value.html), Previous: [Intro to Buffer-Local](Int
 
     The buffer-local value of `variable` starts out as the same value `variable` previously had. If `variable` was void, it remains void.
 
-        ;; In buffer ‘b1’:
-        (setq foo 5)                ; Affects all buffers.
-             ⇒ 5
-
-    <!---->
-
-        (make-local-variable 'foo)  ; Now it is local in ‘b1’.
-             ⇒ foo
-
-    <!---->
-
-        foo                         ; That did not change
-             ⇒ 5                   ;   the value.
-
-    <!---->
-
-        (setq foo 6)                ; Change the value
-             ⇒ 6                   ;   in ‘b1’.
-
-    <!---->
-
-        foo
-             ⇒ 6
-
-    ```
+    ```lisp
+    ;; In buffer ‘b1’:
+    (setq foo 5)                ; Affects all buffers.
+         ⇒ 5
     ```
 
-        ;; In buffer ‘b2’, the value hasn’t changed.
-        (with-current-buffer "b2"
-          foo)
-             ⇒ 5
+    ```lisp
+    (make-local-variable 'foo)  ; Now it is local in ‘b1’.
+         ⇒ foo
+    ```
+
+    ```lisp
+    foo                         ; That did not change
+         ⇒ 5                   ;   the value.
+    ```
+
+    ```lisp
+    (setq foo 6)                ; Change the value
+         ⇒ 6                   ;   in ‘b1’.
+    ```
+
+    ```lisp
+    foo
+         ⇒ 6
+    ```
+
+    ```lisp
+    ```
+
+    ```lisp
+    ;; In buffer ‘b2’, the value hasn’t changed.
+    (with-current-buffer "b2"
+      foo)
+         ⇒ 5
+    ```
 
     Making a variable buffer-local within a `let`-binding for that variable does not work reliably, unless the buffer in which you do this is not current either on entry to or exit from the `let`. This is because `let` does not distinguish between different kinds of bindings; it knows only which variable the binding was made for.
 
@@ -74,8 +60,10 @@ Next: [Default Value](Default-Value.html), Previous: [Intro to Buffer-Local](Int
 
     `pairs` is a list of variable and value pairs. This macro creates a buffer-local binding in the current buffer for each of the variables, and gives them a buffer-local value. It is equivalent to calling `make-local-variable` followed by `setq` for each of the variables. The variables should be unquoted symbols.
 
-        (setq-local var1 "value1"
-                    var2 "value2")
+    ```lisp
+    (setq-local var1 "value1"
+                var2 "value2")
+    ```
 
 <!---->
 
@@ -123,29 +111,31 @@ Next: [Default Value](Default-Value.html), Previous: [Intro to Buffer-Local](Int
 
 *   Function: **buffer-local-variables** *\&optional buffer*
 
-    This function returns a list describing the buffer-local variables in buffer `buffer`. (If `buffer` is omitted, the current buffer is used.) Normally, each list element has the form `(sym . val)`<!-- /@w -->, where `sym` is a buffer-local variable (a symbol) and `val` is its buffer-local value. But when a variable’s buffer-local binding in `buffer` is void, its list element is just `sym`.
+    This function returns a list describing the buffer-local variables in buffer `buffer`. (If `buffer` is omitted, the current buffer is used.) Normally, each list element has the form `(sym . val)`, where `sym` is a buffer-local variable (a symbol) and `val` is its buffer-local value. But when a variable’s buffer-local binding in `buffer` is void, its list element is just `sym`.
 
-        (make-local-variable 'foobar)
-        (makunbound 'foobar)
-        (make-local-variable 'bind-me)
-        (setq bind-me 69)
+    ```lisp
+    (make-local-variable 'foobar)
+    (makunbound 'foobar)
+    (make-local-variable 'bind-me)
+    (setq bind-me 69)
+    ```
 
-    <!---->
+    ```lisp
+    (setq lcl (buffer-local-variables))
+        ;; First, built-in variables local in all buffers:
+    ⇒ ((mark-active . nil)
+        (buffer-undo-list . nil)
+        (mode-name . "Fundamental")
+        …
+    ```
 
-        (setq lcl (buffer-local-variables))
-            ;; First, built-in variables local in all buffers:
-        ⇒ ((mark-active . nil)
-            (buffer-undo-list . nil)
-            (mode-name . "Fundamental")
-            …
-
-    <!---->
-
-            ;; Next, non-built-in buffer-local variables.
-            ;; This one is buffer-local and void:
-            foobar
-            ;; This one is buffer-local and nonvoid:
-            (bind-me . 69))
+    ```lisp
+        ;; Next, non-built-in buffer-local variables.
+        ;; This one is buffer-local and void:
+        foobar
+        ;; This one is buffer-local and nonvoid:
+        (bind-me . 69))
+    ```
 
     Note that storing new values into the CDRs of cons cells in this list does *not* change the buffer-local values of the variables.
 

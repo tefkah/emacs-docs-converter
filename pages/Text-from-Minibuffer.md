@@ -1,22 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
 
 Next: [Object from Minibuffer](Object-from-Minibuffer.html), Previous: [Intro to Minibuffers](Intro-to-Minibuffers.html), Up: [Minibuffers](Minibuffers.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
@@ -48,10 +30,12 @@ In most cases, you should not call minibuffer input functions in the middle of a
 
     If the user wants to completely control the look of the prompt, the most convenient way to do that is to specify the `default` face at the end of all face lists. For instance:
 
-        (read-from-minibuffer
-         (concat
-          (propertize "Bold" 'face '(bold default))
-          (propertize " and normal: " 'face '(default))))
+    ```lisp
+    (read-from-minibuffer
+     (concat
+      (propertize "Bold" 'face '(bold default))
+      (propertize " and normal: " 'face '(default))))
+    ```
 
     If the argument `inherit-input-method` is non-`nil`, then the minibuffer inherits the current input method (see [Input Methods](Input-Methods.html)) and the setting of `enable-multibyte-characters` (see [Text Representations](Text-Representations.html)) from whichever buffer was current before entering the minibuffer.
 
@@ -67,14 +51,16 @@ In most cases, you should not call minibuffer input functions in the middle of a
 
     This function works by calling the `read-from-minibuffer` function:
 
-        (read-string prompt initial history default inherit)
-        ≡
-        (let ((value
-               (read-from-minibuffer prompt initial nil nil
-                                     history default inherit)))
-          (if (and (equal value "") default)
-              (if (consp default) (car default) default)
-            value))
+    ```lisp
+    (read-string prompt initial history default inherit)
+    ≡
+    (let ((value
+           (read-from-minibuffer prompt initial nil nil
+                                 history default inherit)))
+      (if (and (equal value "") default)
+          (if (consp default) (car default) default)
+        value))
+    ```
 
 <!---->
 
@@ -167,10 +153,12 @@ In most cases, you should not call minibuffer input functions in the middle of a
 
     This function discards text properties, regardless of the value of `minibuffer-allow-text-properties`.
 
-        (read-no-blanks-input prompt initial)
-        ≡
-        (let (minibuffer-allow-text-properties)
-          (read-from-minibuffer prompt initial minibuffer-local-ns-map))
+    ```lisp
+    (read-no-blanks-input prompt initial)
+    ≡
+    (let (minibuffer-allow-text-properties)
+      (read-from-minibuffer prompt initial minibuffer-local-ns-map))
+    ```
 
 <!---->
 

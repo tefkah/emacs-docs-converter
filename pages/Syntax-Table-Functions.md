@@ -1,22 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
 
 Next: [Syntax Properties](Syntax-Properties.html), Previous: [Syntax Descriptors](Syntax-Descriptors.html), Up: [Syntax Tables](Syntax-Tables.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
@@ -48,40 +30,48 @@ In this section we describe functions for creating, accessing and altering synta
 
     This function always returns `nil`. The old syntax information in the table for this character is discarded.
 
-        Examples:
-
+    ```lisp
+    Examples:
     ```
+
+    ```lisp
 
     ;; Put the space character in class whitespace.
     (modify-syntax-entry ?\s " ")
          ⇒ nil
     ```
 
-    ```
-    ```
-
-        ;; Make ‘$’ an open parenthesis character,
-        ;;   with ‘^’ as its matching close.
-        (modify-syntax-entry ?$ "(^")
-             ⇒ nil
-
-    ```
+    ```lisp
     ```
 
-        ;; Make ‘^’ a close parenthesis character,
-        ;;   with ‘$’ as its matching open.
-        (modify-syntax-entry ?^ ")$")
-             ⇒ nil
-
+    ```lisp
+    ;; Make ‘$’ an open parenthesis character,
+    ;;   with ‘^’ as its matching close.
+    (modify-syntax-entry ?$ "(^")
+         ⇒ nil
     ```
+
+    ```lisp
     ```
 
-        ;; Make ‘/’ a punctuation character,
-        ;;   the first character of a start-comment sequence,
-        ;;   and the second character of an end-comment sequence.
-        ;;   This is used in C mode.
-        (modify-syntax-entry ?/ ". 14")
-             ⇒ nil
+    ```lisp
+    ;; Make ‘^’ a close parenthesis character,
+    ;;   with ‘$’ as its matching open.
+    (modify-syntax-entry ?^ ")$")
+         ⇒ nil
+    ```
+
+    ```lisp
+    ```
+
+    ```lisp
+    ;; Make ‘/’ a punctuation character,
+    ;;   the first character of a start-comment sequence,
+    ;;   and the second character of an end-comment sequence.
+    ;;   This is used in C mode.
+    (modify-syntax-entry ?/ ". 14")
+         ⇒ nil
+    ```
 
 <!---->
 
@@ -91,27 +81,33 @@ In this section we describe functions for creating, accessing and altering synta
 
     The following examples apply to C mode. (We use `string` to make it easier to see the character returned by `char-syntax`.)
 
-        ;; Space characters have whitespace syntax class.
-        (string (char-syntax ?\s))
-             ⇒ " "
-
-    ```
-    ```
-
-        ;; Forward slash characters have punctuation syntax.
-        ;; Note that this char-syntax call does not reveal
-        ;; that it is also part of comment-start and -end sequences.
-        (string (char-syntax ?/))
-             ⇒ "."
-
-    ```
+    ```lisp
+    ;; Space characters have whitespace syntax class.
+    (string (char-syntax ?\s))
+         ⇒ " "
     ```
 
-        ;; Open parenthesis characters have open parenthesis syntax.
-        ;; Note that this char-syntax call does not reveal that
-        ;; it has a matching character, ‘)’.
-        (string (char-syntax ?\())
-             ⇒ "("
+    ```lisp
+    ```
+
+    ```lisp
+    ;; Forward slash characters have punctuation syntax.
+    ;; Note that this char-syntax call does not reveal
+    ;; that it is also part of comment-start and -end sequences.
+    (string (char-syntax ?/))
+         ⇒ "."
+    ```
+
+    ```lisp
+    ```
+
+    ```lisp
+    ;; Open parenthesis characters have open parenthesis syntax.
+    ;; Note that this char-syntax call does not reveal that
+    ;; it has a matching character, ‘)’.
+    (string (char-syntax ?\())
+         ⇒ "("
+    ```
 
 <!---->
 

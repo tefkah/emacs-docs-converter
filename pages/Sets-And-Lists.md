@@ -1,22 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
 
 Next: [Association Lists](Association-Lists.html), Previous: [Modifying Lists](Modifying-Lists.html), Up: [Lists](Lists.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
@@ -30,13 +12,15 @@ A list can represent an unordered mathematical set—simply consider a value an 
 
     This function tests to see whether `object` is a member of `list`. If it is, `memq` returns a list starting with the first occurrence of `object`. Otherwise, it returns `nil`. The letter ‘`q`’ in `memq` says that it uses `eq` to compare `object` against the elements of the list. For example:
 
-        (memq 'b '(a b c b a))
-             ⇒ (b c b a)
+    ```lisp
+    (memq 'b '(a b c b a))
+         ⇒ (b c b a)
+    ```
 
-    <!---->
-
-        (memq '(2) '((1) (2)))    ; The two (2)s need not be eq.
-             ⇒ Unspecified; might be nil or ((2)).
+    ```lisp
+    (memq '(2) '((1) (2)))    ; The two (2)s need not be eq.
+         ⇒ Unspecified; might be nil or ((2)).
+    ```
 
 <!---->
 
@@ -48,41 +32,49 @@ A list can represent an unordered mathematical set—simply consider a value an 
 
 The `delq` function deletes elements from the front of the list by simply advancing down the list, and returning a sublist that starts after those elements. For example:
 
-    (delq 'a '(a b c)) ≡ (cdr '(a b c))
+```lisp
+(delq 'a '(a b c)) ≡ (cdr '(a b c))
+```
 
 When an element to be deleted appears in the middle of the list, removing it involves changing the CDRs (see [Setcdr](Setcdr.html)).
 
-    (setq sample-list (list 'a 'b 'c '(4)))
-         ⇒ (a b c (4))
+```lisp
+(setq sample-list (list 'a 'b 'c '(4)))
+     ⇒ (a b c (4))
+```
 
-<!---->
+```lisp
+(delq 'a sample-list)
+     ⇒ (b c (4))
+```
 
-    (delq 'a sample-list)
-         ⇒ (b c (4))
+```lisp
+sample-list
+     ⇒ (a b c (4))
+```
 
-<!---->
+```lisp
+(delq 'c sample-list)
+     ⇒ (a b (4))
+```
 
-    sample-list
-         ⇒ (a b c (4))
-
-<!---->
-
-    (delq 'c sample-list)
-         ⇒ (a b (4))
-
-<!---->
-
-    sample-list
-         ⇒ (a b (4))
+```lisp
+sample-list
+     ⇒ (a b (4))
+```
 
 Note that `(delq 'c sample-list)` modifies `sample-list` to splice out the third element, but `(delq 'a sample-list)` does not splice anything—it just returns a shorter list. Don’t assume that a variable which formerly held the argument `list` now has fewer elements, or that it still holds the original list! Instead, save the result of `delq` and use that. Most often we store the result back into the variable that held the original list:
 
-    (setq flowers (delq 'rose flowers))
+```lisp
+(setq flowers (delq 'rose flowers))
+```
 
 In the following example, the `(list 4)` that `delq` attempts to match and the `(4)` in the `sample-list` are `equal` but not `eq`:
 
-    (delq (list 4) sample-list)
-         ⇒ (a c (4))
+```lisp
+(delq (list 4) sample-list)
+     ⇒ (a c (4))
+```
 
 If you want to delete elements that are `equal` to a given value, use `delete` (see below).
 
@@ -90,18 +82,20 @@ If you want to delete elements that are `equal` to a given value, use `delete` (
 
     This function returns a copy of `list`, with all elements removed which are `eq` to `object`. The letter ‘`q`’ in `remq` says that it uses `eq` to compare `object` against the elements of `list`.
 
-        (setq sample-list (list 'a 'b 'c 'a 'b 'c))
-             ⇒ (a b c a b c)
+    ```lisp
+    (setq sample-list (list 'a 'b 'c 'a 'b 'c))
+         ⇒ (a b c a b c)
+    ```
 
-    <!---->
+    ```lisp
+    (remq 'a sample-list)
+         ⇒ (b c b c)
+    ```
 
-        (remq 'a sample-list)
-             ⇒ (b c b c)
-
-    <!---->
-
-        sample-list
-             ⇒ (a b c a b c)
+    ```lisp
+    sample-list
+         ⇒ (a b c a b c)
+    ```
 
 <!---->
 
@@ -111,13 +105,15 @@ If you want to delete elements that are `equal` to a given value, use `delete` (
 
     Compare this with `memq`:
 
-        (memql 1.2 '(1.1 1.2 1.3))  ; 1.2 and 1.2 are eql.
-             ⇒ (1.2 1.3)
+    ```lisp
+    (memql 1.2 '(1.1 1.2 1.3))  ; 1.2 and 1.2 are eql.
+         ⇒ (1.2 1.3)
+    ```
 
-    <!---->
-
-        (memq 1.2 '(1.1 1.2 1.3))  ; The two 1.2s need not be eq.
-             ⇒ Unspecified; might be nil or (1.2 1.3).
+    ```lisp
+    (memq 1.2 '(1.1 1.2 1.3))  ; The two 1.2s need not be eq.
+         ⇒ Unspecified; might be nil or (1.2 1.3).
+    ```
 
 The following three functions are like `memq`, `delq` and `remq`, but use `equal` rather than `eq` to compare elements. See [Equality Predicates](Equality-Predicates.html).
 
@@ -127,19 +123,21 @@ The following three functions are like `memq`, `delq` and `remq`, but use `equal
 
     Compare this with `memq`:
 
-        (member '(2) '((1) (2)))  ; (2) and (2) are equal.
-             ⇒ ((2))
+    ```lisp
+    (member '(2) '((1) (2)))  ; (2) and (2) are equal.
+         ⇒ ((2))
+    ```
 
-    <!---->
+    ```lisp
+    (memq '(2) '((1) (2)))    ; The two (2)s need not be eq.
+         ⇒ Unspecified; might be nil or (2).
+    ```
 
-        (memq '(2) '((1) (2)))    ; The two (2)s need not be eq.
-             ⇒ Unspecified; might be nil or (2).
-
-    <!---->
-
-        ;; Two strings with the same contents are equal.
-        (member "foo" '("foo" "bar"))
-             ⇒ ("foo" "bar")
+    ```lisp
+    ;; Two strings with the same contents are equal.
+    (member "foo" '("foo" "bar"))
+         ⇒ ("foo" "bar")
+    ```
 
 <!---->
 
@@ -153,28 +151,30 @@ The following three functions are like `memq`, `delq` and `remq`, but use `equal
 
     For example:
 
-        (setq l (list '(2) '(1) '(2)))
-        (delete '(2) l)
-             ⇒ ((1))
-        l
-             ⇒ ((2) (1))
-        ;; If you want to change l reliably,
-        ;; write (setq l (delete '(2) l)).
+    ```lisp
+    (setq l (list '(2) '(1) '(2)))
+    (delete '(2) l)
+         ⇒ ((1))
+    l
+         ⇒ ((2) (1))
+    ;; If you want to change l reliably,
+    ;; write (setq l (delete '(2) l)).
+    ```
 
-    <!---->
+    ```lisp
+    (setq l (list '(2) '(1) '(2)))
+    (delete '(1) l)
+         ⇒ ((2) (2))
+    l
+         ⇒ ((2) (2))
+    ;; In this case, it makes no difference whether you set l,
+    ;; but you should do so for the sake of the other case.
+    ```
 
-        (setq l (list '(2) '(1) '(2)))
-        (delete '(1) l)
-             ⇒ ((2) (2))
-        l
-             ⇒ ((2) (2))
-        ;; In this case, it makes no difference whether you set l,
-        ;; but you should do so for the sake of the other case.
-
-    <!---->
-
-        (delete '(2) [(2) (1) (2)])
-             ⇒ [(1)]
+    ```lisp
+    (delete '(2) [(2) (1) (2)])
+         ⇒ [(1)]
+    ```
 
 <!---->
 
@@ -182,13 +182,15 @@ The following three functions are like `memq`, `delq` and `remq`, but use `equal
 
     This function is the non-destructive counterpart of `delete`. It returns a copy of `sequence`, a list, vector, or string, with elements `equal` to `object` removed. For example:
 
-        (remove '(2) '((2) (1) (2)))
-             ⇒ ((1))
+    ```lisp
+    (remove '(2) '((2) (1) (2)))
+         ⇒ ((1))
+    ```
 
-    <!---->
-
-        (remove '(2) [(2) (1) (2)])
-             ⇒ [(1)]
+    ```lisp
+    (remove '(2) [(2) (1) (2)])
+         ⇒ [(1)]
+    ```
 
 > **Common Lisp note:** The functions `member`, `delete` and `remove` in GNU Emacs Lisp are derived from Maclisp, not Common Lisp. The Common Lisp versions do not use `equal` to compare elements.
 

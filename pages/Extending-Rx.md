@@ -1,22 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
 
 Previous: [Rx Functions](Rx-Functions.html), Up: [Rx Notation](Rx-Notation.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
@@ -40,17 +22,21 @@ The Lisp macros below provide different ways of binding names to definitions. Co
 
     Define `name` globally in all subsequent calls to `rx` and `rx-to-string`. If `arglist` is absent, then `name` is defined as a plain symbol to be replaced with `rx-form`. Example:
 
-        (rx-define haskell-comment (seq "--" (zero-or-more nonl)))
-        (rx haskell-comment)
-             ⇒ "--.*"
+    ```lisp
+    (rx-define haskell-comment (seq "--" (zero-or-more nonl)))
+    (rx haskell-comment)
+         ⇒ "--.*"
+    ```
 
     If `arglist` is present, it must be a list of zero or more argument names, and `name` is then defined as a parameterized form. When used in an `rx` expression as `(name arg…)`, each `arg` will replace the corresponding argument name inside `rx-form`.
 
     `arglist` may end in `&rest` and one final argument name, denoting a rest parameter. The rest parameter will expand to all extra actual argument values not matched by any other parameter in `arglist`, spliced into `rx-form` where it occurs. Example:
 
-        (rx-define moan (x y &rest r) (seq x (one-or-more y) r "!"))
-        (rx (moan "MOO" "A" "MEE" "OW"))
-             ⇒ "MOOA+MEEOW!"
+    ```lisp
+    (rx-define moan (x y &rest r) (seq x (one-or-more y) r "!"))
+    (rx (moan "MOO" "A" "MEE" "OW"))
+         ⇒ "MOOA+MEEOW!"
+    ```
 
     Since the definition is global, it is recommended to give `name` a package prefix to avoid name clashes with definitions elsewhere, as is usual when naming non-local variables and functions.
 
@@ -60,22 +46,26 @@ The Lisp macros below provide different ways of binding names to definitions. Co
 
     Make the `rx` definitions in `bindings` available locally for `rx` macro invocations in `body`, which is then evaluated.
 
-    Each element of `bindings` is on the form `(name [arglist] rx-form)`<!-- /@w -->, where the parts have the same meaning as in `rx-define` above. Example:
+    Each element of `bindings` is on the form `(name [arglist] rx-form)`, where the parts have the same meaning as in `rx-define` above. Example:
 
-        (rx-let ((comma-separated (item) (seq item (0+ "," item)))
-                 (number (1+ digit))
-                 (numbers (comma-separated number)))
-          (re-search-forward (rx "(" numbers ")")))
+    ```lisp
+    (rx-let ((comma-separated (item) (seq item (0+ "," item)))
+             (number (1+ digit))
+             (numbers (comma-separated number)))
+      (re-search-forward (rx "(" numbers ")")))
+    ```
 
     The definitions are only available during the macro-expansion of `body`, and are thus not present during execution of compiled code.
 
     `rx-let` can be used not only inside a function, but also at top level to include global variable and function definitions that need to share a common set of `rx` forms. Since the names are local inside `body`, there is no need for any package prefixes. Example:
 
-        (rx-let ((phone-number (seq (opt ?+) (1+ (any digit ?-)))))
-          (defun find-next-phone-number ()
-            (re-search-forward (rx phone-number)))
-          (defun phone-number-p (string)
-            (string-match-p (rx bos phone-number eos) string)))
+    ```lisp
+    (rx-let ((phone-number (seq (opt ?+) (1+ (any digit ?-)))))
+      (defun find-next-phone-number ()
+        (re-search-forward (rx phone-number)))
+      (defun phone-number-p (string)
+        (string-match-p (rx bos phone-number eos) string)))
+    ```
 
     The scope of the `rx-let` bindings is lexical, which means that they are not visible outside `body` itself, even in functions called from `body`.
 
@@ -87,11 +77,13 @@ The Lisp macros below provide different ways of binding names to definitions. Co
 
     This macro is similar to `rx-let`, except that the `bindings` argument is evaluated (and thus needs to be quoted if it is a list literal), and the definitions are substituted at run time, which is required for `rx-to-string` to work. Example:
 
-        (rx-let-eval
-            '((ponder (x) (seq "Where have all the " x " gone?")))
-          (looking-at (rx-to-string
-                       '(ponder (or "flowers" "young girls"
-                                    "left socks")))))
+    ```lisp
+    (rx-let-eval
+        '((ponder (x) (seq "Where have all the " x " gone?")))
+      (looking-at (rx-to-string
+                   '(ponder (or "flowers" "young girls"
+                                "left socks")))))
+    ```
 
     Another difference from `rx-let` is that the `bindings` are dynamically scoped, and thus also available in functions called from `body`. However, they are not visible inside functions defined in `body`.
 

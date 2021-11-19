@@ -1,22 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
 
 Previous: [Precedence of Action Functions](Precedence-of-Action-Functions.html), Up: [Displaying Buffers](Displaying-Buffers.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
@@ -36,55 +18,71 @@ Below we will give a number of guidelines to redeem the frustration mentioned ab
 
     Writing display actions can be a pain because one has to lump together action functions and action alists in one huge list. (Historical reasons prevented us from having `display-buffer` support separate arguments for these.) It might help to memorize some basic forms like the ones listed below:
 
-        '(nil (inhibit-same-window . t))
+    ```lisp
+    '(nil (inhibit-same-window . t))
+    ```
 
     specifies an action alist entry only and no action function. Its sole purpose is to inhibit a `display-buffer-same-window` function specified elsewhere from showing the buffer in the same window, see also the last example of the preceding subsection.
 
-        '(display-buffer-below-selected)
+    ```lisp
+    '(display-buffer-below-selected)
+    ```
 
     on the other hand, specifies one action function and an empty action alist. To combine the effects of the above two specifications one would write the form
 
-        '(display-buffer-below-selected (inhibit-same-window . t))
+    ```lisp
+    '(display-buffer-below-selected (inhibit-same-window . t))
+    ```
 
     to add another action function one would write
 
-        '((display-buffer-below-selected display-buffer-at-bottom)
-          (inhibit-same-window . t))
+    ```lisp
+    '((display-buffer-below-selected display-buffer-at-bottom)
+      (inhibit-same-window . t))
+    ```
 
     and to add another alist entry one would write
 
-        '((display-buffer-below-selected display-buffer-at-bottom)
-          (inhibit-same-window . t)
-          (window-height . fit-window-to-buffer))
+    ```lisp
+    '((display-buffer-below-selected display-buffer-at-bottom)
+      (inhibit-same-window . t)
+      (window-height . fit-window-to-buffer))
+    ```
 
     That last form can be used as `action` argument of `display-buffer` in the following way:
 
-        (display-buffer
-         (get-buffer-create "*foo*")
-         '((display-buffer-below-selected display-buffer-at-bottom)
-           (inhibit-same-window . t)
-           (window-height . fit-window-to-buffer)))
+    ```lisp
+    (display-buffer
+     (get-buffer-create "*foo*")
+     '((display-buffer-below-selected display-buffer-at-bottom)
+       (inhibit-same-window . t)
+       (window-height . fit-window-to-buffer)))
+    ```
 
     In a customization of `display-buffer-alist` it would be used as follows:
 
-        (customize-set-variable
-         'display-buffer-alist
-         '(("\\*foo\\*"
-            (display-buffer-below-selected display-buffer-at-bottom)
-            (inhibit-same-window . t)
-            (window-height . fit-window-to-buffer))))
+    ```lisp
+    (customize-set-variable
+     'display-buffer-alist
+     '(("\\*foo\\*"
+        (display-buffer-below-selected display-buffer-at-bottom)
+        (inhibit-same-window . t)
+        (window-height . fit-window-to-buffer))))
+    ```
 
     To add a customization for a second buffer one would then write:
 
-        (customize-set-variable
-         'display-buffer-alist
-         '(("\\*foo\\*"
-            (display-buffer-below-selected display-buffer-at-bottom)
-            (inhibit-same-window . t)
-            (window-height . fit-window-to-buffer))
-           ("\\*bar\\*"
-            (display-buffer-reuse-window display-buffer-pop-up-frame)
-            (reusable-frames . visible))))
+    ```lisp
+    (customize-set-variable
+     'display-buffer-alist
+     '(("\\*foo\\*"
+        (display-buffer-below-selected display-buffer-at-bottom)
+        (inhibit-same-window . t)
+        (window-height . fit-window-to-buffer))
+       ("\\*bar\\*"
+        (display-buffer-reuse-window display-buffer-pop-up-frame)
+        (reusable-frames . visible))))
+    ```
 
 *   Treat each other with respect
 

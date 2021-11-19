@@ -1,22 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
 
 Next: [Examples of Catch](Examples-of-Catch.html), Up: [Nonlocal Exits](Nonlocal-Exits.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
@@ -24,15 +6,17 @@ Next: [Examples of Catch](Examples-of-Catch.html), Up: [Nonlocal Exits](Nonlocal
 
 Most control constructs affect only the flow of control within the construct itself. The function `throw` is the exception to this rule of normal program execution: it performs a nonlocal exit on request. (There are other exceptions, but they are for error handling only.) `throw` is used inside a `catch`, and jumps back to that `catch`. For example:
 
-    (defun foo-outer ()
-      (catch 'foo
-        (foo-inner)))
+```lisp
+(defun foo-outer ()
+  (catch 'foo
+    (foo-inner)))
 
-    (defun foo-inner ()
-      …
-      (if x
-          (throw 'foo t))
-      …)
+(defun foo-inner ()
+  …
+  (if x
+      (throw 'foo t))
+  …)
+```
 
 The `throw` form, if executed, transfers control straight back to the corresponding `catch`, which returns immediately. The code following the `throw` is not executed. The second argument of `throw` is used as the return value of the `catch`.
 

@@ -1,22 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
 
 Next: [Buffer Names](Buffer-Names.html), Previous: [Buffer Basics](Buffer-Basics.html), Up: [Buffers](Buffers.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
@@ -30,8 +12,10 @@ Normally, the buffer displayed in the selected window is the current buffer, but
 
     This function returns the current buffer.
 
-        (current-buffer)
-             ⇒ #<buffer buffers.texi>
+    ```lisp
+    (current-buffer)
+         ⇒ #<buffer buffers.texi>
+    ```
 
 <!---->
 
@@ -47,24 +31,28 @@ When writing a Lisp function, do *not* rely on this behavior of the command loop
 
 To operate temporarily on another buffer, put the `set-buffer` within a `save-current-buffer` form. Here, as an example, is a simplified version of the command `append-to-buffer`:
 
-    (defun append-to-buffer (buffer start end)
-      "Append the text of the region to BUFFER."
-      (interactive "BAppend to buffer: \nr")
-      (let ((oldbuf (current-buffer)))
-        (save-current-buffer
-          (set-buffer (get-buffer-create buffer))
-          (insert-buffer-substring oldbuf start end))))
+```lisp
+(defun append-to-buffer (buffer start end)
+  "Append the text of the region to BUFFER."
+  (interactive "BAppend to buffer: \nr")
+  (let ((oldbuf (current-buffer)))
+    (save-current-buffer
+      (set-buffer (get-buffer-create buffer))
+      (insert-buffer-substring oldbuf start end))))
+```
 
 Here, we bind a local variable to record the current buffer, and then `save-current-buffer` arranges to make it current again later. Next, `set-buffer` makes the specified buffer current, and `insert-buffer-substring` copies the string from the original buffer to the specified (and now current) buffer.
 
 Alternatively, we can use the `with-current-buffer` macro:
 
-    (defun append-to-buffer (buffer start end)
-      "Append the text of the region to BUFFER."
-      (interactive "BAppend to buffer: \nr")
-      (let ((oldbuf (current-buffer)))
-        (with-current-buffer (get-buffer-create buffer)
-          (insert-buffer-substring oldbuf start end))))
+```lisp
+(defun append-to-buffer (buffer start end)
+  "Append the text of the region to BUFFER."
+  (interactive "BAppend to buffer: \nr")
+  (let ((oldbuf (current-buffer)))
+    (with-current-buffer (get-buffer-create buffer)
+      (insert-buffer-substring oldbuf start end))))
+```
 
 In either case, if the buffer appended to happens to be displayed in some window, the next redisplay will show how its text has changed. If it is not displayed in any window, you will not see the change immediately on the screen. The command causes the buffer to become current temporarily, but does not cause it to be displayed.
 
@@ -72,10 +60,12 @@ If you make local bindings (with `let` or function arguments) for a variable tha
 
 Do not rely on using `set-buffer` to change the current buffer back, because that won’t do the job if a quit happens while the wrong buffer is current. For instance, in the previous example, it would have been wrong to do this:
 
-      (let ((oldbuf (current-buffer)))
-        (set-buffer (get-buffer-create buffer))
-        (insert-buffer-substring oldbuf start end)
-        (set-buffer oldbuf))
+```lisp
+  (let ((oldbuf (current-buffer)))
+    (set-buffer (get-buffer-create buffer))
+    (insert-buffer-substring oldbuf start end)
+    (set-buffer oldbuf))
+```
 
 Using `save-current-buffer` or `with-current-buffer`, as we did, correctly handles quitting, errors, and `throw`, as well as ordinary evaluation.
 

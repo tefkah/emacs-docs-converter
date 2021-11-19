@@ -1,22 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
 
 Next: [Processor Run Time](Processor-Run-Time.html), Previous: [Time Conversion](Time-Conversion.html), Up: [System Interface](System-Interface.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
@@ -34,7 +16,9 @@ These functions convert time values to text in a string, and vice versa. Time va
 
     This function parses the time-string `string` into a list of the following form:
 
-        (sec min hour day mon year dow dst tz)
+    ```lisp
+    (sec min hour day mon year dow dst tz)
+    ```
 
     The format of this list is the same as what `decode-time` accepts (see [Time Conversion](Time-Conversion.html)), and is described in more detail there. Any element that cannot be determined from the input will be set to `nil`. The argument `string` should resemble an RFC 822 (or later) or ISO 8601 string, like “Fri, 25 Mar 2016 16:24:56 +0100” or “1998-09-12T12:21:54-0200”, but this function will attempt to parse less well-formed time strings as well.
 
@@ -263,7 +247,7 @@ These functions convert time values to text in a string, and vice versa. Time va
 
     *   ‘`%z`’
 
-        Non-printing control flag. When it is used, other specifiers must be given in the order of decreasing size, i.e., years before days, hours before minutes, etc. Nothing will be produced in the result string to the left of ‘`%z`’ until the first non-zero conversion is encountered. For example, the default format used by `emacs-uptime` (see [emacs-uptime](Processor-Run-Time.html)) `"%Y, %D, %H, %M, %z%S"`<!-- /@w --> means that the number of seconds will always be produced, but years, days, hours, and minutes will only be shown if they are non-zero.
+        Non-printing control flag. When it is used, other specifiers must be given in the order of decreasing size, i.e., years before days, hours before minutes, etc. Nothing will be produced in the result string to the left of ‘`%z`’ until the first non-zero conversion is encountered. For example, the default format used by `emacs-uptime` (see [emacs-uptime](Processor-Run-Time.html)) `"%Y, %D, %H, %M, %z%S"` means that the number of seconds will always be produced, but years, days, hours, and minutes will only be shown if they are non-zero.
 
     *   ‘`%%`’
 

@@ -1,22 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
 
 Next: [File Name Completion](File-Name-Completion.html), Previous: [File Name Expansion](File-Name-Expansion.html), Up: [File Names](File-Names.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
@@ -24,7 +6,9 @@ Next: [File Name Completion](File-Name-Completion.html), Previous: [File Name Ex
 
 Some programs need to write temporary files. Here is the usual way to construct a name for such a file:
 
-    (make-temp-file name-of-application)
+```lisp
+(make-temp-file name-of-application)
+```
 
 The job of `make-temp-file` is to prevent two different users or two different jobs from trying to use the exact same file name.
 
@@ -32,8 +16,10 @@ The job of `make-temp-file` is to prevent two different users or two different j
 
     This function creates a temporary file and returns its name. Emacs creates the temporary file’s name by adding to `prefix` some random characters that are different in each Emacs job. The result is guaranteed to be a newly created file, containing `text` if that’s given as a string and empty otherwise. On MS-DOS, this function can truncate `prefix` to fit into the 8+3 file-name limits. If `prefix` is a relative file name, it is expanded against `temporary-file-directory`.
 
-        (make-temp-file "foo")
-             ⇒ "/tmp/foo232J6v"
+    ```lisp
+    (make-temp-file "foo")
+         ⇒ "/tmp/foo232J6v"
+    ```
 
     When `make-temp-file` returns, the file has been created and is empty. At that point, you should write the intended contents into the file.
 
@@ -63,10 +49,12 @@ The default directory for temporary files is controlled by the variable `tempora
 
     If you want to write a temporary file which is likely to be small, you should compute the directory like this:
 
-        (make-temp-file
-          (expand-file-name prefix
-                            (or small-temporary-file-directory
-                                temporary-file-directory)))
+    ```lisp
+    (make-temp-file
+      (expand-file-name prefix
+                        (or small-temporary-file-directory
+                            temporary-file-directory)))
+    ```
 
 <!---->
 
@@ -82,9 +70,11 @@ Sometimes, it is necessary to create a temporary file on a remote host or a moun
 
     This function is similar to `make-temp-file`, but it creates a temporary file as close as possible to `default-directory`. If `prefix` is a relative file name, and `default-directory` is a remote file name or located on a mounted file systems, the temporary file is created in the directory returned by the function `temporary-file-directory`. Otherwise, the function `make-temp-file` is used. `prefix`, `dir-flag` and `suffix` have the same meaning as in `make-temp-file`.
 
-        (let ((default-directory "/ssh:remotehost:"))
-          (make-nearby-temp-file "foo"))
-             ⇒ "/ssh:remotehost:/tmp/foo232J6v"
+    ```lisp
+    (let ((default-directory "/ssh:remotehost:"))
+      (make-nearby-temp-file "foo"))
+         ⇒ "/ssh:remotehost:/tmp/foo232J6v"
+    ```
 
 <!---->
 

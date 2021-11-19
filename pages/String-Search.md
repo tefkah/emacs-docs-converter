@@ -1,22 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
 
 Next: [Searching and Case](Searching-and-Case.html), Up: [Searching and Matching](Searching-and-Matching.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
@@ -32,19 +14,23 @@ These search functions convert the search string to multibyte if the buffer is m
 
     In the following example, point is initially at the beginning of the line. Then `(search-forward "fox")` moves point after the last letter of ‘`fox`’:
 
-        ---------- Buffer: foo ----------
-        ∗The quick brown fox jumped over the lazy dog.
-        ---------- Buffer: foo ----------
-
+    ```lisp
+    ---------- Buffer: foo ----------
+    ∗The quick brown fox jumped over the lazy dog.
+    ---------- Buffer: foo ----------
     ```
+
+    ```lisp
     ```
 
-        (search-forward "fox")
-             ⇒ 20
+    ```lisp
+    (search-forward "fox")
+         ⇒ 20
 
-        ---------- Buffer: foo ----------
-        The quick brown fox∗ jumped over the lazy dog.
-        ---------- Buffer: foo ----------
+    ---------- Buffer: foo ----------
+    The quick brown fox∗ jumped over the lazy dog.
+    ---------- Buffer: foo ----------
+    ```
 
     The argument `limit` specifies the bound to the search, and should be a position in the current buffer. No match extending after that position is accepted. If `limit` is omitted or `nil`, it defaults to the end of the accessible portion of the buffer.
 
@@ -70,21 +56,25 @@ These search functions convert the search string to multibyte if the buffer is m
 
     In this example, point is initially at the beginning of the buffer; the search leaves it between the ‘`y`’ and the ‘`!`’.
 
-        ---------- Buffer: foo ----------
-        ∗He said "Please!  Find
-        the ball boy!"
-        ---------- Buffer: foo ----------
-
+    ```lisp
+    ---------- Buffer: foo ----------
+    ∗He said "Please!  Find
+    the ball boy!"
+    ---------- Buffer: foo ----------
     ```
+
+    ```lisp
     ```
 
-        (word-search-forward "Please find the ball, boy.")
-             ⇒ 39
+    ```lisp
+    (word-search-forward "Please find the ball, boy.")
+         ⇒ 39
 
-        ---------- Buffer: foo ----------
-        He said "Please!  Find
-        the ball boy∗!"
-        ---------- Buffer: foo ----------
+    ---------- Buffer: foo ----------
+    He said "Please!  Find
+    the ball boy∗!"
+    ---------- Buffer: foo ----------
+    ```
 
     If `limit` is non-`nil`, it must be a position in the current buffer; it specifies the upper bound to the search. The match found must not extend after that position.
 

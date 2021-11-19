@@ -1,22 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
 
 Next: [Character Sets](Character-Sets.html), Previous: [Character Codes](Character-Codes.html), Up: [Non-ASCII Characters](Non_002dASCII-Characters.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
@@ -118,44 +100,46 @@ Here is the full list of value types for all the character properties that Emacs
 
     This function returns the value of `char`’s `propname` property.
 
-        (get-char-code-property ?\s 'general-category)
-             ⇒ Zs
+    ```lisp
+    (get-char-code-property ?\s 'general-category)
+         ⇒ Zs
+    ```
 
-    <!---->
+    ```lisp
+    (get-char-code-property ?1 'general-category)
+         ⇒ Nd
+    ```
 
-        (get-char-code-property ?1 'general-category)
-             ⇒ Nd
+    ```lisp
+    ;; U+2084
+    (get-char-code-property ?\N{SUBSCRIPT FOUR}
+                            'digit-value)
+         ⇒ 4
+    ```
 
-    <!---->
+    ```lisp
+    ;; U+2155
+    (get-char-code-property ?\N{VULGAR FRACTION ONE FIFTH}
+                            'numeric-value)
+         ⇒ 0.2
+    ```
 
-        ;; U+2084
-        (get-char-code-property ?\N{SUBSCRIPT FOUR}
-                                'digit-value)
-             ⇒ 4
+    ```lisp
+    ;; U+2163
+    (get-char-code-property ?\N{ROMAN NUMERAL FOUR}
+                            'numeric-value)
+         ⇒ 4
+    ```
 
-    <!---->
+    ```lisp
+    (get-char-code-property ?\( 'paired-bracket)
+         ⇒ 41  ;; closing parenthesis
+    ```
 
-        ;; U+2155
-        (get-char-code-property ?\N{VULGAR FRACTION ONE FIFTH}
-                                'numeric-value)
-             ⇒ 0.2
-
-    <!---->
-
-        ;; U+2163
-        (get-char-code-property ?\N{ROMAN NUMERAL FOUR}
-                                'numeric-value)
-             ⇒ 4
-
-    <!---->
-
-        (get-char-code-property ?\( 'paired-bracket)
-             ⇒ 41  ;; closing parenthesis
-
-    <!---->
-
-        (get-char-code-property ?\) 'bracket-type)
-             ⇒ c
+    ```lisp
+    (get-char-code-property ?\) 'bracket-type)
+         ⇒ c
+    ```
 
 <!---->
 
@@ -163,18 +147,20 @@ Here is the full list of value types for all the character properties that Emacs
 
     This function returns the description string of property `prop`’s `value`, or `nil` if `value` has no description.
 
-        (char-code-property-description 'general-category 'Zs)
-             ⇒ "Separator, Space"
+    ```lisp
+    (char-code-property-description 'general-category 'Zs)
+         ⇒ "Separator, Space"
+    ```
 
-    <!---->
+    ```lisp
+    (char-code-property-description 'general-category 'Nd)
+         ⇒ "Number, Decimal Digit"
+    ```
 
-        (char-code-property-description 'general-category 'Nd)
-             ⇒ "Number, Decimal Digit"
-
-    <!---->
-
-        (char-code-property-description 'numeric-value '1/5)
-             ⇒ nil
+    ```lisp
+    (char-code-property-description 'numeric-value '1/5)
+         ⇒ nil
+    ```
 
 <!---->
 

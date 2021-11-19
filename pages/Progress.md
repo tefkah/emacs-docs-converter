@@ -1,22 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
 
 Next: [Logging Messages](Logging-Messages.html), Previous: [Displaying Messages](Displaying-Messages.html), Up: [The Echo Area](The-Echo-Area.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
@@ -26,13 +8,15 @@ When an operation can take a while to finish, you should inform the user about t
 
 Here is a working example that does nothing useful:
 
-    (let ((progress-reporter
-           (make-progress-reporter "Collecting mana for Emacs..."
-                                   0  500)))
-      (dotimes (k 500)
-        (sit-for 0.01)
-        (progress-reporter-update progress-reporter k))
-      (progress-reporter-done progress-reporter))
+```lisp
+(let ((progress-reporter
+       (make-progress-reporter "Collecting mana for Emacs..."
+                               0  500)))
+  (dotimes (k 500)
+    (sit-for 0.01)
+    (progress-reporter-update progress-reporter k))
+  (progress-reporter-done progress-reporter))
+```
 
 *   Function: **make-progress-reporter** *message \&optional min-value max-value current-value min-change min-time*
 
@@ -86,17 +70,21 @@ Here is a working example that does nothing useful:
 
     You can rewrite the example in the beginning of this subsection using this macro as follows:
 
-        (dotimes-with-progress-reporter
-            (k 500)
-            "Collecting some mana for Emacs..."
-          (sit-for 0.01))
+    ```lisp
+    (dotimes-with-progress-reporter
+        (k 500)
+        "Collecting some mana for Emacs..."
+      (sit-for 0.01))
+    ```
 
     Using a reporter object as the `reporter-or-message` argument is useful if you want to specify the optional arguments in `make-progress-reporter`. For instance, you can write the previous example as follows:
 
-        (dotimes-with-progress-reporter
-            (k 500)
-            (make-progress-reporter "Collecting some mana for Emacs..." 0 500 0 1 1.5)
-          (sit-for 0.01))
+    ```lisp
+    (dotimes-with-progress-reporter
+        (k 500)
+        (make-progress-reporter "Collecting some mana for Emacs..." 0 500 0 1 1.5)
+      (sit-for 0.01))
+    ```
 
 <!---->
 
@@ -104,9 +92,11 @@ Here is a working example that does nothing useful:
 
     This is another convenience macro that works the same way as `dolist` does, but also reports loop progress using the functions described above. As in `dotimes-with-progress-reporter`, `reporter-or-message` can be a progress reporter or a string. You can rewrite the previous example with this macro as follows:
 
-        (dolist-with-progress-reporter
-            (k (number-sequence 0 500))
-            "Collecting some mana for Emacs..."
-          (sit-for 0.01))
+    ```lisp
+    (dolist-with-progress-reporter
+        (k (number-sequence 0 500))
+        "Collecting some mana for Emacs..."
+      (sit-for 0.01))
+    ```
 
 Next: [Logging Messages](Logging-Messages.html), Previous: [Displaying Messages](Displaying-Messages.html), Up: [The Echo Area](The-Echo-Area.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]

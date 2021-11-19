@@ -1,22 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
 
 Next: [File Attributes](File-Attributes.html), Previous: [Kinds of Files](Kinds-of-Files.html), Up: [Information about Files](Information-about-Files.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
@@ -44,12 +26,14 @@ The *truename* of a file is the name that you get by following symbolic links at
 
 To illustrate the difference between `file-chase-links` and `file-truename`, suppose that `/usr/foo` is a symbolic link to the directory `/home/foo`, and `/home/foo/hello` is an ordinary file (or at least, not a symbolic link) or nonexistent. Then we would have:
 
-    (file-chase-links "/usr/foo/hello")
-         ;; This does not follow the links in the parent directories.
-         ⇒ "/usr/foo/hello"
-    (file-truename "/usr/foo/hello")
-         ;; Assuming that /home is not a symbolic link.
-         ⇒ "/home/foo/hello"
+```lisp
+(file-chase-links "/usr/foo/hello")
+     ;; This does not follow the links in the parent directories.
+     ⇒ "/usr/foo/hello"
+(file-truename "/usr/foo/hello")
+     ;; Assuming that /home is not a symbolic link.
+     ⇒ "/home/foo/hello"
+```
 
 *   Function: **file-equal-p** *file1 file2*
 
@@ -73,8 +57,10 @@ To illustrate the difference between `file-chase-links` and `file-truename`, sup
 
 *   Function: **vc-responsible-backend** *file*
 
-    This function determines the responsible VC backend of the given `file`. For example, if `emacs.c` is a file tracked by Git, `(vc-responsible-backend "emacs.c")`<!-- /@w --> returns ‘`Git`’. Note that if `file` is a symbolic link, `vc-responsible-backend` will not resolve it—the backend of the symbolic link file itself is reported. To get the backend VC of the file to which `file` refers, wrap `file` with a symbolic link resolving function such as `file-chase-links`:
+    This function determines the responsible VC backend of the given `file`. For example, if `emacs.c` is a file tracked by Git, `(vc-responsible-backend "emacs.c")` returns ‘`Git`’. Note that if `file` is a symbolic link, `vc-responsible-backend` will not resolve it—the backend of the symbolic link file itself is reported. To get the backend VC of the file to which `file` refers, wrap `file` with a symbolic link resolving function such as `file-chase-links`:
 
-        (vc-responsible-backend (file-chase-links "emacs.c"))
+    ```lisp
+    (vc-responsible-backend (file-chase-links "emacs.c"))
+    ```
 
 Next: [File Attributes](File-Attributes.html), Previous: [Kinds of Files](Kinds-of-Files.html), Up: [Information about Files](Information-about-Files.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]

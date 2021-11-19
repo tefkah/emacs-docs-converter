@@ -1,22 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
 
 Next: [Textual Scrolling](Textual-Scrolling.html), Previous: [Window Point](Window-Point.html), Up: [Windows](Windows.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
@@ -68,46 +50,54 @@ After switching windows or buffers, and in some other cases, if the window start
 
     The display routines insist that the position of point be visible when a buffer is displayed. Normally, they select the display-start position according to their internal logic (and scroll the window if necessary) to make point visible. However, if you specify the start position with this function using `nil` for `noforce`, it means you want display to start at `position` even if that would put the location of point off the screen. If this does place point off screen, the display routines attempt to move point to the left margin on the middle line in the window.
 
-    For example, if point is 1<!-- /@w --> and you set the start of the window to 37<!-- /@w -->, the start of the next line, point will be above the top of the window. The display routines will automatically move point if it is still 1 when redisplay occurs. Here is an example:
+    For example, if point is 1 and you set the start of the window to 37, the start of the next line, point will be above the top of the window. The display routines will automatically move point if it is still 1 when redisplay occurs. Here is an example:
 
-        ;; Here is what ‘foo’ looks like before executing
-        ;;   the set-window-start expression.
-
-    ```
-    ```
-
-        ---------- Buffer: foo ----------
-        ∗This is the contents of buffer foo.
-        2
-        3
-        4
-        5
-        6
-        ---------- Buffer: foo ----------
-
-    ```
+    ```lisp
+    ;; Here is what ‘foo’ looks like before executing
+    ;;   the set-window-start expression.
     ```
 
-        (set-window-start
-         (selected-window)
-         (save-excursion
-           (goto-char 1)
-           (forward-line 1)
-           (point)))
-        ⇒ 37
-
-    ```
+    ```lisp
     ```
 
-        ;; Here is what ‘foo’ looks like after executing
-        ;;   the set-window-start expression.
-        ---------- Buffer: foo ----------
-        2
-        3
-        ∗4
-        5
-        6
-        ---------- Buffer: foo ----------
+    ```lisp
+    ---------- Buffer: foo ----------
+    ∗This is the contents of buffer foo.
+    2
+    3
+    4
+    5
+    6
+    ---------- Buffer: foo ----------
+    ```
+
+    ```lisp
+    ```
+
+    ```lisp
+    (set-window-start
+     (selected-window)
+     (save-excursion
+       (goto-char 1)
+       (forward-line 1)
+       (point)))
+    ⇒ 37
+    ```
+
+    ```lisp
+    ```
+
+    ```lisp
+    ;; Here is what ‘foo’ looks like after executing
+    ;;   the set-window-start expression.
+    ---------- Buffer: foo ----------
+    2
+    3
+    ∗4
+    5
+    6
+    ---------- Buffer: foo ----------
+    ```
 
     If the attempt to make point visible (i.e., in a fully-visible screen line) fails, the display routines will disregard the requested window-start position and compute a new one anyway. Thus, for reliable results Lisp programs that call this function should always move point to be inside the window whose display starts at `position`.
 
@@ -131,10 +121,12 @@ After switching windows or buffers, and in some other cases, if the window start
 
     Here is an example:
 
-        ;; If point is off the screen now, recenter it now.
-        (or (pos-visible-in-window-p
-             (point) (selected-window))
-            (recenter 0))
+    ```lisp
+    ;; If point is off the screen now, recenter it now.
+    (or (pos-visible-in-window-p
+         (point) (selected-window))
+        (recenter 0))
+    ```
 
 <!---->
 

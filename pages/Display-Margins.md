@@ -1,22 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
 
 Previous: [Other Display Specs](Other-Display-Specs.html), Up: [Display Property](Display-Property.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
@@ -60,6 +42,6 @@ You can also set the margin widths immediately.
 
 *   Function: **window-margins** *\&optional window*
 
-    This function returns the width of the left and right margins of `window` as a cons cell of the form `(left . right)`<!-- /@w -->. If one of the two marginal areas does not exist, its width is returned as `nil`; if neither of the two margins exist, the function returns `(nil)`. If `window` is `nil`, the selected window is used.
+    This function returns the width of the left and right margins of `window` as a cons cell of the form `(left . right)`. If one of the two marginal areas does not exist, its width is returned as `nil`; if neither of the two margins exist, the function returns `(nil)`. If `window` is `nil`, the selected window is used.
 
 Previous: [Other Display Specs](Other-Display-Specs.html), Up: [Display Property](Display-Property.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]

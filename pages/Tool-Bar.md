@@ -1,22 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
 
 Next: [Modifying Menus](Modifying-Menus.html), Previous: [Menu Bar](Menu-Bar.html), Up: [Menu Keymaps](Menu-Keymaps.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
@@ -28,7 +10,9 @@ On each frame, the frame parameter `tool-bar-lines` controls how many lines’ w
 
 The tool bar contents are controlled by a menu keymap attached to a fake function key called `TOOL-BAR` (much like the way the menu bar is controlled). So you define a tool bar item using `define-key`, like this:
 
-    (define-key global-map [tool-bar key] item)
+```lisp
+(define-key global-map [tool-bar key] item)
+```
 
 where `key` is a fake function key to distinguish this item from other items, and `item` is a menu item key binding (see [Extended Menu Items](Extended-Menu-Items.html)), which says how to display this item and how it behaves.
 
@@ -72,9 +56,11 @@ The default tool bar is defined so that items specific to editing do not appear 
 
     By default, the global map binds `[tool-bar]` as follows:
 
-        (global-set-key [tool-bar]
-                        `(menu-item ,(purecopy "tool bar") ignore
-                                    :filter tool-bar-make-keymap))
+    ```lisp
+    (global-set-key [tool-bar]
+                    `(menu-item ,(purecopy "tool bar") ignore
+                                :filter tool-bar-make-keymap))
+    ```
 
     The function `tool-bar-make-keymap`, in turn, derives the actual tool bar map dynamically from the value of the variable `tool-bar-map`. Hence, you should normally adjust the default (global) tool bar by changing that map. Some major modes, such as Info mode, completely replace the global tool bar by making `tool-bar-map` buffer-local and setting it to a different keymap.
 
@@ -86,11 +72,13 @@ There are two convenience functions for defining tool bar items, as follows.
 
     To define items in some local map, bind `tool-bar-map` with `let` around calls of this function:
 
-        (defvar foo-tool-bar-map
-          (let ((tool-bar-map (make-sparse-keymap)))
-            (tool-bar-add-item …)
-            …
-            tool-bar-map))
+    ```lisp
+    (defvar foo-tool-bar-map
+      (let ((tool-bar-map (make-sparse-keymap)))
+        (tool-bar-add-item …)
+        …
+        tool-bar-map))
+    ```
 
 <!---->
 
@@ -144,13 +132,17 @@ You can define a special meaning for clicking on a tool bar item with the shift,
 
 Thus, if the original item was defined this way,
 
-    (define-key global-map [tool-bar shell]
-      '(menu-item "Shell" shell
-                  :image (image :type xpm :file "shell.xpm")))
+```lisp
+(define-key global-map [tool-bar shell]
+  '(menu-item "Shell" shell
+              :image (image :type xpm :file "shell.xpm")))
+```
 
 then here is how you can define clicking on the same tool bar image with the shift modifier:
 
-    (define-key global-map [tool-bar S-shell] 'some-command)
+```lisp
+(define-key global-map [tool-bar S-shell] 'some-command)
+```
 
 See [Function Keys](Function-Keys.html), for more information about how to add modifiers to function keys.
 

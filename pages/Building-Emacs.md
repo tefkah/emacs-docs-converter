@@ -1,22 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
 
 Next: [Pure Storage](Pure-Storage.html), Up: [GNU Emacs Internals](GNU-Emacs-Internals.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
@@ -28,9 +10,9 @@ Building Emacs requires GNU Make version 3.81 or later.
 
 Compilation of the C source files in the `src` directory produces an executable file called `temacs`, also called a *bare impure Emacs*. It contains the Emacs Lisp interpreter and I/O routines, but not the editing commands.
 
-The command `temacs -l loadup`<!-- /@w --> would run `temacs` and direct it to load `loadup.el`. The `loadup` library loads additional Lisp libraries, which set up the normal Emacs editing environment. After this step, the Emacs executable is no longer *bare*.
+The command `temacs -l loadup` would run `temacs` and direct it to load `loadup.el`. The `loadup` library loads additional Lisp libraries, which set up the normal Emacs editing environment. After this step, the Emacs executable is no longer *bare*.
 
-Because it takes some time to load the standard Lisp files, the `temacs` executable usually isn’t run directly by users. Instead, one of the last steps of building Emacs runs the command ‘`temacs -batch -l loadup --temacs=dump-method`’<!-- /@w -->. The special option `--temacs` tells `temacs` how to record all the standard preloaded Lisp functions and variables, so that when you subsequently run Emacs, it will start much faster. The `--temacs` option requires an argument `dump-method`, which can be one of the following:
+Because it takes some time to load the standard Lisp files, the `temacs` executable usually isn’t run directly by users. Instead, one of the last steps of building Emacs runs the command ‘`temacs -batch -l loadup --temacs=dump-method`’. The special option `--temacs` tells `temacs` how to record all the standard preloaded Lisp functions and variables, so that when you subsequently run Emacs, it will start much faster. The `--temacs` option requires an argument `dump-method`, which can be one of the following:
 
 *   ‘`pdump`’
 
@@ -54,7 +36,9 @@ By default the dumped `emacs` executable records details such as the build time 
 
 You can specify additional files to preload by writing a library named `site-load.el` that loads them. You may need to rebuild Emacs with an added definition
 
-    #define SITELOAD_PURESIZE_EXTRA n
+```lisp
+#define SITELOAD_PURESIZE_EXTRA n
+```
 
 to make `n` added bytes of pure space to hold the additional files; see `src/puresize.h`. (Try adding increments of 20000 until it is big enough.) However, the advantage of preloading additional files decreases as machines get faster. On modern machines, it is usually not advisable.
 
@@ -98,6 +82,6 @@ In the unlikely event that you need a more general functionality than `custom-in
 
 *   Function: **pdumper-stats**
 
-    If the current Emacs session restored its state from a dump file, this function returns information about the dump file and the time it took to restore the Emacs state. The value is an alist `((dumped-with-pdumper . t) (load-time . time) (dump-file-name . file))`<!-- /@w -->, where `file` is the name of the dump file, and `time` is the time in seconds it took to restore the state from the dump file. If the current session was not restored from a dump file, the value is nil.
+    If the current Emacs session restored its state from a dump file, this function returns information about the dump file and the time it took to restore the Emacs state. The value is an alist `((dumped-with-pdumper . t) (load-time . time) (dump-file-name . file))`, where `file` is the name of the dump file, and `time` is the time in seconds it took to restore the state from the dump file. If the current session was not restored from a dump file, the value is nil.
 
 Next: [Pure Storage](Pure-Storage.html), Up: [GNU Emacs Internals](GNU-Emacs-Internals.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]

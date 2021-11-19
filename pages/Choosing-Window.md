@@ -1,22 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
 
 Next: [Buffer Display Action Functions](Buffer-Display-Action-Functions.html), Up: [Displaying Buffers](Displaying-Buffers.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
@@ -52,13 +34,13 @@ An action function accepts two arguments: the buffer to display and an action al
 
     The argument `action` can also have a non-`nil`, non-list value. This has the special meaning that the buffer should be displayed in a window other than the selected one, even if the selected window is already displaying it. If called interactively with a prefix argument, `action` is `t`. Lisp programs should always supply a list value.
 
-    The optional argument `frame`, if non-`nil`, specifies which frames to check when deciding whether the buffer is already displayed. It is equivalent to adding an element `(reusable-frames . frame)`<!-- /@w --> to the action alist of `action` (see [Buffer Display Action Alists](Buffer-Display-Action-Alists.html)). The `frame` argument is provided for compatibility reasons, Lisp programs should not use it.
+    The optional argument `frame`, if non-`nil`, specifies which frames to check when deciding whether the buffer is already displayed. It is equivalent to adding an element `(reusable-frames . frame)` to the action alist of `action` (see [Buffer Display Action Alists](Buffer-Display-Action-Alists.html)). The `frame` argument is provided for compatibility reasons, Lisp programs should not use it.
 
 <!---->
 
 *   Variable: **display-buffer-overriding-action**
 
-    The value of this variable should be a display action, which is treated with the highest priority by `display-buffer`. The default value is an empty display action, i.e., `(nil . nil)`<!-- /@w -->.
+    The value of this variable should be a display action, which is treated with the highest priority by `display-buffer`. The default value is an empty display action, i.e., `(nil . nil)`.
 
 <!---->
 

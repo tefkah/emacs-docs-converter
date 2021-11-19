@@ -1,22 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
 
 Next: [Files and Storage](Files-and-Storage.html), Previous: [Information about Files](Information-about-Files.html), Up: [Files](Files.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
@@ -44,39 +26,51 @@ In the functions that have an argument `newname`, if a file by the name of `newn
 
     In the first part of the following example, we list two files, `foo` and `foo3`.
 
-        $ ls -li fo*
-        81908 -rw-rw-rw- 1 rms rms 29 Aug 18 20:32 foo
-        84302 -rw-rw-rw- 1 rms rms 24 Aug 18 20:31 foo3
+    ```lisp
+    $ ls -li fo*
+    81908 -rw-rw-rw- 1 rms rms 29 Aug 18 20:32 foo
+    84302 -rw-rw-rw- 1 rms rms 24 Aug 18 20:31 foo3
+    ```
 
     Now we create a hard link, by calling `add-name-to-file`, then list the files again. This shows two names for one file, `foo` and `foo2`.
 
-        (add-name-to-file "foo" "foo2")
-             ⇒ nil
-
+    ```lisp
+    (add-name-to-file "foo" "foo2")
+         ⇒ nil
     ```
+
+    ```lisp
     ```
 
-        $ ls -li fo*
-        81908 -rw-rw-rw- 2 rms rms 29 Aug 18 20:32 foo
-        81908 -rw-rw-rw- 2 rms rms 29 Aug 18 20:32 foo2
-        84302 -rw-rw-rw- 1 rms rms 24 Aug 18 20:31 foo3
+    ```lisp
+    $ ls -li fo*
+    81908 -rw-rw-rw- 2 rms rms 29 Aug 18 20:32 foo
+    81908 -rw-rw-rw- 2 rms rms 29 Aug 18 20:32 foo2
+    84302 -rw-rw-rw- 1 rms rms 24 Aug 18 20:31 foo3
+    ```
 
     Finally, we evaluate the following:
 
-        (add-name-to-file "foo" "foo3" t)
+    ```lisp
+    (add-name-to-file "foo" "foo3" t)
+    ```
 
     and list the files again. Now there are three names for one file: `foo`, `foo2`, and `foo3`. The old contents of `foo3` are lost.
 
-        (add-name-to-file "foo1" "foo3")
-             ⇒ nil
-
+    ```lisp
+    (add-name-to-file "foo1" "foo3")
+         ⇒ nil
     ```
+
+    ```lisp
     ```
 
-        $ ls -li fo*
-        81908 -rw-rw-rw- 3 rms rms 29 Aug 18 20:32 foo
-        81908 -rw-rw-rw- 3 rms rms 29 Aug 18 20:32 foo2
-        81908 -rw-rw-rw- 3 rms rms 29 Aug 18 20:32 foo3
+    ```lisp
+    $ ls -li fo*
+    81908 -rw-rw-rw- 3 rms rms 29 Aug 18 20:32 foo
+    81908 -rw-rw-rw- 3 rms rms 29 Aug 18 20:32 foo2
+    81908 -rw-rw-rw- 3 rms rms 29 Aug 18 20:32 foo3
+    ```
 
     This function is meaningless on operating systems where multiple names for one file are not allowed. Some systems implement multiple names by copying the file instead.
 
@@ -144,7 +138,9 @@ In the functions that have an argument `newname`, if a file by the name of `newn
 
     If called non-interactively, `mode` must be an integer. Only the lowest 12 bits of the integer are used; on most systems, only the lowest 9 bits are meaningful. You can use the Lisp construct for octal numbers to enter `mode`. For example,
 
-        (set-file-modes #o644)
+    ```lisp
+    (set-file-modes #o644)
+    ```
 
     specifies that the file should be readable and writable for its owner, readable for group members, and readable for all other users. See [File permissions](https://www.gnu.org/software/coreutils/manual/html_node/File-permissions.html#File-permissions) in The GNU `Coreutils` Manual, for a description of mode bit specifications.
 

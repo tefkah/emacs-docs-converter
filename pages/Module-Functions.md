@@ -1,22 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
 
 Next: [Module Values](Module-Values.html), Previous: [Module Initialization](Module-Initialization.html), Up: [Writing Dynamic Modules](Writing-Dynamic-Modules.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
@@ -50,12 +32,14 @@ Finally, you should bind the Lisp function to a symbol, so that Lisp code could 
 
 Combining the above steps, code that arranges for a C function `module_func` to be callable as `module-func` from Lisp will look like this, as part of the module initialization function:
 
-     emacs_env *env = ert->get_environment (ert);
-     emacs_value func = env->make_function (env, min_arity, max_arity,
-                                            module_func, docstring, data);
-     emacs_value symbol = env->intern (env, "module-func");
-     emacs_value args[] = {symbol, func};
-     env->funcall (env, env->intern (env, "defalias"), 2, args);
+```lisp
+ emacs_env *env = ert->get_environment (ert);
+ emacs_value func = env->make_function (env, min_arity, max_arity,
+                                        module_func, docstring, data);
+ emacs_value symbol = env->intern (env, "module-func");
+ emacs_value args[] = {symbol, func};
+ env->funcall (env, env->intern (env, "defalias"), 2, args);
+```
 
 This makes the symbol `module-func` known to Emacs by calling `env->intern`, then invokes `defalias` from Emacs to bind the function to that symbol. Note that it is possible to use `fset` instead of `defalias`; the differences are described in [defalias](Defining-Functions.html).
 
@@ -63,10 +47,12 @@ Module functions including the `emacs_module_init` function (see [module initial
 
 Using the module API, it is possible to define more complex function and data types: interactive functions, inline functions, macros, etc. However, the resulting C code will be cumbersome and hard to read. Therefore, we recommend that you limit the module code which creates functions and data structures to the absolute minimum, and leave the rest for a Lisp package that will accompany your module, because doing these additional tasks in Lisp is much easier, and will produce a much more readable code. For example, given a module function `module-func` defined as above, one way of making an interactive command `module-cmd` based on it is with the following simple Lisp wrapper:
 
-    (defun module-cmd (&rest args)
-      "Documentation string for the command."
-      (interactive spec)
-      (apply 'module-func args))
+```lisp
+(defun module-cmd (&rest args)
+  "Documentation string for the command."
+  (interactive spec)
+  (apply 'module-func args))
+```
 
 The Lisp package which goes with your module could then load the module using the `load` primitive (see [Dynamic Modules](Dynamic-Modules.html)) when the package is loaded into Emacs.
 

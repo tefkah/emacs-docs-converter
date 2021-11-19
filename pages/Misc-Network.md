@@ -1,22 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
 
 Next: [Serial Ports](Serial-Ports.html), Previous: [Low-Level Network](Low_002dLevel-Network.html), Up: [Processes](Processes.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
@@ -28,47 +10,49 @@ These additional functions are useful for creating and operating on network conn
 
     This function returns a list describing the network interfaces of the machine you are using. The value is an alist whose elements have the form `(ifname . address)`. `ifname` is a string naming the interface, `address` has the same form as the `local-address` and `remote-address` arguments to `make-network-process`, i.e. a vector of integers. By default both IPv4 and IPv6 addresses are returned if possible.
 
-    Optional argument `full` non-`nil` means to instead return a list of one or more elements of the form `(ifname addr bcast netmask)`<!-- /@w -->. `ifname` is a non-unique string naming the interface. `addr`, `bcast`, and `netmask` are vectors of integers detailing the IP address, broadcast address, and network mask.
+    Optional argument `full` non-`nil` means to instead return a list of one or more elements of the form `(ifname addr bcast netmask)`. `ifname` is a non-unique string naming the interface. `addr`, `bcast`, and `netmask` are vectors of integers detailing the IP address, broadcast address, and network mask.
 
     Optional argument `family` specified as symbol `ipv4` or `ipv6` restricts the returned information to IPv4 and IPv6 addresses respectively, independently of the value of `full`. Specifying `ipv6` when IPv6 support is not available will result in an error being signaled.
 
     Some examples:
 
-        (network-interface-list) ⇒
-        (("vmnet8" .
-          [172 16 76 1 0])
-         ("vmnet1" .
-          [172 16 206 1 0])
-         ("lo0" .
-          [65152 0 0 0 0 0 0 1 0])
-         ("lo0" .
-          [0 0 0 0 0 0 0 1 0])
-         ("lo0" .
-          [127 0 0 1 0]))
+    ```lisp
+    (network-interface-list) ⇒
+    (("vmnet8" .
+      [172 16 76 1 0])
+     ("vmnet1" .
+      [172 16 206 1 0])
+     ("lo0" .
+      [65152 0 0 0 0 0 0 1 0])
+     ("lo0" .
+      [0 0 0 0 0 0 0 1 0])
+     ("lo0" .
+      [127 0 0 1 0]))
+    ```
 
-    <!---->
-
-        (network-interface-list t) ⇒
-        (("vmnet8"
-          [172 16 76 1 0]
-          [172 16 76 255 0]
-          [255 255 255 0 0])
-         ("vmnet1"
-          [172 16 206 1 0]
-          [172 16 206 255 0]
-          [255 255 255 0 0])
-         ("lo0"
-          [65152 0 0 0 0 0 0 1 0]
-          [65152 0 0 0 65535 65535 65535 65535 0]
-          [65535 65535 65535 65535 0 0 0 0 0])
-         ("lo0"
-          [0 0 0 0 0 0 0 1 0]
-          [0 0 0 0 0 0 0 1 0]
-          [65535 65535 65535 65535 65535 65535 65535 65535 0])
-         ("lo0"
-          [127 0 0 1 0]
-          [127 255 255 255 0]
-          [255 0 0 0 0]))
+    ```lisp
+    (network-interface-list t) ⇒
+    (("vmnet8"
+      [172 16 76 1 0]
+      [172 16 76 255 0]
+      [255 255 255 0 0])
+     ("vmnet1"
+      [172 16 206 1 0]
+      [172 16 206 255 0]
+      [255 255 255 0 0])
+     ("lo0"
+      [65152 0 0 0 0 0 0 1 0]
+      [65152 0 0 0 65535 65535 65535 65535 0]
+      [65535 65535 65535 65535 0 0 0 0 0])
+     ("lo0"
+      [0 0 0 0 0 0 0 1 0]
+      [0 0 0 0 0 0 0 1 0]
+      [65535 65535 65535 65535 65535 65535 65535 65535 0])
+     ("lo0"
+      [127 0 0 1 0]
+      [127 255 255 255 0]
+      [255 0 0 0 0]))
+    ```
 
 <!---->
 

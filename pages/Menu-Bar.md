@@ -1,22 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
 
 Next: [Tool Bar](Tool-Bar.html), Previous: [Menu Example](Menu-Example.html), Up: [Menu Keymaps](Menu-Keymaps.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
@@ -32,28 +14,34 @@ The variable `overriding-local-map` is normally ignored when determining the men
 
 Here’s an example of setting up a menu bar item:
 
-    ;; Make a menu keymap (with a prompt string)
-    ;; and make it the menu bar item’s definition.
-    (define-key global-map [menu-bar words]
-      (cons "Words" (make-sparse-keymap "Words")))
-
+```lisp
+;; Make a menu keymap (with a prompt string)
+;; and make it the menu bar item’s definition.
+(define-key global-map [menu-bar words]
+  (cons "Words" (make-sparse-keymap "Words")))
 ```
+
+```lisp
 ```
 
-    ;; Define specific subcommands in this menu.
-    (define-key global-map
-      [menu-bar words forward]
-      '("Forward word" . forward-word))
+```lisp
+;; Define specific subcommands in this menu.
+(define-key global-map
+  [menu-bar words forward]
+  '("Forward word" . forward-word))
+```
 
-<!---->
-
-    (define-key global-map
-      [menu-bar words backward]
-      '("Backward word" . backward-word))
+```lisp
+(define-key global-map
+  [menu-bar words backward]
+  '("Backward word" . backward-word))
+```
 
 A local keymap can cancel a menu bar item made by the global keymap by rebinding the same fake function key with `undefined` as the binding. For example, this is how Dired suppresses the ‘`Edit`’ menu bar item:
 
-    (define-key dired-mode-map [menu-bar edit] 'undefined)
+```lisp
+(define-key dired-mode-map [menu-bar edit] 'undefined)
+```
 
 Here, `edit` is the symbol produced by a fake function key, it is used by the global map for the ‘`Edit`’ menu bar item. The main reason to suppress a global menu bar item is to regain space for mode-specific items.
 

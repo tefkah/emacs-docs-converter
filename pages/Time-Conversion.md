@@ -1,22 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
 
 Next: [Time Parsing](Time-Parsing.html), Previous: [Time Zone Rules](Time-Zone-Rules.html), Up: [System Interface](System-Interface.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
@@ -40,23 +22,25 @@ Calendrical conversion functions always use the Gregorian calendar, even for dat
 
     Although `(time-convert nil nil)` is equivalent to `(current-time)`, the latter may be a bit faster.
 
-        (setq a (time-convert nil t))
-        ⇒ (1564826753904873156 . 1000000000)
+    ```lisp
+    (setq a (time-convert nil t))
+    ⇒ (1564826753904873156 . 1000000000)
+    ```
 
-    <!---->
+    ```lisp
+    (time-convert a 100000)
+    ⇒ (156482675390487 . 100000)
+    ```
 
-        (time-convert a 100000)
-        ⇒ (156482675390487 . 100000)
+    ```lisp
+    (time-convert a 'integer)
+    ⇒ 1564826753
+    ```
 
-    <!---->
-
-        (time-convert a 'integer)
-        ⇒ 1564826753
-
-    <!---->
-
-        (time-convert a 'list)
-        ⇒ (23877 23681 904873 156000)
+    ```lisp
+    (time-convert a 'list)
+    ⇒ (23877 23681 904873 156000)
+    ```
 
 <!---->
 
@@ -66,7 +50,9 @@ Calendrical conversion functions always use the Gregorian calendar, even for dat
 
     The `form` argument controls the form of the returned `seconds` element, as described below. The return value is a list of nine elements, as follows:
 
-        (seconds minutes hour day month year dow dst utcoff)
+    ```lisp
+    (seconds minutes hour day month year dow dst utcoff)
+    ```
 
     Here is what the elements mean:
 
@@ -114,8 +100,10 @@ Calendrical conversion functions always use the Gregorian calendar, even for dat
 
     For instance, to increase the year in a decoded time, you could say:
 
-        (setf (decoded-time-year decoded-time)
-              (+ (decoded-time-year decoded-time) 4))
+    ```lisp
+    (setf (decoded-time-year decoded-time)
+          (+ (decoded-time-year decoded-time) 4))
+    ```
 
     Also see the following function.
 
@@ -127,9 +115,11 @@ Calendrical conversion functions always use the Gregorian calendar, even for dat
 
     For instance, if you want “same time next month”, you could say:
 
-        (let ((time (decode-time nil nil t))
-              (delta (make-decoded-time :month 2)))
-           (encode-time (decoded-time-add time delta)))
+    ```lisp
+    (let ((time (decode-time nil nil t))
+          (delta (make-decoded-time :month 2)))
+       (encode-time (decoded-time-add time delta)))
+    ```
 
     If this date doesn’t exist (if you’re running this on January 31st, for instance), then the date will be shifted back until you get a valid date (which will be February 28th or 29th, depending).
 
@@ -145,7 +135,9 @@ Calendrical conversion functions always use the Gregorian calendar, even for dat
 
     Return a decoded time structure with only the given keywords filled out, leaving the rest `nil`. For instance, to get a structure that represents “two months”, you could say:
 
-        (make-decoded-time :month 2)
+    ```lisp
+    (make-decoded-time :month 2)
+    ```
 
 <!---->
 
@@ -161,7 +153,9 @@ Calendrical conversion functions always use the Gregorian calendar, even for dat
 
     The `encode-time` function acts as a rough inverse to `decode-time`. For example, you can pass the output of the latter to the former as follows:
 
-        (encode-time (decode-time …))
+    ```lisp
+    (encode-time (decode-time …))
+    ```
 
     You can perform simple date arithmetic by using out-of-range values for `seconds`, `minutes`, `hour`, `day`, and `month`; for example, day 0 means the day preceding the given month.
 

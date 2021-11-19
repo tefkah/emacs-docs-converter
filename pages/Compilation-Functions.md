@@ -1,22 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
 
 Next: [Docs and Compilation](Docs-and-Compilation.html), Previous: [Speed of Byte-Code](Speed-of-Byte_002dCode.html), Up: [Byte Compilation](Byte-Compilation.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
@@ -34,21 +16,25 @@ Inline (`defsubst`) functions are less troublesome; if you compile a call to suc
 
     This function byte-compiles the function definition of `symbol`, replacing the previous definition with the compiled one. The function definition of `symbol` must be the actual code for the function; `byte-compile` does not handle function indirection. The return value is the byte-code function object which is the compiled definition of `symbol` (see [Byte-Code Objects](Byte_002dCode-Objects.html)).
 
-        (defun factorial (integer)
-          "Compute factorial of INTEGER."
-          (if (= 1 integer) 1
-            (* integer (factorial (1- integer)))))
-        ⇒ factorial
-
+    ```lisp
+    (defun factorial (integer)
+      "Compute factorial of INTEGER."
+      (if (= 1 integer) 1
+        (* integer (factorial (1- integer)))))
+    ⇒ factorial
     ```
+
+    ```lisp
     ```
 
-        (byte-compile 'factorial)
-        ⇒
-        #[(integer)
-          "^H\301U\203^H^@\301\207\302^H\303^HS!\"\207"
-          [integer 1 * factorial]
-          4 "Compute factorial of INTEGER."]
+    ```lisp
+    (byte-compile 'factorial)
+    ⇒
+    #[(integer)
+      "^H\301U\203^H^@\301\207\302^H\303^HS!\"\207"
+      [integer 1 * factorial]
+      4 "Compute factorial of INTEGER."]
+    ```
 
     If `symbol`’s definition is a byte-code function object, `byte-compile` does nothing and returns `nil`. It does not compile the symbol’s definition again, since the original (non-compiled) code has already been replaced in the symbol’s function cell by the byte-compiled code.
 
@@ -74,21 +60,27 @@ Inline (`defsubst`) functions are less troublesome; if you compile a call to suc
 
     If `load` is non-`nil`, this command loads the compiled file after compiling it. Interactively, `load` is the prefix argument.
 
-        $ ls -l push*
-        -rw-r--r-- 1 lewis lewis 791 Oct  5 20:31 push.el
-
-    ```
-    ```
-
-        (byte-compile-file "~/emacs/push.el")
-             ⇒ t
-
-    ```
+    ```lisp
+    $ ls -l push*
+    -rw-r--r-- 1 lewis lewis 791 Oct  5 20:31 push.el
     ```
 
-        $ ls -l push*
-        -rw-r--r-- 1 lewis lewis 791 Oct  5 20:31 push.el
-        -rw-rw-rw- 1 lewis lewis 638 Oct  8 20:25 push.elc
+    ```lisp
+    ```
+
+    ```lisp
+    (byte-compile-file "~/emacs/push.el")
+         ⇒ t
+    ```
+
+    ```lisp
+    ```
+
+    ```lisp
+    $ ls -l push*
+    -rw-r--r-- 1 lewis lewis 791 Oct  5 20:31 push.el
+    -rw-rw-rw- 1 lewis lewis 638 Oct  8 20:25 push.elc
+    ```
 
 <!---->
 
@@ -112,6 +104,8 @@ Inline (`defsubst`) functions are less troublesome; if you compile a call to suc
 
     If `noforce` is non-`nil`, this function does not recompile files that have an up-to-date ‘`.elc`’ file.
 
-        $ emacs -batch -f batch-byte-compile *.el
+    ```lisp
+    $ emacs -batch -f batch-byte-compile *.el
+    ```
 
 Next: [Docs and Compilation](Docs-and-Compilation.html), Previous: [Speed of Byte-Code](Speed-of-Byte_002dCode.html), Up: [Byte Compilation](Byte-Compilation.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]

@@ -1,22 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
 
 Next: [Reading File Names](Reading-File-Names.html), Previous: [Completion Commands](Completion-Commands.html), Up: [Completion](Completion.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
@@ -38,26 +20,32 @@ In most cases, you should not call these functions in the middle of a Lisp funct
 
     In the following example, the user enters ‘`minibuffer.t`’, and then types `RET`. The argument `require-match` is `t`, and the only buffer name starting with the given input is ‘`minibuffer.texi`’, so that name is the value.
 
-        (read-buffer "Buffer name: " "foo" t)
-
-    <!---->
-
-        ;; After evaluation of the preceding expression,
-        ;;   the following prompt appears,
-        ;;   with an empty minibuffer:
-
-    ```
+    ```lisp
+    (read-buffer "Buffer name: " "foo" t)
     ```
 
-        ---------- Buffer: Minibuffer ----------
-        Buffer name (default foo): ∗
-        ---------- Buffer: Minibuffer ----------
-
+    ```lisp
+    ;; After evaluation of the preceding expression,
+    ;;   the following prompt appears,
+    ;;   with an empty minibuffer:
     ```
+
+    ```lisp
     ```
 
-        ;; The user types minibuffer.t RET.
-             ⇒ "minibuffer.texi"
+    ```lisp
+    ---------- Buffer: Minibuffer ----------
+    Buffer name (default foo): ∗
+    ---------- Buffer: Minibuffer ----------
+    ```
+
+    ```lisp
+    ```
+
+    ```lisp
+    ;; The user types minibuffer.t RET.
+         ⇒ "minibuffer.texi"
+    ```
 
 <!---->
 
@@ -79,28 +67,34 @@ In most cases, you should not call these functions in the middle of a Lisp funct
 
     The argument `default` specifies what to return if the user enters null input. It can be a symbol, a string or a list of strings. If it is a string, `read-command` interns it before returning it. If it is a list, `read-command` interns the first element of this list. If `default` is `nil`, that means no default has been specified; then if the user enters null input, the return value is `(intern "")`, that is, a symbol whose name is an empty string, and whose printed representation is `##` (see [Symbol Type](Symbol-Type.html)).
 
-        (read-command "Command name? ")
-
-    <!---->
-
-        ;; After evaluation of the preceding expression,
-        ;;   the following prompt appears with an empty minibuffer:
-
-    ```
+    ```lisp
+    (read-command "Command name? ")
     ```
 
-        ---------- Buffer: Minibuffer ----------
-        Command name?
-        ---------- Buffer: Minibuffer ----------
+    ```lisp
+    ;; After evaluation of the preceding expression,
+    ;;   the following prompt appears with an empty minibuffer:
+    ```
+
+    ```lisp
+    ```
+
+    ```lisp
+    ---------- Buffer: Minibuffer ----------
+    Command name?
+    ---------- Buffer: Minibuffer ----------
+    ```
 
     If the user types `forward-c RET`, then this function returns `forward-char`.
 
     The `read-command` function is a simplified interface to `completing-read`. It uses the variable `obarray` so as to complete in the set of extant Lisp symbols, and it uses the `commandp` predicate so as to accept only command names:
 
-        (read-command prompt)
-        ≡
-        (intern (completing-read prompt obarray
-                                 'commandp t nil))
+    ```lisp
+    (read-command prompt)
+    ≡
+    (intern (completing-read prompt obarray
+                             'commandp t nil))
+    ```
 
 <!---->
 

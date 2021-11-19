@@ -1,22 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
 
 Next: [Truenames](Truenames.html), Previous: [Testing Accessibility](Testing-Accessibility.html), Up: [Information about Files](Information-about-Files.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
@@ -34,30 +16,34 @@ Symbolic links are ordinarily followed wherever they appear. For example, to int
 
     Here are a few examples of using this function:
 
-        (file-symlink-p "not-a-symlink")
-             ⇒ nil
+    ```lisp
+    (file-symlink-p "not-a-symlink")
+         ⇒ nil
+    ```
 
-    <!---->
+    ```lisp
+    (file-symlink-p "sym-link")
+         ⇒ "not-a-symlink"
+    ```
 
-        (file-symlink-p "sym-link")
-             ⇒ "not-a-symlink"
+    ```lisp
+    (file-symlink-p "sym-link2")
+         ⇒ "sym-link"
+    ```
 
-    <!---->
-
-        (file-symlink-p "sym-link2")
-             ⇒ "sym-link"
-
-    <!---->
-
-        (file-symlink-p "/bin")
-             ⇒ "/pub/bin"
+    ```lisp
+    (file-symlink-p "/bin")
+         ⇒ "/pub/bin"
+    ```
 
     Note that in the third example, the function returned `sym-link`, but did not proceed to resolve it, although that file is itself a symbolic link. That is because this function does not follow symbolic links—the process of following the symbolic links does not apply to the last component of the file name.
 
     The string that this function returns is what is recorded in the symbolic link; it may or may not include any leading directories. This function does *not* expand the link target to produce a fully-qualified file name, and in particular does not use the leading directories, if any, of the `filename` argument if the link target is not an absolute file name. Here’s an example:
 
-        (file-symlink-p "/foo/bar/baz")
-             ⇒ "some-file"
+    ```lisp
+    (file-symlink-p "/foo/bar/baz")
+         ⇒ "some-file"
+    ```
 
     Here, although `/foo/bar/baz` was given as a fully-qualified file name, the result is not, and in fact does not have any leading directories at all. And since `some-file` might itself be a symbolic link, you cannot simply prepend leading directories to it, nor even naively use `expand-file-name` (see [File Name Expansion](File-Name-Expansion.html)) to produce its absolute file name.
 
@@ -69,29 +55,31 @@ Symbolic links are ordinarily followed wherever they appear. For example, to int
 
     This function returns `t` if `filename` is the name of an existing directory. It returns `nil` if `filename` does not name a directory, or if there is trouble determining whether it is a directory. This function follows symbolic links.
 
-        (file-directory-p "~rms")
-             ⇒ t
+    ```lisp
+    (file-directory-p "~rms")
+         ⇒ t
+    ```
 
-    <!---->
+    ```lisp
+    (file-directory-p "~rms/lewis/files.texi")
+         ⇒ nil
+    ```
 
-        (file-directory-p "~rms/lewis/files.texi")
-             ⇒ nil
+    ```lisp
+    (file-directory-p "~rms/lewis/no-such-file")
+         ⇒ nil
+    ```
 
-    <!---->
+    ```lisp
+    (file-directory-p "$HOME")
+         ⇒ nil
+    ```
 
-        (file-directory-p "~rms/lewis/no-such-file")
-             ⇒ nil
-
-    <!---->
-
-        (file-directory-p "$HOME")
-             ⇒ nil
-
-    <!---->
-
-        (file-directory-p
-         (substitute-in-file-name "$HOME"))
-             ⇒ t
+    ```lisp
+    (file-directory-p
+     (substitute-in-file-name "$HOME"))
+         ⇒ t
+    ```
 
 <!---->
 

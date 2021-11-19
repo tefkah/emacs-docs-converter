@@ -1,22 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
 
 Next: [Symbol Properties](Symbol-Properties.html), Previous: [Definitions](Definitions.html), Up: [Symbols](Symbols.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
@@ -50,8 +32,10 @@ Most of the functions below take a name and sometimes an obarray as arguments. A
 
     This function returns the string that is `symbol`’s name. For example:
 
-        (symbol-name 'foo)
-             ⇒ "foo"
+    ```lisp
+    (symbol-name 'foo)
+         ⇒ "foo"
+    ```
 
     **Warning:** Changing the string by substituting characters does change the name of the symbol, but fails to update the obarray, so don’t do it!
 
@@ -61,10 +45,12 @@ Most of the functions below take a name and sometimes an obarray as arguments. A
 
     This function returns a newly-allocated, uninterned symbol whose name is `name` (which must be a string). Its value and function definition are void, and its property list is `nil`. In the example below, the value of `sym` is not `eq` to `foo` because it is a distinct uninterned symbol whose name is also ‘`foo`’.
 
-        (setq sym (make-symbol "foo"))
-             ⇒ foo
-        (eq sym 'foo)
-             ⇒ nil
+    ```lisp
+    (setq sym (make-symbol "foo"))
+         ⇒ foo
+    (eq sym 'foo)
+         ⇒ nil
+    ```
 
 <!---->
 
@@ -78,15 +64,17 @@ Most of the functions below take a name and sometimes an obarray as arguments. A
 
     This function returns the interned symbol whose name is `name`. If there is no such symbol in the obarray `obarray`, `intern` creates a new one, adds it to the obarray, and returns it. If `obarray` is omitted, the value of the global variable `obarray` is used.
 
-        (setq sym (intern "foo"))
-             ⇒ foo
-        (eq sym 'foo)
-             ⇒ t
+    ```lisp
+    (setq sym (intern "foo"))
+         ⇒ foo
+    (eq sym 'foo)
+         ⇒ t
 
-        (setq sym1 (intern "foo" other-obarray))
-             ⇒ foo
-        (eq sym1 'foo)
-             ⇒ nil
+    (setq sym1 (intern "foo" other-obarray))
+         ⇒ foo
+    (eq sym1 'foo)
+         ⇒ nil
+    ```
 
 > **Common Lisp note:** In Common Lisp, you can intern an existing symbol in an obarray. In Emacs Lisp, you cannot do this, because the argument to `intern` must be a string, not a symbol.
 
@@ -96,30 +84,32 @@ Most of the functions below take a name and sometimes an obarray as arguments. A
 
     The argument `name` may also be a symbol; in that case, the function returns `name` if `name` is interned in the specified obarray, and otherwise `nil`.
 
-        (intern-soft "frazzle")        ; No such symbol exists.
-             ⇒ nil
-        (make-symbol "frazzle")        ; Create an uninterned one.
-             ⇒ frazzle
+    ```lisp
+    (intern-soft "frazzle")        ; No such symbol exists.
+         ⇒ nil
+    (make-symbol "frazzle")        ; Create an uninterned one.
+         ⇒ frazzle
+    ```
 
-    <!---->
+    ```lisp
+    (intern-soft "frazzle")        ; That one cannot be found.
+         ⇒ nil
+    ```
 
-        (intern-soft "frazzle")        ; That one cannot be found.
-             ⇒ nil
+    ```lisp
+    (setq sym (intern "frazzle"))  ; Create an interned one.
+         ⇒ frazzle
+    ```
 
-    <!---->
+    ```lisp
+    (intern-soft "frazzle")        ; That one can be found!
+         ⇒ frazzle
+    ```
 
-        (setq sym (intern "frazzle"))  ; Create an interned one.
-             ⇒ frazzle
-
-    <!---->
-
-        (intern-soft "frazzle")        ; That one can be found!
-             ⇒ frazzle
-
-    <!---->
-
-        (eq sym 'frazzle)              ; And it is the same one.
-             ⇒ t
+    ```lisp
+    (eq sym 'frazzle)              ; And it is the same one.
+         ⇒ t
+    ```
 
 <!---->
 
@@ -133,15 +123,17 @@ Most of the functions below take a name and sometimes an obarray as arguments. A
 
     This function calls `function` once with each symbol in the obarray `obarray`. Then it returns `nil`. If `obarray` is omitted, it defaults to the value of `obarray`, the standard obarray for ordinary symbols.
 
-        (setq count 0)
-             ⇒ 0
-        (defun count-syms (s)
-          (setq count (1+ count)))
-             ⇒ count-syms
-        (mapatoms 'count-syms)
-             ⇒ nil
-        count
-             ⇒ 1871
+    ```lisp
+    (setq count 0)
+         ⇒ 0
+    (defun count-syms (s)
+      (setq count (1+ count)))
+         ⇒ count-syms
+    (mapatoms 'count-syms)
+         ⇒ nil
+    count
+         ⇒ 1871
+    ```
 
     See `documentation` in [Accessing Documentation](Accessing-Documentation.html), for another example using `mapatoms`.
 

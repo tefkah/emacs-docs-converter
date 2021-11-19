@@ -1,22 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
 
 Next: [Extended Attributes](Extended-Attributes.html), Previous: [Truenames](Truenames.html), Up: [Information about Files](Information-about-Files.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
@@ -30,23 +12,25 @@ This section describes the functions for getting detailed information about a fi
 
     In the following example, assume that the file `aug-19` was written on the 19th, `aug-20` was written on the 20th, and the file `no-file` doesn’t exist at all.
 
-        (file-newer-than-file-p "aug-19" "aug-20")
-             ⇒ nil
+    ```lisp
+    (file-newer-than-file-p "aug-19" "aug-20")
+         ⇒ nil
+    ```
 
-    <!---->
+    ```lisp
+    (file-newer-than-file-p "aug-20" "aug-19")
+         ⇒ t
+    ```
 
-        (file-newer-than-file-p "aug-20" "aug-19")
-             ⇒ t
+    ```lisp
+    (file-newer-than-file-p "aug-19" "no-file")
+         ⇒ t
+    ```
 
-    <!---->
-
-        (file-newer-than-file-p "aug-19" "no-file")
-             ⇒ t
-
-    <!---->
-
-        (file-newer-than-file-p "no-file" "aug-19")
-             ⇒ nil
+    ```lisp
+    (file-newer-than-file-p "no-file" "aug-19")
+         ⇒ nil
+    ```
 
 <!---->
 
@@ -75,14 +59,16 @@ This section describes the functions for getting detailed information about a fi
 
     For example, here are the file attributes for `files.texi`:
 
-        (file-attributes "files.texi" 'string)
-             ⇒  (nil 1 "lh" "users"
-                  (20614 64019 50040 152000)
-                  (20000 23 0 0)
-                  (20614 64555 902289 872000)
-                  122295 "-rw-rw-rw-"
-                  t 6473924464520138
-                  1014478468)
+    ```lisp
+    (file-attributes "files.texi" 'string)
+         ⇒  (nil 1 "lh" "users"
+              (20614 64019 50040 152000)
+              (20000 23 0 0)
+              (20614 64555 902289 872000)
+              122295 "-rw-rw-rw-"
+              t 6473924464520138
+              1014478468)
+    ```
 
     and here is how the result is interpreted:
 
@@ -140,19 +126,23 @@ This section describes the functions for getting detailed information about a fi
 
     This function returns the number of names (i.e., hard links) that file `filename` has. If the file does not exist, this function returns `nil`. Note that symbolic links have no effect on this function, because they are not considered to be names of the files they link to. This function does not follow symbolic links.
 
-        $ ls -l foo*
-        -rw-rw-rw- 2 rms rms 4 Aug 19 01:27 foo
-        -rw-rw-rw- 2 rms rms 4 Aug 19 01:27 foo1
-
+    ```lisp
+    $ ls -l foo*
+    -rw-rw-rw- 2 rms rms 4 Aug 19 01:27 foo
+    -rw-rw-rw- 2 rms rms 4 Aug 19 01:27 foo1
     ```
+
+    ```lisp
     ```
 
-        (file-nlinks "foo")
-             ⇒ 2
+    ```lisp
+    (file-nlinks "foo")
+         ⇒ 2
+    ```
 
-    <!---->
-
-        (file-nlinks "doesnt-exist")
-             ⇒ nil
+    ```lisp
+    (file-nlinks "doesnt-exist")
+         ⇒ nil
+    ```
 
 Next: [Extended Attributes](Extended-Attributes.html), Previous: [Truenames](Truenames.html), Up: [Information about Files](Information-about-Files.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]

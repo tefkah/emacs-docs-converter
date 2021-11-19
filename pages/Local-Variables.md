@@ -1,22 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
 
 Next: [Void Variables](Void-Variables.html), Previous: [Constant Variables](Constant-Variables.html), Up: [Variables](Variables.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
@@ -40,26 +22,32 @@ The special forms `let` and `let*` exist to create local bindings:
 
     This special form sets up local bindings for a certain set of variables, as specified by `bindings`, and then evaluates all of the `forms` in textual order. Its return value is the value of the last form in `forms`. The local bindings set up by `let` will be in effect only within the body of `forms`.
 
-    Each of the `bindings` is either (i) a<!-- /@w --> symbol, in which case that symbol is locally bound to `nil`; or (ii) a<!-- /@w --> list of the form `(symbol value-form)`, in which case `symbol` is locally bound to the result of evaluating `value-form`. If `value-form` is omitted, `nil` is used.
+    Each of the `bindings` is either (i) a symbol, in which case that symbol is locally bound to `nil`; or (ii) a list of the form `(symbol value-form)`, in which case `symbol` is locally bound to the result of evaluating `value-form`. If `value-form` is omitted, `nil` is used.
 
     All of the `value-form`s in `bindings` are evaluated in the order they appear and *before* binding any of the symbols to them. Here is an example of this: `z` is bound to the old value of `y`, which is 2, not the new value of `y`, which is 1.
 
-        (setq y 2)
-             ⇒ 2
-
+    ```lisp
+    (setq y 2)
+         ⇒ 2
     ```
+
+    ```lisp
     ```
 
-        (let ((y 1)
-              (z y))
-          (list y z))
-             ⇒ (1 2)
+    ```lisp
+    (let ((y 1)
+          (z y))
+      (list y z))
+         ⇒ (1 2)
+    ```
 
     On the other hand, the order of *bindings* is unspecified: in the following example, either 1 or 2 might be printed.
 
-        (let ((x 1)
-              (x 2))
-          (print x))
+    ```lisp
+    (let ((x 1)
+          (x 2))
+      (print x))
+    ```
 
     Therefore, avoid binding a variable more than once in a single `let` form.
 
@@ -69,16 +57,20 @@ The special forms `let` and `let*` exist to create local bindings:
 
     This special form is like `let`, but it binds each variable right after computing its local value, before computing the local value for the next variable. Therefore, an expression in `bindings` can refer to the preceding symbols bound in this `let*` form. Compare the following example with the example above for `let`.
 
-        (setq y 2)
-             ⇒ 2
-
+    ```lisp
+    (setq y 2)
+         ⇒ 2
     ```
+
+    ```lisp
     ```
 
-        (let* ((y 1)
-               (z y))    ; Use the just-established value of y.
-          (list y z))
-             ⇒ (1 1)
+    ```lisp
+    (let* ((y 1)
+           (z y))    ; Use the just-established value of y.
+      (list y z))
+         ⇒ (1 1)
+    ```
 
 <!---->
 
@@ -88,10 +80,12 @@ The special forms `let` and `let*` exist to create local bindings:
 
     For instance, here’s a closure that removes itself from a hook after being run once:
 
-        (letrec ((hookfun (lambda ()
-                            (message "Run once")
-                            (remove-hook 'post-command-hook hookfun))))
-          (add-hook 'post-command-hook hookfun))
+    ```lisp
+    (letrec ((hookfun (lambda ()
+                        (message "Run once")
+                        (remove-hook 'post-command-hook hookfun))))
+      (add-hook 'post-command-hook hookfun))
+    ```
 
 Here is a complete list of the other facilities that create local bindings:
 

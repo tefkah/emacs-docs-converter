@@ -1,22 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
 
 Previous: [Modifying Menus](Modifying-Menus.html), Up: [Menu Keymaps](Menu-Keymaps.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
@@ -52,7 +34,9 @@ The following macro provides a convenient way to define pop-up menus and/or menu
 
     Alternatively, a menu item may have the form:
 
-           [ name callback [ keyword arg ]... ]
+    ```lisp
+       [ name callback [ keyword arg ]... ]
+    ```
 
     where `name` and `callback` have the same meanings as above, and each optional `keyword` and `arg` pair should be one of the following:
 
@@ -98,10 +82,12 @@ The following macro provides a convenient way to define pop-up menus and/or menu
 
 Here is an example of using `easy-menu-define` to define a menu similar to the one defined in the example in [Menu Bar](Menu-Bar.html):
 
-    (easy-menu-define words-menu global-map
-      "Menu for word navigation commands."
-      '("Words"
-         ["Forward word" forward-word]
-         ["Backward word" backward-word]))
+```lisp
+(easy-menu-define words-menu global-map
+  "Menu for word navigation commands."
+  '("Words"
+     ["Forward word" forward-word]
+     ["Backward word" backward-word]))
+```
 
 Previous: [Modifying Menus](Modifying-Menus.html), Up: [Menu Keymaps](Menu-Keymaps.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]

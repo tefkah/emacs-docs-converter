@@ -1,22 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
 
 Previous: [Search and Replace](Search-and-Replace.html), Up: [Searching and Matching](Searching-and-Matching.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
@@ -32,13 +14,13 @@ The following two regular expressions should *not* assume the match always start
 
 *   User Option: **paragraph-separate**
 
-    This is the regular expression for recognizing the beginning of a line that separates paragraphs. (If you change this, you may have to change `paragraph-start` also.) The default value is `"[ \t\f]*$"`<!-- /@w -->, which matches a line that consists entirely of spaces, tabs, and form feeds (after its left margin).
+    This is the regular expression for recognizing the beginning of a line that separates paragraphs. (If you change this, you may have to change `paragraph-start` also.) The default value is `"[ \t\f]*$"`, which matches a line that consists entirely of spaces, tabs, and form feeds (after its left margin).
 
 <!---->
 
 *   User Option: **paragraph-start**
 
-    This is the regular expression for recognizing the beginning of a line that starts *or* separates paragraphs. The default value is `"\f\\|[ \t]*$"`<!-- /@w -->, which matches a line containing only whitespace or starting with a form feed (after its left margin).
+    This is the regular expression for recognizing the beginning of a line that starts *or* separates paragraphs. The default value is `"\f\\|[ \t]*$"`, which matches a line containing only whitespace or starting with a form feed (after its left margin).
 
 <!---->
 

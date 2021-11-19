@@ -1,22 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
 
 Next: [Declare Form](Declare-Form.html), Previous: [Obsolete Functions](Obsolete-Functions.html), Up: [Functions](Functions.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
@@ -67,7 +49,7 @@ The following macros should be used in the body of a function defined by `define
 
 *   Macro: **inline-letevals** *(bindings…) body…*
 
-    This is similar to `let` (see [Local Variables](Local-Variables.html)): it sets up local variables as specified by `bindings`, and then evaluates `body` with those bindings in effect. Each element of `bindings` should be either a symbol or a list of the form `(var expr)`<!-- /@w -->; the result is to evaluate `expr` and bind `var` to the result. The tail of `bindings` can be either `nil` or a symbol which should hold a list of arguments, in which case each argument is evaluated, and the symbol is bound to the resulting list.
+    This is similar to `let` (see [Local Variables](Local-Variables.html)): it sets up local variables as specified by `bindings`, and then evaluates `body` with those bindings in effect. Each element of `bindings` should be either a symbol or a list of the form `(var expr)`; the result is to evaluate `expr` and bind `var` to the result. The tail of `bindings` can be either `nil` or a symbol which should hold a list of arguments, in which case each argument is evaluated, and the symbol is bound to the resulting list.
 
 <!---->
 
@@ -89,13 +71,17 @@ The following macros should be used in the body of a function defined by `define
 
 Here’s an example of using `define-inline`:
 
-    (define-inline myaccessor (obj)
-      (inline-letevals (obj)
-        (inline-quote (if (foo-p ,obj) (aref (cdr ,obj) 3) (aref ,obj 2)))))
+```lisp
+(define-inline myaccessor (obj)
+  (inline-letevals (obj)
+    (inline-quote (if (foo-p ,obj) (aref (cdr ,obj) 3) (aref ,obj 2)))))
+```
 
 This is equivalent to
 
-    (defsubst myaccessor (obj)
-      (if (foo-p obj) (aref (cdr obj) 3) (aref obj 2)))
+```lisp
+(defsubst myaccessor (obj)
+  (if (foo-p obj) (aref (cdr obj) 3) (aref obj 2)))
+```
 
 Next: [Declare Form](Declare-Form.html), Previous: [Obsolete Functions](Obsolete-Functions.html), Up: [Functions](Functions.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]

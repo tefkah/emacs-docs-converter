@@ -1,22 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
 
 Next: [Directory Local Variables](Directory-Local-Variables.html), Previous: [Buffer-Local Variables](Buffer_002dLocal-Variables.html), Up: [Variables](Variables.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
@@ -62,17 +44,17 @@ For additional safety, `read-circle` is temporarily bound to `nil` when Emacs re
 
 *   Function: **hack-local-variables** *\&optional handle-mode*
 
-    This function parses, and binds or evaluates as appropriate, any local variables specified by the contents of the current buffer. The variable `enable-local-variables` has its effect here. However, this function does not look for the ‘`mode:`’ local variable in the ‘`-*-`’<!-- /@w --> line. `set-auto-mode` does that, also taking `enable-local-variables` into account (see [Auto Major Mode](Auto-Major-Mode.html)).
+    This function parses, and binds or evaluates as appropriate, any local variables specified by the contents of the current buffer. The variable `enable-local-variables` has its effect here. However, this function does not look for the ‘`mode:`’ local variable in the ‘`-*-`’ line. `set-auto-mode` does that, also taking `enable-local-variables` into account (see [Auto Major Mode](Auto-Major-Mode.html)).
 
     This function works by walking the alist stored in `file-local-variables-alist` and applying each local variable in turn. It calls `before-hack-local-variables-hook` and `hack-local-variables-hook` before and after applying the variables, respectively. It only calls the before-hook if the alist is non-`nil`; it always calls the other hook. This function ignores a ‘`mode`’ element if it specifies the same major mode as the buffer already has.
 
-    If the optional argument `handle-mode` is `t`, then all this function does is return a symbol specifying the major mode, if the ‘`-*-`’<!-- /@w --> line or the local variables list specifies one, and `nil` otherwise. It does not set the mode or any other file-local variable. If `handle-mode` has any value other than `nil` or `t`, any settings of ‘`mode`’ in the ‘`-*-`’<!-- /@w --> line or the local variables list are ignored, and the other settings are applied. If `handle-mode` is `nil`, all the file local variables are set.
+    If the optional argument `handle-mode` is `t`, then all this function does is return a symbol specifying the major mode, if the ‘`-*-`’ line or the local variables list specifies one, and `nil` otherwise. It does not set the mode or any other file-local variable. If `handle-mode` has any value other than `nil` or `t`, any settings of ‘`mode`’ in the ‘`-*-`’ line or the local variables list are ignored, and the other settings are applied. If `handle-mode` is `nil`, all the file local variables are set.
 
 <!---->
 
 *   Variable: **file-local-variables-alist**
 
-    This buffer-local variable holds the alist of file-local variable settings. Each element of the alist is of the form `(var . value)`<!-- /@w -->, where `var` is a symbol of the local variable and `value` is its value. When Emacs visits a file, it first collects all the file-local variables into this alist, and then the `hack-local-variables` function applies them one by one.
+    This buffer-local variable holds the alist of file-local variable settings. Each element of the alist is of the form `(var . value)`, where `var` is a symbol of the local variable and `value` is its value. When Emacs visits a file, it first collects all the file-local variables into this alist, and then the `hack-local-variables` function applies them one by one.
 
 <!---->
 
@@ -92,7 +74,9 @@ If you want to define `safe-local-variable` properties for variables defined in 
 
 When defining a user option using `defcustom`, you can set its `safe-local-variable` property by adding the arguments `:safe function` to `defcustom` (see [Variable Definitions](Variable-Definitions.html)). However, a safety predicate defined using `:safe` will only be known once the package that contains the `defcustom` is loaded, which is often too late. As an alternative, you can use the autoload cookie (see [Autoload](Autoload.html)) to assign the option its safety predicate, like this:
 
-    ;;;###autoload (put 'var 'safe-local-variable 'pred)
+```lisp
+;;;###autoload (put 'var 'safe-local-variable 'pred)
+```
 
 The safe value definitions specified with `autoload` are copied into the package’s autoloads file (`loaddefs.el` for most packages bundled with Emacs), and are known to Emacs since the beginning of a session.
 

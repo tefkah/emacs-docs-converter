@@ -1,22 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
 
 Next: [Reading One Event](Reading-One-Event.html), Up: [Reading Input](Reading-Input.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
@@ -42,15 +24,17 @@ The command loop reads input a key sequence at a time, by calling `read-key-sequ
 
     In the following example, Emacs displays the prompt ‘`?`’ in the echo area, and then the user types `C-x C-f`.
 
-        (read-key-sequence "?")
+    ```lisp
+    (read-key-sequence "?")
+    ```
 
-    <!---->
+    ```lisp
+    ---------- Echo Area ----------
+    ?C-x C-f
+    ---------- Echo Area ----------
 
-        ---------- Echo Area ----------
-        ?C-x C-f
-        ---------- Echo Area ----------
-
-             ⇒ "^X^F"
+         ⇒ "^X^F"
+    ```
 
     The function `read-key-sequence` suppresses quitting: `C-g` typed while reading with this function works like any other character, and does not set `quit-flag`. See [Quitting](Quitting.html).
 
@@ -70,11 +54,13 @@ When mouse events occur in special parts of a window or frame, such as a mode li
 
 For example, if you call `read-key-sequence` and then click the mouse on the window’s mode line, you get two events, like this:
 
-    (read-key-sequence "Click on the mode line: ")
-         ⇒ [mode-line
-             (mouse-1
-              (#<window 6 on NEWS> mode-line
-               (40 . 63) 5959987))]
+```lisp
+(read-key-sequence "Click on the mode line: ")
+     ⇒ [mode-line
+         (mouse-1
+          (#<window 6 on NEWS> mode-line
+           (40 . 63) 5959987))]
+```
 
 *   Variable: **num-input-keys**
 

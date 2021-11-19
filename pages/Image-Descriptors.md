@@ -1,22 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
 
 Next: [XBM Images](XBM-Images.html), Previous: [Image Formats](Image-Formats.html), Up: [Images](Images.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
@@ -95,23 +77,29 @@ The following is a list of properties that are meaningful for all image types (t
 
         Specifies a general edge-detection algorithm. `matrix` must be either a nine-element list or a nine-element vector of numbers. A pixel at position *x/y* in the transformed image is computed from original pixels around that position. `matrix` specifies, for each pixel in the neighborhood of *x/y*, a factor with which that pixel will influence the transformed pixel; element *0* specifies the factor for the pixel at *x-1/y-1*, element *1* the factor for the pixel at *x/y-1* etc., as shown below:
 
-              (x-1/y-1  x/y-1  x+1/y-1
-               x-1/y    x/y    x+1/y
-               x-1/y+1  x/y+1  x+1/y+1)
+        ```lisp
+          (x-1/y-1  x/y-1  x+1/y-1
+           x-1/y    x/y    x+1/y
+           x-1/y+1  x/y+1  x+1/y+1)
+        ```
 
         The resulting pixel is computed from the color intensity of the color resulting from summing up the RGB values of surrounding pixels, multiplied by the specified factors, and dividing that sum by the sum of the factors’ absolute values.
 
         Laplace edge-detection currently uses a matrix of
 
-              (1  0  0
-               0  0  0
-               0  0 -1)
+        ```lisp
+          (1  0  0
+           0  0  0
+           0  0 -1)
+        ```
 
         Emboss edge-detection uses a matrix of
 
-              ( 2 -1  0
-               -1  0  1
-                0  1 -2)
+        ```lisp
+          ( 2 -1  0
+           -1  0  1
+            0  1 -2)
+        ```
 
     *   `disabled`
 

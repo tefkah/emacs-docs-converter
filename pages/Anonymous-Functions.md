@@ -1,22 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
 
 Next: [Generic Functions](Generic-Functions.html), Previous: [Mapping Functions](Mapping-Functions.html), Up: [Functions](Functions.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
@@ -32,8 +14,10 @@ When defining a lambda expression that is to be used as an anonymous function, y
 
     Under dynamic binding, this macro effectively makes `lambda` forms self-quoting: evaluating a form whose CAR is `lambda` yields the form itself:
 
-        (lambda (x) (* x x))
-             ⇒ (lambda (x) (* x x))
+    ```lisp
+    (lambda (x) (* x x))
+         ⇒ (lambda (x) (* x x))
+    ```
 
     Note that when evaluating under lexical binding the result is a closure object (see [Closures](Closures.html)).
 
@@ -52,28 +36,36 @@ When defining a lambda expression that is to be used as an anonymous function, y
 
 The read syntax `#'` is a short-hand for using `function`. The following forms are all equivalent:
 
-    (lambda (x) (* x x))
-    (function (lambda (x) (* x x)))
-    #'(lambda (x) (* x x))
+```lisp
+(lambda (x) (* x x))
+(function (lambda (x) (* x x)))
+#'(lambda (x) (* x x))
+```
 
 In the following example, we define a `change-property` function that takes a function as its third argument, followed by a `double-property` function that makes use of `change-property` by passing it an anonymous function:
 
-    (defun change-property (symbol prop function)
-      (let ((value (get symbol prop)))
-        (put symbol prop (funcall function value))))
-
+```lisp
+(defun change-property (symbol prop function)
+  (let ((value (get symbol prop)))
+    (put symbol prop (funcall function value))))
 ```
+
+```lisp
 ```
 
-    (defun double-property (symbol prop)
-      (change-property symbol prop (lambda (x) (* 2 x))))
+```lisp
+(defun double-property (symbol prop)
+  (change-property symbol prop (lambda (x) (* 2 x))))
+```
 
 Note that we do not quote the `lambda` form.
 
 If you compile the above code, the anonymous function is also compiled. This would not happen if, say, you had constructed the anonymous function by quoting it as a list:
 
-    (defun double-property (symbol prop)
-      (change-property symbol prop '(lambda (x) (* 2 x))))
+```lisp
+(defun double-property (symbol prop)
+  (change-property symbol prop '(lambda (x) (* 2 x))))
+```
 
 In that case, the anonymous function is kept as a lambda expression in the compiled code. The byte-compiler cannot assume this list is a function, even though it looks like one, since it does not know that `change-property` intends to use it as a function.
 

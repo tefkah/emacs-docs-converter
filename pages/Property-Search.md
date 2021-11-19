@@ -1,22 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
 
 Next: [Special Properties](Special-Properties.html), Previous: [Changing Properties](Changing-Properties.html), Up: [Text Properties](Text-Properties.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
@@ -40,13 +22,15 @@ These functions do not move point; instead, they return a position (or `nil`). R
 
     Here is an example of how to scan the buffer by chunks of text within which all properties are constant:
 
-        (while (not (eobp))
-          (let ((plist (text-properties-at (point)))
-                (next-change
-                 (or (next-property-change (point) (current-buffer))
-                     (point-max))))
-            Process text from point to next-change…
-            (goto-char next-change)))
+    ```lisp
+    (while (not (eobp))
+      (let ((plist (text-properties-at (point)))
+            (next-change
+             (or (next-property-change (point) (current-buffer))
+                 (point-max))))
+        Process text from point to next-change…
+        (goto-char next-change)))
+    ```
 
 <!---->
 
@@ -128,37 +112,47 @@ These functions do not move point; instead, they return a position (or `nil`). R
 
     In the examples below, imagine that you’re in a buffer that looks like this:
 
-        This is a bold and here's bolditalic and this is the end.
+    ```lisp
+    This is a bold and here's bolditalic and this is the end.
+    ```
 
     That is, the “bold” words are the `bold` face, and the “italic” word is in the `italic` face.
 
     With point at the start:
 
-        (while (setq match (text-property-search-forward 'face 'bold t))
-          (push (buffer-substring (prop-match-beginning match)
-                                  (prop-match-end match))
-                words))
+    ```lisp
+    (while (setq match (text-property-search-forward 'face 'bold t))
+      (push (buffer-substring (prop-match-beginning match)
+                              (prop-match-end match))
+            words))
+    ```
 
     This will pick out all the words that use the `bold` face.
 
-        (while (setq match (text-property-search-forward 'face nil t))
-          (push (buffer-substring (prop-match-beginning match)
-                                  (prop-match-end match))
-                words))
+    ```lisp
+    (while (setq match (text-property-search-forward 'face nil t))
+      (push (buffer-substring (prop-match-beginning match)
+                              (prop-match-end match))
+            words))
+    ```
 
     This will pick out all the bits that have no face properties, which will result in the list ‘`("This is a " "and here's " "and this is the end")`’ (only reversed, since we used `push`).
 
-        (while (setq match (text-property-search-forward 'face nil nil))
-          (push (buffer-substring (prop-match-beginning match)
-                                  (prop-match-end match))
-                words))
+    ```lisp
+    (while (setq match (text-property-search-forward 'face nil nil))
+      (push (buffer-substring (prop-match-beginning match)
+                              (prop-match-end match))
+            words))
+    ```
 
     This will pick out all the regions where `face` is set to something, but this is split up into where the properties change, so the result here will be ‘`("bold" "bold" "italic")`’.
 
     For a more realistic example where you might use this, consider that you have a buffer where certain sections represent URLs, and these are tagged with `shr-url`.
 
-        (while (setq match (text-property-search-forward 'shr-url nil nil))
-          (push (prop-match-value match) urls))
+    ```lisp
+    (while (setq match (text-property-search-forward 'shr-url nil nil))
+      (push (prop-match-value match) urls))
+    ```
 
     This will give you a list of all those URLs.
 

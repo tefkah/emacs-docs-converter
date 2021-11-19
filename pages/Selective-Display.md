@@ -1,22 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
 
 Next: [Temporary Displays](Temporary-Displays.html), Previous: [Invisible Text](Invisible-Text.html), Up: [Display](Display.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
@@ -45,30 +27,34 @@ When you write a selectively displayed buffer into a file, all the control-m’s
 
     In the examples below, we show the *display appearance* of the buffer `foo`, which changes with the value of `selective-display`. The *contents* of the buffer do not change.
 
-        (setq selective-display nil)
-             ⇒ nil
+    ```lisp
+    (setq selective-display nil)
+         ⇒ nil
 
-        ---------- Buffer: foo ----------
-        1 on this column
-         2on this column
-          3n this column
-          3n this column
-         2on this column
-        1 on this column
-        ---------- Buffer: foo ----------
-
+    ---------- Buffer: foo ----------
+    1 on this column
+     2on this column
+      3n this column
+      3n this column
+     2on this column
+    1 on this column
+    ---------- Buffer: foo ----------
     ```
+
+    ```lisp
     ```
 
-        (setq selective-display 2)
-             ⇒ 2
+    ```lisp
+    (setq selective-display 2)
+         ⇒ 2
 
-        ---------- Buffer: foo ----------
-        1 on this column
-         2on this column
-         2on this column
-        1 on this column
-        ---------- Buffer: foo ----------
+    ---------- Buffer: foo ----------
+    1 on this column
+     2on this column
+     2on this column
+    1 on this column
+    ---------- Buffer: foo ----------
+    ```
 
 <!---->
 
@@ -76,15 +62,17 @@ When you write a selectively displayed buffer into a file, all the control-m’s
 
     If this buffer-local variable is non-`nil`, then Emacs displays ‘`…`’ at the end of a line that is followed by hidden text. This example is a continuation of the previous one.
 
-        (setq selective-display-ellipses t)
-             ⇒ t
+    ```lisp
+    (setq selective-display-ellipses t)
+         ⇒ t
 
-        ---------- Buffer: foo ----------
-        1 on this column
-         2on this column ...
-         2on this column
-        1 on this column
-        ---------- Buffer: foo ----------
+    ---------- Buffer: foo ----------
+    1 on this column
+     2on this column ...
+     2on this column
+    1 on this column
+    ---------- Buffer: foo ----------
+    ```
 
     You can use a display table to substitute other text for the ellipsis (‘`…`’). See [Display Tables](Display-Tables.html).
 

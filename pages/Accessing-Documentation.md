@@ -1,22 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
 
 Next: [Keys in Documentation](Keys-in-Documentation.html), Previous: [Documentation Basics](Documentation-Basics.html), Up: [Documentation](Documentation.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
@@ -32,19 +14,21 @@ Next: [Keys in Documentation](Keys-in-Documentation.html), Previous: [Documentat
 
     Finally, this function passes the string through `substitute-command-keys` to substitute key bindings (see [Keys in Documentation](Keys-in-Documentation.html)). It skips this step if `verbatim` is non-`nil`.
 
-        (documentation-property 'command-line-processed
-           'variable-documentation)
-             ⇒ "Non-nil once command line has been processed"
+    ```lisp
+    (documentation-property 'command-line-processed
+       'variable-documentation)
+         ⇒ "Non-nil once command line has been processed"
+    ```
 
-    <!---->
+    ```lisp
+    (symbol-plist 'command-line-processed)
+         ⇒ (variable-documentation 188902)
+    ```
 
-        (symbol-plist 'command-line-processed)
-             ⇒ (variable-documentation 188902)
-
-    <!---->
-
-        (documentation-property 'emacs 'group-documentation)
-             ⇒ "Customization of the One True Editor."
+    ```lisp
+    (documentation-property 'emacs 'group-documentation)
+         ⇒ "Customization of the One True Editor."
+    ```
 
 <!---->
 
@@ -68,113 +52,127 @@ Next: [Keys in Documentation](Keys-in-Documentation.html), Previous: [Documentat
 
 Here is an example of using the two functions, `documentation` and `documentation-property`, to display the documentation strings for several symbols in a `*Help*` buffer.
 
-    (defun describe-symbols (pattern)
-      "Describe the Emacs Lisp symbols matching PATTERN.
-    All symbols that have PATTERN in their name are described
-    in the *Help* buffer."
-      (interactive "sDescribe symbols matching: ")
-      (let ((describe-func
-             (lambda (s)
-
-<!---->
-
-               ;; Print description of symbol.
-               (if (fboundp s)             ; It is a function.
-                   (princ
-                    (format "%s\t%s\n%s\n\n" s
-                      (if (commandp s)
-                          (let ((keys (where-is-internal s)))
-                            (if keys
-                                (concat
-                                 "Keys: "
-                                 (mapconcat 'key-description
-                                            keys " "))
-                              "Keys: none"))
-                        "Function")
-
-<!---->
-
-                      (or (documentation s)
-                          "not documented"))))
-
-               (if (boundp s)              ; It is a variable.
-
-<!---->
-
-                   (princ
-                    (format "%s\t%s\n%s\n\n" s
-                      (if (custom-variable-p s)
-                          "Option " "Variable")
-
-<!---->
-
-                      (or (documentation-property
-                            s 'variable-documentation)
-                          "not documented"))))))
-            sym-list)
-
-```
+```lisp
+(defun describe-symbols (pattern)
+  "Describe the Emacs Lisp symbols matching PATTERN.
+All symbols that have PATTERN in their name are described
+in the *Help* buffer."
+  (interactive "sDescribe symbols matching: ")
+  (let ((describe-func
+         (lambda (s)
 ```
 
-        ;; Build a list of symbols that match pattern.
-        (mapatoms (lambda (sym)
-                    (if (string-match pattern (symbol-name sym))
-                        (setq sym-list (cons sym sym-list)))))
-
+```lisp
+           ;; Print description of symbol.
+           (if (fboundp s)             ; It is a function.
+               (princ
+                (format "%s\t%s\n%s\n\n" s
+                  (if (commandp s)
+                      (let ((keys (where-is-internal s)))
+                        (if keys
+                            (concat
+                             "Keys: "
+                             (mapconcat 'key-description
+                                        keys " "))
+                          "Keys: none"))
+                    "Function")
 ```
+
+```lisp
+                  (or (documentation s)
+                      "not documented"))))
+
+           (if (boundp s)              ; It is a variable.
 ```
 
-        ;; Display the data.
-        (help-setup-xref (list 'describe-symbols pattern) (interactive-p))
-        (with-help-window (help-buffer)
-          (mapcar describe-func (sort sym-list 'string<)))))
+```lisp
+               (princ
+                (format "%s\t%s\n%s\n\n" s
+                  (if (custom-variable-p s)
+                      "Option " "Variable")
+```
+
+```lisp
+                  (or (documentation-property
+                        s 'variable-documentation)
+                      "not documented"))))))
+        sym-list)
+```
+
+```lisp
+```
+
+```lisp
+    ;; Build a list of symbols that match pattern.
+    (mapatoms (lambda (sym)
+                (if (string-match pattern (symbol-name sym))
+                    (setq sym-list (cons sym sym-list)))))
+```
+
+```lisp
+```
+
+```lisp
+    ;; Display the data.
+    (help-setup-xref (list 'describe-symbols pattern) (interactive-p))
+    (with-help-window (help-buffer)
+      (mapcar describe-func (sort sym-list 'string<)))))
+```
 
 The `describe-symbols` function works like `apropos`, but provides more information.
 
-    (describe-symbols "goal")
+```lisp
+(describe-symbols "goal")
 
-    ---------- Buffer: *Help* ----------
-    goal-column     Option
-    Semipermanent goal column for vertical motion, as set by …
-
-```
-```
-
-    minibuffer-temporary-goal-position      Variable
-    not documented
-
-```
+---------- Buffer: *Help* ----------
+goal-column     Option
+Semipermanent goal column for vertical motion, as set by …
 ```
 
-    set-goal-column Keys: C-x C-n
-    Set the current horizontal position as a goal for C-n and C-p.
-
-<!---->
-
-    Those commands will move to this position in the line moved to
-    rather than trying to keep the same horizontal position.
-    With a non-nil argument ARG, clears out the goal column
-    so that C-n and C-p resume vertical motion.
-    The goal column is stored in the variable ‘goal-column’.
-
-    (fn ARG)
-
-```
+```lisp
 ```
 
-    temporary-goal-column   Variable
-    Current goal column for vertical motion.
-    It is the column where point was at the start of the current run
-    of vertical motion commands.
+```lisp
+minibuffer-temporary-goal-position      Variable
+not documented
+```
 
-    When moving by visual lines via the function ‘line-move-visual’, it is a cons
-    cell (COL . HSCROLL), where COL is the x-position, in pixels,
-    divided by the default column width, and HSCROLL is the number of
-    columns by which window is scrolled from left margin.
+```lisp
+```
 
-    When the ‘track-eol’ feature is doing its job, the value is
-    ‘most-positive-fixnum’.
-    ---------- Buffer: *Help* ----------
+```lisp
+set-goal-column Keys: C-x C-n
+Set the current horizontal position as a goal for C-n and C-p.
+```
+
+```lisp
+Those commands will move to this position in the line moved to
+rather than trying to keep the same horizontal position.
+With a non-nil argument ARG, clears out the goal column
+so that C-n and C-p resume vertical motion.
+The goal column is stored in the variable ‘goal-column’.
+
+(fn ARG)
+```
+
+```lisp
+```
+
+```lisp
+temporary-goal-column   Variable
+Current goal column for vertical motion.
+It is the column where point was at the start of the current run
+of vertical motion commands.
+
+When moving by visual lines via the function ‘line-move-visual’, it is a cons
+cell (COL . HSCROLL), where COL is the x-position, in pixels,
+divided by the default column width, and HSCROLL is the number of
+columns by which window is scrolled from left margin.
+
+When the ‘track-eol’ feature is doing its job, the value is
+‘most-positive-fixnum’.
+---------- Buffer: *Help* ----------
+```
 
 *   Function: **Snarf-documentation** *filename*
 

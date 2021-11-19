@@ -1,22 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
 
 Next: [Numeric Conversions](Numeric-Conversions.html), Previous: [Predicates on Numbers](Predicates-on-Numbers.html), Up: [Numbers](Numbers.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
@@ -30,12 +12,14 @@ Sometimes it is useful to compare numbers with `eql` or `equal`, which treat two
 
 There is another wrinkle: because floating-point arithmetic is not exact, it is often a bad idea to check for equality of floating-point values. Usually it is better to test for approximate equality. Here’s a function to do this:
 
-    (defvar fuzz-factor 1.0e-6)
-    (defun approx-equal (x y)
-      (or (= x y)
-          (< (/ (abs (- x y))
-                (max (abs x) (abs y)))
-             fuzz-factor)))
+```lisp
+(defvar fuzz-factor 1.0e-6)
+(defun approx-equal (x y)
+  (or (= x y)
+      (< (/ (abs (- x y))
+            (max (abs x) (abs y)))
+         fuzz-factor)))
+```
 
 *   Function: **=** *number-or-marker \&rest number-or-markers*
 
@@ -83,12 +67,14 @@ There is another wrinkle: because floating-point arithmetic is not exact, it is 
 
     This function returns the largest of its arguments.
 
-        (max 20)
-             ⇒ 20
-        (max 1 2.5)
-             ⇒ 2.5
-        (max 1 3 2.5)
-             ⇒ 3
+    ```lisp
+    (max 20)
+         ⇒ 20
+    (max 1 2.5)
+         ⇒ 2.5
+    (max 1 3 2.5)
+         ⇒ 3
+    ```
 
 <!---->
 
@@ -96,8 +82,10 @@ There is another wrinkle: because floating-point arithmetic is not exact, it is 
 
     This function returns the smallest of its arguments.
 
-        (min -4 1)
-             ⇒ -4
+    ```lisp
+    (min -4 1)
+         ⇒ -4
+    ```
 
 <!---->
 

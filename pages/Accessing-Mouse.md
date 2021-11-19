@@ -1,22 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
 
 Next: [Accessing Scroll](Accessing-Scroll.html), Previous: [Classifying Events](Classifying-Events.html), Up: [Input Events](Input-Events.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
@@ -68,24 +50,26 @@ These functions take a mouse position list as argument, and return various parts
 
 *   Function: **posn-x-y** *position*
 
-    Return the pixel-based x and y coordinates in `position`, as a cons cell `(x . y)`<!-- /@w -->. These coordinates are relative to the window given by `posn-window`.
+    Return the pixel-based x and y coordinates in `position`, as a cons cell `(x . y)`. These coordinates are relative to the window given by `posn-window`.
 
     This example shows how to convert the window-relative coordinates in the text area of a window into frame-relative coordinates:
 
-        (defun frame-relative-coordinates (position)
-          "Return frame-relative coordinates from POSITION.
-        POSITION is assumed to lie in a window text area."
-          (let* ((x-y (posn-x-y position))
-                 (window (posn-window position))
-                 (edges (window-inside-pixel-edges window)))
-            (cons (+ (car x-y) (car edges))
-                  (+ (cdr x-y) (cadr edges)))))
+    ```lisp
+    (defun frame-relative-coordinates (position)
+      "Return frame-relative coordinates from POSITION.
+    POSITION is assumed to lie in a window text area."
+      (let* ((x-y (posn-x-y position))
+             (window (posn-window position))
+             (edges (window-inside-pixel-edges window)))
+        (cons (+ (car x-y) (car edges))
+              (+ (cdr x-y) (cadr edges)))))
+    ```
 
 <!---->
 
 *   Function: **posn-col-row** *position*
 
-    This function returns a cons cell `(col .  row)`<!-- /@w -->, containing the estimated column and row corresponding to buffer position described by `position`. The return value is given in units of the frame’s default character width and default line height (including spacing), as computed from the `x` and `y` values corresponding to `position`. (So, if the actual characters have non-default sizes, the actual row and column may differ from these computed values.)
+    This function returns a cons cell `(col .  row)`, containing the estimated column and row corresponding to buffer position described by `position`. The return value is given in units of the frame’s default character width and default line height (including spacing), as computed from the `x` and `y` values corresponding to `position`. (So, if the actual characters have non-default sizes, the actual row and column may differ from these computed values.)
 
     Note that `row` is counted from the top of the text area. If the window given by `position` possesses a header line (see [Header Lines](Header-Lines.html)) or a tab line, they are *not* included in the `row` count.
 
@@ -93,7 +77,7 @@ These functions take a mouse position list as argument, and return various parts
 
 *   Function: **posn-actual-col-row** *position*
 
-    Return the actual row and column in `position`, as a cons cell `(col . row)`<!-- /@w -->. The values are the actual row and column numbers in the window given by `position`. See [Click Events](Click-Events.html), for details. The function returns `nil` if `position` does not include actual position values; in that case `posn-col-row` can be used to get approximate values.
+    Return the actual row and column in `position`, as a cons cell `(col . row)`. The values are the actual row and column numbers in the window given by `position`. See [Click Events](Click-Events.html), for details. The function returns `nil` if `position` does not include actual position values; in that case `posn-col-row` can be used to get approximate values.
 
     Note that this function doesn’t account for the visual width of characters on display, like the number of visual columns taken by a tab character or an image. If you need the coordinates in canonical character units, use `posn-col-row` instead.
 
@@ -101,25 +85,25 @@ These functions take a mouse position list as argument, and return various parts
 
 *   Function: **posn-string** *position*
 
-    Return the string object described by `position`, either `nil` (which means `position` describes buffer text), or a cons cell `(string . string-pos)`<!-- /@w -->.
+    Return the string object described by `position`, either `nil` (which means `position` describes buffer text), or a cons cell `(string . string-pos)`.
 
 <!---->
 
 *   Function: **posn-image** *position*
 
-    Return the image object in `position`, either `nil` (if there’s no image at `position`), or an image spec `(image …)`<!-- /@w -->.
+    Return the image object in `position`, either `nil` (if there’s no image at `position`), or an image spec `(image …)`.
 
 <!---->
 
 *   Function: **posn-object** *position*
 
-    Return the image or string object described by `position`, either `nil` (which means `position` describes buffer text), an image `(image …)`<!-- /@w -->, or a cons cell `(string . string-pos)`<!-- /@w -->.
+    Return the image or string object described by `position`, either `nil` (which means `position` describes buffer text), an image `(image …)`, or a cons cell `(string . string-pos)`.
 
 <!---->
 
 *   Function: **posn-object-x-y** *position*
 
-    Return the pixel-based x and y coordinates relative to the upper left corner of the object described by `position`, as a cons cell `(dx . dy)`<!-- /@w -->. If the `position` describes buffer text, return the relative coordinates of the buffer-text character closest to that position.
+    Return the pixel-based x and y coordinates relative to the upper left corner of the object described by `position`, as a cons cell `(dx . dy)`. If the `position` describes buffer text, return the relative coordinates of the buffer-text character closest to that position.
 
 <!---->
 

@@ -1,22 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
 
 Next: [Key Binding Commands](Key-Binding-Commands.html), Previous: [Remapping Commands](Remapping-Commands.html), Up: [Keymaps](Keymaps.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
@@ -62,23 +44,25 @@ The key translation function receives one argument, which is the prompt that was
 
 If the function reads input itself, it can have the effect of altering the event that follows. For example, here’s how to define `C-c h` to turn the character that follows into a Hyper character:
 
-    (defun hyperify (prompt)
-      (let ((e (read-event)))
-        (vector (if (numberp e)
-                    (logior (ash 1 24) e)
-                  (if (memq 'hyper (event-modifiers e))
-                      e
-                    (add-event-modifier "H-" e))))))
+```lisp
+(defun hyperify (prompt)
+  (let ((e (read-event)))
+    (vector (if (numberp e)
+                (logior (ash 1 24) e)
+              (if (memq 'hyper (event-modifiers e))
+                  e
+                (add-event-modifier "H-" e))))))
 
-    (defun add-event-modifier (string e)
-      (let ((symbol (if (symbolp e) e (car e))))
-        (setq symbol (intern (concat string
-                                     (symbol-name symbol))))
-        (if (symbolp e)
-            symbol
-          (cons symbol (cdr e)))))
+(defun add-event-modifier (string e)
+  (let ((symbol (if (symbolp e) e (car e))))
+    (setq symbol (intern (concat string
+                                 (symbol-name symbol))))
+    (if (symbolp e)
+        symbol
+      (cons symbol (cdr e)))))
 
-    (define-key local-function-key-map "\C-ch" 'hyperify)
+(define-key local-function-key-map "\C-ch" 'hyperify)
+```
 
 #### 22.14.1 Interaction with normal keymaps
 

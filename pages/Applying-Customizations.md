@@ -1,22 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
 
 Next: [Custom Themes](Custom-Themes.html), Previous: [Customization Types](Customization-Types.html), Up: [Customization](Customization.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
@@ -28,7 +10,9 @@ The following functions are responsible for installing the user’s customizatio
 
     This function installs the variable customizations specified by `args`. Each argument in `args` should have the form
 
-        (var expression [now [request [comment]]])
+    ```lisp
+    (var expression [now [request [comment]]])
+    ```
 
     `var` is a variable name (a symbol), and `expression` is an expression which evaluates to the desired customized value.
 
@@ -42,7 +26,9 @@ The following functions are responsible for installing the user’s customizatio
 
     This function installs the face customizations specified by `args`. Each argument in `args` should have the form
 
-        (face spec [now [comment]])
+    ```lisp
+    (face spec [now [comment]])
+    ```
 
     `face` is a face name (a symbol), and `spec` is the customized face specification for that face (see [Defining Faces](Defining-Faces.html)).
 

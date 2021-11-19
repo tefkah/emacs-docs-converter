@@ -1,22 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
 
 Next: [Format Properties](Format-Properties.html), Previous: [Property Search](Property-Search.html), Up: [Text Properties](Text-Properties.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
@@ -35,22 +17,10 @@ Note: the properties `composition`, `display`, `invisible` and `intangible` can 
     The `face` property controls the appearance of the character (see [Faces](Faces.html)). The value of the property can be the following:
 
     *   A face name (a symbol or string).
-
     *   An anonymous face: a property list of the form `(keyword value …)`, where each `keyword` is a face attribute name and `value` is a value for that attribute.
-
     *   A list of faces. Each list element should be either a face name or an anonymous face. This specifies a face which is an aggregate of the attributes of each of the listed faces. Faces occurring earlier in the list have higher priority.
-
     *   A cons cell of the form `(foreground-color . color-name)` or `(background-color . color-name)`. This specifies the foreground or background color, similar to `(:foreground color-name)` or `(:background color-name)`. This form is supported for backward compatibility only, and should be avoided.
-
-    *   A cons cell of the form `(:filtered filter face-spec)`
-
-        <!-- /@w -->
-
-        , that specifies the face given by `face-spec`, but only if `filter` matches when the face is used for display. The `face-spec` can use any of the forms mentioned above. The `filter` should be of the form `(:window param value)`
-
-        <!-- /@w -->
-
-        , which matches for windows whose parameter `param` is `eq` to `value`. If the variable `face-filters-always-match` is non-`nil`, all face filters are deemed to have matched.
+    *   A cons cell of the form `(:filtered filter face-spec)`, that specifies the face given by `face-spec`, but only if `filter` matches when the face is used for display. The `face-spec` can use any of the forms mentioned above. The `filter` should be of the form `(:window param value)`, which matches for windows whose parameter `param` is `eq` to `value`. If the variable `face-filters-always-match` is non-`nil`, all face filters are deemed to have matched.
 
     Font Lock mode (see [Font Lock Mode](Font-Lock-Mode.html)) works in most buffers by dynamically updating the `face` property of characters based on the context.
 

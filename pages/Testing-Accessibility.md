@@ -1,22 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
 
 Next: [Kinds of Files](Kinds-of-Files.html), Up: [Information about Files](Information-about-Files.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
@@ -54,8 +36,10 @@ On some operating systems, more complex sets of access permissions can be specif
 
     In the example below, `foo` is not writable because the parent directory does not exist, even though the user could create such a directory.
 
-        (file-writable-p "~/no-such-dir/foo")
-             ⇒ nil
+    ```lisp
+    (file-writable-p "~/no-such-dir/foo")
+         ⇒ nil
+    ```
 
 <!---->
 
@@ -65,8 +49,10 @@ On some operating systems, more complex sets of access permissions can be specif
 
     For example, from the following we deduce that any attempt to read a file in `/foo/` will give an error:
 
-        (file-accessible-directory-p "/foo")
-             ⇒ nil
+    ```lisp
+    (file-accessible-directory-p "/foo")
+         ⇒ nil
+    ```
 
 <!---->
 
@@ -94,25 +80,31 @@ On some operating systems, more complex sets of access permissions can be specif
 
     See [Changing Files](Changing-Files.html), for the `set-file-modes` function, which can be used to set these permissions.
 
-        (file-modes "~/junk/diffs")
-             ⇒ 492               ; Decimal integer.
-
-    <!---->
-
-        (format "%o" 492)
-             ⇒ "754"             ; Convert to octal.
-
-    ```
+    ```lisp
+    (file-modes "~/junk/diffs")
+         ⇒ 492               ; Decimal integer.
     ```
 
-        (set-file-modes "~/junk/diffs" #o666)
-             ⇒ nil
-
+    ```lisp
+    (format "%o" 492)
+         ⇒ "754"             ; Convert to octal.
     ```
+
+    ```lisp
     ```
 
-        $ ls -l diffs
-        -rw-rw-rw- 1 lewis lewis 3063 Oct 30 16:00 diffs
+    ```lisp
+    (set-file-modes "~/junk/diffs" #o666)
+         ⇒ nil
+    ```
+
+    ```lisp
+    ```
+
+    ```lisp
+    $ ls -l diffs
+    -rw-rw-rw- 1 lewis lewis 3063 Oct 30 16:00 diffs
+    ```
 
     **MS-DOS note:** On MS-DOS, there is no such thing as an executable file mode bit. So `file-modes` considers a file executable if its name ends in one of the standard executable extensions, such as `.com`, `.bat`, `.exe`, and some others. Files that begin with the POSIX-standard ‘`#!`’ signature, such as shell and Perl scripts, are also considered executable. Directories are also reported as executable, for compatibility with POSIX. These conventions are also followed by `file-attributes` (see [File Attributes](File-Attributes.html)).
 

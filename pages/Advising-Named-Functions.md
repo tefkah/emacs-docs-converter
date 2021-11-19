@@ -1,22 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
 
 Next: [Advice Combinators](Advice-Combinators.html), Previous: [Core Advising Primitives](Core-Advising-Primitives.html), Up: [Advising Functions](Advising-Functions.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
@@ -24,7 +6,9 @@ Next: [Advice Combinators](Advice-Combinators.html), Previous: [Core Advising Pr
 
 A common use of advice is for named functions and macros. You could just use `add-function` as in:
 
-    (add-function :around (symbol-function 'fun) #'his-tracing-function)
+```lisp
+(add-function :around (symbol-function 'fun) #'his-tracing-function)
+```
 
 But you should use `advice-add` and `advice-remove` for that instead. This separate set of functions to manipulate pieces of advice applied to named functions, offers the following extra features compared to `add-function`: they know how to deal with macros and autoloaded functions, they let `describe-function` preserve the original docstring as well as document the added advice, and they let you add and remove advice before a function is even defined.
 

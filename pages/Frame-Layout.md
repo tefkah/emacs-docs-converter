@@ -1,22 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
 
 Next: [Frame Font](Frame-Font.html), Up: [Frame Geometry](Frame-Geometry.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
@@ -24,7 +6,7 @@ Next: [Frame Font](Frame-Font.html), Up: [Frame Geometry](Frame-Geometry.html) �
 
 A visible frame occupies a rectangular area on its terminal’s display. This area may contain a number of nested rectangles, each serving a different purpose. The drawing below sketches the layout of a frame on a graphical terminal:
 
-```
+```lisp
 
         <------------ Outer Frame Width ----------->
         ____________________________________________
@@ -95,17 +77,9 @@ In practice not all of the areas shown in the drawing will or may be present. Th
 
     The position of the top left corner of the native frame specifies the *native position* of the frame. (1)–(3) in the drawing above indicate that position for the various builds:
 
-    *   <!-- /@w -->
-
-        (1) non-toolkit and terminal frames
-
-    *   <!-- /@w -->
-
-        (2) Lucid, Motif and MS-Windows frames
-
-    *   <!-- /@w -->
-
-        (3) GTK+ and NS frames
+    *   (1) non-toolkit and terminal frames
+    *   (2) Lucid, Motif and MS-Windows frames
+    *   (3) GTK+ and NS frames
 
     Accordingly, the native height of a frame may include the height of the tool bar but not that of the menu bar (Lucid, Motif, MS-Windows) or those of the menu bar and the tool bar (non-toolkit and text terminal frames).
 
@@ -187,7 +161,7 @@ The following function can be used to retrieve the edges of the outer, native an
 
 *   Function: **frame-edges** *\&optional frame type*
 
-    This function returns the absolute edges of the outer, native or inner frame of `frame`. `frame` must be a live frame and defaults to the selected one. The returned list has the form `(left top right bottom)`<!-- /@w --> where all values are in pixels relative to the origin of `frame`’s display. For terminal frames the values returned for `left` and `top` are always zero.
+    This function returns the absolute edges of the outer, native or inner frame of `frame`. `frame` must be a live frame and defaults to the selected one. The returned list has the form `(left top right bottom)` where all values are in pixels relative to the origin of `frame`’s display. For terminal frames the values returned for `left` and `top` are always zero.
 
     Optional argument `type` specifies the type of the edges to return: `outer-edges` means to return the outer edges of `frame`, `native-edges` (or `nil`) means to return its native edges and `inner-edges` means to return its inner edges.
 

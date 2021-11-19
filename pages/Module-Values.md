@@ -1,22 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
 
 Next: [Module Misc](Module-Misc.html), Previous: [Module Functions](Module-Functions.html), Up: [Writing Dynamic Modules](Writing-Dynamic-Modules.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
@@ -26,8 +8,10 @@ With very few exceptions, most modules need to exchange data with Lisp programs 
 
 All of the functions described below are actually *function pointers* provided via the pointer to the environment which every module function accepts. Therefore, module code should call these functions through the environment pointer, like this:
 
-    emacs_env *env;  /* the environment pointer */
-    env->some_function (arguments…);
+```lisp
+emacs_env *env;  /* the environment pointer */
+env->some_function (arguments…);
+```
 
 The `emacs_env` pointer will usually come from the first argument to the module function, or from the call to `get_environment` if you need the environment in the module initialization function.
 
@@ -37,7 +21,7 @@ The following API functions extract values of various C data types from `emacs_v
 
 *   Function: *intmax\_t* **extract\_integer** *(emacs\_env \*`env`, emacs\_value `arg`)*
 
-    This function returns the value of a Lisp integer specified by `arg`. The C data type of the return value, `intmax_t`, is the widest integer data type supported by the C compiler, typically `long long`<!-- /@w -->. If the value of `arg` doesn’t fit into an `intmax_t`, the function signals an error using the error symbol `overflow-error`.
+    This function returns the value of a Lisp integer specified by `arg`. The C data type of the return value, `intmax_t`, is the widest integer data type supported by the C compiler, typically `long long`. If the value of `arg` doesn’t fit into an `intmax_t`, the function signals an error using the error symbol `overflow-error`.
 
 <!---->
 
@@ -127,108 +111,110 @@ The following API functions create `emacs_value` objects from basic C data types
 
 The following example uses the GNU Multiprecision Library (GMP) to calculate the next probable prime after a given integer. See [(gmp)Top](https://www.gmplib.org/manual/index.html#Top), for a general overview of GMP, and see [(gmp)Integer Import and Export](https://www.gmplib.org/manual/Integer-Import-and-Export.html#Integer-Import-and-Export) for how to convert the `magnitude` array to and from GMP `mpz_t` values.
 
-    #include <emacs-module.h>
-    int plugin_is_GPL_compatible;
+```lisp
+#include <emacs-module.h>
+int plugin_is_GPL_compatible;
 
-    #include <assert.h>
-    #include <limits.h>
-    #include <stdint.h>
-    #include <stdlib.h>
-    #include <string.h>
+#include <assert.h>
+#include <limits.h>
+#include <stdint.h>
+#include <stdlib.h>
+#include <string.h>
 
-    #include <gmp.h>
+#include <gmp.h>
 
-    static void
-    memory_full (emacs_env *env)
+static void
+memory_full (emacs_env *env)
+{
+  static const char message[] = "Memory exhausted";
+  emacs_value data = env->make_string (env, message,
+                                       strlen (message));
+  env->non_local_exit_signal
+    (env, env->intern (env, "error"),
+     env->funcall (env, env->intern (env, "list"), 1, &data));
+}
+
+enum
+{
+  order = -1, endian = 0, nails = 0,
+  limb_size = sizeof (emacs_limb_t),
+  max_nlimbs = ((SIZE_MAX < PTRDIFF_MAX ? SIZE_MAX : PTRDIFF_MAX)
+                / limb_size)
+};
+
+static bool
+extract_big_integer (emacs_env *env, emacs_value arg, mpz_t result)
+{
+  ptrdiff_t nlimbs;
+  bool ok = env->extract_big_integer (env, arg, NULL, &nlimbs, NULL);
+  if (!ok)
+    return false;
+  assert (0 < nlimbs && nlimbs <= max_nlimbs);
+  emacs_limb_t *magnitude = malloc (nlimbs * limb_size);
+  if (magnitude == NULL)
     {
-      static const char message[] = "Memory exhausted";
-      emacs_value data = env->make_string (env, message,
-                                           strlen (message));
-      env->non_local_exit_signal
-        (env, env->intern (env, "error"),
-         env->funcall (env, env->intern (env, "list"), 1, &data));
+      memory_full (env);
+      return false;
     }
+  int sign;
+  ok = env->extract_big_integer (env, arg, &sign, &nlimbs, magnitude);
+  assert (ok);
+  mpz_import (result, nlimbs, order, limb_size, endian, nails, magnitude);
+  free (magnitude);
+  if (sign < 0)
+    mpz_neg (result, result);
+  return true;
+}
 
-    enum
+static emacs_value
+make_big_integer (emacs_env *env, const mpz_t value)
+{
+  size_t nbits = mpz_sizeinbase (value, 2);
+  int bitsperlimb = CHAR_BIT * limb_size - nails;
+  size_t nlimbs = nbits / bitsperlimb + (nbits % bitsperlimb != 0);
+  emacs_limb_t *magnitude
+    = nlimbs <= max_nlimbs ? malloc (nlimbs * limb_size) : NULL;
+  if (magnitude == NULL)
     {
-      order = -1, endian = 0, nails = 0,
-      limb_size = sizeof (emacs_limb_t),
-      max_nlimbs = ((SIZE_MAX < PTRDIFF_MAX ? SIZE_MAX : PTRDIFF_MAX)
-                    / limb_size)
-    };
-
-    static bool
-    extract_big_integer (emacs_env *env, emacs_value arg, mpz_t result)
-    {
-      ptrdiff_t nlimbs;
-      bool ok = env->extract_big_integer (env, arg, NULL, &nlimbs, NULL);
-      if (!ok)
-        return false;
-      assert (0 < nlimbs && nlimbs <= max_nlimbs);
-      emacs_limb_t *magnitude = malloc (nlimbs * limb_size);
-      if (magnitude == NULL)
-        {
-          memory_full (env);
-          return false;
-        }
-      int sign;
-      ok = env->extract_big_integer (env, arg, &sign, &nlimbs, magnitude);
-      assert (ok);
-      mpz_import (result, nlimbs, order, limb_size, endian, nails, magnitude);
-      free (magnitude);
-      if (sign < 0)
-        mpz_neg (result, result);
-      return true;
+      memory_full (env);
+      return NULL;
     }
+  size_t written;
+  mpz_export (magnitude, &written, order, limb_size, endian, nails, value);
+  assert (written == nlimbs);
+  assert (nlimbs <= PTRDIFF_MAX);
+  emacs_value result = env->make_big_integer (env, mpz_sgn (value),
+                                              nlimbs, magnitude);
+  free (magnitude);
+  return result;
+}
 
-    static emacs_value
-    make_big_integer (emacs_env *env, const mpz_t value)
-    {
-      size_t nbits = mpz_sizeinbase (value, 2);
-      int bitsperlimb = CHAR_BIT * limb_size - nails;
-      size_t nlimbs = nbits / bitsperlimb + (nbits % bitsperlimb != 0);
-      emacs_limb_t *magnitude
-        = nlimbs <= max_nlimbs ? malloc (nlimbs * limb_size) : NULL;
-      if (magnitude == NULL)
-        {
-          memory_full (env);
-          return NULL;
-        }
-      size_t written;
-      mpz_export (magnitude, &written, order, limb_size, endian, nails, value);
-      assert (written == nlimbs);
-      assert (nlimbs <= PTRDIFF_MAX);
-      emacs_value result = env->make_big_integer (env, mpz_sgn (value),
-                                                  nlimbs, magnitude);
-      free (magnitude);
-      return result;
-    }
+static emacs_value
+next_prime (emacs_env *env, ptrdiff_t nargs, emacs_value *args,
+            void *data)
+{
+  assert (nargs == 1);
+  mpz_t p;
+  mpz_init (p);
+  extract_big_integer (env, args[0], p);
+  mpz_nextprime (p, p);
+  emacs_value result = make_big_integer (env, p);
+  mpz_clear (p);
+  return result;
+}
 
-    static emacs_value
-    next_prime (emacs_env *env, ptrdiff_t nargs, emacs_value *args,
-                void *data)
-    {
-      assert (nargs == 1);
-      mpz_t p;
-      mpz_init (p);
-      extract_big_integer (env, args[0], p);
-      mpz_nextprime (p, p);
-      emacs_value result = make_big_integer (env, p);
-      mpz_clear (p);
-      return result;
-    }
-
-    int
-    emacs_module_init (struct emacs_runtime *ert)
-    {
-      emacs_env *env = ert->get_environment (ert);
-      emacs_value symbol = env->intern (env, "next-prime");
-      emacs_value func
-        = env->make_function (env, 1, 1, next_prime, NULL, NULL);
-      emacs_value args[] = {symbol, func};
-      env->funcall (env, env->intern (env, "defalias"), 2, args);
-      return 0;
-    }
+int
+emacs_module_init (struct emacs_runtime *ert)
+{
+  emacs_env *env = ert->get_environment (ert);
+  emacs_value symbol = env->intern (env, "next-prime");
+  emacs_value func
+    = env->make_function (env, 1, 1, next_prime, NULL, NULL);
+  emacs_value args[] = {symbol, func};
+  env->funcall (env, env->intern (env, "defalias"), 2, args);
+  return 0;
+}
+```
 
 *   Function: *emacs\_value* **make\_float** *(emacs\_env \*`env`, double `d`)*
 
@@ -266,7 +252,9 @@ An alternative to keeping around C data structures that need to be passed to mod
 
     This function creates and returns a `user-ptr` object which wraps the C pointer `ptr`. The finalizer function `fin` can be a `NULL` pointer (meaning no finalizer), or it can be a function of the following signature:
 
-        typedef void (*emacs_finalizer) (void *ptr);
+    ```lisp
+    typedef void (*emacs_finalizer) (void *ptr);
+    ```
 
     If `fin` is not a `NULL` pointer, it will be called with the `ptr` as the argument when the `user-ptr` object is garbage-collected. Don’t run any expensive code in a finalizer, because GC must finish quickly to keep Emacs responsive.
 

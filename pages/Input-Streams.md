@@ -1,22 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
 
 Next: [Input Functions](Input-Functions.html), Previous: [Streams Intro](Streams-Intro.html), Up: [Read and Print](Read-and-Print.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
@@ -47,7 +29,9 @@ Most of the Lisp functions for reading text take an *input stream* as an argumen
 
     `t` used as a stream means that the input is read from the minibuffer. In fact, the minibuffer is invoked once and the text given by the user is made into a string that is then used as the input stream. If Emacs is running in batch mode (see [Batch Mode](Batch-Mode.html)), standard input is used instead of the minibuffer. For example,
 
-        (message "%s" (read t))
+    ```lisp
+    (message "%s" (read t))
+    ```
 
     will in batch mode read a Lisp expression from standard input and print the result to standard output.
 
@@ -61,93 +45,113 @@ Most of the Lisp functions for reading text take an *input stream* as an argumen
 
 Here is an example of reading from a stream that is a buffer, showing where point is located before and after:
 
-    ---------- Buffer: foo ----------
-    This∗ is the contents of foo.
-    ---------- Buffer: foo ----------
-
-```
-```
-
-    (read (get-buffer "foo"))
-         ⇒ is
-
-<!---->
-
-    (read (get-buffer "foo"))
-         ⇒ the
-
-```
+```lisp
+---------- Buffer: foo ----------
+This∗ is the contents of foo.
+---------- Buffer: foo ----------
 ```
 
-    ---------- Buffer: foo ----------
-    This is the∗ contents of foo.
-    ---------- Buffer: foo ----------
+```lisp
+```
+
+```lisp
+(read (get-buffer "foo"))
+     ⇒ is
+```
+
+```lisp
+(read (get-buffer "foo"))
+     ⇒ the
+```
+
+```lisp
+```
+
+```lisp
+---------- Buffer: foo ----------
+This is the∗ contents of foo.
+---------- Buffer: foo ----------
+```
 
 Note that the first read skips a space. Reading skips any amount of whitespace preceding the significant text.
 
 Here is an example of reading from a stream that is a marker, initially positioned at the beginning of the buffer shown. The value read is the symbol `This`.
 
-```
+```lisp
 
 ---------- Buffer: foo ----------
 This is the contents of foo.
 ---------- Buffer: foo ----------
 ```
 
+```lisp
 ```
+
+```lisp
+(setq m (set-marker (make-marker) 1 (get-buffer "foo")))
+     ⇒ #<marker at 1 in foo>
 ```
 
-    (setq m (set-marker (make-marker) 1 (get-buffer "foo")))
-         ⇒ #<marker at 1 in foo>
+```lisp
+(read m)
+     ⇒ This
+```
 
-<!---->
-
-    (read m)
-         ⇒ This
-
-<!---->
-
-    m
-         ⇒ #<marker at 5 in foo>   ;; Before the first space.
+```lisp
+m
+     ⇒ #<marker at 5 in foo>   ;; Before the first space.
+```
 
 Here we read from the contents of a string:
 
-    (read "(When in) the course")
-         ⇒ (When in)
+```lisp
+(read "(When in) the course")
+     ⇒ (When in)
+```
 
-The following example reads from the minibuffer. The prompt is: ‘`Lisp expression: `’<!-- /@w -->. (That is always the prompt used when you read from the stream `t`.) The user’s input is shown following the prompt.
+The following example reads from the minibuffer. The prompt is: ‘`Lisp expression: `’. (That is always the prompt used when you read from the stream `t`.) The user’s input is shown following the prompt.
 
-    (read t)
-         ⇒ 23
-    ---------- Buffer: Minibuffer ----------
-    Lisp expression: 23 RET
-    ---------- Buffer: Minibuffer ----------
+```lisp
+(read t)
+     ⇒ 23
+---------- Buffer: Minibuffer ----------
+Lisp expression: 23 RET
+---------- Buffer: Minibuffer ----------
+```
 
 Finally, here is an example of a stream that is a function, named `useless-stream`. Before we use the stream, we initialize the variable `useless-list` to a list of characters. Then each call to the function `useless-stream` obtains the next character in the list or unreads a character by adding it to the front of the list.
 
-    (setq useless-list (append "XY()" nil))
-         ⇒ (88 89 40 41)
-
+```lisp
+(setq useless-list (append "XY()" nil))
+     ⇒ (88 89 40 41)
 ```
+
+```lisp
 ```
 
-    (defun useless-stream (&optional unread)
-      (if unread
-          (setq useless-list (cons unread useless-list))
-        (prog1 (car useless-list)
-               (setq useless-list (cdr useless-list)))))
-         ⇒ useless-stream
+```lisp
+(defun useless-stream (&optional unread)
+  (if unread
+      (setq useless-list (cons unread useless-list))
+    (prog1 (car useless-list)
+           (setq useless-list (cdr useless-list)))))
+     ⇒ useless-stream
+```
 
 Now we read using the stream thus constructed:
 
-    (read 'useless-stream)
-         ⇒ XY
-
+```lisp
+(read 'useless-stream)
+     ⇒ XY
 ```
+
+```lisp
 ```
 
-    useless-list
-         ⇒ (40 41)
+```lisp
+useless-list
+     ⇒ (40 41)
+```
 
 Note that the open and close parentheses remain in the list. The Lisp reader encountered the open parenthesis, decided that it ended the input, and unread it. Another attempt to read from the stream at this point would read ‘`()`’ and return `nil`.
 

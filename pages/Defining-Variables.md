@@ -1,22 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
 
 Next: [Tips for Defining](Tips-for-Defining.html), Previous: [Void Variables](Void-Variables.html), Up: [Variables](Variables.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
@@ -48,14 +30,18 @@ To define a customizable variable, you should use `defcustom` (which calls `defv
 
     Here are some examples. This form defines `foo` but does not initialize it:
 
-        (defvar foo)
-             ⇒ foo
+    ```lisp
+    (defvar foo)
+         ⇒ foo
+    ```
 
     This example initializes the value of `bar` to `23`, and gives it a documentation string:
 
-        (defvar bar 23
-          "The normal weight of a bar.")
-             ⇒ bar
+    ```lisp
+    (defvar bar 23
+      "The normal weight of a bar.")
+         ⇒ bar
+    ```
 
     The `defvar` form returns `symbol`, but it is normally used at top level in a file where its value does not matter.
 
@@ -73,18 +59,20 @@ To define a customizable variable, you should use `defcustom` (which calls `defv
 
     An example of the use of `defconst` is Emacs’s definition of `float-pi`—the mathematical constant *pi*, which ought not to be changed by anyone (attempts by the Indiana State Legislature notwithstanding). As the second form illustrates, however, `defconst` is only advisory.
 
-        (defconst float-pi 3.141592653589793 "The value of Pi.")
-             ⇒ float-pi
+    ```lisp
+    (defconst float-pi 3.141592653589793 "The value of Pi.")
+         ⇒ float-pi
+    ```
 
-    <!---->
+    ```lisp
+    (setq float-pi 3)
+         ⇒ float-pi
+    ```
 
-        (setq float-pi 3)
-             ⇒ float-pi
-
-    <!---->
-
-        float-pi
-             ⇒ 3
+    ```lisp
+    float-pi
+         ⇒ 3
+    ```
 
 **Warning:** If you use a `defconst` or `defvar` special form while the variable has a local binding (made with `let`, or a function argument), it sets the local binding rather than the global binding. This is not what you usually want. To prevent this, use these special forms at top level in a file, where normally no local binding is in effect, and make sure to load the file before making a local binding for the variable.
 

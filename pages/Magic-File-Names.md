@@ -1,22 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
 
 Next: [Format Conversion](Format-Conversion.html), Previous: [Create/Delete Dirs](Create_002fDelete-Dirs.html), Up: [Files](Files.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
@@ -28,25 +10,35 @@ To define a kind of magic file name, you must supply a regular expression to def
 
 The variable `file-name-handler-alist` holds a list of handlers, together with regular expressions that determine when to apply each handler. Each element has this form:
 
-    (regexp . handler)
+```lisp
+(regexp . handler)
+```
 
 All the Emacs primitives for file access and file name transformation check the given file name against `file-name-handler-alist`. If the file name matches `regexp`, the primitives handle that file by calling `handler`.
 
 The first argument given to `handler` is the name of the primitive, as a symbol; the remaining arguments are the arguments that were passed to that primitive. (The first of these arguments is most often the file name itself.) For example, if you do this:
 
-    (file-exists-p filename)
+```lisp
+(file-exists-p filename)
+```
 
 and `filename` has handler `handler`, then `handler` is called like this:
 
-    (funcall handler 'file-exists-p filename)
+```lisp
+(funcall handler 'file-exists-p filename)
+```
 
 When a function takes two or more arguments that must be file names, it checks each of those names for a handler. For example, if you do this:
 
-    (expand-file-name filename dirname)
+```lisp
+(expand-file-name filename dirname)
+```
 
 then it checks for a handler for `filename` and then for a handler for `dirname`. In either case, the `handler` is called like this:
 
-    (funcall handler 'expand-file-name filename dirname)
+```lisp
+(funcall handler 'expand-file-name filename dirname)
+```
 
 The `handler` then needs to figure out whether to handle `filename` or `dirname`.
 
@@ -67,19 +59,21 @@ Handlers for `insert-file-contents` typically need to clear the buffer’s modif
 
 The handler function must handle all of the above operations, and possibly others to be added in the future. It need not implement all these operations itself—when it has nothing special to do for a certain operation, it can reinvoke the primitive, to handle the operation in the usual way. It should always reinvoke the primitive for an operation it does not recognize. Here’s one way to do this:
 
-    (defun my-file-handler (operation &rest args)
-      ;; First check for the specific operations
-      ;; that we have special handling for.
-      (cond ((eq operation 'insert-file-contents) …)
-            ((eq operation 'write-region) …)
-            …
-            ;; Handle any operation we don’t know about.
-            (t (let ((inhibit-file-name-handlers
-                      (cons 'my-file-handler
-                            (and (eq inhibit-file-name-operation operation)
-                                 inhibit-file-name-handlers)))
-                     (inhibit-file-name-operation operation))
-                 (apply operation args)))))
+```lisp
+(defun my-file-handler (operation &rest args)
+  ;; First check for the specific operations
+  ;; that we have special handling for.
+  (cond ((eq operation 'insert-file-contents) …)
+        ((eq operation 'write-region) …)
+        …
+        ;; Handle any operation we don’t know about.
+        (t (let ((inhibit-file-name-handlers
+                  (cons 'my-file-handler
+                        (and (eq inhibit-file-name-operation operation)
+                             inhibit-file-name-handlers)))
+                 (inhibit-file-name-operation operation))
+             (apply operation args)))))
+```
 
 When a handler function decides to call the ordinary Emacs primitive for the operation at hand, it needs to prevent the primitive from calling the same handler once again, thus leading to an infinite recursion. The example above shows how to do this, with the variables `inhibit-file-name-handlers` and `inhibit-file-name-operation`. Be careful to use them exactly as shown above; the details are crucial for proper behavior in the case of multiple handlers, and for operations that have two file names that may each have handlers.
 
@@ -141,8 +135,10 @@ Simply deferring all operations to the usual primitives does not work. For insta
 
     This function returns the *local part* of `filename`. This is the part of the file’s name that identifies it on the remote host, and is typically obtained by removing from the remote file name the parts that specify the remote host and the method of accessing it. For example:
 
-        (file-local-name "/ssh:user@host:/foo/bar")
-             ⇒ "/foo/bar"
+    ```lisp
+    (file-local-name "/ssh:user@host:/foo/bar")
+         ⇒ "/foo/bar"
+    ```
 
     For a remote `filename`, this function returns a file name which could be used directly as an argument of a remote process (see [Asynchronous Processes](Asynchronous-Processes.html), and see [Synchronous Processes](Synchronous-Processes.html)), and as the program to run on the remote host. If `filename` is local, this function returns it unchanged.
 
@@ -156,12 +152,14 @@ Simply deferring all operations to the usual primitives does not work. For insta
 
     A compromise is to set it to a positive number. This means that cached values are used for that amount of seconds since they were cached. If a remote file is checked regularly, it might be a good idea to let-bind this variable to a value less than the time period between consecutive checks. For example:
 
-        (defun display-time-file-nonempty-p (file)
-          (let ((remote-file-name-inhibit-cache
-                 (- display-time-interval 5)))
-            (and (file-exists-p file)
-                 (< 0 (file-attribute-size
-                       (file-attributes
-                        (file-chase-links file)))))))
+    ```lisp
+    (defun display-time-file-nonempty-p (file)
+      (let ((remote-file-name-inhibit-cache
+             (- display-time-interval 5)))
+        (and (file-exists-p file)
+             (< 0 (file-attribute-size
+                   (file-attributes
+                    (file-chase-links file)))))))
+    ```
 
 Next: [Format Conversion](Format-Conversion.html), Previous: [Create/Delete Dirs](Create_002fDelete-Dirs.html), Up: [Files](Files.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]

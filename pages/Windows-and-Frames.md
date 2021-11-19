@@ -1,22 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
 
 Next: [Window Sizes](Window-Sizes.html), Previous: [Basic Windows](Basic-Windows.html), Up: [Windows](Windows.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
@@ -58,19 +40,21 @@ Each child window can be either a live window, or an internal window (which in t
 
 For each internal window, the screen areas of the immediate children are arranged either vertically or horizontally (never both). If the child windows are arranged one above the other, they are said to form a *vertical combination*; if they are arranged side by side, they are said to form a *horizontal combination*. Consider the following example:
 
-         ______________________________________
-        | ______  ____________________________ |
-        ||      || __________________________ ||
-        ||      |||                          |||
-        ||      |||                          |||
-        ||      |||                          |||
-        ||      |||____________W4____________|||
-        ||      || __________________________ ||
-        ||      |||                          |||
-        ||      |||                          |||
-        ||      |||____________W5____________|||
-        ||__W2__||_____________W3_____________ |
-        |__________________W1__________________|
+```lisp
+     ______________________________________
+    | ______  ____________________________ |
+    ||      || __________________________ ||
+    ||      |||                          |||
+    ||      |||                          |||
+    ||      |||                          |||
+    ||      |||____________W4____________|||
+    ||      || __________________________ ||
+    ||      |||                          |||
+    ||      |||                          |||
+    ||      |||____________W5____________|||
+    ||__W2__||_____________W3_____________ |
+    |__________________W1__________________|
+```
 
 The root window of this frame is an internal window, `W1`. Its child windows form a horizontal combination, consisting of the live window `W2` and the internal window `W3`. The child windows of `W3` form a vertical combination, consisting of the live windows `W4` and `W5`. Hence, the live windows in this window tree are `W2`, `W4`, and `W5`.
 

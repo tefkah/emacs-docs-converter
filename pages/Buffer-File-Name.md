@@ -1,22 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
 
 Next: [Buffer Modification](Buffer-Modification.html), Previous: [Buffer Names](Buffer-Names.html), Up: [Buffers](Buffers.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
@@ -28,8 +10,10 @@ The *buffer file name* is the name of the file that is visited in that buffer. W
 
     This function returns the absolute file name of the file that `buffer` is visiting. If `buffer` is not visiting any file, `buffer-file-name` returns `nil`. If `buffer` is not supplied, it defaults to the current buffer.
 
-        (buffer-file-name (other-buffer))
-             ⇒ "/usr/user/lewis/manual/files.texi"
+    ```lisp
+    (buffer-file-name (other-buffer))
+         ⇒ "/usr/user/lewis/manual/files.texi"
+    ```
 
 <!---->
 
@@ -37,8 +21,10 @@ The *buffer file name* is the name of the file that is visited in that buffer. W
 
     This buffer-local variable contains the name of the file being visited in the current buffer, or `nil` if it is not visiting a file. It is a permanent local variable, unaffected by `kill-all-local-variables`.
 
-        buffer-file-name
-             ⇒ "/usr/user/lewis/manual/buffers.texi"
+    ```lisp
+    buffer-file-name
+         ⇒ "/usr/user/lewis/manual/buffers.texi"
+    ```
 
     It is risky to change this variable’s value without doing various other things. Normally it is better to use `set-visited-file-name` (see below); some of the things done there, such as changing the buffer name, are not strictly necessary, but others are essential to avoid confusing Emacs.
 
@@ -64,8 +50,10 @@ The *buffer file name* is the name of the file that is visited in that buffer. W
 
     This function returns the buffer visiting file `filename`. If there is no such buffer, it returns `nil`. The argument `filename`, which must be a string, is expanded (see [File Name Expansion](File-Name-Expansion.html)), then compared against the visited file names of all live buffers. Note that the buffer’s `buffer-file-name` must match the expansion of `filename` exactly. This function will not recognize other names for the same file.
 
-        (get-file-buffer "buffers.texi")
-            ⇒ #<buffer buffers.texi>
+    ```lisp
+    (get-file-buffer "buffers.texi")
+        ⇒ #<buffer buffers.texi>
+    ```
 
     In unusual circumstances, there can be more than one buffer visiting the same file name. In such cases, this function returns the first such buffer in the buffer list.
 

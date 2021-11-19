@@ -1,22 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
 
 Previous: [Fontsets](Fontsets.html), Up: [Faces](Faces.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
@@ -92,7 +74,9 @@ A font spec is a Lisp object that contains a set of specifications that can be u
 
         The font must be an OpenType font that supports these OpenType features, provided Emacs is compiled with a library, such as ‘`libotf`’ on GNU/Linux, that supports complex text layout for scripts which need that. The value must be a list of the form
 
-            (script-tag langsys-tag gsub gpos)
+        ```lisp
+        (script-tag langsys-tag gsub gpos)
+        ```
 
         where `script-tag` is the OpenType script tag symbol; `langsys-tag` is the OpenType language system tag symbol, or `nil` to use the default language system; `gsub` is a list of OpenType GSUB feature tag symbols, or `nil` if none is required; and `gpos` is a list of OpenType GPOS feature tag symbols, or `nil` if none is required. If `gsub` or `gpos` is a list, a `nil` element in that list means that the font must not match any of the remaining tag symbols. The `gpos` element may be omitted.
 
@@ -132,8 +116,10 @@ The following functions can be used to obtain information about a font. For thes
 
     This function returns a list of face attributes corresponding to `font`. The optional argument `frame` specifies the frame on which the font is to be displayed. If it is `nil`, the selected frame is used. The return value has the form
 
-        (:family family :height height :weight weight
-           :slant slant :width width)
+    ```lisp
+    (:family family :height height :weight weight
+       :slant slant :width width)
+    ```
 
     where the values of `family`, `height`, `weight`, `slant`, and `width` are face attribute values. Some of these key-attribute pairs may be omitted from the list if they are not specified by `font`.
 

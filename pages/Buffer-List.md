@@ -1,22 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
 
 Next: [Creating Buffers](Creating-Buffers.html), Previous: [Read Only Buffers](Read-Only-Buffers.html), Up: [Buffers](Buffers.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
@@ -34,26 +16,32 @@ In addition to the fundamental buffer list just described, Emacs maintains a loc
 
     If `frame` is a frame, this returns `frame`’s local buffer list. If `frame` is `nil` or omitted, the fundamental buffer list is used: the buffers appear in order of most recent display or selection, regardless of which frames they were displayed on.
 
-        (buffer-list)
-             ⇒ (#<buffer buffers.texi>
-                 #<buffer  *Minibuf-1*> #<buffer buffer.c>
-                 #<buffer *Help*> #<buffer TAGS>)
-
+    ```lisp
+    (buffer-list)
+         ⇒ (#<buffer buffers.texi>
+             #<buffer  *Minibuf-1*> #<buffer buffer.c>
+             #<buffer *Help*> #<buffer TAGS>)
     ```
+
+    ```lisp
     ```
 
-        ;; Note that the name of the minibuffer
-        ;;   begins with a space!
-        (mapcar #'buffer-name (buffer-list))
-            ⇒ ("buffers.texi" " *Minibuf-1*"
-                "buffer.c" "*Help*" "TAGS")
+    ```lisp
+    ;; Note that the name of the minibuffer
+    ;;   begins with a space!
+    (mapcar #'buffer-name (buffer-list))
+        ⇒ ("buffers.texi" " *Minibuf-1*"
+            "buffer.c" "*Help*" "TAGS")
+    ```
 
 The list returned by `buffer-list` is constructed specifically; it is not an internal Emacs data structure, and modifying it has no effect on the order of buffers. If you want to change the order of buffers in the fundamental buffer list, here is an easy way:
 
-    (defun reorder-buffer-list (new-list)
-      (while new-list
-        (bury-buffer (car new-list))
-        (setq new-list (cdr new-list))))
+```lisp
+(defun reorder-buffer-list (new-list)
+  (while new-list
+    (bury-buffer (car new-list))
+    (setq new-list (cdr new-list))))
+```
 
 With this method, you can specify any order for the list, but there is no danger of losing a buffer or adding something that is not a valid live buffer.
 

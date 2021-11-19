@@ -1,22 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
 
 Next: [The Kill Ring](The-Kill-Ring.html), Previous: [Deletion](Deletion.html), Up: [Text](Text.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
@@ -32,25 +14,29 @@ This section describes higher-level commands for deleting text, commands intende
 
     In the following examples, we call `delete-horizontal-space` four times, once on each line, with point between the second and third characters on the line each time.
 
-        ---------- Buffer: foo ----------
-        I ∗thought
-        I ∗     thought
-        We∗ thought
-        Yo∗u thought
-        ---------- Buffer: foo ----------
-
+    ```lisp
+    ---------- Buffer: foo ----------
+    I ∗thought
+    I ∗     thought
+    We∗ thought
+    Yo∗u thought
+    ---------- Buffer: foo ----------
     ```
+
+    ```lisp
     ```
 
-        (delete-horizontal-space)   ; Four times.
-             ⇒ nil
+    ```lisp
+    (delete-horizontal-space)   ; Four times.
+         ⇒ nil
 
-        ---------- Buffer: foo ----------
-        Ithought
-        Ithought
-        Wethought
-        You thought
-        ---------- Buffer: foo ----------
+    ---------- Buffer: foo ----------
+    Ithought
+    Ithought
+    Wethought
+    You thought
+    ---------- Buffer: foo ----------
+    ```
 
 <!---->
 
@@ -64,20 +50,24 @@ This section describes higher-level commands for deleting text, commands intende
 
     In the example below, point is located on the line starting ‘`events`’, and it makes no difference if there are trailing spaces in the preceding line.
 
-        ---------- Buffer: foo ----------
-        When in the course of human
-        ∗    events, it becomes necessary
-        ---------- Buffer: foo ----------
-
+    ```lisp
+    ---------- Buffer: foo ----------
+    When in the course of human
+    ∗    events, it becomes necessary
+    ---------- Buffer: foo ----------
     ```
+
+    ```lisp
 
     (delete-indentation)
          ⇒ nil
     ```
 
-        ---------- Buffer: foo ----------
-        When in the course of human∗ events, it becomes necessary
-        ---------- Buffer: foo ----------
+    ```lisp
+    ---------- Buffer: foo ----------
+    When in the course of human∗ events, it becomes necessary
+    ---------- Buffer: foo ----------
+    ```
 
     After the lines are joined, the function `fixup-whitespace` is responsible for deciding whether to leave a space at the junction.
 
@@ -91,26 +81,32 @@ This section describes higher-level commands for deleting text, commands intende
 
     In the example below, `fixup-whitespace` is called the first time with point before the word ‘`spaces`’ in the first line. For the second invocation, point is directly after the ‘`(`’.
 
-        ---------- Buffer: foo ----------
-        This has too many     ∗spaces
-        This has too many spaces at the start of (∗   this list)
-        ---------- Buffer: foo ----------
-
-    ```
-    ```
-
-        (fixup-whitespace)
-             ⇒ nil
-        (fixup-whitespace)
-             ⇒ nil
-
-    ```
+    ```lisp
+    ---------- Buffer: foo ----------
+    This has too many     ∗spaces
+    This has too many spaces at the start of (∗   this list)
+    ---------- Buffer: foo ----------
     ```
 
-        ---------- Buffer: foo ----------
-        This has too many spaces
-        This has too many spaces at the start of (this list)
-        ---------- Buffer: foo ----------
+    ```lisp
+    ```
+
+    ```lisp
+    (fixup-whitespace)
+         ⇒ nil
+    (fixup-whitespace)
+         ⇒ nil
+    ```
+
+    ```lisp
+    ```
+
+    ```lisp
+    ---------- Buffer: foo ----------
+    This has too many spaces
+    This has too many spaces at the start of (this list)
+    ---------- Buffer: foo ----------
+    ```
 
 <!---->
 

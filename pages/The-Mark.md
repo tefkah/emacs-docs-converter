@@ -1,22 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
 
 Next: [The Region](The-Region.html), Previous: [Moving Markers](Moving-Markers.html), Up: [Markers](Markers.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
@@ -48,18 +30,20 @@ There is also a separate global mark ring, but that is used only in a few partic
 
     This function returns the marker that represents the current buffer’s mark. It is not a copy, it is the marker used internally. Therefore, changing this marker’s position will directly affect the buffer’s mark. Don’t do that unless that is the effect you want.
 
-        (setq m (mark-marker))
-             ⇒ #<marker at 3420 in markers.texi>
+    ```lisp
+    (setq m (mark-marker))
+         ⇒ #<marker at 3420 in markers.texi>
+    ```
 
-    <!---->
+    ```lisp
+    (set-marker m 100)
+         ⇒ #<marker at 100 in markers.texi>
+    ```
 
-        (set-marker m 100)
-             ⇒ #<marker at 100 in markers.texi>
-
-    <!---->
-
-        (mark-marker)
-             ⇒ #<marker at 100 in markers.texi>
+    ```lisp
+    (mark-marker)
+         ⇒ #<marker at 100 in markers.texi>
+    ```
 
     Like any marker, this marker can be set to point at any buffer you like. If you make it point at any buffer other than the one of which it is the mark, it will yield perfectly consistent, but rather odd, results. We recommend that you not do it!
 
@@ -73,9 +57,11 @@ There is also a separate global mark ring, but that is used only in a few partic
 
     Novice Emacs Lisp programmers often try to use the mark for the wrong purposes. The mark saves a location for the user’s convenience. An editing command should not alter the mark unless altering the mark is part of the user-level functionality of the command. (And, in that case, this effect should be documented.) To remember a location for internal use in the Lisp program, store it in a Lisp variable. For example:
 
-        (let ((beg (point)))
-          (forward-line 1)
-          (delete-region beg (point))).
+    ```lisp
+    (let ((beg (point)))
+      (forward-line 1)
+      (delete-region beg (point))).
+    ```
 
 <!---->
 
@@ -101,7 +87,7 @@ There is also a separate global mark ring, but that is used only in a few partic
 
     When Transient Mark mode is enabled and the mark is active, many commands that normally apply to the text near point instead apply to the region. Such commands should use the function `use-region-p` to test whether they should operate on the region. See [The Region](The-Region.html).
 
-    Lisp programs can set `transient-mark-mode` to non-`nil`, non-`t` values to enable Transient Mark mode temporarily. If the value is `lambda`, Transient Mark mode is automatically turned off after any action, such as buffer modification, that would normally deactivate the mark. If the value is `(only . oldval)`<!-- /@w -->, then `transient-mark-mode` is set to the value `oldval` after any subsequent command that moves point and is not shift-translated (see [shift-translation](Key-Sequence-Input.html)), or after any other action that would normally deactivate the mark.
+    Lisp programs can set `transient-mark-mode` to non-`nil`, non-`t` values to enable Transient Mark mode temporarily. If the value is `lambda`, Transient Mark mode is automatically turned off after any action, such as buffer modification, that would normally deactivate the mark. If the value is `(only . oldval)`, then `transient-mark-mode` is set to the value `oldval` after any subsequent command that moves point and is not shift-translated (see [shift-translation](Key-Sequence-Input.html)), or after any other action that would normally deactivate the mark.
 
 <!---->
 
@@ -117,8 +103,10 @@ There is also a separate global mark ring, but that is used only in a few partic
 
     To write Lisp code that modifies the buffer without causing deactivation of the mark at the end of the command, bind `deactivate-mark` to `nil` around the code that does the modification. For example:
 
-        (let (deactivate-mark)
-          (insert " "))
+    ```lisp
+    (let (deactivate-mark)
+      (insert " "))
+    ```
 
 <!---->
 
@@ -153,10 +141,12 @@ There is also a separate global mark ring, but that is used only in a few partic
 
     The value of this buffer-local variable is the list of saved former marks of the current buffer, most recent first.
 
-        mark-ring
-        ⇒ (#<marker at 11050 in markers.texi>
-            #<marker at 10832 in markers.texi>
-            …)
+    ```lisp
+    mark-ring
+    ⇒ (#<marker at 11050 in markers.texi>
+        #<marker at 10832 in markers.texi>
+        …)
+    ```
 
 <!---->
 

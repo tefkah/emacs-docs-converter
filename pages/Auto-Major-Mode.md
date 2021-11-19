@@ -1,22 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
 
 Next: [Mode Help](Mode-Help.html), Previous: [Major Mode Conventions](Major-Mode-Conventions.html), Up: [Major Modes](Major-Modes.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
@@ -40,9 +22,9 @@ When Emacs visits a file, it automatically selects a major mode for the buffer b
 
 *   Function: **set-auto-mode** *\&optional keep-mode-if-same*
 
-    This function selects and sets the major mode that is appropriate for the current buffer. It bases its decision (in order of precedence) on the ‘`-*-`’<!-- /@w --> line, on any ‘`mode:`’ local variable near the end of a file, on the ‘`#!`’<!-- /@w --> line (using `interpreter-mode-alist`), on the text at the beginning of the buffer (using `magic-mode-alist`), and finally on the visited file name (using `auto-mode-alist`). See [How Major Modes are Chosen](https://www.gnu.org/software/emacs/manual/html_node/emacs/Choosing-Modes.html#Choosing-Modes) in The GNU Emacs Manual. If `enable-local-variables` is `nil`, `set-auto-mode` does not check the ‘`-*-`’<!-- /@w --> line, or near the end of the file, for any mode tag.
+    This function selects and sets the major mode that is appropriate for the current buffer. It bases its decision (in order of precedence) on the ‘`-*-`’ line, on any ‘`mode:`’ local variable near the end of a file, on the ‘`#!`’ line (using `interpreter-mode-alist`), on the text at the beginning of the buffer (using `magic-mode-alist`), and finally on the visited file name (using `auto-mode-alist`). See [How Major Modes are Chosen](https://www.gnu.org/software/emacs/manual/html_node/emacs/Choosing-Modes.html#Choosing-Modes) in The GNU Emacs Manual. If `enable-local-variables` is `nil`, `set-auto-mode` does not check the ‘`-*-`’ line, or near the end of the file, for any mode tag.
 
-    There are some file types where it is not appropriate to scan the file contents for a mode specifier. For example, a tar archive may happen to contain, near the end of the file, a member file that has a local variables section specifying a mode for that particular file. This should not be applied to the containing tar file. Similarly, a tiff image file might just happen to contain a first line that seems to match the ‘`-*-`’<!-- /@w --> pattern. For these reasons, both these file extensions are members of the list `inhibit-local-variables-regexps`. Add patterns to this list to prevent Emacs searching them for local variables of any kind (not just mode specifiers).
+    There are some file types where it is not appropriate to scan the file contents for a mode specifier. For example, a tar archive may happen to contain, near the end of the file, a member file that has a local variables section specifying a mode for that particular file. This should not be applied to the containing tar file. Similarly, a tiff image file might just happen to contain a first line that seems to match the ‘`-*-`’ pattern. For these reasons, both these file extensions are members of the list `inhibit-local-variables-regexps`. Add patterns to this list to prevent Emacs searching them for local variables of any kind (not just mode specifiers).
 
     If `keep-mode-if-same` is non-`nil`, this function does not call the mode command if the buffer is already in the proper major mode. For instance, `set-visited-file-name` sets this to `t` to avoid killing buffer local variables that the user may have set.
 
@@ -86,16 +68,18 @@ When Emacs visits a file, it automatically selects a major mode for the buffer b
 
     For example,
 
-        (("\\`/tmp/fol/" . text-mode)
-         ("\\.texinfo\\'" . texinfo-mode)
-         ("\\.texi\\'" . texinfo-mode)
+    ```lisp
+    (("\\`/tmp/fol/" . text-mode)
+     ("\\.texinfo\\'" . texinfo-mode)
+     ("\\.texi\\'" . texinfo-mode)
+    ```
 
-    <!---->
-
-         ("\\.el\\'" . emacs-lisp-mode)
-         ("\\.c\\'" . c-mode)
-         ("\\.h\\'" . c-mode)
-         …)
+    ```lisp
+     ("\\.el\\'" . emacs-lisp-mode)
+     ("\\.c\\'" . c-mode)
+     ("\\.h\\'" . c-mode)
+     …)
+    ```
 
     When you visit a file whose expanded file name (see [File Name Expansion](File-Name-Expansion.html)), with version numbers and backup suffixes removed using `file-name-sans-versions` (see [File Name Components](File-Name-Components.html)), matches a `regexp`, `set-auto-mode` calls the corresponding `mode-function`. This feature enables Emacs to select the proper major mode for most files.
 
@@ -103,14 +87,16 @@ When Emacs visits a file, it automatically selects a major mode for the buffer b
 
     Here is an example of how to prepend several pattern pairs to `auto-mode-alist`. (You might use this sort of expression in your init file.)
 
-        (setq auto-mode-alist
-          (append
-           ;; File name (within directory) starts with a dot.
-           '(("/\\.[^/]*\\'" . fundamental-mode)
-             ;; File name has no dot.
-             ("/[^\\./]*\\'" . fundamental-mode)
-             ;; File name ends in ‘.C’.
-             ("\\.C\\'" . c++-mode))
-           auto-mode-alist))
+    ```lisp
+    (setq auto-mode-alist
+      (append
+       ;; File name (within directory) starts with a dot.
+       '(("/\\.[^/]*\\'" . fundamental-mode)
+         ;; File name has no dot.
+         ("/[^\\./]*\\'" . fundamental-mode)
+         ;; File name ends in ‘.C’.
+         ("\\.C\\'" . c++-mode))
+       auto-mode-alist))
+    ```
 
 Next: [Mode Help](Mode-Help.html), Previous: [Major Mode Conventions](Major-Mode-Conventions.html), Up: [Major Modes](Major-Modes.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]

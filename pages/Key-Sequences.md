@@ -1,22 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
 
 Next: [Keymap Basics](Keymap-Basics.html), Up: [Keymaps](Keymaps.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
@@ -36,13 +18,15 @@ For examples of key sequences written in string and vector representations, [Ini
 
     This function converts the text `keyseq-text` (a string constant) into a key sequence (a string or vector constant). The contents of `keyseq-text` should use the same syntax as in the buffer invoked by the `C-x C-k RET` (`kmacro-edit-macro`) command; in particular, you must surround function key names with ‘`<…>`’. See [Edit Keyboard Macro](https://www.gnu.org/software/emacs/manual/html_node/emacs/Edit-Keyboard-Macro.html#Edit-Keyboard-Macro) in The GNU Emacs Manual.
 
-        (kbd "C-x") ⇒ "\C-x"
-        (kbd "C-x C-f") ⇒ "\C-x\C-f"
-        (kbd "C-x 4 C-f") ⇒ "\C-x4\C-f"
-        (kbd "X") ⇒ "X"
-        (kbd "RET") ⇒ "\^M"
-        (kbd "C-c SPC") ⇒ "\C-c "
-        (kbd "<f1> SPC") ⇒ [f1 32]
-        (kbd "C-M-<down>") ⇒ [C-M-down]
+    ```lisp
+    (kbd "C-x") ⇒ "\C-x"
+    (kbd "C-x C-f") ⇒ "\C-x\C-f"
+    (kbd "C-x 4 C-f") ⇒ "\C-x4\C-f"
+    (kbd "X") ⇒ "X"
+    (kbd "RET") ⇒ "\^M"
+    (kbd "C-c SPC") ⇒ "\C-c "
+    (kbd "<f1> SPC") ⇒ [f1 32]
+    (kbd "C-M-<down>") ⇒ [C-M-down]
+    ```
 
 Next: [Keymap Basics](Keymap-Basics.html), Up: [Keymaps](Keymaps.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]

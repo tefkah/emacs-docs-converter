@@ -1,22 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
 
 Next: [Signals to Processes](Signals-to-Processes.html), Previous: [Process Information](Process-Information.html), Up: [Processes](Processes.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
@@ -36,8 +18,10 @@ In these functions, the `process` argument can be a process or the name of a pro
 
     This function sends `process` the contents of `string` as standard input. It returns `nil`. For example, to make a Shell buffer list files:
 
-        (process-send-string "shell<1>" "ls\n")
-             ⇒ nil
+    ```lisp
+    (process-send-string "shell<1>" "ls\n")
+         ⇒ nil
+    ```
 
 <!---->
 
@@ -53,8 +37,10 @@ In these functions, the `process` argument can be a process or the name of a pro
 
     This function makes `process` see an end-of-file in its input. The EOF comes after any text already sent to it. The function returns `process`.
 
-        (process-send-eof "shell")
-             ⇒ "shell"
+    ```lisp
+    (process-send-eof "shell")
+         ⇒ "shell"
+    ```
 
 <!---->
 

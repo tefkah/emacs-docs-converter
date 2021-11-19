@@ -1,22 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
 
 Next: [Predicates on Markers](Predicates-on-Markers.html), Up: [Markers](Markers.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
@@ -34,51 +16,63 @@ Because it is common to perform arithmetic operations on a marker position, most
 
 Here are examples of creating markers, setting markers, and moving point to markers:
 
-    ;; Make a new marker that initially does not point anywhere:
-    (setq m1 (make-marker))
-         ⇒ #<marker in no buffer>
-
-```
-```
-
-    ;; Set m1 to point between the 99th and 100th characters
-    ;;   in the current buffer:
-    (set-marker m1 100)
-         ⇒ #<marker at 100 in markers.texi>
-
-```
+```lisp
+;; Make a new marker that initially does not point anywhere:
+(setq m1 (make-marker))
+     ⇒ #<marker in no buffer>
 ```
 
-    ;; Now insert one character at the beginning of the buffer:
-    (goto-char (point-min))
-         ⇒ 1
-    (insert "Q")
-         ⇒ nil
-
-```
+```lisp
 ```
 
-    ;; m1 is updated appropriately.
-    m1
-         ⇒ #<marker at 101 in markers.texi>
-
-```
-```
-
-    ;; Two markers that point to the same position
-    ;;   are not eq, but they are equal.
-    (setq m2 (copy-marker m1))
-         ⇒ #<marker at 101 in markers.texi>
-    (eq m1 m2)
-         ⇒ nil
-    (equal m1 m2)
-         ⇒ t
-
-```
+```lisp
+;; Set m1 to point between the 99th and 100th characters
+;;   in the current buffer:
+(set-marker m1 100)
+     ⇒ #<marker at 100 in markers.texi>
 ```
 
-    ;; When you are finished using a marker, make it point nowhere.
-    (set-marker m1 nil)
-         ⇒ #<marker in no buffer>
+```lisp
+```
+
+```lisp
+;; Now insert one character at the beginning of the buffer:
+(goto-char (point-min))
+     ⇒ 1
+(insert "Q")
+     ⇒ nil
+```
+
+```lisp
+```
+
+```lisp
+;; m1 is updated appropriately.
+m1
+     ⇒ #<marker at 101 in markers.texi>
+```
+
+```lisp
+```
+
+```lisp
+;; Two markers that point to the same position
+;;   are not eq, but they are equal.
+(setq m2 (copy-marker m1))
+     ⇒ #<marker at 101 in markers.texi>
+(eq m1 m2)
+     ⇒ nil
+(equal m1 m2)
+     ⇒ t
+```
+
+```lisp
+```
+
+```lisp
+;; When you are finished using a marker, make it point nowhere.
+(set-marker m1 nil)
+     ⇒ #<marker in no buffer>
+```
 
 Next: [Predicates on Markers](Predicates-on-Markers.html), Up: [Markers](Markers.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]

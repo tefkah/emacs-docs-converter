@@ -1,22 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
 
 Next: [Formatting Strings](Formatting-Strings.html), Previous: [Text Comparison](Text-Comparison.html), Up: [Strings and Characters](Strings-and-Characters.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
@@ -30,18 +12,20 @@ See [Documentation](Documentation.html), for functions that produce textual desc
 
     This function returns a string consisting of the printed base-ten representation of `number`. The returned value starts with a minus sign if the argument is negative.
 
-        (number-to-string 256)
-             ⇒ "256"
+    ```lisp
+    (number-to-string 256)
+         ⇒ "256"
+    ```
 
-    <!---->
+    ```lisp
+    (number-to-string -23)
+         ⇒ "-23"
+    ```
 
-        (number-to-string -23)
-             ⇒ "-23"
-
-    <!---->
-
-        (number-to-string -23.5)
-             ⇒ "-23.5"
+    ```lisp
+    (number-to-string -23.5)
+         ⇒ "-23.5"
+    ```
 
     `int-to-string` is a semi-obsolete alias for this function.
 
@@ -55,16 +39,18 @@ See [Documentation](Documentation.html), for functions that produce textual desc
 
     The parsing skips spaces and tabs at the beginning of `string`, then reads as much of `string` as it can interpret as a number in the given base. (On some systems it ignores other whitespace at the beginning, not just spaces and tabs.) If `string` cannot be interpreted as a number, this function returns 0.
 
-        (string-to-number "256")
-             ⇒ 256
-        (string-to-number "25 is a perfect square.")
-             ⇒ 25
-        (string-to-number "X256")
-             ⇒ 0
-        (string-to-number "-4.5")
-             ⇒ -4.5
-        (string-to-number "1e5")
-             ⇒ 100000.0
+    ```lisp
+    (string-to-number "256")
+         ⇒ 256
+    (string-to-number "25 is a perfect square.")
+         ⇒ 25
+    (string-to-number "X256")
+         ⇒ 0
+    (string-to-number "-4.5")
+         ⇒ -4.5
+    (string-to-number "1e5")
+         ⇒ 100000.0
+    ```
 
     `string-to-int` is an obsolete alias for this function.
 

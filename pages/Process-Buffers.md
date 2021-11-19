@@ -1,22 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
 
 Next: [Filter Functions](Filter-Functions.html), Up: [Output from Processes](Output-from-Processes.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
@@ -32,8 +14,10 @@ Killing the associated buffer of a process also kills the process. Emacs asks fo
 
     This function returns the associated buffer of the specified `process`.
 
-        (process-buffer (get-process "shell"))
-             ⇒ #<buffer *shell*>
+    ```lisp
+    (process-buffer (get-process "shell"))
+         ⇒ #<buffer *shell*>
+    ```
 
 <!---->
 
@@ -63,8 +47,10 @@ Killing the associated buffer of a process also kills the process. Emacs asks fo
 
     It is usually a bad idea to have more than one process associated with the same buffer.
 
-        (get-buffer-process "*shell*")
-             ⇒ #<process shell>
+    ```lisp
+    (get-buffer-process "*shell*")
+         ⇒ #<process shell>
+    ```
 
     Killing the process’s buffer deletes the process, which kills the subprocess with a `SIGHUP` signal (see [Signals to Processes](Signals-to-Processes.html)).
 
@@ -78,7 +64,7 @@ When windows that display buffers associated with process change their dimension
 
 *   User Option: **window-adjust-process-window-size-function**
 
-    The value of this variable should be a function of two arguments: a process and the list of windows displaying the process’s buffer. When the function is called, the process’s buffer is the current buffer. The function should return a cons cell `(width . height)`<!-- /@w --> that describes the dimensions of the logical process window to be passed via a call to `set-process-window-size`. The function can also return `nil`, in which case Emacs will not call `set-process-window-size` for this process.
+    The value of this variable should be a function of two arguments: a process and the list of windows displaying the process’s buffer. When the function is called, the process’s buffer is the current buffer. The function should return a cons cell `(width . height)` that describes the dimensions of the logical process window to be passed via a call to `set-process-window-size`. The function can also return `nil`, in which case Emacs will not call `set-process-window-size` for this process.
 
     Emacs supplies two predefined values for this variable: `window-adjust-process-window-size-smallest`, which returns the smallest of all the dimensions of the windows that display a process’s buffer; and `window-adjust-process-window-size-largest`, which returns the largest dimensions. For more complex strategies, write your own function.
 

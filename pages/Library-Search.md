@@ -1,22 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
 
 Next: [Loading Non-ASCII](Loading-Non_002dASCII.html), Previous: [Load Suffixes](Load-Suffixes.html), Up: [Loading](Loading.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
@@ -30,7 +12,9 @@ When Emacs loads a Lisp library, it searches for the library in a list of direct
 
 When Emacs starts up, it sets up the value of `load-path` in several steps. First, it initializes `load-path` using default locations set when Emacs was compiled. Normally, this is a directory something like
 
-    "/usr/local/share/emacs/version/lisp"
+```lisp
+"/usr/local/share/emacs/version/lisp"
+```
 
 (In this and the following examples, replace `/usr/local` with the installation prefix appropriate for your Emacs.) These directories contain the standard Lisp files that come with Emacs. If Emacs cannot find them, it will not start correctly.
 
@@ -38,11 +22,15 @@ If you run Emacs from the directory where it was built—that is, an executable 
 
 Unless you start Emacs with the `--no-site-lisp` option, it then adds two more `site-lisp` directories to the front of `load-path`. These are intended for locally installed Lisp files, and are normally of the form:
 
-    "/usr/local/share/emacs/version/site-lisp"
+```lisp
+"/usr/local/share/emacs/version/site-lisp"
+```
 
 and
 
-    "/usr/local/share/emacs/site-lisp"
+```lisp
+"/usr/local/share/emacs/site-lisp"
+```
 
 The first one is for locally installed files for a specific Emacs version; the second is for locally installed files meant for use with all installed Emacs versions. (If Emacs is running uninstalled, it also adds `site-lisp` directories from the source and build directories, if they exist. Normally these directories do not contain `site-lisp` directories.)
 
@@ -50,7 +38,9 @@ If the environment variable `EMACSLOADPATH` is set, it modifies the above initia
 
 The syntax of `EMACSLOADPATH` is the same as used for `PATH`; directories are separated by ‘`:`’ (or ‘`;`’, on some operating systems). Here is an example of how to set `EMACSLOADPATH` variable (from a `sh`-style shell):
 
-    export EMACSLOADPATH=/home/foo/.emacs.d/lisp:
+```lisp
+export EMACSLOADPATH=/home/foo/.emacs.d/lisp:
+```
 
 An empty element in the value of the environment variable, whether trailing (as in the above example), leading, or embedded, is replaced by the default value of `load-path` as determined by the standard initialization procedure. If there are no such empty elements, then `EMACSLOADPATH` specifies the entire `load-path`. You must include either an empty element, or the explicit path to the directory containing the standard Lisp files, else Emacs will not function. (Another way to modify `load-path` is to use the `-L` command-line option when starting Emacs; see below.)
 
@@ -60,7 +50,9 @@ Next, Emacs adds any extra load directories that you specify using the `-L` comm
 
 It is common to add code to one’s init file (see [Init File](Init-File.html)) to add one or more directories to `load-path`. For example:
 
-    (push "~/.emacs.d/lisp" load-path)
+```lisp
+(push "~/.emacs.d/lisp" load-path)
+```
 
 Dumping Emacs uses a special value of `load-path`. If you use a `site-load.el` or `site-init.el` file to customize the dumped Emacs (see [Building Emacs](Building-Emacs.html)), any changes to `load-path` that these files make will be lost after dumping.
 
@@ -80,7 +72,9 @@ Dumping Emacs uses a special value of `load-path`. If you use a `site-load.el` o
 
     For instance, suppose `load-path` is set to
 
-          ("/opt/emacs/site-lisp" "/usr/share/emacs/23.3/lisp")
+    ```lisp
+      ("/opt/emacs/site-lisp" "/usr/share/emacs/23.3/lisp")
+    ```
 
     and that both these directories contain a file named `foo.el`. Then `(require 'foo)` never loads the file in the second directory. Such a situation might indicate a problem in the way Emacs was installed.
 

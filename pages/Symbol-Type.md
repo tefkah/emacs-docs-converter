@@ -1,22 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
 
 Next: [Sequence Type](Sequence-Type.html), Previous: [Character Type](Character-Type.html), Up: [Programming Types](Programming-Types.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
@@ -34,24 +16,26 @@ A symbol name can contain any characters whatever. Most symbol names are written
 
 Here are several examples of symbol names. Note that the ‘`+`’ in the fourth example is escaped to prevent it from being read as a number. This is not necessary in the sixth example because the rest of the name makes it invalid as a number.
 
-    foo                 ; A symbol named ‘foo’.
-    FOO                 ; A symbol named ‘FOO’, different from ‘foo’.
+```lisp
+foo                 ; A symbol named ‘foo’.
+FOO                 ; A symbol named ‘FOO’, different from ‘foo’.
+```
 
-<!---->
+```lisp
+1+                  ; A symbol named ‘1+’
+                    ;   (not ‘+1’, which is an integer).
+```
 
-    1+                  ; A symbol named ‘1+’
-                        ;   (not ‘+1’, which is an integer).
+```lisp
+\+1                 ; A symbol named ‘+1’
+                    ;   (not a very readable name).
+```
 
-<!---->
-
-    \+1                 ; A symbol named ‘+1’
-                        ;   (not a very readable name).
-
-<!---->
-
-    \(*\ 1\ 2\)         ; A symbol named ‘(* 1 2)’ (a worse name).
-    +-*/_~!@$%^&=:<>{}  ; A symbol named ‘+-*/_~!@$%^&=:<>{}’.
-                        ;   These characters need not be escaped.
+```lisp
+\(*\ 1\ 2\)         ; A symbol named ‘(* 1 2)’ (a worse name).
++-*/_~!@$%^&=:<>{}  ; A symbol named ‘+-*/_~!@$%^&=:<>{}’.
+                    ;   These characters need not be escaped.
+```
 
 As an exception to the rule that a symbol’s name serves as its printed representation, ‘`##`’ is the printed representation for an interned symbol whose name is an empty string. Furthermore, ‘`#:foo`’ is the printed representation for an uninterned symbol whose name is `foo`. (Normally, the Lisp reader interns all symbols; see [Creating Symbols](Creating-Symbols.html).)
 

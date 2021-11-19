@@ -1,22 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
 
 Next: [Menu Keymaps](Menu-Keymaps.html), Previous: [Key Binding Commands](Key-Binding-Commands.html), Up: [Keymaps](Keymaps.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
@@ -34,49 +16,55 @@ This section describes functions used to scan all the current keymaps for the sa
 
     In the example below, the returned alist indicates that the key `ESC`, which is displayed as ‘`^[`’, is a prefix key whose definition is the sparse keymap `(keymap (83 . center-paragraph) (115 . foo))`.
 
-        (accessible-keymaps (current-local-map))
-        ⇒(([] keymap
-              (27 keymap   ; Note this keymap for ESC is repeated below.
-                  (83 . center-paragraph)
-                  (115 . center-line))
-              (9 . tab-to-tab-stop))
-
+    ```lisp
+    (accessible-keymaps (current-local-map))
+    ⇒(([] keymap
+          (27 keymap   ; Note this keymap for ESC is repeated below.
+              (83 . center-paragraph)
+              (115 . center-line))
+          (9 . tab-to-tab-stop))
     ```
+
+    ```lisp
     ```
 
-           ("^[" keymap
-            (83 . center-paragraph)
-            (115 . foo)))
+    ```lisp
+       ("^[" keymap
+        (83 . center-paragraph)
+        (115 . foo)))
+    ```
 
     In the following example, `C-h` is a prefix key that uses a sparse keymap starting with `(keymap (118 . describe-variable)…)`. Another prefix, `C-x 4`, uses a keymap which is also the value of the variable `ctl-x-4-map`. The event `mode-line` is one of several dummy events used as prefixes for mouse actions in special parts of a window.
 
-        (accessible-keymaps (current-global-map))
-        ⇒ (([] keymap [set-mark-command beginning-of-line …
-                           delete-backward-char])
+    ```lisp
+    (accessible-keymaps (current-global-map))
+    ⇒ (([] keymap [set-mark-command beginning-of-line …
+                       delete-backward-char])
+    ```
 
-    <!---->
+    ```lisp
+        ("^H" keymap (118 . describe-variable) …
+         (8 . help-for-help))
+    ```
 
-            ("^H" keymap (118 . describe-variable) …
-             (8 . help-for-help))
+    ```lisp
+        ("^X" keymap [x-flush-mouse-queue …
+         backward-kill-sentence])
+    ```
 
-    <!---->
+    ```lisp
+        ("^[" keymap [mark-sexp backward-sexp …
+         backward-kill-word])
+    ```
 
-            ("^X" keymap [x-flush-mouse-queue …
-             backward-kill-sentence])
+    ```lisp
+        ("^X4" keymap (15 . display-buffer) …)
+    ```
 
-    <!---->
-
-            ("^[" keymap [mark-sexp backward-sexp …
-             backward-kill-word])
-
-    <!---->
-
-            ("^X4" keymap (15 . display-buffer) …)
-
-    <!---->
-
-            ([mode-line] keymap
-             (S-mouse-2 . mouse-split-window-horizontally) …))
+    ```lisp
+        ([mode-line] keymap
+         (S-mouse-2 . mouse-split-window-horizontally) …))
+    ```
 
     These are not all the keymaps you would see in actuality.
 

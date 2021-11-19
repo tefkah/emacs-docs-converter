@@ -1,22 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
 
 Previous: [Type Keywords](Type-Keywords.html), Up: [Customization Types](Customization-Types.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
@@ -26,19 +8,21 @@ In the previous sections we have described how to construct elaborate type speci
 
 Since custom types are implemented as widgets, the way to define a new customize type is to define a new widget. We are not going to describe the widget interface here in details, see [Introduction](../widget/index.html#Top) in The Emacs Widget Library, for that. Instead we are going to demonstrate the minimal functionality needed for defining new customize types by a simple example.
 
-    (define-widget 'binary-tree-of-string 'lazy
-      "A binary tree made of cons-cells and strings."
-      :offset 4
-      :tag "Node"
-      :type '(choice (string :tag "Leaf" :value "")
-                     (cons :tag "Interior"
-                           :value ("" . "")
-                           binary-tree-of-string
-                           binary-tree-of-string)))
+```lisp
+(define-widget 'binary-tree-of-string 'lazy
+  "A binary tree made of cons-cells and strings."
+  :offset 4
+  :tag "Node"
+  :type '(choice (string :tag "Leaf" :value "")
+                 (cons :tag "Interior"
+                       :value ("" . "")
+                       binary-tree-of-string
+                       binary-tree-of-string)))
 
-    (defcustom foo-bar ""
-      "Sample variable holding a binary tree of strings."
-      :type 'binary-tree-of-string)
+(defcustom foo-bar ""
+  "Sample variable holding a binary tree of strings."
+  :type 'binary-tree-of-string)
+```
 
 The function to define a new widget is called `define-widget`. The first argument is the symbol we want to make a new widget type. The second argument is a symbol representing an existing widget, the new widget is going to be defined in terms of difference from the existing widget. For the purpose of defining new customization types, the `lazy` widget is perfect, because it accepts a `:type` keyword argument with the same syntax as the keyword argument to `defcustom` with the same name. The third argument is a documentation string for the new widget. You will be able to see that string with the `M-x widget-browse RET binary-tree-of-string RET` command.
 

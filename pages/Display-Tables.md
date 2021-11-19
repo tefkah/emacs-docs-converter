@@ -1,22 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
 
 Next: [Active Display Table](Active-Display-Table.html), Previous: [Usual Display](Usual-Display.html), Up: [Character Display](Character-Display.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
@@ -60,16 +42,18 @@ The display table also has six *extra slots* which serve special purposes. Here 
 
 For example, here is how to construct a display table that mimics the effect of setting `ctl-arrow` to a non-`nil` value (see [Glyphs](Glyphs.html), for the function `make-glyph-code`):
 
-    (setq disptab (make-display-table))
-    (dotimes (i 32)
-      (or (= i ?\t)
-          (= i ?\n)
-          (aset disptab i
-                (vector (make-glyph-code ?^ 'escape-glyph)
-                        (make-glyph-code (+ i 64) 'escape-glyph)))))
-    (aset disptab 127
-          (vector (make-glyph-code ?^ 'escape-glyph)
-                  (make-glyph-code ?? 'escape-glyph)))))
+```lisp
+(setq disptab (make-display-table))
+(dotimes (i 32)
+  (or (= i ?\t)
+      (= i ?\n)
+      (aset disptab i
+            (vector (make-glyph-code ?^ 'escape-glyph)
+                    (make-glyph-code (+ i 64) 'escape-glyph)))))
+(aset disptab 127
+      (vector (make-glyph-code ?^ 'escape-glyph)
+              (make-glyph-code ?? 'escape-glyph)))))
+```
 
 *   Function: **display-table-slot** *display-table slot*
 

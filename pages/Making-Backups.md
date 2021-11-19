@@ -1,22 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
 
 Next: [Rename or Copy](Rename-or-Copy.html), Up: [Backup Files](Backup-Files.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
@@ -44,8 +26,10 @@ Next: [Rename or Copy](Rename-or-Copy.html), Up: [Backup Files](Backup-Files.htm
 
     The following example shows how to change the `make-backup-files` variable only in the Rmail buffers and not elsewhere. Setting it `nil` stops Emacs from making backups of these files, which may save disk space. (You would put this code in your init file.)
 
-        (add-hook 'rmail-mode-hook
-                  (lambda () (setq-local make-backup-files nil)))
+    ```lisp
+    (add-hook 'rmail-mode-hook
+              (lambda () (setq-local make-backup-files nil)))
+    ```
 
 <!---->
 
@@ -69,7 +53,9 @@ Next: [Rename or Copy](Rename-or-Copy.html), Up: [Backup Files](Backup-Files.htm
 
     This variable’s value is an alist of filename patterns and backup directories. Each element looks like
 
-        (regexp . directory)
+    ```lisp
+    (regexp . directory)
+    ```
 
     Backups of files with names matching `regexp` will be made in `directory`. `directory` may be relative or absolute. If it is absolute, so that all matching files are backed up into the same directory, the file names in this directory will be the full name of the file backed up with all directory separators changed to ‘`!`’ to prevent clashes. This will not work correctly if your filesystem truncates the resulting name.
 

@@ -1,22 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
 
 Next: [Search-based Fontification](Search_002dbased-Fontification.html), Up: [Font Lock Mode](Font-Lock-Mode.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
@@ -60,8 +42,10 @@ There are several variables that control how Font Lock mode highlights text. But
 
     If non-`nil`, the value should look like this:
 
-        (keywords [keywords-only [case-fold
-         [syntax-alist other-vars…]]])
+    ```lisp
+    (keywords [keywords-only [case-fold
+     [syntax-alist other-vars…]]])
+    ```
 
     The first element, `keywords`, indirectly specifies the value of `font-lock-keywords` which directs search-based fontification. It can be a symbol, a variable or a function whose value is the list to use for `font-lock-keywords`. It can also be a list of several such symbols, one for each possible level of fontification. The first symbol specifies the ‘`mode default`’ level of fontification, the next symbol level 1 fontification, the next level 2, and so on. The ‘`mode default`’ level is normally the same as level 1. It is used when `font-lock-maximum-decoration` has a `nil` value. See [Levels of Font Lock](Levels-of-Font-Lock.html).
 

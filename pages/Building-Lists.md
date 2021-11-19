@@ -1,22 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
 
 Next: [List Variables](List-Variables.html), Previous: [List Elements](List-Elements.html), Up: [Lists](Lists.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
@@ -28,22 +10,26 @@ Many functions build lists, as lists reside at the very heart of Lisp. `cons` is
 
     This function is the most basic function for building new list structure. It creates a new cons cell, making `object1` the CAR, and `object2` the CDR. It then returns the new cons cell. The arguments `object1` and `object2` may be any Lisp objects, but most often `object2` is a list.
 
-        (cons 1 '(2))
-             ⇒ (1 2)
+    ```lisp
+    (cons 1 '(2))
+         ⇒ (1 2)
+    ```
 
-    <!---->
+    ```lisp
+    (cons 1 '())
+         ⇒ (1)
+    ```
 
-        (cons 1 '())
-             ⇒ (1)
-
-    <!---->
-
-        (cons 1 2)
-             ⇒ (1 . 2)
+    ```lisp
+    (cons 1 2)
+         ⇒ (1 . 2)
+    ```
 
     `cons` is often used to add a single element to the front of a list. This is called *consing the element onto the list*. [4](#FOOT4) For example:
 
-        (setq list (cons newelt list))
+    ```lisp
+    (setq list (cons newelt list))
+    ```
 
     Note that there is no conflict between the variable named `list` used in this example and the function named `list` described below; any symbol can serve both purposes.
 
@@ -53,18 +39,20 @@ Many functions build lists, as lists reside at the very heart of Lisp. `cons` is
 
     This function creates a list with `objects` as its elements. The resulting list is always `nil`-terminated. If no `objects` are given, the empty list is returned.
 
-        (list 1 2 3 4 5)
-             ⇒ (1 2 3 4 5)
+    ```lisp
+    (list 1 2 3 4 5)
+         ⇒ (1 2 3 4 5)
+    ```
 
-    <!---->
+    ```lisp
+    (list 1 2 '(3 4 5) 'foo)
+         ⇒ (1 2 (3 4 5) foo)
+    ```
 
-        (list 1 2 '(3 4 5) 'foo)
-             ⇒ (1 2 (3 4 5) foo)
-
-    <!---->
-
-        (list)
-             ⇒ nil
+    ```lisp
+    (list)
+         ⇒ nil
+    ```
 
 <!---->
 
@@ -72,20 +60,22 @@ Many functions build lists, as lists reside at the very heart of Lisp. `cons` is
 
     This function creates a list of `length` elements, in which each element is `object`. Compare `make-list` with `make-string` (see [Creating Strings](Creating-Strings.html)).
 
-        (make-list 3 'pigs)
-             ⇒ (pigs pigs pigs)
+    ```lisp
+    (make-list 3 'pigs)
+         ⇒ (pigs pigs pigs)
+    ```
 
-    <!---->
+    ```lisp
+    (make-list 0 'pigs)
+         ⇒ nil
+    ```
 
-        (make-list 0 'pigs)
-             ⇒ nil
-
-    <!---->
-
-        (setq l (make-list 3 '(a b)))
-             ⇒ ((a b) (a b) (a b))
-        (eq (car l) (cadr l))
-             ⇒ t
+    ```lisp
+    (setq l (make-list 3 '(a b)))
+         ⇒ ((a b) (a b) (a b))
+    (eq (car l) (cadr l))
+         ⇒ t
+    ```
 
 <!---->
 
@@ -97,78 +87,94 @@ Many functions build lists, as lists reside at the very heart of Lisp. `cons` is
 
 Here is an example of using `append`:
 
-    (setq trees '(pine oak))
-         ⇒ (pine oak)
-    (setq more-trees (append '(maple birch) trees))
-         ⇒ (maple birch pine oak)
-
+```lisp
+(setq trees '(pine oak))
+     ⇒ (pine oak)
+(setq more-trees (append '(maple birch) trees))
+     ⇒ (maple birch pine oak)
 ```
+
+```lisp
 ```
 
-    trees
-         ⇒ (pine oak)
-    more-trees
-         ⇒ (maple birch pine oak)
+```lisp
+trees
+     ⇒ (pine oak)
+more-trees
+     ⇒ (maple birch pine oak)
+```
 
-<!---->
-
-    (eq trees (cdr (cdr more-trees)))
-         ⇒ t
+```lisp
+(eq trees (cdr (cdr more-trees)))
+     ⇒ t
+```
 
 You can see how `append` works by looking at a box diagram. The variable `trees` is set to the list `(pine oak)` and then the variable `more-trees` is set to the list `(maple birch pine oak)`. However, the variable `trees` continues to refer to the original list:
 
-    more-trees                trees
-    |                           |
-    |     --- ---      --- ---   -> --- ---      --- ---
-     --> |   |   |--> |   |   |--> |   |   |--> |   |   |--> nil
-          --- ---      --- ---      --- ---      --- ---
-           |            |            |            |
-           |            |            |            |
-            --> maple    -->birch     --> pine     --> oak
+```lisp
+more-trees                trees
+|                           |
+|     --- ---      --- ---   -> --- ---      --- ---
+ --> |   |   |--> |   |   |--> |   |   |--> |   |   |--> nil
+      --- ---      --- ---      --- ---      --- ---
+       |            |            |            |
+       |            |            |            |
+        --> maple    -->birch     --> pine     --> oak
+```
 
 An empty sequence contributes nothing to the value returned by `append`. As a consequence of this, a final `nil` argument forces a copy of the previous argument:
 
-    trees
-         ⇒ (pine oak)
+```lisp
+trees
+     ⇒ (pine oak)
+```
 
-<!---->
+```lisp
+(setq wood (append trees nil))
+     ⇒ (pine oak)
+```
 
-    (setq wood (append trees nil))
-         ⇒ (pine oak)
+```lisp
+wood
+     ⇒ (pine oak)
+```
 
-<!---->
-
-    wood
-         ⇒ (pine oak)
-
-<!---->
-
-    (eq wood trees)
-         ⇒ nil
+```lisp
+(eq wood trees)
+     ⇒ nil
+```
 
 This once was the usual way to copy a list, before the function `copy-sequence` was invented. See [Sequences Arrays Vectors](Sequences-Arrays-Vectors.html).
 
 Here we show the use of vectors and strings as arguments to `append`:
 
-    (append [a b] "cd" nil)
-         ⇒ (a b 99 100)
+```lisp
+(append [a b] "cd" nil)
+     ⇒ (a b 99 100)
+```
 
 With the help of `apply` (see [Calling Functions](Calling-Functions.html)), we can append all the lists in a list of lists:
 
-    (apply 'append '((a b c) nil (x y z) nil))
-         ⇒ (a b c x y z)
+```lisp
+(apply 'append '((a b c) nil (x y z) nil))
+     ⇒ (a b c x y z)
+```
 
 If no `sequences` are given, `nil` is returned:
 
-    (append)
-         ⇒ nil
+```lisp
+(append)
+     ⇒ nil
+```
 
 Here are some examples where the final argument is not a list:
 
-    (append '(x y) 'z)
-         ⇒ (x y . z)
-    (append '(x y) [z])
-         ⇒ (x y . [z])
+```lisp
+(append '(x y) 'z)
+     ⇒ (x y . z)
+(append '(x y) [z])
+     ⇒ (x y . [z])
+```
 
 The second example shows that when the final argument is a sequence but not a list, the sequence’s elements do not become elements of the resulting list. Instead, the sequence becomes the final CDR, like any other non-list final argument.
 
@@ -184,10 +190,10 @@ The second example shows that when the final argument is a sequence but not a li
 
     This function returns a “flattened” copy of `tree`, that is, a list containing all the non-`nil` terminal nodes, or leaves, of the tree of cons cells rooted at `tree`. Leaves in the returned list are in the same order as in `tree`.
 
-<!---->
-
-    (flatten-tree '(1 (2 . 3) nil (4 5 (6)) 7))
-        ⇒(1 2 3 4 5 6 7)
+```lisp
+(flatten-tree '(1 (2 . 3) nil (4 5 (6)) 7))
+    ⇒(1 2 3 4 5 6 7)
+```
 
 *   Function: **number-sequence** *from \&optional to separation*
 
@@ -199,20 +205,22 @@ The second example shows that when the final argument is a sequence but not a li
 
     Some examples:
 
-        (number-sequence 4 9)
-             ⇒ (4 5 6 7 8 9)
-        (number-sequence 9 4 -1)
-             ⇒ (9 8 7 6 5 4)
-        (number-sequence 9 4 -2)
-             ⇒ (9 7 5)
-        (number-sequence 8)
-             ⇒ (8)
-        (number-sequence 8 5)
-             ⇒ nil
-        (number-sequence 5 8 -1)
-             ⇒ nil
-        (number-sequence 1.5 6 2)
-             ⇒ (1.5 3.5 5.5)
+    ```lisp
+    (number-sequence 4 9)
+         ⇒ (4 5 6 7 8 9)
+    (number-sequence 9 4 -1)
+         ⇒ (9 8 7 6 5 4)
+    (number-sequence 9 4 -2)
+         ⇒ (9 7 5)
+    (number-sequence 8)
+         ⇒ (8)
+    (number-sequence 8 5)
+         ⇒ nil
+    (number-sequence 5 8 -1)
+         ⇒ nil
+    (number-sequence 1.5 6 2)
+         ⇒ (1.5 3.5 5.5)
+    ```
 
 ***
 

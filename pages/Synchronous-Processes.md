@@ -1,22 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
 
 Next: [Asynchronous Processes](Asynchronous-Processes.html), Previous: [Shell Arguments](Shell-Arguments.html), Up: [Processes](Processes.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
@@ -34,7 +16,7 @@ The output from a synchronous subprocess is generally decoded using a coding sys
 
     This function calls `program` and waits for it to finish.
 
-    The current working directory of the subprocess is set to the current buffer’s value of `default-directory` if that is local (as determined by `unhandled-file-name-directory`), or "~" otherwise. If you want to run a process in a remote directory use `process-file`.
+    The current working directory of the subprocess is set to the current buffer’s value of `default-directory` if that is local (as determined by `unhandled-file-name-directory`), or "\~" otherwise. If you want to run a process in a remote directory use `process-file`.
 
     The standard input for the new process comes from file `infile` if `infile` is not `nil`, and from the null device otherwise. The argument `destination` says where to put the process output. Here are the possibilities:
 
@@ -82,30 +64,36 @@ The output from a synchronous subprocess is generally decoded using a coding sys
 
     In the examples below, the buffer ‘`foo`’ is current.
 
-        (call-process "pwd" nil t)
-             ⇒ 0
+    ```lisp
+    (call-process "pwd" nil t)
+         ⇒ 0
 
-        ---------- Buffer: foo ----------
-        /home/lewis/manual
-        ---------- Buffer: foo ----------
-
+    ---------- Buffer: foo ----------
+    /home/lewis/manual
+    ---------- Buffer: foo ----------
     ```
+
+    ```lisp
     ```
 
-        (call-process "grep" nil "bar" nil "lewis" "/etc/passwd")
-             ⇒ 0
+    ```lisp
+    (call-process "grep" nil "bar" nil "lewis" "/etc/passwd")
+         ⇒ 0
 
-        ---------- Buffer: bar ----------
-        lewis:x:1001:1001:Bil Lewis,,,,:/home/lewis:/bin/bash
+    ---------- Buffer: bar ----------
+    lewis:x:1001:1001:Bil Lewis,,,,:/home/lewis:/bin/bash
 
-        ---------- Buffer: bar ----------
+    ---------- Buffer: bar ----------
+    ```
 
     Here is an example of the use of `call-process`, as used to be found in the definition of the `insert-directory` function:
 
-        (call-process insert-directory-program nil t nil switches
-                      (if full-directory-p
-                          (concat (file-name-as-directory file) ".")
-                        file))
+    ```lisp
+    (call-process insert-directory-program nil t nil switches
+                  (if full-directory-p
+                      (concat (file-name-as-directory file) ".")
+                    file))
+    ```
 
 <!---->
 
@@ -149,27 +137,33 @@ The output from a synchronous subprocess is generally decoded using a coding sys
 
     In the following example, we use `call-process-region` to run the `cat` utility, with standard input being the first five characters in buffer ‘`foo`’ (the word ‘`input`’). `cat` copies its standard input into its standard output. Since the argument `destination` is `t`, this output is inserted in the current buffer.
 
-        ---------- Buffer: foo ----------
-        input∗
-        ---------- Buffer: foo ----------
-
+    ```lisp
+    ---------- Buffer: foo ----------
+    input∗
+    ---------- Buffer: foo ----------
     ```
+
+    ```lisp
     ```
 
-        (call-process-region 1 6 "cat" nil t)
-             ⇒ 0
+    ```lisp
+    (call-process-region 1 6 "cat" nil t)
+         ⇒ 0
 
-        ---------- Buffer: foo ----------
-        inputinput∗
-        ---------- Buffer: foo ----------
+    ---------- Buffer: foo ----------
+    inputinput∗
+    ---------- Buffer: foo ----------
+    ```
 
     For example, the `shell-command-on-region` command uses `call-shell-region` in a manner similar to this:
 
-        (call-shell-region
-         start end
-         command              ; shell command
-         nil                  ; do not delete region
-         buffer)              ; send output to buffer
+    ```lisp
+    (call-shell-region
+     start end
+     command              ; shell command
+     nil                  ; do not delete region
+     buffer)              ; send output to buffer
+    ```
 
 <!---->
 

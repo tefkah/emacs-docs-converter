@@ -1,22 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
 
 Next: [Pattern-Matching Conditional](Pattern_002dMatching-Conditional.html), Previous: [Conditionals](Conditionals.html), Up: [Control Structures](Control-Structures.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
@@ -40,25 +22,31 @@ This section describes constructs that are often used together with `if` and `co
 
     Here is an example. The first condition returns the integer 1, which is not `nil`. Similarly, the second condition returns the integer 2, which is not `nil`. The third condition is `nil`, so the remaining condition is never evaluated.
 
-        (and (print 1) (print 2) nil (print 3))
-             -| 1
-             -| 2
-        ⇒ nil
+    ```lisp
+    (and (print 1) (print 2) nil (print 3))
+         -| 1
+         -| 2
+    ⇒ nil
+    ```
 
     Here is a more realistic example of using `and`:
 
-        (if (and (consp foo) (eq (car foo) 'x))
-            (message "foo is a list starting with x"))
+    ```lisp
+    (if (and (consp foo) (eq (car foo) 'x))
+        (message "foo is a list starting with x"))
+    ```
 
     Note that `(car foo)` is not executed if `(consp foo)` returns `nil`, thus avoiding an error.
 
     `and` expressions can also be written using either `if` or `cond`. Here’s how:
 
-        (and arg1 arg2 arg3)
-        ≡
-        (if arg1 (if arg2 arg3))
-        ≡
-        (cond (arg1 (cond (arg2 arg3))))
+    ```lisp
+    (and arg1 arg2 arg3)
+    ≡
+    (if arg1 (if arg2 arg3))
+    ≡
+    (cond (arg1 (cond (arg2 arg3))))
+    ```
 
 <!---->
 
@@ -72,21 +60,27 @@ This section describes constructs that are often used together with `if` and `co
 
     For example, this expression tests whether `x` is either `nil` or the integer zero:
 
-        (or (eq x nil) (eq x 0))
+    ```lisp
+    (or (eq x nil) (eq x 0))
+    ```
 
     Like the `and` construct, `or` can be written in terms of `cond`. For example:
 
-        (or arg1 arg2 arg3)
-        ≡
-        (cond (arg1)
-              (arg2)
-              (arg3))
+    ```lisp
+    (or arg1 arg2 arg3)
+    ≡
+    (cond (arg1)
+          (arg2)
+          (arg3))
+    ```
 
     You could almost write `or` in terms of `if`, but not quite:
 
-        (if arg1 arg1
-          (if arg2 arg2
-            arg3))
+    ```lisp
+    (if arg1 arg1
+      (if arg2 arg2
+        arg3))
+    ```
 
     This is not completely equivalent because it can evaluate `arg1` or `arg2` twice. By contrast, `(or arg1 arg2 arg3)` never evaluates any argument more than once.
 

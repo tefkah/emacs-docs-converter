@@ -1,22 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
 
 Next: [Mapping Functions](Mapping-Functions.html), Previous: [Defining Functions](Defining-Functions.html), Up: [Functions](Functions.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
@@ -38,23 +20,25 @@ When you write a list as an expression in your program, you specify which functi
 
     If you need to use `funcall` to call a command and make it behave as if invoked interactively, use `funcall-interactively` (see [Interactive Call](Interactive-Call.html)).
 
-        (setq f 'list)
-             ⇒ list
+    ```lisp
+    (setq f 'list)
+         ⇒ list
+    ```
 
-    <!---->
+    ```lisp
+    (funcall f 'x 'y 'z)
+         ⇒ (x y z)
+    ```
 
-        (funcall f 'x 'y 'z)
-             ⇒ (x y z)
+    ```lisp
+    (funcall f 'x 'y '(z))
+         ⇒ (x y (z))
+    ```
 
-    <!---->
-
-        (funcall f 'x 'y '(z))
-             ⇒ (x y (z))
-
-    <!---->
-
-        (funcall 'and t nil)
-        error→ Invalid function: #<subr and>
+    ```lisp
+    (funcall 'and t nil)
+    error→ Invalid function: #<subr and>
+    ```
 
     Compare these examples with the examples of `apply`.
 
@@ -66,29 +50,33 @@ When you write a list as an expression in your program, you specify which functi
 
     `apply` returns the result of calling `function`. As with `funcall`, `function` must either be a Lisp function or a primitive function; special forms and macros do not make sense in `apply`.
 
-        (setq f 'list)
-             ⇒ list
-
-    <!---->
-
-        (apply f 'x 'y 'z)
-        error→ Wrong type argument: listp, z
-
-    <!---->
-
-        (apply '+ 1 2 '(3 4))
-             ⇒ 10
-
-    <!---->
-
-        (apply '+ '(1 2 3 4))
-             ⇒ 10
-
-    ```
+    ```lisp
+    (setq f 'list)
+         ⇒ list
     ```
 
-        (apply 'append '((a b c) nil (x y z) nil))
-             ⇒ (a b c x y z)
+    ```lisp
+    (apply f 'x 'y 'z)
+    error→ Wrong type argument: listp, z
+    ```
+
+    ```lisp
+    (apply '+ 1 2 '(3 4))
+         ⇒ 10
+    ```
+
+    ```lisp
+    (apply '+ '(1 2 3 4))
+         ⇒ 10
+    ```
+
+    ```lisp
+    ```
+
+    ```lisp
+    (apply 'append '((a b c) nil (x y z) nil))
+         ⇒ (a b c x y z)
+    ```
 
     For an interesting example of using `apply`, see [Definition of mapcar](Mapping-Functions.html#Definition-of-mapcar).
 
@@ -98,17 +86,19 @@ Here’s how to do partial application in Emacs Lisp:
 
 *   Function: **apply-partially** *func \&rest args*
 
-    This function returns a new function which, when called, will call `func` with the list of arguments composed from `args` and additional arguments specified at the time of the call. If `func` accepts `n` arguments, then a call to `apply-partially` with `m < n`<!-- /@w --> arguments will produce a new function of `n - m`<!-- /@w --> arguments.
+    This function returns a new function which, when called, will call `func` with the list of arguments composed from `args` and additional arguments specified at the time of the call. If `func` accepts `n` arguments, then a call to `apply-partially` with `m < n` arguments will produce a new function of `n - m` arguments.
 
     Here’s how we could define the built-in function `1+`, if it didn’t exist, using `apply-partially` and `+`, another built-in function:
 
-        (defalias '1+ (apply-partially '+ 1)
-          "Increment argument by one.")
+    ```lisp
+    (defalias '1+ (apply-partially '+ 1)
+      "Increment argument by one.")
+    ```
 
-    <!---->
-
-        (1+ 10)
-             ⇒ 11
+    ```lisp
+    (1+ 10)
+         ⇒ 11
+    ```
 
 It is common for Lisp functions to accept functions as arguments or find them in data structures (especially in hook variables and property lists) and call them using `funcall` or `apply`. Functions that accept function arguments are often called *functionals*.
 

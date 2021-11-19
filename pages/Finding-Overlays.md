@@ -1,22 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
 
 Previous: [Overlay Properties](Overlay-Properties.html), Up: [Overlays](Overlays.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
@@ -28,15 +10,17 @@ Previous: [Overlay Properties](Overlay-Properties.html), Up: [Overlays](Overlays
 
     To illustrate usage, here is a Lisp function that returns a list of the overlays that specify property `prop` for the character at point:
 
-        (defun find-overlays-specifying (prop)
-          (let ((overlays (overlays-at (point)))
-                found)
-            (while overlays
-              (let ((overlay (car overlays)))
-                (if (overlay-get overlay prop)
-                    (setq found (cons overlay found))))
-              (setq overlays (cdr overlays)))
-            found))
+    ```lisp
+    (defun find-overlays-specifying (prop)
+      (let ((overlays (overlays-at (point)))
+            found)
+        (while overlays
+          (let ((overlay (car overlays)))
+            (if (overlay-get overlay prop)
+                (setq found (cons overlay found))))
+          (setq overlays (cdr overlays)))
+        found))
+    ```
 
 <!---->
 
@@ -58,14 +42,16 @@ Previous: [Overlay Properties](Overlay-Properties.html), Up: [Overlays](Overlays
 
 As an example, here’s a simplified (and inefficient) version of the primitive function `next-single-char-property-change` (see [Property Search](Property-Search.html)). It searches forward from position `pos` for the next position where the value of a given property `prop`, as obtained from either overlays or text properties, changes.
 
-    (defun next-single-char-property-change (position prop)
-      (save-excursion
-        (goto-char position)
-        (let ((propval (get-char-property (point) prop)))
-          (while (and (not (eobp))
-                      (eq (get-char-property (point) prop) propval))
-            (goto-char (min (next-overlay-change (point))
-                            (next-single-property-change (point) prop)))))
-        (point)))
+```lisp
+(defun next-single-char-property-change (position prop)
+  (save-excursion
+    (goto-char position)
+    (let ((propval (get-char-property (point) prop)))
+      (while (and (not (eobp))
+                  (eq (get-char-property (point) prop) propval))
+        (goto-char (min (next-overlay-change (point))
+                        (next-single-property-change (point) prop)))))
+    (point)))
+```
 
 Previous: [Overlay Properties](Overlay-Properties.html), Up: [Overlays](Overlays.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]

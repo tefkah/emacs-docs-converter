@@ -1,22 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
 
 Next: [Resizing Windows](Resizing-Windows.html), Previous: [Windows and Frames](Windows-and-Frames.html), Up: [Windows](Windows.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
@@ -24,19 +6,21 @@ Next: [Resizing Windows](Resizing-Windows.html), Previous: [Windows and Frames](
 
 The following schematic shows the structure of a live window:
 
-            ____________________________________________
-           |______________ Header Line ______________|RD| ^
-         ^ |LS|LM|LF|                       |RF|RM|RS|  | |
-         | |  |  |  |                       |  |  |  |  | |
-    Window |  |  |  |       Text Area       |  |  |  |  | Window
-    Body | |  |  |  |     (Window Body)     |  |  |  |  | Total
-    Height |  |  |  |                       |  |  |  |  | Height
-         | |  |  |  |<- Window Body Width ->|  |  |  |  | |
-         v |__|__|__|_______________________|__|__|__|  | |
-           |_________ Horizontal Scroll Bar _________|  | |
-           |_______________ Mode Line _______________|__| |
-           |_____________ Bottom Divider _______________| v
-            <---------- Window Total Width ------------>
+```lisp
+        ____________________________________________
+       |______________ Header Line ______________|RD| ^
+     ^ |LS|LM|LF|                       |RF|RM|RS|  | |
+     | |  |  |  |                       |  |  |  |  | |
+Window |  |  |  |       Text Area       |  |  |  |  | Window
+Body | |  |  |  |     (Window Body)     |  |  |  |  | Total
+Height |  |  |  |                       |  |  |  |  | Height
+     | |  |  |  |<- Window Body Width ->|  |  |  |  | |
+     v |__|__|__|_______________________|__|__|__|  | |
+       |_________ Horizontal Scroll Bar _________|  | |
+       |_______________ Mode Line _______________|__| |
+       |_____________ Bottom Divider _______________| v
+        <---------- Window Total Width ------------>
+```
 
 At the center of the window is the *text area*, or *body*, where the buffer text is displayed. The text area can be surrounded by a series of optional areas. On the left and right, from innermost to outermost, these are the left and right fringes, denoted by LF and RF (see [Fringes](Fringes.html)); the left and right margins, denoted by LM and RM in the schematic (see [Display Margins](Display-Margins.html)); the left or right vertical scroll bar, only one of which is present at any time, denoted by LS and RS (see [Scroll Bars](Scroll-Bars.html)); and the right divider, denoted by RD (see [Window Dividers](Window-Dividers.html)). At the top of the window is the header line (see [Header Lines](Header-Lines.html)). At the bottom of the window are the horizontal scroll bar (see [Scroll Bars](Scroll-Bars.html)); the mode line (see [Mode Line Format](Mode-Line-Format.html)); and the bottom divider (see [Window Dividers](Window-Dividers.html)).
 

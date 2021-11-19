@@ -1,22 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
 
 Next: [String Conversion](String-Conversion.html), Previous: [Modifying Strings](Modifying-Strings.html), Up: [Strings and Characters](Strings-and-Characters.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
@@ -26,11 +8,13 @@ Next: [String Conversion](String-Conversion.html), Previous: [Modifying Strings]
 
     This function returns `t` if the arguments represent the same character, `nil` otherwise. This function ignores differences in case if `case-fold-search` is non-`nil`.
 
-        (char-equal ?x ?x)
-             ⇒ t
-        (let ((case-fold-search nil))
-          (char-equal ?x ?X))
-             ⇒ nil
+    ```lisp
+    (char-equal ?x ?x)
+         ⇒ t
+    (let ((case-fold-search nil))
+      (char-equal ?x ?X))
+         ⇒ nil
+    ```
 
 <!---->
 
@@ -40,12 +24,14 @@ Next: [String Conversion](String-Conversion.html), Previous: [Modifying Strings]
 
     This function is equivalent to `equal` for comparing two strings (see [Equality Predicates](Equality-Predicates.html)). In particular, the text properties of the two strings are ignored; use `equal-including-properties` if you need to distinguish between strings that differ only in their text properties. However, unlike `equal`, if either argument is not a string or symbol, `string=` signals an error.
 
-        (string= "abc" "abc")
-             ⇒ t
-        (string= "abc" "ABC")
-             ⇒ nil
-        (string= "ab" "ABC")
-             ⇒ nil
+    ```lisp
+    (string= "abc" "abc")
+         ⇒ t
+    (string= "abc" "ABC")
+         ⇒ nil
+    (string= "ab" "ABC")
+         ⇒ nil
+    ```
 
     For technical reasons, a unibyte and a multibyte string are `equal` if and only if they contain the same sequence of character codes and all these codes are either in the range 0 through 127 (ASCII) or 160 through 255 (`eight-bit-graphic`). However, when a unibyte string is converted to a multibyte string, all characters with codes in the range 160 through 255 are converted to characters with higher codes, whereas ASCII characters remain unchanged. Thus, a unibyte string and its conversion to multibyte are only `equal` if the string is all ASCII. Character codes 160 through 255 are not entirely proper in multibyte text, even though they can occur. As a consequence, the situation where a unibyte and a multibyte string are `equal` without both being all ASCII is a technical oddity that very few Emacs Lisp programmers ever get confronted with. See [Text Representations](Text-Representations.html).
 
@@ -63,8 +49,10 @@ Next: [String Conversion](String-Conversion.html), Previous: [Modifying Strings]
 
     For example, characters with different coding points but the same meaning might be considered as equal, like different grave accent Unicode characters:
 
-        (string-collate-equalp (string ?\uFF40) (string ?\u1FEF))
-             ⇒ t
+    ```lisp
+    (string-collate-equalp (string ?\uFF40) (string ?\u1FEF))
+         ⇒ t
+    ```
 
     The optional argument `locale`, a string, overrides the setting of your current locale identifier for collation. The value is system dependent; a `locale` `"en_US.UTF-8"` is applicable on POSIX systems, while it would be, e.g., `"enu_USA.1252"` on MS-Windows systems.
 
@@ -84,25 +72,29 @@ Next: [String Conversion](String-Conversion.html), Previous: [Modifying Strings]
 
     Pairs of characters are compared according to their character codes. Keep in mind that lower case letters have higher numeric values in the ASCII character set than their upper case counterparts; digits and many punctuation characters have a lower numeric value than upper case letters. An ASCII character is less than any non-ASCII character; a unibyte non-ASCII character is always less than any multibyte non-ASCII character (see [Text Representations](Text-Representations.html)).
 
-        (string< "abc" "abd")
-             ⇒ t
-        (string< "abd" "abc")
-             ⇒ nil
-        (string< "123" "abc")
-             ⇒ t
+    ```lisp
+    (string< "abc" "abd")
+         ⇒ t
+    (string< "abd" "abc")
+         ⇒ nil
+    (string< "123" "abc")
+         ⇒ t
+    ```
 
     When the strings have different lengths, and they match up to the length of `string1`, then the result is `t`. If they match up to the length of `string2`, the result is `nil`. A string of no characters is less than any other string.
 
-        (string< "" "abc")
-             ⇒ t
-        (string< "ab" "abc")
-             ⇒ t
-        (string< "abc" "")
-             ⇒ nil
-        (string< "abc" "ab")
-             ⇒ nil
-        (string< "" "")
-             ⇒ nil
+    ```lisp
+    (string< "" "abc")
+         ⇒ t
+    (string< "ab" "abc")
+         ⇒ t
+    (string< "abc" "")
+         ⇒ nil
+    (string< "abc" "ab")
+         ⇒ nil
+    (string< "" "")
+         ⇒ nil
+    ```
 
     Symbols are also allowed as arguments, in which case their print names are compared.
 
@@ -126,16 +118,20 @@ Next: [String Conversion](String-Conversion.html), Previous: [Modifying Strings]
 
     For example, punctuation and whitespace characters might be ignored for sorting (see [Sequence Functions](Sequence-Functions.html)):
 
-        (sort (list "11" "12" "1 1" "1 2" "1.1" "1.2") 'string-collate-lessp)
-             ⇒ ("11" "1 1" "1.1" "12" "1 2" "1.2")
+    ```lisp
+    (sort (list "11" "12" "1 1" "1 2" "1.1" "1.2") 'string-collate-lessp)
+         ⇒ ("11" "1 1" "1.1" "12" "1 2" "1.2")
+    ```
 
     This behavior is system-dependent; e.g., punctuation and whitespace are never ignored on Cygwin, regardless of locale.
 
     The optional argument `locale`, a string, overrides the setting of your current locale identifier for collation. The value is system dependent; a `locale` `"en_US.UTF-8"` is applicable on POSIX systems, while it would be, e.g., `"enu_USA.1252"` on MS-Windows systems. The `locale` value of `"POSIX"` or `"C"` lets `string-collate-lessp` behave like `string-lessp`:
 
-        (sort (list "11" "12" "1 1" "1 2" "1.1" "1.2")
-              (lambda (s1 s2) (string-collate-lessp s1 s2 "POSIX")))
-             ⇒ ("1 1" "1 2" "1.1" "1.2" "11" "12")
+    ```lisp
+    (sort (list "11" "12" "1 1" "1 2" "1.1" "1.2")
+          (lambda (s1 s2) (string-collate-lessp s1 s2 "POSIX")))
+         ⇒ ("1 1" "1 2" "1.1" "1.2" "11" "12")
+    ```
 
     If `ignore-case` is non-`nil`, characters are converted to lower-case before comparing them.
 

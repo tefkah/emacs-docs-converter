@@ -1,22 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
 
 Next: [Invoking the Input Method](Invoking-the-Input-Method.html), Previous: [Reading One Event](Reading-One-Event.html), Up: [Reading Input](Reading-Input.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
@@ -52,12 +34,14 @@ Emacs modifies every event it reads according to `extra-keyboard-modifiers`, the
 
 Here’s an example of using the `keyboard-translate-table` to make `C-x`, `C-c` and `C-v` perform the cut, copy and paste operations:
 
-    (keyboard-translate ?\C-x 'control-x)
-    (keyboard-translate ?\C-c 'control-c)
-    (keyboard-translate ?\C-v 'control-v)
-    (global-set-key [control-x] 'kill-region)
-    (global-set-key [control-c] 'kill-ring-save)
-    (global-set-key [control-v] 'yank)
+```lisp
+(keyboard-translate ?\C-x 'control-x)
+(keyboard-translate ?\C-c 'control-c)
+(keyboard-translate ?\C-v 'control-v)
+(global-set-key [control-x] 'kill-region)
+(global-set-key [control-c] 'kill-ring-save)
+(global-set-key [control-v] 'yank)
+```
 
 On a graphical terminal that supports extended ASCII input, you can still get the standard Emacs meanings of one of those characters by typing it with the shift key. That makes it a different character as far as keyboard translation is concerned, but it has the same usual meaning.
 

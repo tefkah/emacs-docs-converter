@@ -1,22 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
 
 Next: [Printing in Edebug](Printing-in-Edebug.html), Previous: [Edebug Eval](Edebug-Eval.html), Up: [Edebug](Edebug.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
@@ -64,24 +46,26 @@ If an error occurs during an evaluation from the evaluation list, the error mess
 
 Here is an example of what the evaluation list window looks like after several expressions have been added to it:
 
-    (current-buffer)
-    #<buffer *scratch*>
-    ;---------------------------------------------------------------
-    (selected-window)
-    #<window 16 on *scratch*>
-    ;---------------------------------------------------------------
-    (point)
-    196
-    ;---------------------------------------------------------------
-    bad-var
-    "Symbol's value as variable is void: bad-var"
-    ;---------------------------------------------------------------
-    (recursion-depth)
-    0
-    ;---------------------------------------------------------------
-    this-command
-    eval-last-sexp
-    ;---------------------------------------------------------------
+```lisp
+(current-buffer)
+#<buffer *scratch*>
+;---------------------------------------------------------------
+(selected-window)
+#<window 16 on *scratch*>
+;---------------------------------------------------------------
+(point)
+196
+;---------------------------------------------------------------
+bad-var
+"Symbol's value as variable is void: bad-var"
+;---------------------------------------------------------------
+(recursion-depth)
+0
+;---------------------------------------------------------------
+this-command
+eval-last-sexp
+;---------------------------------------------------------------
+```
 
 To delete a group, move point into it and type `C-c C-d`, or simply delete the text for the group and update the evaluation list with `C-c C-u`. To add a new expression to the evaluation list, insert the expression at a suitable place, insert a new comment line, then type `C-c C-u`. You need not insert dashes in the comment line—its contents don’t matter.
 

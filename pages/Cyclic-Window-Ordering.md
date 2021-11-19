@@ -1,28 +1,10 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
 
 Next: [Buffers and Windows](Buffers-and-Windows.html), Previous: [Selecting Windows](Selecting-Windows.html), Up: [Windows](Windows.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
 ### 28.10 Cyclic Ordering of Windows
 
-When you use the command `C-x o`<!-- /@w --> (`other-window`) to select some other window, it moves through live windows in a specific order. For any given configuration of windows, this order never varies. It is called the *cyclic ordering of windows*.
+When you use the command `C-x o` (`other-window`) to select some other window, it moves through live windows in a specific order. For any given configuration of windows, this order never varies. It is called the *cyclic ordering of windows*.
 
 The ordering is determined by a depth-first traversal of each frame’s window tree, retrieving the live windows which are the leaf nodes of the tree (see [Windows and Frames](Windows-and-Frames.html)). If the minibuffer is active, the minibuffer window is included too. The ordering is cyclic, so the last window in the sequence is followed by the first one.
 
@@ -30,7 +12,7 @@ The ordering is determined by a depth-first traversal of each frame’s window t
 
     This function returns a live window, the one following `window` in the cyclic ordering of windows. `window` should be a live window; if omitted or `nil`, it defaults to the selected window.
 
-    The optional argument `minibuf` specifies whether minibuffer windows should be included in the cyclic ordering. Normally, when `minibuf` is `nil`, a minibuffer window is included only if it is currently active; this matches the behavior of `C-x o`<!-- /@w -->. (Note that a minibuffer window is active as long as its minibuffer is in use; see [Minibuffers](Minibuffers.html)).
+    The optional argument `minibuf` specifies whether minibuffer windows should be included in the cyclic ordering. Normally, when `minibuf` is `nil`, a minibuffer window is included only if it is currently active; this matches the behavior of `C-x o`. (Note that a minibuffer window is active as long as its minibuffer is in use; see [Minibuffers](Minibuffers.html)).
 
     If `minibuf` is `t`, the cyclic ordering includes all minibuffer windows. If `minibuf` is neither `t` nor `nil`, minibuffer windows are not included even if they are active.
 

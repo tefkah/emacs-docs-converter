@@ -1,22 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
 
 Next: [Character Properties](Character-Properties.html), Previous: [Selecting a Representation](Selecting-a-Representation.html), Up: [Non-ASCII Characters](Non_002dASCII-Characters.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
@@ -30,18 +12,20 @@ Emacs character codes are a superset of the Unicode standard. Values 0 through `
 
     This returns `t` if `charcode` is a valid character, and `nil` otherwise.
 
-        (characterp 65)
-             ⇒ t
+    ```lisp
+    (characterp 65)
+         ⇒ t
+    ```
 
-    <!---->
+    ```lisp
+    (characterp 4194303)
+         ⇒ t
+    ```
 
-        (characterp 4194303)
-             ⇒ t
-
-    <!---->
-
-        (characterp 4194304)
-             ⇒ nil
+    ```lisp
+    (characterp 4194304)
+         ⇒ nil
+    ```
 
 <!---->
 
@@ -49,13 +33,15 @@ Emacs character codes are a superset of the Unicode standard. Values 0 through `
 
     This function returns the largest value that a valid character codepoint can have.
 
-        (characterp (max-char))
-             ⇒ t
+    ```lisp
+    (characterp (max-char))
+         ⇒ t
+    ```
 
-    <!---->
-
-        (characterp (1+ (max-char)))
-             ⇒ nil
+    ```lisp
+    (characterp (1+ (max-char)))
+         ⇒ nil
+    ```
 
 <!---->
 
@@ -63,9 +49,11 @@ Emacs character codes are a superset of the Unicode standard. Values 0 through `
 
     This function returns the character whose Unicode name is `string`. If `ignore-case` is non-`nil`, case is ignored in `string`. This function returns `nil` if `string` does not name a character.
 
-        ;; U+03A3
-        (= (char-from-name "GREEK CAPITAL LETTER SIGMA") #x03A3)
-             ⇒ t
+    ```lisp
+    ;; U+03A3
+    (= (char-from-name "GREEK CAPITAL LETTER SIGMA") #x03A3)
+         ⇒ t
+    ```
 
 <!---->
 

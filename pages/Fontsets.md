@@ -1,22 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
 
 Next: [Low-Level Font](Low_002dLevel-Font.html), Previous: [Font Lookup](Font-Lookup.html), Up: [Faces](Faces.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
@@ -28,7 +10,9 @@ A *fontset* is a list of fonts, each assigned to a range of character codes. An 
 
     This function defines a new fontset according to the specification string `fontset-spec`. The string should have this format:
 
-        fontpattern, [charset:font]…
+    ```lisp
+    fontpattern, [charset:font]…
+    ```
 
     Whitespace characters before and after the commas are ignored.
 
@@ -48,20 +32,28 @@ In addition, when several consecutive fields are wildcards, Emacs collapses them
 
 Thus if `fontpattern` is this,
 
-    -*-fixed-medium-r-normal-*-24-*-*-*-*-*-fontset-24
+```lisp
+-*-fixed-medium-r-normal-*-24-*-*-*-*-*-fontset-24
+```
 
 the font specification for ASCII characters would be this:
 
-    -*-fixed-medium-r-normal-*-24-*-ISO8859-1
+```lisp
+-*-fixed-medium-r-normal-*-24-*-ISO8859-1
+```
 
 and the font specification for Chinese GB2312 characters would be this:
 
-    -*-fixed-medium-r-normal-*-24-*-gb2312*-*
+```lisp
+-*-fixed-medium-r-normal-*-24-*-gb2312*-*
+```
 
 You may not have any Chinese font matching the above font specification. Most X distributions include only Chinese fonts that have ‘`song ti`’ or ‘`fangsong ti`’ in the `family` field. In such a case, ‘`Fontset-n`’ can be specified as below:
 
-    Emacs.Fontset-0: -*-fixed-medium-r-normal-*-24-*-*-*-*-*-fontset-24,\
-            chinese-gb2312:-*-*-medium-r-normal-*-24-*-gb2312*-*
+```lisp
+Emacs.Fontset-0: -*-fixed-medium-r-normal-*-24-*-*-*-*-*-fontset-24,\
+        chinese-gb2312:-*-*-medium-r-normal-*-24-*-gb2312*-*
+```
 
 Then, the font specifications for all but Chinese GB2312 characters have ‘`fixed`’ in the `family` field, and the font specification for Chinese GB2312 characters has a wild card ‘`*`’ in the `family` field.
 
@@ -93,8 +85,10 @@ Then, the font specifications for all but Chinese GB2312 characters have ‘`fix
 
     For instance, this changes the default fontset to use a font of which family name is ‘`Kochi Gothic`’ for all characters belonging to the charset `japanese-jisx0208`.
 
-        (set-fontset-font t 'japanese-jisx0208
-                          (font-spec :family "Kochi Gothic"))
+    ```lisp
+    (set-fontset-font t 'japanese-jisx0208
+                      (font-spec :family "Kochi Gothic"))
+    ```
 
 <!---->
 

@@ -1,22 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
 
 Next: [Attribute Functions](Attribute-Functions.html), Previous: [Face Attributes](Face-Attributes.html), Up: [Faces](Faces.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
@@ -40,7 +22,9 @@ Note that once you have defined a face (usually with `defface`), you cannot late
 
     The `spec` argument is a *face spec*, which states how the face should appear on different kinds of terminals. It should be an alist whose elements each have the form
 
-        (display . plist)
+    ```lisp
+    (display . plist)
+    ```
 
     `display` specifies a class of terminals (see below). `plist` is a property list of face attributes and their values, specifying how the face appears on such terminals. For backward compatibility, you can also write an element as `(display plist)`.
 
@@ -82,20 +66,22 @@ Note that once you have defined a face (usually with `defface`), you cannot late
 
 For example, here’s the definition of the standard face `highlight`:
 
-    (defface highlight
-      '((((class color) (min-colors 88) (background light))
-         :background "darkseagreen2")
-        (((class color) (min-colors 88) (background dark))
-         :background "darkolivegreen")
-        (((class color) (min-colors 16) (background light))
-         :background "darkseagreen2")
-        (((class color) (min-colors 16) (background dark))
-         :background "darkolivegreen")
-        (((class color) (min-colors 8))
-         :background "green" :foreground "black")
-        (t :inverse-video t))
-      "Basic face for highlighting."
-      :group 'basic-faces)
+```lisp
+(defface highlight
+  '((((class color) (min-colors 88) (background light))
+     :background "darkseagreen2")
+    (((class color) (min-colors 88) (background dark))
+     :background "darkolivegreen")
+    (((class color) (min-colors 16) (background light))
+     :background "darkseagreen2")
+    (((class color) (min-colors 16) (background dark))
+     :background "darkolivegreen")
+    (((class color) (min-colors 8))
+     :background "green" :foreground "black")
+    (t :inverse-video t))
+  "Basic face for highlighting."
+  :group 'basic-faces)
+```
 
 Internally, Emacs stores each face’s default spec in its `face-defface-spec` symbol property (see [Symbol Properties](Symbol-Properties.html)). The `saved-face` property stores any face spec saved by the user using the customization buffer; the `customized-face` property stores the face spec customized for the current session, but not saved; and the `theme-face` property stores an alist associating the active customization settings and Custom themes with the face specs for that face. The face’s documentation string is stored in the `face-documentation` property.
 

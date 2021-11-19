@@ -1,22 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
 
 Next: [Saving Match Data](Saving-Match-Data.html), Previous: [Simple Match Data](Simple-Match-Data.html), Up: [Match Data](Match-Data.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
@@ -36,11 +18,13 @@ The functions `match-data` and `set-match-data` read or write the entire match d
 
     As always, there must be no possibility of intervening searches between the call to a search function and the call to `match-data` that is intended to access the match data for that search.
 
-        (match-data)
-             ⇒  (#<marker at 9 in foo>
-                  #<marker at 17 in foo>
-                  #<marker at 13 in foo>
-                  #<marker at 17 in foo>)
+    ```lisp
+    (match-data)
+         ⇒  (#<marker at 9 in foo>
+              #<marker at 17 in foo>
+              #<marker at 13 in foo>
+              #<marker at 17 in foo>)
+    ```
 
 <!---->
 

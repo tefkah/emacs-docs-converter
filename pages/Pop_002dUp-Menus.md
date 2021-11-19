@@ -1,22 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
 
 Next: [Dialog Boxes](Dialog-Boxes.html), Previous: [Mouse Position](Mouse-Position.html), Up: [Frames](Frames.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
@@ -30,7 +12,9 @@ A Lisp program can pop up a menu so that the user can choose an alternative with
 
     The argument `position` specifies where on the screen to put the top left corner of the menu. It can be either a mouse button event (which says to put the menu where the user actuated the button) or a list of this form:
 
-        ((xoffset yoffset) window)
+    ```lisp
+    ((xoffset yoffset) window)
+    ```
 
     where `xoffset` and `yoffset` are coordinates, measured in pixels, counting from the top left corner of `window`. `window` may be a window or a frame.
 
@@ -40,11 +24,15 @@ A Lisp program can pop up a menu so that the user can choose an alternative with
 
     Alternatively, `menu` can have the following form:
 
-        (title pane1 pane2...)
+    ```lisp
+    (title pane1 pane2...)
+    ```
 
     where each pane is a list of form
 
-        (title item1 item2...)
+    ```lisp
+    (title item1 item2...)
+    ```
 
     Each `item` should be a cons cell, `(line . value)`, where `line` is a string and `value` is the value to return if that `line` is chosen. Unlike in a menu keymap, a `nil` `value` does not make the menu item non-selectable. Alternatively, each `item` can be a string rather than a cons cell; this makes a non-selectable menu item.
 

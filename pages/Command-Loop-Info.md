@@ -1,22 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
 
 Next: [Adjusting Point](Adjusting-Point.html), Previous: [Distinguish Interactive](Distinguish-Interactive.html), Up: [Command Loop](Command-Loop.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
@@ -56,12 +38,14 @@ The editor command loop sets several Lisp variables to keep status records for i
 
 If you do not want a particular command to be recognized as the previous command in the case where it got an error, you must code that command to prevent this. One way is to set `this-command` to `t` at the beginning of the command, and set `this-command` back to its proper value at the end, like this:
 
-    (defun foo (args…)
-      (interactive …)
-      (let ((old-this-command this-command))
-        (setq this-command t)
-        …do the work…
-        (setq this-command old-this-command)))
+```lisp
+(defun foo (args…)
+  (interactive …)
+  (let ((old-this-command this-command))
+    (setq this-command t)
+    …do the work…
+    (setq this-command old-this-command)))
+```
 
 We do not bind `this-command` with `let` because that would restore the old value in case of error—a feature of `let` which in this case does precisely what we want to avoid.
 
@@ -77,9 +61,11 @@ We do not bind `this-command` with `let` because that would restore the old valu
 
     However, if the command has called `read-key-sequence`, it returns the last read key sequence. See [Key Sequence Input](Key-Sequence-Input.html). The value is a string if all events in the sequence were characters that fit in a string. See [Input Events](Input-Events.html).
 
-        (this-command-keys)
-        ;; Now use C-u C-x C-e to evaluate that.
-             ⇒ "^U^X^E"
+    ```lisp
+    (this-command-keys)
+    ;; Now use C-u C-x C-e to evaluate that.
+         ⇒ "^U^X^E"
+    ```
 
 <!---->
 
@@ -107,9 +93,11 @@ We do not bind `this-command` with `let` because that would restore the old valu
 
     This variable is set to the last input event that was read by the command loop as part of a command. The principal use of this variable is in `self-insert-command`, which uses it to decide which character to insert.
 
-        last-command-event
-        ;; Now use C-u C-x C-e to evaluate that.
-             ⇒ 5
+    ```lisp
+    last-command-event
+    ;; Now use C-u C-x C-e to evaluate that.
+         ⇒ 5
+    ```
 
     The value is 5 because that is the ASCII code for `C-e`.
 

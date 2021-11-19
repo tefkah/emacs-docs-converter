@@ -1,22 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
 
 Next: [Killing Buffers](Killing-Buffers.html), Previous: [Buffer List](Buffer-List.html), Up: [Buffers](Buffers.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
@@ -32,8 +14,10 @@ Other functions you can use to create buffers include `with-output-to-temp-buffe
 
     `buffer-or-name` must be either a string or an existing buffer. If it is a string and a live buffer with that name already exists, `get-buffer-create` returns that buffer. If no such buffer exists, it creates a new buffer. If `buffer-or-name` is a buffer instead of a string, it is returned as given, even if it is dead.
 
-        (get-buffer-create "foo")
-             ⇒ #<buffer foo>
+    ```lisp
+    (get-buffer-create "foo")
+         ⇒ #<buffer foo>
+    ```
 
     The major mode for a newly created buffer is set to Fundamental mode. (The default value of the variable `major-mode` is handled at a higher level; see [Auto Major Mode](Auto-Major-Mode.html).) If the name begins with a space, the buffer initially disables undo information recording (see [Undo](Undo.html)).
 
@@ -45,18 +29,20 @@ Other functions you can use to create buffers include `with-output-to-temp-buffe
 
     An error is signaled if `name` is not a string.
 
-        (generate-new-buffer "bar")
-             ⇒ #<buffer bar>
+    ```lisp
+    (generate-new-buffer "bar")
+         ⇒ #<buffer bar>
+    ```
 
-    <!---->
+    ```lisp
+    (generate-new-buffer "bar")
+         ⇒ #<buffer bar<2>>
+    ```
 
-        (generate-new-buffer "bar")
-             ⇒ #<buffer bar<2>>
-
-    <!---->
-
-        (generate-new-buffer "bar")
-             ⇒ #<buffer bar<3>>
+    ```lisp
+    (generate-new-buffer "bar")
+         ⇒ #<buffer bar<3>>
+    ```
 
     The major mode for the new buffer is set to Fundamental mode. The default value of the variable `major-mode` is handled at a higher level. See [Auto Major Mode](Auto-Major-Mode.html).
 

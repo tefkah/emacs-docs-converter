@@ -1,28 +1,10 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
 
 Next: [GNU Free Documentation License](GNU-Free-Documentation-License.html), Previous: [Packaging](Packaging.html), Up: [Top](index.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
 ## Appendix A Emacs 26 Antinews
 
-For those users who live backwards in time, here is information about downgrading to Emacs version 26.3. We hope you will enjoy the greater simplicity that results from the absence of many Emacs 27.2<!-- /@w --> features.
+For those users who live backwards in time, here is information about downgrading to Emacs version 26.3. We hope you will enjoy the greater simplicity that results from the absence of many Emacs 27.2 features.
 
 *   Lisp objects are again implemented on the C level as integer types, not as pointers. This might be a small step for Emacs Lisp users, but it’s a giant leap for the Emacs developers who work on the C level, since it is now again easy to print Lisp object in the debugger in the decimal format, which is so much easier for debugging. It also makes calling Emacs functions from the debugger easier, and allows us to freely mix integers and Lisp objects in the C code.
 

@@ -1,22 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
 
 Next: [Stack-allocated Objects](Stack_002dallocated-Objects.html), Previous: [Pure Storage](Pure-Storage.html), Up: [GNU Emacs Internals](GNU-Emacs-Internals.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
@@ -42,26 +24,30 @@ The sweep phase puts unused cons cells onto a *free list* for future allocation;
 
     `garbage-collect` returns a list with information on amount of space in use, where each entry has the form ‘`(name size used)`’ or ‘`(name size used free)`’. In the entry, `name` is a symbol describing the kind of objects this entry represents, `size` is the number of bytes used by each one, `used` is the number of those objects that were found live in the heap, and optional `free` is the number of those objects that are not live but that Emacs keeps around for future allocations. So an overall result is:
 
-        ((conses cons-size used-conses free-conses)
-         (symbols symbol-size used-symbols free-symbols)
-         (strings string-size used-strings free-strings)
-         (string-bytes byte-size used-bytes)
-         (vectors vector-size used-vectors)
-         (vector-slots slot-size used-slots free-slots)
-         (floats float-size used-floats free-floats)
-         (intervals interval-size used-intervals free-intervals)
-         (buffers buffer-size used-buffers)
-         (heap unit-size total-size free-size))
+    ```lisp
+    ((conses cons-size used-conses free-conses)
+     (symbols symbol-size used-symbols free-symbols)
+     (strings string-size used-strings free-strings)
+     (string-bytes byte-size used-bytes)
+     (vectors vector-size used-vectors)
+     (vector-slots slot-size used-slots free-slots)
+     (floats float-size used-floats free-floats)
+     (intervals interval-size used-intervals free-intervals)
+     (buffers buffer-size used-buffers)
+     (heap unit-size total-size free-size))
+    ```
 
     Here is an example:
 
-        (garbage-collect)
-              ⇒ ((conses 16 49126 8058) (symbols 48 14607 0)
-                         (strings 32 2942 2607)
-                         (string-bytes 1 78607) (vectors 16 7247)
-                         (vector-slots 8 341609 29474) (floats 8 71 102)
-                         (intervals 56 27 26) (buffers 944 8)
-                         (heap 1024 11715 2678))
+    ```lisp
+    (garbage-collect)
+          ⇒ ((conses 16 49126 8058) (symbols 48 14607 0)
+                     (strings 32 2942 2607)
+                     (string-bytes 1 78607) (vectors 16 7247)
+                     (vector-slots 8 341609 29474) (floats 8 71 102)
+                     (intervals 56 27 26) (buffers 944 8)
+                     (heap 1024 11715 2678))
+    ```
 
     Below is a table explaining each element. Note that last `heap` entry is optional and present only if an underlying `malloc` implementation provides `mallinfo` function.
 

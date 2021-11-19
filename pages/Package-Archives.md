@@ -1,22 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
 
 Next: [Archive Web Server](Archive-Web-Server.html), Previous: [Multi-file Packages](Multi_002dfile-Packages.html), Up: [Packaging](Packaging.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
@@ -44,7 +26,9 @@ Maintaining a public package archive entails a degree of responsibility. When Em
 
 One way to increase the security of your packages is to *sign* them using a cryptographic key. If you have generated a private/public gpg key pair, you can use gpg to sign the package like this:
 
-    gpg -ba -o file.sig file
+```lisp
+gpg -ba -o file.sig file
+```
 
 For a single-file package, `file` is the package Lisp file; for a multi-file package, it is the package tar file. You can also sign the archive’s contents file in the same way. Make the `.sig` files available in the same location as the packages. You should also make your public key available for people to download; e.g., by uploading it to a key server such as <https://pgp.mit.edu/>. When people install packages from your archive, they can use your public key to verify the signatures.
 

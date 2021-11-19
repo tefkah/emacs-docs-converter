@@ -1,22 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
 
 Next: [Coordinates and Windows](Coordinates-and-Windows.html), Previous: [Vertical Scrolling](Vertical-Scrolling.html), Up: [Windows](Windows.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
@@ -60,18 +42,20 @@ The default value of `auto-hscroll-mode` is `t`; setting it to `current-line` ac
 
     The return value is never negative. It is zero when no horizontal scrolling has been done in `window` (which is usually the case).
 
-        (window-hscroll)
-             ⇒ 0
+    ```lisp
+    (window-hscroll)
+         ⇒ 0
+    ```
 
-    <!---->
+    ```lisp
+    (scroll-left 5)
+         ⇒ 5
+    ```
 
-        (scroll-left 5)
-             ⇒ 5
-
-    <!---->
-
-        (window-hscroll)
-             ⇒ 5
+    ```lisp
+    (window-hscroll)
+         ⇒ 5
+    ```
 
 <!---->
 
@@ -83,17 +67,21 @@ The default value of `auto-hscroll-mode` is `t`; setting it to `current-line` ac
 
     The value returned is `columns`.
 
-        (set-window-hscroll (selected-window) 10)
-             ⇒ 10
+    ```lisp
+    (set-window-hscroll (selected-window) 10)
+         ⇒ 10
+    ```
 
 Here is how you can determine whether a given position `position` is off the screen due to horizontal scrolling:
 
-    (defun hscroll-on-screen (window position)
-      (save-excursion
-        (goto-char position)
-        (and
-         (>= (- (current-column) (window-hscroll window)) 0)
-         (< (- (current-column) (window-hscroll window))
-            (window-width window)))))
+```lisp
+(defun hscroll-on-screen (window position)
+  (save-excursion
+    (goto-char position)
+    (and
+     (>= (- (current-column) (window-hscroll window)) 0)
+     (< (- (current-column) (window-hscroll window))
+        (window-width window)))))
+```
 
 Next: [Coordinates and Windows](Coordinates-and-Windows.html), Previous: [Vertical Scrolling](Vertical-Scrolling.html), Up: [Windows](Windows.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]

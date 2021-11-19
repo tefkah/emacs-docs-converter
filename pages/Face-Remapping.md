@@ -1,22 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
 
 Next: [Face Functions](Face-Functions.html), Previous: [Displaying Faces](Displaying-Faces.html), Up: [Faces](Faces.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
@@ -30,17 +12,21 @@ The variable `face-remapping-alist` is used for buffer-local or global changes i
 
     `remapping` may be any face spec suitable for a `face` text property: either a face (i.e., a face name or a property list of attribute/value pairs), or a list of faces. For details, see the description of the `face` text property in [Special Properties](Special-Properties.html). `remapping` serves as the complete specification for the remapped face—it replaces the normal definition of `face`, instead of modifying it.
 
-    If `face-remapping-alist` is buffer-local, its local value takes effect only within that buffer. If `face-remapping-alist` includes faces applicable only to certain windows, by using the `(:filtered (:window param val) spec)`<!-- /@w -->, that face takes effect only in windows that match the filter conditions (see [Special Properties](Special-Properties.html)). To turn off face filtering temporarily, bind `face-filters-always-match` to a non-`nil` value, then all face filters will match any window.
+    If `face-remapping-alist` is buffer-local, its local value takes effect only within that buffer. If `face-remapping-alist` includes faces applicable only to certain windows, by using the `(:filtered (:window param val) spec)`, that face takes effect only in windows that match the filter conditions (see [Special Properties](Special-Properties.html)). To turn off face filtering temporarily, bind `face-filters-always-match` to a non-`nil` value, then all face filters will match any window.
 
     Note: face remapping is non-recursive. If `remapping` references the same face name `face`, either directly or via the `:inherit` attribute of some other face in `remapping`, that reference uses the normal definition of `face`. For instance, if the `mode-line` face is remapped using this entry in `face-remapping-alist`:
 
-        (mode-line italic mode-line)
+    ```lisp
+    (mode-line italic mode-line)
+    ```
 
     then the new definition of the `mode-line` face inherits from the `italic` face, and the *normal* (non-remapped) definition of `mode-line` face.
 
 The following functions implement a higher-level interface to `face-remapping-alist`. Most Lisp code should use these functions instead of setting `face-remapping-alist` directly, to avoid trampling on remappings applied elsewhere. These functions are intended for buffer-local remappings, so they all make `face-remapping-alist` buffer-local as a side-effect. They manage `face-remapping-alist` entries of the form
 
-      (face relative-spec-1 relative-spec-2 ... base-spec)
+```lisp
+  (face relative-spec-1 relative-spec-2 ... base-spec)
+```
 
 where, as explained above, each of the `relative-spec-N` and `base-spec` is either a face name, or a property list of attribute/value pairs. Each of the *relative remapping* entries, `relative-spec-N`, is managed by the `face-remap-add-relative` and `face-remap-remove-relative` functions; these are intended for simple modifications like changing the text size. The *base remapping* entry, `base-spec`, has the lowest priority and is managed by the `face-remap-set-base` and `face-remap-reset-base` functions; it is intended for major modes to remap faces in the buffers they control.
 
@@ -50,12 +36,14 @@ where, as explained above, each of the `relative-spec-N` and `base-spec` is eith
 
     The return value is a Lisp object that serves as a cookie; you can pass this object as an argument to `face-remap-remove-relative` if you need to remove the remapping later.
 
-        ;; Remap the 'escape-glyph' face into a combination
-        ;; of the 'highlight' and 'italic' faces:
-        (face-remap-add-relative 'escape-glyph 'highlight 'italic)
+    ```lisp
+    ;; Remap the 'escape-glyph' face into a combination
+    ;; of the 'highlight' and 'italic' faces:
+    (face-remap-add-relative 'escape-glyph 'highlight 'italic)
 
-        ;; Increase the size of the 'default' face by 50%:
-        (face-remap-add-relative 'default :height 1.5)
+    ;; Increase the size of the 'default' face by 50%:
+    (face-remap-add-relative 'default :height 1.5)
+    ```
 
 <!---->
 

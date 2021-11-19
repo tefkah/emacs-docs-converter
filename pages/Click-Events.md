@@ -1,22 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
 
 Next: [Drag Events](Drag-Events.html), Previous: [Mouse Events](Mouse-Events.html), Up: [Input Events](Input-Events.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
@@ -24,7 +6,9 @@ Next: [Drag Events](Drag-Events.html), Previous: [Mouse Events](Mouse-Events.htm
 
 When the user presses a mouse button and releases it at the same location, that generates a *click* event. All mouse click event share the same format:
 
-    (event-type position click-count)
+```lisp
+(event-type position click-count)
+```
 
 *   `event-type`
 
@@ -46,9 +30,11 @@ To access the contents of a mouse position list in the `position` slot of a clic
 
 The explicit format of the list depends on where the click occurred. For clicks in the text area, mode line, header line, tab line, or in the fringe or marginal areas, the mouse position list has the form
 
-    (window pos-or-area (x . y) timestamp
-     object text-pos (col . row)
-     image (dx . dy) (width . height))
+```lisp
+(window pos-or-area (x . y) timestamp
+ object text-pos (col . row)
+ image (dx . dy) (width . height))
+```
 
 The meanings of these list elements are as follows:
 
@@ -72,7 +58,7 @@ The meanings of these list elements are as follows:
 
 *   `object`
 
-    Either `nil`, which means the click occurred on buffer text, or a cons cell of the form (`string` . `string-pos`)<!-- /@w --> if there is a string from a text property or an overlay at the click position.
+    Either `nil`, which means the click occurred on buffer text, or a cons cell of the form (`string` . `string-pos`) if there is a string from a text property or an overlay at the click position.
 
     *   `string`
 
@@ -104,7 +90,9 @@ The meanings of these list elements are as follows:
 
 For clicks on a scroll bar, `position` has this form:
 
-    (window area (portion . whole) timestamp part)
+```lisp
+(window area (portion . whole) timestamp part)
+```
 
 *   `window`
 
@@ -132,7 +120,9 @@ For clicks on a scroll bar, `position` has this form:
 
 For clicks on the frame’s internal border (see [Frame Layout](Frame-Layout.html)), `position` has this form:
 
-     (frame part (X . Y) timestamp)
+```lisp
+ (frame part (X . Y) timestamp)
+```
 
 *   `frame`
 

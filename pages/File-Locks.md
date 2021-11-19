@@ -1,22 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
 
 Next: [Information about Files](Information-about-Files.html), Previous: [Writing to Files](Writing-to-Files.html), Up: [Files](Files.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
@@ -30,8 +12,10 @@ When you access files using NFS, there may be a small probability that you and a
 
     This function returns `nil` if the file `filename` is not locked. It returns `t` if it is locked by this Emacs process, and it returns the name of the user who has locked it if it is locked by some other job.
 
-        (file-locked-p "foo")
-             ⇒ nil
+    ```lisp
+    (file-locked-p "foo")
+         ⇒ nil
+    ```
 
 <!---->
 
@@ -65,7 +49,9 @@ When you access files using NFS, there may be a small probability that you and a
 
         The error message for this error looks like this:
 
-            error→ File is locked: file other-user
+        ```lisp
+        error→ File is locked: file other-user
+        ```
 
         where `file` is the name of the file and `other-user` is the name of the user who has locked the file.
 

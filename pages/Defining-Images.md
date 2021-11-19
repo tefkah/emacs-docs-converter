@@ -1,22 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
 
 Next: [Showing Images](Showing-Images.html), Previous: [Other Image Types](Other-Image-Types.html), Up: [Images](Images.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
@@ -32,7 +14,9 @@ The functions `create-image`, `defimage` and `find-image` provide convenient way
 
     The remaining arguments, `props`, specify additional image properties—for example,
 
-        (create-image "foo.xpm" 'xpm nil :heuristic-mask t)
+    ```lisp
+    (create-image "foo.xpm" 'xpm nil :heuristic-mask t)
+    ```
 
     The function returns `nil` if images of this type are not supported. Otherwise it returns an image descriptor.
 
@@ -44,9 +28,11 @@ The functions `create-image`, `defimage` and `find-image` provide convenient way
 
     Each argument in `specs` has the form of a property list, and each one should specify at least the `:type` property and either the `:file` or the `:data` property. The value of `:type` should be a symbol specifying the image type, the value of `:file` is the file to load the image from, and the value of `:data` is a string containing the actual image data. Here is an example:
 
-        (defimage test-image
-          ((:type xpm :file "~/test1.xpm")
-           (:type xbm :file "~/test1.xbm")))
+    ```lisp
+    (defimage test-image
+      ((:type xpm :file "~/test1.xpm")
+       (:type xbm :file "~/test1.xbm")))
+    ```
 
     `defimage` tests each argument, one by one, to see if it is usable—that is, if the type is supported and the file exists. The first usable argument is used to make an image descriptor which is stored in `symbol`.
 
@@ -64,7 +50,7 @@ The functions `create-image`, `defimage` and `find-image` provide convenient way
 
     This function provides a convenient way to find an image satisfying one of a list of image specifications `specs`.
 
-    Each specification in `specs` is a property list with contents depending on image type. All specifications must at least contain the properties `:type type` and either `:file file`<!-- /@w --> or `:data data`<!-- /@w -->, where `type` is a symbol specifying the image type, e.g., `xbm`, `file` is the file to load the image from, and `data` is a string containing the actual image data. The first specification in the list whose `type` is supported, and `file` exists, is used to construct the image specification to be returned. If no specification is satisfied, `nil` is returned.
+    Each specification in `specs` is a property list with contents depending on image type. All specifications must at least contain the properties `:type type` and either `:file file` or `:data data`, where `type` is a symbol specifying the image type, e.g., `xbm`, `file` is the file to load the image from, and `data` is a string containing the actual image data. The first specification in the list whose `type` is supported, and `file` exists, is used to construct the image specification to be returned. If no specification is satisfied, `nil` is returned.
 
     The image is looked for in `image-load-path`.
 
@@ -76,7 +62,9 @@ The functions `create-image`, `defimage` and `find-image` provide convenient way
 
     The default is to search in the `images` subdirectory of the directory specified by `data-directory`, then the directory specified by `data-directory`, and finally in the directories in `load-path`. Subdirectories are not automatically included in the search, so if you put an image file in a subdirectory, you have to supply the subdirectory explicitly. For example, to find the image `images/foo/bar.xpm` within `data-directory`, you should specify the image as follows:
 
-        (defimage foo-image '((:type xpm :file "foo/bar.xpm")))
+    ```lisp
+    (defimage foo-image '((:type xpm :file "foo/bar.xpm")))
+    ```
 
 <!---->
 
@@ -92,12 +80,14 @@ The functions `create-image`, `defimage` and `find-image` provide convenient way
 
     Here is an example of using `image-load-path-for-library`:
 
-        (defvar image-load-path) ; shush compiler
-        (let* ((load-path (image-load-path-for-library
-                            "mh-e" "mh-logo.xpm"))
-               (image-load-path (cons (car load-path)
-                                      image-load-path)))
-          (mh-tool-bar-folder-buttons-init))
+    ```lisp
+    (defvar image-load-path) ; shush compiler
+    (let* ((load-path (image-load-path-for-library
+                        "mh-e" "mh-logo.xpm"))
+           (image-load-path (cons (car load-path)
+                                  image-load-path)))
+      (mh-tool-bar-folder-buttons-init))
+    ```
 
 Images are automatically scaled when created based on the `image-scaling-factor` variable. The value is either a floating point number (where numbers higher than 1 means to increase the size and lower means to shrink the size), or the symbol `auto`, which will compute a scaling factor based on the font pixel size.
 

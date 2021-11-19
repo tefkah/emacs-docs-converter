@@ -1,22 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
 
 Next: [Bool-Vectors](Bool_002dVectors.html), Previous: [Vector Functions](Vector-Functions.html), Up: [Sequences Arrays Vectors](Sequences-Arrays-Vectors.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
@@ -127,21 +109,23 @@ A char-table can specify an element value for a single character code; it can al
 
     The return value is always `nil`; to make calls to `map-char-table` useful, `function` should have side effects. For example, here is how to examine the elements of the syntax table:
 
-        (let (accumulator)
-           (map-char-table
-            (lambda (key value)
-              (setq accumulator
-                    (cons (list
-                           (if (consp key)
-                               (list (car key) (cdr key))
-                             key)
-                           value)
-                          accumulator)))
-            (syntax-table))
-           accumulator)
-        ⇒
-        (((2597602 4194303) (2)) ((2597523 2597601) (3))
-         ... (65379 (5 . 65378)) (65378 (4 . 65379)) (65377 (1))
-         ... (12 (0)) (11 (3)) (10 (12)) (9 (0)) ((0 8) (3)))
+    ```lisp
+    (let (accumulator)
+       (map-char-table
+        (lambda (key value)
+          (setq accumulator
+                (cons (list
+                       (if (consp key)
+                           (list (car key) (cdr key))
+                         key)
+                       value)
+                      accumulator)))
+        (syntax-table))
+       accumulator)
+    ⇒
+    (((2597602 4194303) (2)) ((2597523 2597601) (3))
+     ... (65379 (5 . 65378)) (65378 (4 . 65379)) (65377 (1))
+     ... (12 (0)) (11 (3)) (10 (12)) (9 (0)) ((0 8) (3)))
+    ```
 
 Next: [Bool-Vectors](Bool_002dVectors.html), Previous: [Vector Functions](Vector-Functions.html), Up: [Sequences Arrays Vectors](Sequences-Arrays-Vectors.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]

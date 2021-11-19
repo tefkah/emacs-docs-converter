@@ -1,22 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
 
 Next: [Progress](Progress.html), Up: [The Echo Area](The-Echo-Area.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
@@ -36,16 +18,20 @@ This section describes the standard functions for displaying messages in the ech
 
     If `format-string` is `nil` or the empty string, `message` clears the echo area; if the echo area has been expanded automatically, this brings it back to its normal size. If the minibuffer is active, this brings the minibuffer contents back onto the screen immediately.
 
-        (message "Reverting `%s'..." (buffer-name))
-         -| Reverting ‘subr.el’...
-        ⇒ "Reverting ‘subr.el’..."
-
+    ```lisp
+    (message "Reverting `%s'..." (buffer-name))
+     -| Reverting ‘subr.el’...
+    ⇒ "Reverting ‘subr.el’..."
     ```
+
+    ```lisp
     ```
 
-        ---------- Echo Area ----------
-        Reverting ‘subr.el’...
-        ---------- Echo Area ----------
+    ```lisp
+    ---------- Echo Area ----------
+    Reverting ‘subr.el’...
+    ---------- Echo Area ----------
+    ```
 
     To automatically display a message in the echo area or in a pop-buffer, depending on its size, use `display-message-or-buffer` (see below).
 

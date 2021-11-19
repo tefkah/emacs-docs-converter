@@ -1,22 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
 
 Next: [Input to Processes](Input-to-Processes.html), Previous: [Deleting Processes](Deleting-Processes.html), Up: [Processes](Processes.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
@@ -38,8 +20,10 @@ Several functions return information about processes.
 
     This function returns a list of all processes that have not been deleted.
 
-        (process-list)
-             ⇒ (#<process display-time> #<process shell>)
+    ```lisp
+    (process-list)
+         ⇒ (#<process display-time> #<process shell>)
+    ```
 
 <!---->
 
@@ -47,8 +31,10 @@ Several functions return information about processes.
 
     This function returns the process named `name` (a string), or `nil` if there is none. The argument `name` can also be a process object, in which case it is returned.
 
-        (get-process "shell")
-             ⇒ #<process shell>
+    ```lisp
+    (get-process "shell")
+         ⇒ #<process shell>
+    ```
 
 <!---->
 
@@ -56,8 +42,10 @@ Several functions return information about processes.
 
     This function returns the command that was executed to start `process`. This is a list of strings, the first string being the program executed and the rest of the strings being the arguments that were given to the program. For a network, serial, or pipe connection, this is either `nil`, which means the process is running or `t` (process is stopped).
 
-        (process-command (get-process "shell"))
-             ⇒ ("bash" "-i")
+    ```lisp
+    (process-command (get-process "shell"))
+         ⇒ ("bash" "-i")
+    ```
 
 <!---->
 
@@ -161,10 +149,10 @@ Several functions return information about processes.
 
         if `process-name` is not the name of an existing process.
 
-    <!---->
-
-        (process-status (get-buffer "*shell*"))
-             ⇒ run
+    ```lisp
+    (process-status (get-buffer "*shell*"))
+         ⇒ run
+    ```
 
     For a network, serial, or pipe connection, `process-status` returns one of the symbols `open`, `stop`, or `closed`. The latter means that the other side closed the connection, or Emacs did `delete-process`. The value `stop` means that `stop-process` was called on the connection.
 

@@ -1,22 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
 
 Next: [Selective Display](Selective-Display.html), Previous: [Warnings](Warnings.html), Up: [Display](Display.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
@@ -64,18 +46,20 @@ Two functions are specifically provided for adding elements to `buffer-invisibil
 
 A convention for use of `buffer-invisibility-spec` is that a major mode should use the mode’s own name as an element of `buffer-invisibility-spec` and as the value of the `invisible` property:
 
-    ;; If you want to display an ellipsis:
-    (add-to-invisibility-spec '(my-symbol . t))
-    ;; If you don’t want ellipsis:
-    (add-to-invisibility-spec 'my-symbol)
+```lisp
+;; If you want to display an ellipsis:
+(add-to-invisibility-spec '(my-symbol . t))
+;; If you don’t want ellipsis:
+(add-to-invisibility-spec 'my-symbol)
 
-    (overlay-put (make-overlay beginning end)
-                 'invisible 'my-symbol)
+(overlay-put (make-overlay beginning end)
+             'invisible 'my-symbol)
 
-    ;; When done with the invisibility:
-    (remove-from-invisibility-spec '(my-symbol . t))
-    ;; Or respectively:
-    (remove-from-invisibility-spec 'my-symbol)
+;; When done with the invisibility:
+(remove-from-invisibility-spec '(my-symbol . t))
+;; Or respectively:
+(remove-from-invisibility-spec 'my-symbol)
+```
 
 You can check for invisibility using the following function:
 

@@ -1,22 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
 
 Next: [Named Features](Named-Features.html), Previous: [Autoload](Autoload.html), Up: [Loading](Loading.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
@@ -30,18 +12,24 @@ When writing the forms in a Lisp library file, keep in mind that the file might 
 
 The simplest way to add an element to an alist is like this:
 
-    (push '(leif-mode " Leif") minor-mode-alist)
+```lisp
+(push '(leif-mode " Leif") minor-mode-alist)
+```
 
 But this would add multiple elements if the library is reloaded. To avoid the problem, use `add-to-list` (see [List Variables](List-Variables.html)):
 
-    (add-to-list 'minor-mode-alist '(leif-mode " Leif"))
+```lisp
+(add-to-list 'minor-mode-alist '(leif-mode " Leif"))
+```
 
 Occasionally you will want to test explicitly whether a library has already been loaded. If the library uses `provide` to provide a named feature, you can use `featurep` earlier in the file to test whether the `provide` call has been executed before (see [Named Features](Named-Features.html)). Alternatively, you could use something like this:
 
-    (defvar foo-was-loaded nil)
+```lisp
+(defvar foo-was-loaded nil)
 
-    (unless foo-was-loaded
-      execute-first-time-only
-      (setq foo-was-loaded t))
+(unless foo-was-loaded
+  execute-first-time-only
+  (setq foo-was-loaded t))
+```
 
 Next: [Named Features](Named-Features.html), Previous: [Autoload](Autoload.html), Up: [Loading](Loading.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]

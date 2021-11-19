@@ -1,22 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
 
 Next: [Narrowing](Narrowing.html), Previous: [Motion](Motion.html), Up: [Positions](Positions.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
@@ -34,17 +16,21 @@ If you only need to save and restore the identity of the current buffer, use `sa
 
 Because `save-excursion` only saves point for the buffer that was current at the start of the excursion, any changes made to point in other buffers, during the excursion, will remain in effect afterward. This frequently leads to unintended consequences, so the byte compiler warns if you call `set-buffer` during an excursion:
 
-    Warning: Use ‘with-current-buffer’ rather than
-             save-excursion+set-buffer
+```lisp
+Warning: Use ‘with-current-buffer’ rather than
+         save-excursion+set-buffer
+```
 
 To avoid such problems, you should call `save-excursion` only after setting the desired current buffer, as in the following example:
 
-    (defun append-string-to-buffer (string buffer)
-      "Append STRING to the end of BUFFER."
-      (with-current-buffer buffer
-        (save-excursion
-          (goto-char (point-max))
-          (insert string))))
+```lisp
+(defun append-string-to-buffer (string buffer)
+  "Append STRING to the end of BUFFER."
+  (with-current-buffer buffer
+    (save-excursion
+      (goto-char (point-max))
+      (insert string))))
+```
 
 Likewise, `save-excursion` does not restore window-buffer correspondences altered by functions such as `switch-to-buffer`.
 

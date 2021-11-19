@@ -1,22 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
 
 Next: [Minibuffer Completion](Minibuffer-Completion.html), Up: [Completion](Completion.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
@@ -46,35 +28,43 @@ The following completion functions have nothing in themselves to do with minibuf
 
     In the first of the following examples, the string ‘`foo`’ is matched by three of the alist CARs. All of the matches begin with the characters ‘`fooba`’, so that is the result. In the second example, there is only one possible match, and it is exact, so the return value is `t`.
 
-        (try-completion
-         "foo"
-         '(("foobar1" 1) ("barfoo" 2) ("foobaz" 3) ("foobar2" 4)))
-             ⇒ "fooba"
-
+    ```lisp
+    (try-completion
+     "foo"
+     '(("foobar1" 1) ("barfoo" 2) ("foobaz" 3) ("foobar2" 4)))
+         ⇒ "fooba"
     ```
+
+    ```lisp
     ```
 
-        (try-completion "foo" '(("barfoo" 2) ("foo" 3)))
-             ⇒ t
+    ```lisp
+    (try-completion "foo" '(("barfoo" 2) ("foo" 3)))
+         ⇒ t
+    ```
 
     In the following example, numerous symbols begin with the characters ‘`forw`’, and all of them begin with the word ‘`forward`’. In most of the symbols, this is followed with a ‘`-`’, but not in all, so no more than ‘`forward`’ can be completed.
 
-        (try-completion "forw" obarray)
-             ⇒ "forward"
+    ```lisp
+    (try-completion "forw" obarray)
+         ⇒ "forward"
+    ```
 
     Finally, in the following example, only two of the three possible matches pass the predicate `test` (the string ‘`foobaz`’ is too short). Both of those begin with the string ‘`foobar`’.
 
-        (defun test (s)
-          (> (length (car s)) 6))
-             ⇒ test
+    ```lisp
+    (defun test (s)
+      (> (length (car s)) 6))
+         ⇒ test
+    ```
 
-    <!---->
-
-        (try-completion
-         "foo"
-         '(("foobar1" 1) ("barfoo" 2) ("foobaz" 3) ("foobar2" 4))
-         'test)
-             ⇒ "foobar"
+    ```lisp
+    (try-completion
+     "foo"
+     '(("foobar1" 1) ("barfoo" 2) ("foobaz" 3) ("foobar2" 4))
+     'test)
+         ⇒ "foobar"
+    ```
 
 <!---->
 
@@ -86,18 +76,22 @@ The following completion functions have nothing in themselves to do with minibuf
 
     Here is an example, using the function `test` shown in the example for `try-completion`:
 
-        (defun test (s)
-          (> (length (car s)) 6))
-             ⇒ test
-
+    ```lisp
+    (defun test (s)
+      (> (length (car s)) 6))
+         ⇒ test
     ```
+
+    ```lisp
     ```
 
-        (all-completions
-         "foo"
-         '(("foobar1" 1) ("barfoo" 2) ("foobaz" 3) ("foobar2" 4))
-         'test)
-             ⇒ ("foobar1" "foobar2")
+    ```lisp
+    (all-completions
+     "foo"
+     '(("foobar1" 1) ("barfoo" 2) ("foobaz" 3) ("foobar2" 4))
+     'test)
+         ⇒ ("foobar1" "foobar2")
+    ```
 
 <!---->
 
@@ -139,7 +133,9 @@ If you store a completion alist in a variable, you should mark the variable as r
 
     Here is an example:
 
-        (defvar foo (lazy-completion-table foo make-my-alist))
+    ```lisp
+    (defvar foo (lazy-completion-table foo make-my-alist))
+    ```
 
 There are several functions that take an existing completion table and return a modified version. `completion-table-case-fold` returns a case-insensitive table. `completion-table-in-turn` and `completion-table-merge` combine multiple input tables in different ways. `completion-table-subvert` alters a table to use a different initial prefix. `completion-table-with-quoting` returns a table suitable for operating on quoted text. `completion-table-with-predicate` filters a table with a predicate function. `completion-table-with-terminator` adds a terminating string.
 

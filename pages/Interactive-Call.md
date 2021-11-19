@@ -1,22 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
 
 Next: [Distinguish Interactive](Distinguish-Interactive.html), Previous: [Defining Commands](Defining-Commands.html), Up: [Command Loop](Command-Loop.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
@@ -44,13 +26,17 @@ Note that the term “command”, in this context, refers to an interactively ca
 
     If, for instance, you have a function with the following signature:
 
-        (defun foo (begin end)
-          (interactive "r")
-          ...)
+    ```lisp
+    (defun foo (begin end)
+      (interactive "r")
+      ...)
+    ```
 
     then saying
 
-        (call-interactively 'foo)
+    ```lisp
+    (call-interactively 'foo)
+    ```
 
     will call `foo` with the region (`point` and `mark`) as the arguments.
 
@@ -86,12 +72,14 @@ Note that the term “command”, in this context, refers to an interactively ca
 
     If the command asks for a prefix argument, it receives the value `prefix-argument`. If `execute-extended-command` is called interactively, the current raw prefix argument is used for `prefix-argument`, and thus passed on to whatever command is run.
 
-    `execute-extended-command` is the normal definition of `M-x`, so it uses the string ‘`M-x `’<!-- /@w --> as a prompt. (It would be better to take the prompt from the events used to invoke `execute-extended-command`, but that is painful to implement.) A description of the value of the prefix argument, if any, also becomes part of the prompt.
+    `execute-extended-command` is the normal definition of `M-x`, so it uses the string ‘`M-x `’ as a prompt. (It would be better to take the prompt from the events used to invoke `execute-extended-command`, but that is painful to implement.) A description of the value of the prefix argument, if any, also becomes part of the prompt.
 
-        (execute-extended-command 3)
-        ---------- Buffer: Minibuffer ----------
-        3 M-x forward-word RET
-        ---------- Buffer: Minibuffer ----------
-             ⇒ t
+    ```lisp
+    (execute-extended-command 3)
+    ---------- Buffer: Minibuffer ----------
+    3 M-x forward-word RET
+    ---------- Buffer: Minibuffer ----------
+         ⇒ t
+    ```
 
 Next: [Distinguish Interactive](Distinguish-Interactive.html), Previous: [Defining Commands](Defining-Commands.html), Up: [Command Loop](Command-Loop.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]

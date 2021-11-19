@@ -1,22 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
 
 Next: [Advising Named Functions](Advising-Named-Functions.html), Up: [Advising Functions](Advising-Functions.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
@@ -74,22 +56,24 @@ Next: [Advising Named Functions](Advising-Named-Functions.html), Up: [Advising F
 
     For instance, if you want to make the `C-x m` (`compose-mail`) command prompt for a ‘`From:`’ header, you could say something like this:
 
-        (defun my-compose-mail-advice (orig &rest args)
-          "Read From: address interactively."
-          (interactive
-           (lambda (spec)
-             (let* ((user-mail-address
-                     (completing-read "From: "
-                                      '("one.address@example.net"
-                                        "alternative.address@example.net")))
-                    (from (message-make-from user-full-name
-                                             user-mail-address))
-                    (spec (advice-eval-interactive-spec spec)))
-               ;; Put the From header into the OTHER-HEADERS argument.
-               (push (cons 'From from) (nth 2 spec))
-               spec)))
-          (apply orig args))
+    ```lisp
+    (defun my-compose-mail-advice (orig &rest args)
+      "Read From: address interactively."
+      (interactive
+       (lambda (spec)
+         (let* ((user-mail-address
+                 (completing-read "From: "
+                                  '("one.address@example.net"
+                                    "alternative.address@example.net")))
+                (from (message-make-from user-full-name
+                                         user-mail-address))
+                (spec (advice-eval-interactive-spec spec)))
+           ;; Put the From header into the OTHER-HEADERS argument.
+           (push (cons 'From from) (nth 2 spec))
+           spec)))
+      (apply orig args))
 
-        (advice-add 'compose-mail :around #'my-compose-mail-advice)
+    (advice-add 'compose-mail :around #'my-compose-mail-advice)
+    ```
 
 Next: [Advising Named Functions](Advising-Named-Functions.html), Up: [Advising Functions](Advising-Functions.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]

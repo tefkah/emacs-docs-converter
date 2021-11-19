@@ -1,22 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
 
 Next: [Math Functions](Math-Functions.html), Previous: [Rounding Operations](Rounding-Operations.html), Up: [Numbers](Numbers.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
@@ -32,53 +14,63 @@ The bitwise operations in Emacs Lisp apply only to integers.
 
     Here are examples of `ash`, shifting a pattern of bits one place to the left and to the right. These examples show only the low-order bits of the binary pattern; leading bits all agree with the highest-order bit shown. As you can see, shifting left by one is equivalent to multiplying by two, whereas shifting right by one is equivalent to dividing by two and then rounding toward minus infinity.
 
-        (ash 7 1) ⇒ 14
-        ;; Decimal 7 becomes decimal 14.
-        …000111
-             ⇒
-        …001110
-
-    ```
-    ```
-
-        (ash 7 -1) ⇒ 3
-        …000111
-             ⇒
-        …000011
-
-    ```
+    ```lisp
+    (ash 7 1) ⇒ 14
+    ;; Decimal 7 becomes decimal 14.
+    …000111
+         ⇒
+    …001110
     ```
 
-        (ash -7 1) ⇒ -14
-        …111001
-             ⇒
-        …110010
-
-    ```
+    ```lisp
     ```
 
-        (ash -7 -1) ⇒ -4
-        …111001
-             ⇒
-        …111100
+    ```lisp
+    (ash 7 -1) ⇒ 3
+    …000111
+         ⇒
+    …000011
+    ```
+
+    ```lisp
+    ```
+
+    ```lisp
+    (ash -7 1) ⇒ -14
+    …111001
+         ⇒
+    …110010
+    ```
+
+    ```lisp
+    ```
+
+    ```lisp
+    (ash -7 -1) ⇒ -4
+    …111001
+         ⇒
+    …111100
+    ```
 
     Here are examples of shifting left or right by two bits:
 
-                          ;         binary values
-        (ash 5 2)         ;   5  =  …000101
-             ⇒ 20         ;      =  …010100
-        (ash -5 2)        ;  -5  =  …111011
-             ⇒ -20        ;      =  …101100
+    ```lisp
+                      ;         binary values
+    (ash 5 2)         ;   5  =  …000101
+         ⇒ 20         ;      =  …010100
+    (ash -5 2)        ;  -5  =  …111011
+         ⇒ -20        ;      =  …101100
+    ```
 
-    <!---->
+    ```lisp
+    (ash 5 -2)
+         ⇒ 1          ;      =  …000001
+    ```
 
-        (ash 5 -2)
-             ⇒ 1          ;      =  …000001
-
-    <!---->
-
-        (ash -5 -2)
-             ⇒ -2         ;      =  …111110
+    ```lisp
+    (ash -5 -2)
+         ⇒ -2         ;      =  …111110
+    ```
 
 <!---->
 
@@ -88,18 +80,20 @@ The bitwise operations in Emacs Lisp apply only to integers.
 
     As `lsh` behaves like `ash` except when `integer1` and `count1` are both negative, the following examples focus on these exceptional cases. These examples assume 30-bit fixnums.
 
-                         ;      binary values
-        (ash -7 -1)      ; -7 = …111111111111111111111111111001
-             ⇒ -4        ;    = …111111111111111111111111111100
-        (lsh -7 -1)
-             ⇒ 536870908 ;    = …011111111111111111111111111100
+    ```lisp
+                     ;      binary values
+    (ash -7 -1)      ; -7 = …111111111111111111111111111001
+         ⇒ -4        ;    = …111111111111111111111111111100
+    (lsh -7 -1)
+         ⇒ 536870908 ;    = …011111111111111111111111111100
+    ```
 
-    <!---->
-
-        (ash -5 -2)      ; -5 = …111111111111111111111111111011
-             ⇒ -2        ;    = …111111111111111111111111111110
-        (lsh -5 -2)
-             ⇒ 268435454 ;    = …001111111111111111111111111110
+    ```lisp
+    (ash -5 -2)      ; -5 = …111111111111111111111111111011
+         ⇒ -2        ;    = …111111111111111111111111111110
+    (lsh -5 -2)
+         ⇒ 268435454 ;    = …001111111111111111111111111110
+    ```
 
 <!---->
 
@@ -111,30 +105,38 @@ The bitwise operations in Emacs Lisp apply only to integers.
 
     Therefore,
 
-        (logand 13 12)
-             ⇒ 12
+    ```lisp
+    (logand 13 12)
+         ⇒ 12
+    ```
 
     If `logand` is not passed any argument, it returns a value of -1. This number is an identity element for `logand` because its binary representation consists entirely of ones. If `logand` is passed just one argument, it returns that argument.
 
-                           ;        binary values
+    ```lisp
+                       ;        binary values
 
-        (logand 14 13)     ; 14  =  …001110
-                           ; 13  =  …001101
-             ⇒ 12         ; 12  =  …001100
-
-    ```
-    ```
-
-        (logand 14 13 4)   ; 14  =  …001110
-                           ; 13  =  …001101
-                           ;  4  =  …000100
-             ⇒ 4          ;  4  =  …000100
-
-    ```
+    (logand 14 13)     ; 14  =  …001110
+                       ; 13  =  …001101
+         ⇒ 12         ; 12  =  …001100
     ```
 
-        (logand)
-             ⇒ -1         ; -1  =  …111111
+    ```lisp
+    ```
+
+    ```lisp
+    (logand 14 13 4)   ; 14  =  …001110
+                       ; 13  =  …001101
+                       ;  4  =  …000100
+         ⇒ 4          ;  4  =  …000100
+    ```
+
+    ```lisp
+    ```
+
+    ```lisp
+    (logand)
+         ⇒ -1         ; -1  =  …111111
+    ```
 
 <!---->
 
@@ -142,19 +144,23 @@ The bitwise operations in Emacs Lisp apply only to integers.
 
     This function returns the bitwise inclusive OR of its arguments: the `n`th bit is 1 in the result if, and only if, the `n`th bit is 1 in at least one of the arguments. If there are no arguments, the result is 0, which is an identity element for this operation. If `logior` is passed just one argument, it returns that argument.
 
-                           ;        binary values
+    ```lisp
+                       ;        binary values
 
-        (logior 12 5)      ; 12  =  …001100
-                           ;  5  =  …000101
-             ⇒ 13         ; 13  =  …001101
-
+    (logior 12 5)      ; 12  =  …001100
+                       ;  5  =  …000101
+         ⇒ 13         ; 13  =  …001101
     ```
+
+    ```lisp
     ```
 
-        (logior 12 5 7)    ; 12  =  …001100
-                           ;  5  =  …000101
-                           ;  7  =  …000111
-             ⇒ 15         ; 15  =  …001111
+    ```lisp
+    (logior 12 5 7)    ; 12  =  …001100
+                       ;  5  =  …000101
+                       ;  7  =  …000111
+         ⇒ 15         ; 15  =  …001111
+    ```
 
 <!---->
 
@@ -162,19 +168,23 @@ The bitwise operations in Emacs Lisp apply only to integers.
 
     This function returns the bitwise exclusive OR of its arguments: the `n`th bit is 1 in the result if, and only if, the `n`th bit is 1 in an odd number of the arguments. If there are no arguments, the result is 0, which is an identity element for this operation. If `logxor` is passed just one argument, it returns that argument.
 
-                           ;        binary values
+    ```lisp
+                       ;        binary values
 
-        (logxor 12 5)      ; 12  =  …001100
-                           ;  5  =  …000101
-             ⇒ 9          ;  9  =  …001001
-
+    (logxor 12 5)      ; 12  =  …001100
+                       ;  5  =  …000101
+         ⇒ 9          ;  9  =  …001001
     ```
+
+    ```lisp
     ```
 
-        (logxor 12 5 7)    ; 12  =  …001100
-                           ;  5  =  …000101
-                           ;  7  =  …000111
-             ⇒ 14         ; 14  =  …001110
+    ```lisp
+    (logxor 12 5 7)    ; 12  =  …001100
+                       ;  5  =  …000101
+                       ;  7  =  …000111
+         ⇒ 14         ; 14  =  …001110
+    ```
 
 <!---->
 
@@ -182,11 +192,13 @@ The bitwise operations in Emacs Lisp apply only to integers.
 
     This function returns the bitwise complement of its argument: the `n`th bit is one in the result if, and only if, the `n`th bit is zero in `integer`, and vice-versa. The result equals -1 - `integer`.
 
-        (lognot 5)
-             ⇒ -6
-        ;;  5  =  …000101
-        ;; becomes
-        ;; -6  =  …111010
+    ```lisp
+    (lognot 5)
+         ⇒ -6
+    ;;  5  =  …000101
+    ;; becomes
+    ;; -6  =  …111010
+    ```
 
 <!---->
 
@@ -194,9 +206,11 @@ The bitwise operations in Emacs Lisp apply only to integers.
 
     This function returns the *Hamming weight* of `integer`: the number of ones in the binary representation of `integer`. If `integer` is negative, it returns the number of zero bits in its two’s complement binary representation. The result is always nonnegative.
 
-        (logcount 43)     ;  43 = …000101011
-             ⇒ 4
-        (logcount -43)    ; -43 = …111010101
-             ⇒ 3
+    ```lisp
+    (logcount 43)     ;  43 = …000101011
+         ⇒ 4
+    (logcount -43)    ; -43 = …111010101
+         ⇒ 3
+    ```
 
 Next: [Math Functions](Math-Functions.html), Previous: [Rounding Operations](Rounding-Operations.html), Up: [Numbers](Numbers.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]

@@ -1,22 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
 
 Next: [Relative File Names](Relative-File-Names.html), Up: [File Names](File-Names.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
@@ -34,13 +16,15 @@ For some purposes, the nondirectory part is further subdivided into the name pro
 
     On GNU and other POSIX-like systems, a string returned by this function always ends in a slash. On MS-DOS it can also end in a colon.
 
-        (file-name-directory "lewis/foo")  ; GNU example
-             ⇒ "lewis/"
+    ```lisp
+    (file-name-directory "lewis/foo")  ; GNU example
+         ⇒ "lewis/"
+    ```
 
-    <!---->
-
-        (file-name-directory "foo")        ; GNU example
-             ⇒ nil
+    ```lisp
+    (file-name-directory "foo")        ; GNU example
+         ⇒ nil
+    ```
 
 <!---->
 
@@ -48,18 +32,20 @@ For some purposes, the nondirectory part is further subdivided into the name pro
 
     This function returns the nondirectory part of `filename`.
 
-        (file-name-nondirectory "lewis/foo")
-             ⇒ "foo"
+    ```lisp
+    (file-name-nondirectory "lewis/foo")
+         ⇒ "foo"
+    ```
 
-    <!---->
+    ```lisp
+    (file-name-nondirectory "foo")
+         ⇒ "foo"
+    ```
 
-        (file-name-nondirectory "foo")
-             ⇒ "foo"
-
-    <!---->
-
-        (file-name-nondirectory "lewis/")
-             ⇒ ""
+    ```lisp
+    (file-name-nondirectory "lewis/")
+         ⇒ ""
+    ```
 
 <!---->
 
@@ -69,18 +55,20 @@ For some purposes, the nondirectory part is further subdivided into the name pro
 
     If `keep-backup-version` is non-`nil`, then true file version numbers understood as such by the file system are discarded from the return value, but backup version numbers are kept.
 
-        (file-name-sans-versions "~rms/foo.~1~")
-             ⇒ "~rms/foo"
+    ```lisp
+    (file-name-sans-versions "~rms/foo.~1~")
+         ⇒ "~rms/foo"
+    ```
 
-    <!---->
+    ```lisp
+    (file-name-sans-versions "~rms/foo~")
+         ⇒ "~rms/foo"
+    ```
 
-        (file-name-sans-versions "~rms/foo~")
-             ⇒ "~rms/foo"
-
-    <!---->
-
-        (file-name-sans-versions "~rms/foo")
-             ⇒ "~rms/foo"
+    ```lisp
+    (file-name-sans-versions "~rms/foo")
+         ⇒ "~rms/foo"
+    ```
 
 <!---->
 
@@ -98,18 +86,20 @@ For some purposes, the nondirectory part is further subdivided into the name pro
 
     This function returns `filename` minus its extension, if any. The version/backup part, if present, is only removed if the file has an extension. For example,
 
-        (file-name-sans-extension "foo.lose.c")
-             ⇒ "foo.lose"
-        (file-name-sans-extension "big.hack/foo")
-             ⇒ "big.hack/foo"
-        (file-name-sans-extension "/my/home/.emacs")
-             ⇒ "/my/home/.emacs"
-        (file-name-sans-extension "/my/home/.emacs.el")
-             ⇒ "/my/home/.emacs"
-        (file-name-sans-extension "~/foo.el.~3~")
-             ⇒ "~/foo"
-        (file-name-sans-extension "~/foo.~3~")
-             ⇒ "~/foo.~3~"
+    ```lisp
+    (file-name-sans-extension "foo.lose.c")
+         ⇒ "foo.lose"
+    (file-name-sans-extension "big.hack/foo")
+         ⇒ "big.hack/foo"
+    (file-name-sans-extension "/my/home/.emacs")
+         ⇒ "/my/home/.emacs"
+    (file-name-sans-extension "/my/home/.emacs.el")
+         ⇒ "/my/home/.emacs"
+    (file-name-sans-extension "~/foo.el.~3~")
+         ⇒ "~/foo"
+    (file-name-sans-extension "~/foo.~3~")
+         ⇒ "~/foo.~3~"
+    ```
 
     Note that the ‘`.~3~`’ in the two last examples is the backup part, not an extension.
 
@@ -119,7 +109,9 @@ For some purposes, the nondirectory part is further subdivided into the name pro
 
     This function is the composition of `file-name-sans-extension` and `file-name-nondirectory`. For example,
 
-        (file-name-base "/my/home/foo.c")
-            ⇒ "foo"
+    ```lisp
+    (file-name-base "/my/home/foo.c")
+        ⇒ "foo"
+    ```
 
 Next: [Relative File Names](Relative-File-Names.html), Up: [File Names](File-Names.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]

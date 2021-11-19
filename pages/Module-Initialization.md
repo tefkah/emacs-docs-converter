@@ -1,22 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
 
 Next: [Module Functions](Module-Functions.html), Up: [Writing Dynamic Modules](Writing-Dynamic-Modules.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
@@ -24,9 +6,11 @@ Next: [Module Functions](Module-Functions.html), Up: [Writing Dynamic Modules](W
 
 Begin your module by including the header file `emacs-module.h` and defining the GPL compatibility symbol:
 
-    #include <emacs-module.h>
+```lisp
+#include <emacs-module.h>
 
-    int plugin_is_GPL_compatible;
+int plugin_is_GPL_compatible;
+```
 
 The `emacs-module.h` file is installed into your system’s include tree as part of the Emacs installation. Alternatively, you can find it in the Emacs source tree.
 
@@ -44,32 +28,38 @@ Next, write an initialization function for the module.
 
         A module can verify that the Emacs executable which loads the module is compatible with the module, by comparing the `size` member of the `runtime` structure with the value compiled into the module:
 
-            int
-            emacs_module_init (struct emacs_runtime *ert)
-            {
-              if (ert->size < sizeof (*ert))
-                return 1;
-            }
+        ```lisp
+        int
+        emacs_module_init (struct emacs_runtime *ert)
+        {
+          if (ert->size < sizeof (*ert))
+            return 1;
+        }
+        ```
 
         If the size of the runtime object passed to the module is smaller than what it expects, it means the module was compiled for an Emacs version newer (later) than the one which attempts to load it, i.e. the module might be incompatible with the Emacs binary.
 
         In addition, a module can verify the compatibility of the module API with what the module expects. The following sample code assumes it is part of the `emacs_module_init` function shown above:
 
-              emacs_env *env = ert->get_environment (ert);
-              if (env->size < sizeof (*env))
-                return 2;
+        ```lisp
+          emacs_env *env = ert->get_environment (ert);
+          if (env->size < sizeof (*env))
+            return 2;
+        ```
 
         This calls the `get_environment` function using the pointer provided in the `runtime` structure to retrieve a pointer to the API’s *environment*, a C `struct` which also has a `size` field holding the size of the structure in bytes.
 
         Finally, you can write a module that will work with older versions of Emacs, by comparing the size of the environment passed by Emacs with known sizes, like this:
 
-              emacs_env *env = ert->get_environment (ert);
-              if (env->size >= sizeof (struct emacs_env_26))
-                emacs_version = 26;  /* Emacs 26 or later.  */
-              else if (env->size >= sizeof (struct emacs_env_25))
-                emacs_version = 25;
-              else
-                return 2; /* Unknown or unsupported version.  */
+        ```lisp
+          emacs_env *env = ert->get_environment (ert);
+          if (env->size >= sizeof (struct emacs_env_26))
+            emacs_version = 26;  /* Emacs 26 or later.  */
+          else if (env->size >= sizeof (struct emacs_env_25))
+            emacs_version = 25;
+          else
+            return 2; /* Unknown or unsupported version.  */
+        ```
 
         This works because later Emacs versions always *add* members to the environment, never *remove* any members, so the size can only grow with new Emacs releases. Given the version of Emacs, the module can use only the parts of the module API that existed in that version, since those parts are identical in later versions.
 

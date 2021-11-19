@@ -1,22 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
 
 Next: [Equality Predicates](Equality-Predicates.html), Previous: [Circular Objects](Circular-Objects.html), Up: [Lisp Data Types](Lisp-Data-Types.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
@@ -26,8 +8,10 @@ The Emacs Lisp interpreter itself does not perform type checking on the actual a
 
 All built-in functions do check the types of their actual arguments when appropriate, and signal a `wrong-type-argument` error if an argument is of the wrong type. For example, here is what happens if you pass an argument to `+` that it cannot handle:
 
-    (+ 2 'a)
-         error→ Wrong type argument: number-or-marker-p, a
+```lisp
+(+ 2 'a)
+     error→ Wrong type argument: number-or-marker-p, a
+```
 
 If you want your program to handle different types differently, you must do explicit type checking. The most common way to check the type of an object is to call a *type predicate* function. Emacs has a type predicate for each type, as well as some predicates for combinations of types.
 
@@ -35,16 +19,18 @@ A type predicate function takes one argument; it returns `t` if the argument bel
 
 Here is an example which uses the predicates `listp` to check for a list and `symbolp` to check for a symbol.
 
-    (defun add-on (x)
-      (cond ((symbolp x)
-             ;; If X is a symbol, put it on LIST.
-             (setq list (cons x list)))
-            ((listp x)
-             ;; If X is a list, add its elements to LIST.
-             (setq list (append x list)))
-            (t
-             ;; We handle only symbols and lists.
-             (error "Invalid argument %s in add-on" x))))
+```lisp
+(defun add-on (x)
+  (cond ((symbolp x)
+         ;; If X is a symbol, put it on LIST.
+         (setq list (cons x list)))
+        ((listp x)
+         ;; If X is a list, add its elements to LIST.
+         (setq list (append x list)))
+        (t
+         ;; We handle only symbols and lists.
+         (error "Invalid argument %s in add-on" x))))
+```
 
 Here is a table of predefined type predicates, in alphabetical order, with references to further information.
 
@@ -242,18 +228,20 @@ The most general way to check the type of an object is to call the function `typ
 
     This function returns a symbol naming the primitive type of `object`. The value is one of the symbols `bool-vector`, `buffer`, `char-table`, `compiled-function`, `condition-variable`, `cons`, `finalizer`, `float`, `font-entity`, `font-object`, `font-spec`, `frame`, `hash-table`, `integer`, `marker`, `mutex`, `overlay`, `process`, `string`, `subr`, `symbol`, `thread`, `vector`, `window`, or `window-configuration`. However, if `object` is a record, the type specified by its first slot is returned; [Records](Records.html).
 
-        (type-of 1)
-             ⇒ integer
+    ```lisp
+    (type-of 1)
+         ⇒ integer
+    ```
 
-    <!---->
-
-        (type-of 'nil)
-             ⇒ symbol
-        (type-of '())    ; () is nil.
-             ⇒ symbol
-        (type-of '(x))
-             ⇒ cons
-        (type-of (record 'foo))
-             ⇒ foo
+    ```lisp
+    (type-of 'nil)
+         ⇒ symbol
+    (type-of '())    ; () is nil.
+         ⇒ symbol
+    (type-of '(x))
+         ⇒ cons
+    (type-of (record 'foo))
+         ⇒ foo
+    ```
 
 Next: [Equality Predicates](Equality-Predicates.html), Previous: [Circular Objects](Circular-Objects.html), Up: [Lisp Data Types](Lisp-Data-Types.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]

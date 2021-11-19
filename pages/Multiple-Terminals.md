@@ -1,22 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
 
 Next: [Frame Geometry](Frame-Geometry.html), Previous: [Creating Frames](Creating-Frames.html), Up: [Frames](Frames.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
@@ -91,7 +73,9 @@ Systems that don’t use the X window system, such as MS-Windows, don’t suppor
 
     The optional argument `xrm-string`, if not `nil`, is a string of resource names and values, in the same format used in the `.Xresources` file. See [X Resources](https://www.gnu.org/software/emacs/manual/html_node/emacs/X-Resources.html#X-Resources) in The GNU Emacs Manual. These values apply to all Emacs frames created on this display, overriding the resource values recorded in the X server. Here’s an example of what this string might look like:
 
-        "*BorderWidth: 3\n*InternalBorder: 2\n"
+    ```lisp
+    "*BorderWidth: 3\n*InternalBorder: 2\n"
+    ```
 
     If `must-succeed` is non-`nil`, failure to open the connection terminates Emacs. Otherwise, it is an ordinary Lisp error.
 
@@ -137,19 +121,21 @@ On some multi-monitor setups, a single X display outputs to more than one physic
 
     Here’s an example of the data produced by this function on a 2-monitor display:
 
-          (display-monitor-attributes-list)
-          ⇒
-          (((geometry 0 0 1920 1080) ;; Left-hand, primary monitor
-            (workarea 0 0 1920 1050) ;; A taskbar occupies some of the height
-            (mm-size 677 381)
-            (name . "DISPLAY1")
-            (frames #<frame emacs@host *Messages* 0x11578c0>
-                    #<frame emacs@host *scratch* 0x114b838>))
-           ((geometry 1920 0 1680 1050) ;; Right-hand monitor
-            (workarea 1920 0 1680 1050) ;; Whole screen can be used
-            (mm-size 593 370)
-            (name . "DISPLAY2")
-            (frames)))
+    ```lisp
+      (display-monitor-attributes-list)
+      ⇒
+      (((geometry 0 0 1920 1080) ;; Left-hand, primary monitor
+        (workarea 0 0 1920 1050) ;; A taskbar occupies some of the height
+        (mm-size 677 381)
+        (name . "DISPLAY1")
+        (frames #<frame emacs@host *Messages* 0x11578c0>
+                #<frame emacs@host *scratch* 0x114b838>))
+       ((geometry 1920 0 1680 1050) ;; Right-hand monitor
+        (workarea 1920 0 1680 1050) ;; Whole screen can be used
+        (mm-size 593 370)
+        (name . "DISPLAY2")
+        (frames)))
+    ```
 
 <!---->
 

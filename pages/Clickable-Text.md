@@ -1,22 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
 
 Next: [Fields](Fields.html), Previous: [Lazy Properties](Lazy-Properties.html), Up: [Text Properties](Text-Properties.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
@@ -30,44 +12,50 @@ Implementing a link involves three separate steps: (1) indicating clickability w
 
 To indicate clickability, add the `mouse-face` text property to the text of the link; then Emacs will highlight the link when the mouse moves over it. In addition, you should define a tooltip or echo area message, using the `help-echo` text property. See [Special Properties](Special-Properties.html). For instance, here is how Dired indicates that file names are clickable:
 
-     (if (dired-move-to-filename)
-         (add-text-properties
-           (point)
-           (save-excursion
-             (dired-move-to-end-of-filename)
-             (point))
-           '(mouse-face highlight
-             help-echo "mouse-2: visit this file in other window")))
+```lisp
+ (if (dired-move-to-filename)
+     (add-text-properties
+       (point)
+       (save-excursion
+         (dired-move-to-end-of-filename)
+         (point))
+       '(mouse-face highlight
+         help-echo "mouse-2: visit this file in other window")))
+```
 
 To make the link clickable, bind `RET` and `mouse-2` to commands that perform the desired action. Each command should check to see whether it was called on a link, and act accordingly. For instance, Dired’s major mode keymap binds `mouse-2` to the following command:
 
-    (defun dired-mouse-find-file-other-window (event)
-      "In Dired, visit the file or directory name you click on."
-      (interactive "e")
-      (let ((window (posn-window (event-end event)))
-            (pos (posn-point (event-end event)))
-            file)
-        (if (not (windowp window))
-            (error "No file chosen"))
-        (with-current-buffer (window-buffer window)
-          (goto-char pos)
-          (setq file (dired-get-file-for-visit)))
-        (if (file-directory-p file)
-            (or (and (cdr dired-subdir-alist)
-                     (dired-goto-subdir file))
-                (progn
-                  (select-window window)
-                  (dired-other-window file)))
-          (select-window window)
-          (find-file-other-window (file-name-sans-versions file t)))))
+```lisp
+(defun dired-mouse-find-file-other-window (event)
+  "In Dired, visit the file or directory name you click on."
+  (interactive "e")
+  (let ((window (posn-window (event-end event)))
+        (pos (posn-point (event-end event)))
+        file)
+    (if (not (windowp window))
+        (error "No file chosen"))
+    (with-current-buffer (window-buffer window)
+      (goto-char pos)
+      (setq file (dired-get-file-for-visit)))
+    (if (file-directory-p file)
+        (or (and (cdr dired-subdir-alist)
+                 (dired-goto-subdir file))
+            (progn
+              (select-window window)
+              (dired-other-window file)))
+      (select-window window)
+      (find-file-other-window (file-name-sans-versions file t)))))
+```
 
 This command uses the functions `posn-window` and `posn-point` to determine where the click occurred, and `dired-get-file-for-visit` to determine which file to visit.
 
 Instead of binding the mouse command in a major mode keymap, you can bind it within the link text, using the `keymap` text property (see [Special Properties](Special-Properties.html)). For instance:
 
-    (let ((map (make-sparse-keymap)))
-      (define-key map [mouse-2] 'operate-this-button)
-      (put-text-property link-start link-end 'keymap map))
+```lisp
+(let ((map (make-sparse-keymap)))
+  (define-key map [mouse-2] 'operate-this-button)
+  (put-text-property link-start link-end 'keymap map))
+```
 
 With this method, you can easily define different commands for different links. Furthermore, the global definition of `RET` and `mouse-2` remain available for the rest of the text in the buffer.
 
@@ -81,7 +69,9 @@ To set up the link so that it obeys `mouse-1-click-follows-link`, you must eithe
 
     For example, here is how Info mode handles `mouse-1`:
 
-        (define-key Info-mode-map [follow-link] 'mouse-face)
+    ```lisp
+    (define-key Info-mode-map [follow-link] 'mouse-face)
+    ```
 
 *   a function
 
@@ -89,9 +79,11 @@ To set up the link so that it obeys `mouse-1-click-follows-link`, you must eithe
 
     For example, here is how pcvs enables `mouse-1` to follow links on file names only:
 
-        (define-key map [follow-link]
-          (lambda (pos)
-            (eq (get-char-property pos 'face) 'cvs-filename-face)))
+    ```lisp
+    (define-key map [follow-link]
+      (lambda (pos)
+        (eq (get-char-property pos 'face) 'cvs-filename-face)))
+    ```
 
 *   anything else
 
@@ -109,19 +101,23 @@ The action code tells `mouse-1` how to follow the link:
 
 To define `mouse-1` to activate a button defined with `define-button-type`, give the button a `follow-link` property. The property value should be a link action condition, as described above. See [Buttons](Buttons.html). For example, here is how Help mode handles `mouse-1`:
 
-    (define-button-type 'help-xref
-      'follow-link t
-      'action #'help-button-action)
+```lisp
+(define-button-type 'help-xref
+  'follow-link t
+  'action #'help-button-action)
+```
 
 To define `mouse-1` on a widget defined with `define-widget`, give the widget a `:follow-link` property. The property value should be a link action condition, as described above. For example, here is how the `link` widget specifies that a `mouse-1` click shall be translated to `RET`:
 
-    (define-widget 'link 'item
-      "An embedded link."
-      :button-prefix 'widget-link-prefix
-      :button-suffix 'widget-link-suffix
-      :follow-link "\C-m"
-      :help-echo "Follow the link."
-      :format "%[%t%]")
+```lisp
+(define-widget 'link 'item
+  "An embedded link."
+  :button-prefix 'widget-link-prefix
+  :button-suffix 'widget-link-suffix
+  :follow-link "\C-m"
+  :help-echo "Follow the link."
+  :format "%[%t%]")
+```
 
 *   Function: **mouse-on-link-p** *pos*
 

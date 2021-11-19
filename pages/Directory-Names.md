@@ -1,22 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
 
 Next: [File Name Expansion](File-Name-Expansion.html), Previous: [Relative File Names](Relative-File-Names.html), Up: [File Names](File-Names.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
@@ -32,8 +14,10 @@ The following two functions convert between directory names and directory file n
 
     This function returns a string representing `filename` in a form that the operating system will interpret as the name of a directory (a directory name). On most systems, this means appending a slash to the string (if it does not already end in one).
 
-        (file-name-as-directory "~rms/lewis")
-             ⇒ "~rms/lewis/"
+    ```lisp
+    (file-name-as-directory "~rms/lewis")
+         ⇒ "~rms/lewis/"
+    ```
 
 <!---->
 
@@ -47,29 +31,39 @@ The following two functions convert between directory names and directory file n
 
     This function returns a string representing `dirname` in a form that the operating system will interpret as the name of a file (a directory file name). On most systems, this means removing the final directory separators from the string, unless the string consists entirely of directory separators.
 
-        (directory-file-name "~lewis/")
-             ⇒ "~lewis"
+    ```lisp
+    (directory-file-name "~lewis/")
+         ⇒ "~lewis"
+    ```
 
 Given a directory name, you can combine it with a relative file name using `concat`:
 
-    (concat dirname relfile)
+```lisp
+(concat dirname relfile)
+```
 
 Be sure to verify that the file name is relative before doing that. If you use an absolute file name, the results could be syntactically invalid or refer to the wrong file.
 
 If you want to use a directory file name in making such a combination, you must first convert it to a directory name using `file-name-as-directory`:
 
-    (concat (file-name-as-directory dirfile) relfile)
+```lisp
+(concat (file-name-as-directory dirfile) relfile)
+```
 
 Don’t try concatenating a slash by hand, as in
 
-    ;;; Wrong!
-    (concat dirfile "/" relfile)
+```lisp
+;;; Wrong!
+(concat dirfile "/" relfile)
+```
 
 because this is not portable. Always use `file-name-as-directory`.
 
 To avoid the issues mentioned above, or if the `dirname` value might be `nil` (for example, from an element of `load-path`), use:
 
-    (expand-file-name relfile dirname)
+```lisp
+(expand-file-name relfile dirname)
+```
 
 However, `expand-file-name` expands leading ‘`~`’ in `relfile`, which may not be what you want. See [File Name Expansion](File-Name-Expansion.html).
 

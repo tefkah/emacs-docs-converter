@@ -1,22 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
 
 Previous: [Killing Emacs](Killing-Emacs.html), Up: [Getting Out](Getting-Out.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
@@ -42,33 +24,41 @@ Some operating systems (those without `SIGTSTP`, or MS-DOS) do not support suspe
 
     Here is an example of how you could use these hooks:
 
-        (add-hook 'suspend-hook
-                  (lambda () (or (y-or-n-p "Really suspend? ")
-                                 (error "Suspend canceled"))))
+    ```lisp
+    (add-hook 'suspend-hook
+              (lambda () (or (y-or-n-p "Really suspend? ")
+                             (error "Suspend canceled"))))
+    ```
 
-    <!---->
-
-        (add-hook 'suspend-resume-hook (lambda () (message "Resumed!")
-                                         (sit-for 2)))
+    ```lisp
+    (add-hook 'suspend-resume-hook (lambda () (message "Resumed!")
+                                     (sit-for 2)))
+    ```
 
     Here is what you would see upon evaluating `(suspend-emacs "pwd")`:
 
-        ---------- Buffer: Minibuffer ----------
-        Really suspend? y
-        ---------- Buffer: Minibuffer ----------
-
-    ```
-    ```
-
-        ---------- Parent Shell ----------
-        bash$ /home/username
-        bash$ fg
-
-    ```
+    ```lisp
+    ---------- Buffer: Minibuffer ----------
+    Really suspend? y
+    ---------- Buffer: Minibuffer ----------
     ```
 
-        ---------- Echo Area ----------
-        Resumed!
+    ```lisp
+    ```
+
+    ```lisp
+    ---------- Parent Shell ----------
+    bash$ /home/username
+    bash$ fg
+    ```
+
+    ```lisp
+    ```
+
+    ```lisp
+    ---------- Echo Area ----------
+    Resumed!
+    ```
 
     Note that ‘`pwd`’ is not echoed after Emacs is suspended. But it is read and executed by the shell.
 

@@ -1,22 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
 
 Previous: [Syntax Table Internals](Syntax-Table-Internals.html), Up: [Syntax Tables](Syntax-Tables.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
@@ -26,7 +8,7 @@ Previous: [Syntax Table Internals](Syntax-Table-Internals.html), Up: [Syntax Tab
 
 Each buffer has a *category table* which records which categories are defined and also which characters belong to each category. Each category table defines its own categories, but normally these are initialized by copying from the standard categories table, so that the standard categories are available in all modes.
 
-Each category has a name, which is an ASCII printing character in the range ‘` `’<!-- /@w --> to ‘`~`’. You specify the name of a category when you define it with `define-category`.
+Each category has a name, which is an ASCII printing character in the range ‘` `’ to ‘`~`’. You specify the name of a category when you define it with `define-category`.
 
 The category table is actually a char-table (see [Char-Tables](Char_002dTables.html)). The element of the category table at index `c` is a *category set*—a bool-vector—that indicates which categories character `c` belongs to. In this category set, if the element at index `cat` is `t`, that means category `cat` is a member of the set, and that character `c` belongs to category `cat`.
 
@@ -38,24 +20,26 @@ For the next three functions, the optional argument `table` defaults to the curr
 
     Here’s an example of defining a new category for characters that have strong right-to-left directionality (see [Bidirectional Display](Bidirectional-Display.html)) and using it in a special category table. To obtain the information about the directionality of characters, the example code uses the ‘`bidi-class`’ Unicode property (see [bidi-class](Character-Properties.html)).
 
-        (defvar special-category-table-for-bidi
-          ;;     Make an empty category-table.
-          (let ((category-table (make-category-table))
-                ;; Create a char-table which gives the 'bidi-class' Unicode
-                ;; property for each character.
-                (uniprop-table
-                 (unicode-property-table-internal 'bidi-class)))
-            (define-category ?R "Characters of bidi-class R, AL, or RLO"
-                             category-table)
-            ;; Modify the category entry of each character whose
-            ;; 'bidi-class' Unicode property is R, AL, or RLO --
-            ;; these have a right-to-left directionality.
-            (map-char-table
-             (lambda (key val)
-               (if (memq val '(R AL RLO))
-                   (modify-category-entry key ?R category-table)))
-             uniprop-table)
-            category-table))
+    ```lisp
+    (defvar special-category-table-for-bidi
+      ;;     Make an empty category-table.
+      (let ((category-table (make-category-table))
+            ;; Create a char-table which gives the 'bidi-class' Unicode
+            ;; property for each character.
+            (uniprop-table
+             (unicode-property-table-internal 'bidi-class)))
+        (define-category ?R "Characters of bidi-class R, AL, or RLO"
+                         category-table)
+        ;; Modify the category entry of each character whose
+        ;; 'bidi-class' Unicode property is R, AL, or RLO --
+        ;; these have a right-to-left directionality.
+        (map-char-table
+         (lambda (key val)
+           (if (memq val '(R AL RLO))
+               (modify-category-entry key ?R category-table)))
+         uniprop-table)
+        category-table))
+    ```
 
 <!---->
 
@@ -63,10 +47,12 @@ For the next three functions, the optional argument `table` defaults to the curr
 
     This function returns the documentation string of category `category` in category table `table`.
 
-        (category-docstring ?a)
-             ⇒ "ASCII"
-        (category-docstring ?l)
-             ⇒ "Latin"
+    ```lisp
+    (category-docstring ?a)
+         ⇒ "ASCII"
+    (category-docstring ?l)
+         ⇒ "Latin"
+    ```
 
 <!---->
 
@@ -116,8 +102,10 @@ For the next three functions, the optional argument `table` defaults to the curr
 
     This function returns a new category set—a bool-vector—whose initial contents are the categories listed in the string `categories`. The elements of `categories` should be category names; the new category set has `t` for each of those categories, and `nil` for all other categories.
 
-        (make-category-set "al")
-             ⇒ #&128"\0\0\0\0\0\0\0\0\0\0\0\0\2\20\0\0"
+    ```lisp
+    (make-category-set "al")
+         ⇒ #&128"\0\0\0\0\0\0\0\0\0\0\0\0\2\20\0\0"
+    ```
 
 <!---->
 
@@ -125,8 +113,10 @@ For the next three functions, the optional argument `table` defaults to the curr
 
     This function returns the category set for character `char` in the current buffer’s category table. This is the bool-vector which records which categories the character `char` belongs to. The function `char-category-set` does not allocate storage, because it returns the same bool-vector that exists in the category table.
 
-        (char-category-set ?a)
-             ⇒ #&128"\0\0\0\0\0\0\0\0\0\0\0\0\2\20\0\0"
+    ```lisp
+    (char-category-set ?a)
+         ⇒ #&128"\0\0\0\0\0\0\0\0\0\0\0\0\2\20\0\0"
+    ```
 
 <!---->
 
@@ -134,8 +124,10 @@ For the next three functions, the optional argument `table` defaults to the curr
 
     This function converts the category set `category-set` into a string containing the characters that designate the categories that are members of the set.
 
-        (category-set-mnemonics (char-category-set ?a))
-             ⇒ "al"
+    ```lisp
+    (category-set-mnemonics (char-category-set ?a))
+         ⇒ "al"
+    ```
 
 <!---->
 

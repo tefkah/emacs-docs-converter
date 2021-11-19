@@ -1,22 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
 
 Next: [Nonprinting Characters](Nonprinting-Characters.html), Previous: [Syntax for Strings](Syntax-for-Strings.html), Up: [String Type](String-Type.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
@@ -32,6 +14,6 @@ If you use any Unicode-style escape sequence ‘`\uNNNN`’ or ‘`\U00NNNNNN`�
 
 You can also use hexadecimal escape sequences (‘`\xn`’) and octal escape sequences (‘`\n`’) in string constants. **But beware:** If a string constant contains hexadecimal or octal escape sequences, and these escape sequences all specify unibyte characters (i.e., less than 256), and there are no other literal non-ASCII characters or Unicode-style escape sequences in the string, then Emacs automatically assumes that it is a unibyte string. That is to say, it assumes that all non-ASCII characters occurring in the string are 8-bit raw bytes.
 
-In hexadecimal and octal escape sequences, the escaped character code may contain a variable number of digits, so the first subsequent character which is not a valid hexadecimal or octal digit terminates the escape sequence. If the next character in a string could be interpreted as a hexadecimal or octal digit, write ‘`\ `’<!-- /@w --> (backslash and space) to terminate the escape sequence. For example, ‘`\xe0\ `’<!-- /@w --> represents one character, ‘`a`’ with grave accent. ‘`\ `’<!-- /@w --> in a string constant is just like backslash-newline; it does not contribute any character to the string, but it does terminate any preceding hex escape.
+In hexadecimal and octal escape sequences, the escaped character code may contain a variable number of digits, so the first subsequent character which is not a valid hexadecimal or octal digit terminates the escape sequence. If the next character in a string could be interpreted as a hexadecimal or octal digit, write ‘`\ `’ (backslash and space) to terminate the escape sequence. For example, ‘`\xe0\ `’ represents one character, ‘`a`’ with grave accent. ‘`\ `’ in a string constant is just like backslash-newline; it does not contribute any character to the string, but it does terminate any preceding hex escape.
 
 Next: [Nonprinting Characters](Nonprinting-Characters.html), Previous: [Syntax for Strings](Syntax-for-Strings.html), Up: [String Type](String-Type.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]

@@ -1,22 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
 
 Next: [Reading a Password](Reading-a-Password.html), Previous: [Yes-or-No Queries](Yes_002dor_002dNo-Queries.html), Up: [Minibuffers](Minibuffers.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
@@ -34,7 +16,9 @@ When you have a series of similar questions to ask, such as “Do you want to sa
 
     The argument `prompter` specifies how to ask each question. If `prompter` is a string, the question text is computed like this:
 
-        (format prompter object)
+    ```lisp
+    (format prompter object)
+    ```
 
     where `object` is the next object to ask about (as obtained from `list`).
 
@@ -44,7 +28,9 @@ When you have a series of similar questions to ask, such as “Do you want to sa
 
     If the argument `help` is given, it should be a list of this form:
 
-        (singular plural action)
+    ```lisp
+    (singular plural action)
+    ```
 
     where `singular` is a string containing a singular noun that describes the objects conceptually being acted on, `plural` is the corresponding plural noun, and `action` is a transitive verb describing what `actor` does.
 
@@ -68,7 +54,9 @@ If you need to ask the user a question that might have more than just 2 answers,
 
     This function prompts the user with text in `question`, which should end in the ‘`SPC`’ character. The function includes in the prompt the possible responses in `answers` by appending them to the end of `question`. The possible responses are provided in `answers` as an alist whose elements are of the following form:
 
-        (long-answer short-answer help-message)
+    ```lisp
+    (long-answer short-answer help-message)
+    ```
 
     where `long-answer` is the complete text of the user response, a string; `short-answer` is a short form of the same response, a single character or a function key; and `help-message` is the text that describes the meaning of the answer. If the variable `read-answer-short` is non-`nil`, the prompt will show the short variants of the possible answers and the user is expected to type the single characters/keys shown in the prompt; otherwise the prompt will show the long variants of the answers, and the user is expected to type the full text of one of the answers and end by pressing `RET`. If `use-dialog-box` is non-`nil`, and this function was invoked by mouse events, the question and the answers will be displayed in a GUI dialog box.
 
@@ -76,13 +64,15 @@ If you need to ask the user a question that might have more than just 2 answers,
 
     Here is an example of using this function:
 
-        (let ((read-answer-short t))
-          (read-answer "Foo "
-             '(("yes"  ?y "perform the action")
-               ("no"   ?n "skip to the next")
-               ("all"  ?! "perform for the rest without more questions")
-               ("help" ?h "show help")
-               ("quit" ?q "exit"))))
+    ```lisp
+    (let ((read-answer-short t))
+      (read-answer "Foo "
+         '(("yes"  ?y "perform the action")
+           ("no"   ?n "skip to the next")
+           ("all"  ?! "perform for the rest without more questions")
+           ("help" ?h "show help")
+           ("quit" ?q "exit"))))
+    ```
 
 <!---->
 

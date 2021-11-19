@@ -1,22 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
 
 Next: [Property Search](Property-Search.html), Previous: [Examining Properties](Examining-Properties.html), Up: [Text Properties](Text-Properties.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
@@ -42,8 +24,10 @@ Since text properties are considered part of the contents of the buffer (or stri
 
     For example, here is how to set the `comment` and `face` properties of a range of text:
 
-        (add-text-properties start end
-                             '(comment t face highlight))
+    ```lisp
+    (add-text-properties start end
+                         '(comment t face highlight))
+    ```
 
 <!---->
 
@@ -53,7 +37,9 @@ Since text properties are considered part of the contents of the buffer (or stri
 
     The argument `props` specifies which properties to delete. It should have the form of a property list (see [Property Lists](Property-Lists.html)): a list whose elements are property names alternating with corresponding values. But only the names matter—the values that accompany them are ignored. For example, here’s how to remove the `face` property.
 
-        (remove-text-properties start end '(face nil))
+    ```lisp
+    (remove-text-properties start end '(face nil))
+    ```
 
     The return value is `t` if the function actually changed some property’s value; `nil` otherwise (if `props` is `nil` or if no character in the specified text had any of those properties).
 
@@ -77,7 +63,9 @@ Since text properties are considered part of the contents of the buffer (or stri
 
     If `props` is `nil`, the effect is to get rid of all properties from the specified range of text. Here’s an example:
 
-        (set-text-properties start end nil)
+    ```lisp
+    (set-text-properties start end nil)
+    ```
 
     Do not rely on the return value of this function.
 
@@ -91,9 +79,11 @@ Since text properties are considered part of the contents of the buffer (or stri
 
     For example, the following code would assign an italicized green face to the text between `start` and `end`:
 
-        (add-face-text-property start end 'italic)
-        (add-face-text-property start end '(:foreground "red"))
-        (add-face-text-property start end '(:foreground "green"))
+    ```lisp
+    (add-face-text-property start end 'italic)
+    (add-face-text-property start end '(:foreground "red"))
+    (add-face-text-property start end '(:foreground "green"))
+    ```
 
     The optional argument `object`, if non-`nil`, specifies a buffer or string to act on, rather than the current buffer. If `object` is a string, then `start` and `end` are zero-based indices into the string.
 
@@ -103,22 +93,26 @@ The easiest way to make a string with text properties is with `propertize`:
 
     This function returns a copy of `string` with the text properties `properties` added. These properties apply to all the characters in the string that is returned. Here is an example that constructs a string with a `face` property and a `mouse-face` property:
 
-        (propertize "foo" 'face 'italic
-                    'mouse-face 'bold-italic)
-             ⇒ #("foo" 0 3 (mouse-face bold-italic face italic))
+    ```lisp
+    (propertize "foo" 'face 'italic
+                'mouse-face 'bold-italic)
+         ⇒ #("foo" 0 3 (mouse-face bold-italic face italic))
+    ```
 
     To put different properties on various parts of a string, you can construct each part with `propertize` and then combine them with `concat`:
 
-        (concat
-         (propertize "foo" 'face 'italic
-                     'mouse-face 'bold-italic)
-         " and "
-         (propertize "bar" 'face 'italic
-                     'mouse-face 'bold-italic))
-             ⇒ #("foo and bar"
-                         0 3 (face italic mouse-face bold-italic)
-                         3 8 nil
-                         8 11 (face italic mouse-face bold-italic))
+    ```lisp
+    (concat
+     (propertize "foo" 'face 'italic
+                 'mouse-face 'bold-italic)
+     " and "
+     (propertize "bar" 'face 'italic
+                 'mouse-face 'bold-italic))
+         ⇒ #("foo and bar"
+                     0 3 (face italic mouse-face bold-italic)
+                     3 8 nil
+                     8 11 (face italic mouse-face bold-italic))
+    ```
 
 See [Buffer Contents](Buffer-Contents.html), for the function `buffer-substring-no-properties`, which copies text from the buffer but does not copy its properties.
 

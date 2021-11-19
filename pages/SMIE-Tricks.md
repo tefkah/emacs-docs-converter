@@ -1,22 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
 
 Next: [SMIE Indentation](SMIE-Indentation.html), Previous: [SMIE Lexer](SMIE-Lexer.html), Up: [SMIE](SMIE.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
@@ -26,34 +8,40 @@ The parsing technique used by SMIE does not allow tokens to behave differently i
 
 Sometimes, those conflicts can be worked around by expressing the grammar slightly differently. For example, for Modula-2 it might seem natural to have a BNF grammar that looks like this:
 
-      ...
-      (inst ("IF" exp "THEN" insts "ELSE" insts "END")
-            ("CASE" exp "OF" cases "END")
-            ...)
-      (cases (cases "|" cases)
-             (caselabel ":" insts)
-             ("ELSE" insts))
-      ...
+```lisp
+  ...
+  (inst ("IF" exp "THEN" insts "ELSE" insts "END")
+        ("CASE" exp "OF" cases "END")
+        ...)
+  (cases (cases "|" cases)
+         (caselabel ":" insts)
+         ("ELSE" insts))
+  ...
+```
 
 But this will create conflicts for `"ELSE"`: on the one hand, the IF rule implies (among many other things) that `"ELSE" = "END"`; but on the other hand, since `"ELSE"` appears within `cases`, which appears left of `"END"`, we also have `"ELSE" > "END"`. We can solve the conflict either by using:
 
-      ...
-      (inst ("IF" exp "THEN" insts "ELSE" insts "END")
-            ("CASE" exp "OF" cases "END")
-            ("CASE" exp "OF" cases "ELSE" insts "END")
-            ...)
-      (cases (cases "|" cases) (caselabel ":" insts))
-      ...
+```lisp
+  ...
+  (inst ("IF" exp "THEN" insts "ELSE" insts "END")
+        ("CASE" exp "OF" cases "END")
+        ("CASE" exp "OF" cases "ELSE" insts "END")
+        ...)
+  (cases (cases "|" cases) (caselabel ":" insts))
+  ...
+```
 
 or
 
-      ...
-      (inst ("IF" exp "THEN" else "END")
-            ("CASE" exp "OF" cases "END")
-            ...)
-      (else (insts "ELSE" insts))
-      (cases (cases "|" cases) (caselabel ":" insts) (else))
-      ...
+```lisp
+  ...
+  (inst ("IF" exp "THEN" else "END")
+        ("CASE" exp "OF" cases "END")
+        ...)
+  (else (insts "ELSE" insts))
+  (cases (cases "|" cases) (caselabel ":" insts) (else))
+  ...
+```
 
 Reworking the grammar to try and solve conflicts has its downsides, tho, because SMIE assumes that the grammar reflects the logical structure of the code, so it is preferable to keep the BNF closer to the intended abstract syntax tree.
 

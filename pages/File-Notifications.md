@@ -1,22 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
 
 Next: [Dynamic Libraries](Dynamic-Libraries.html), Previous: [Desktop Notifications](Desktop-Notifications.html), Up: [System Interface](System-Interface.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
@@ -52,7 +34,9 @@ Since all these libraries emit different events on notified file changes, there 
 
     When any event happens, Emacs will call the `callback` function passing it a single argument `event`, which is of the form
 
-        (descriptor action file [file1])
+    ```lisp
+    (descriptor action file [file1])
+    ```
 
     `descriptor` is the same object as the one returned by this function. `action` is the description of the event. It could be any one of the following symbols:
 
@@ -86,56 +70,72 @@ Since all these libraries emit different events on notified file changes, there 
 
     `file` and `file1` are the name of the file(s) whose event is being reported. For example:
 
-        (require 'filenotify)
-             ⇒ filenotify
-
-    ```
-    ```
-
-        (defun my-notify-callback (event)
-          (message "Event %S" event))
-             ⇒ my-notify-callback
-
-    ```
+    ```lisp
+    (require 'filenotify)
+         ⇒ filenotify
     ```
 
-        (file-notify-add-watch
-          "/tmp" '(change attribute-change) 'my-notify-callback)
-             ⇒ 35025468
-
-    ```
+    ```lisp
     ```
 
-        (write-region "foo" nil "/tmp/foo")
-             ⇒ Event (35025468 created "/tmp/.#foo")
-                Event (35025468 created "/tmp/foo")
-                Event (35025468 changed "/tmp/foo")
-                Event (35025468 deleted "/tmp/.#foo")
-
-    ```
+    ```lisp
+    (defun my-notify-callback (event)
+      (message "Event %S" event))
+         ⇒ my-notify-callback
     ```
 
-        (write-region "bla" nil "/tmp/foo")
-             ⇒ Event (35025468 created "/tmp/.#foo")
-                Event (35025468 changed "/tmp/foo")
-                Event (35025468 deleted "/tmp/.#foo")
-
-    ```
+    ```lisp
     ```
 
-        (set-file-modes "/tmp/foo" (default-file-modes))
-             ⇒ Event (35025468 attribute-changed "/tmp/foo")
+    ```lisp
+    (file-notify-add-watch
+      "/tmp" '(change attribute-change) 'my-notify-callback)
+         ⇒ 35025468
+    ```
+
+    ```lisp
+    ```
+
+    ```lisp
+    (write-region "foo" nil "/tmp/foo")
+         ⇒ Event (35025468 created "/tmp/.#foo")
+            Event (35025468 created "/tmp/foo")
+            Event (35025468 changed "/tmp/foo")
+            Event (35025468 deleted "/tmp/.#foo")
+    ```
+
+    ```lisp
+    ```
+
+    ```lisp
+    (write-region "bla" nil "/tmp/foo")
+         ⇒ Event (35025468 created "/tmp/.#foo")
+            Event (35025468 changed "/tmp/foo")
+            Event (35025468 deleted "/tmp/.#foo")
+    ```
+
+    ```lisp
+    ```
+
+    ```lisp
+    (set-file-modes "/tmp/foo" (default-file-modes))
+         ⇒ Event (35025468 attribute-changed "/tmp/foo")
+    ```
 
     Whether the action `renamed` is returned, depends on the used watch library. Otherwise, the actions `deleted` and `created` could be returned in a random order.
 
-        (rename-file "/tmp/foo" "/tmp/bla")
-             ⇒ Event (35025468 renamed "/tmp/foo" "/tmp/bla")
-
+    ```lisp
+    (rename-file "/tmp/foo" "/tmp/bla")
+         ⇒ Event (35025468 renamed "/tmp/foo" "/tmp/bla")
     ```
+
+    ```lisp
     ```
 
-        (delete-file "/tmp/bla")
-             ⇒ Event (35025468 deleted "/tmp/bla")
+    ```lisp
+    (delete-file "/tmp/bla")
+         ⇒ Event (35025468 deleted "/tmp/bla")
+    ```
 
 <!---->
 
@@ -151,63 +151,79 @@ Since all these libraries emit different events on notified file changes, there 
 
     A watch can become invalid if the file or directory it watches is deleted, or if the watcher thread exits abnormally for any other reason. Removing the watch by calling `file-notify-rm-watch` also makes it invalid.
 
-        (make-directory "/tmp/foo")
-             ⇒ Event (35025468 created "/tmp/foo")
-
-    ```
-    ```
-
-        (setq desc
-              (file-notify-add-watch
-                "/tmp/foo" '(change) 'my-notify-callback))
-             ⇒ 11359632
-
-    ```
+    ```lisp
+    (make-directory "/tmp/foo")
+         ⇒ Event (35025468 created "/tmp/foo")
     ```
 
-        (file-notify-valid-p desc)
-             ⇒ t
-
-    ```
+    ```lisp
     ```
 
-        (write-region "bla" nil "/tmp/foo/bla")
-             ⇒ Event (11359632 created "/tmp/foo/.#bla")
-                Event (11359632 created "/tmp/foo/bla")
-                Event (11359632 changed "/tmp/foo/bla")
-                Event (11359632 deleted "/tmp/foo/.#bla")
-
-    ```
+    ```lisp
+    (setq desc
+          (file-notify-add-watch
+            "/tmp/foo" '(change) 'my-notify-callback))
+         ⇒ 11359632
     ```
 
-        ;; Deleting a file in the directory doesn't invalidate the watch.
-        (delete-file "/tmp/foo/bla")
-             ⇒ Event (11359632 deleted "/tmp/foo/bla")
-
-    ```
+    ```lisp
     ```
 
-        (write-region "bla" nil "/tmp/foo/bla")
-             ⇒ Event (11359632 created "/tmp/foo/.#bla")
-                Event (11359632 created "/tmp/foo/bla")
-                Event (11359632 changed "/tmp/foo/bla")
-                Event (11359632 deleted "/tmp/foo/.#bla")
-
-    ```
+    ```lisp
+    (file-notify-valid-p desc)
+         ⇒ t
     ```
 
-        ;; Deleting the directory invalidates the watch.
-        ;; Events arrive for different watch descriptors.
-        (delete-directory "/tmp/foo" 'recursive)
-             ⇒ Event (35025468 deleted "/tmp/foo")
-                Event (11359632 deleted "/tmp/foo/bla")
-                Event (11359632 deleted "/tmp/foo")
-                Event (11359632 stopped "/tmp/foo")
-
-    ```
+    ```lisp
     ```
 
-        (file-notify-valid-p desc)
-             ⇒ nil
+    ```lisp
+    (write-region "bla" nil "/tmp/foo/bla")
+         ⇒ Event (11359632 created "/tmp/foo/.#bla")
+            Event (11359632 created "/tmp/foo/bla")
+            Event (11359632 changed "/tmp/foo/bla")
+            Event (11359632 deleted "/tmp/foo/.#bla")
+    ```
+
+    ```lisp
+    ```
+
+    ```lisp
+    ;; Deleting a file in the directory doesn't invalidate the watch.
+    (delete-file "/tmp/foo/bla")
+         ⇒ Event (11359632 deleted "/tmp/foo/bla")
+    ```
+
+    ```lisp
+    ```
+
+    ```lisp
+    (write-region "bla" nil "/tmp/foo/bla")
+         ⇒ Event (11359632 created "/tmp/foo/.#bla")
+            Event (11359632 created "/tmp/foo/bla")
+            Event (11359632 changed "/tmp/foo/bla")
+            Event (11359632 deleted "/tmp/foo/.#bla")
+    ```
+
+    ```lisp
+    ```
+
+    ```lisp
+    ;; Deleting the directory invalidates the watch.
+    ;; Events arrive for different watch descriptors.
+    (delete-directory "/tmp/foo" 'recursive)
+         ⇒ Event (35025468 deleted "/tmp/foo")
+            Event (11359632 deleted "/tmp/foo/bla")
+            Event (11359632 deleted "/tmp/foo")
+            Event (11359632 stopped "/tmp/foo")
+    ```
+
+    ```lisp
+    ```
+
+    ```lisp
+    (file-notify-valid-p desc)
+         ⇒ nil
+    ```
 
 Next: [Dynamic Libraries](Dynamic-Libraries.html), Previous: [Desktop Notifications](Desktop-Notifications.html), Up: [System Interface](System-Interface.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]

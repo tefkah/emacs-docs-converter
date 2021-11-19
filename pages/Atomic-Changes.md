@@ -1,22 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
 
 Next: [Change Hooks](Change-Hooks.html), Previous: [JSONRPC](JSONRPC.html), Up: [Text](Text.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
@@ -26,9 +8,11 @@ In database terminology, an *atomic* change is an indivisible change—it can su
 
 To do this for one buffer, the one already current, simply write a call to `atomic-change-group` around the code that makes the changes, like this:
 
-    (atomic-change-group
-      (insert foo)
-      (delete-region x y))
+```lisp
+(atomic-change-group
+  (insert foo)
+  (delete-region x y))
+```
 
 If an error (or other nonlocal exit) occurs inside the body of `atomic-change-group`, it unmakes all the changes in that buffer that were during the execution of the body. This kind of change group has no effect on any other buffers—any such changes remain.
 
@@ -66,8 +50,10 @@ Your code should use `unwind-protect` to make sure the group is always finished.
 
 To make a multibuffer change group, call `prepare-change-group` once for each buffer you want to cover, then use `nconc` to combine the returned values, like this:
 
-    (nconc (prepare-change-group buffer-1)
-           (prepare-change-group buffer-2))
+```lisp
+(nconc (prepare-change-group buffer-1)
+       (prepare-change-group buffer-2))
+```
 
 You can then activate the multibuffer change group with a single call to `activate-change-group`, and finish it with a single call to `accept-change-group` or `cancel-change-group`.
 

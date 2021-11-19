@@ -1,22 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
 
 Next: [Precedence of Action Functions](Precedence-of-Action-Functions.html), Previous: [Buffer Display Action Alists](Buffer-Display-Action-Alists.html), Up: [Displaying Buffers](Displaying-Buffers.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
@@ -100,29 +82,35 @@ Many efforts in the design of `display-buffer` have been given to maintain compa
 
     This variable is `t` by default. Instead of customizing it to `nil` and thus telling `display-buffer` what not to do, it’s much better to list in `display-buffer-base-action` the action functions it should try instead as, for example:
 
-        (customize-set-variable
-         'display-buffer-base-action
-         '((display-buffer-reuse-window display-buffer-same-window
-            display-buffer-in-previous-window
-            display-buffer-use-some-window)))
+    ```lisp
+    (customize-set-variable
+     'display-buffer-base-action
+     '((display-buffer-reuse-window display-buffer-same-window
+        display-buffer-in-previous-window
+        display-buffer-use-some-window)))
+    ```
 
 *   `pop-up-frames`
 
     Instead of customizing this variable to `t`, customize `display-buffer-base-action`, for example, as follows:
 
-        (customize-set-variable
-         'display-buffer-base-action
-         '((display-buffer-reuse-window display-buffer-pop-up-frame)
-           (reusable-frames . 0)))
+    ```lisp
+    (customize-set-variable
+     'display-buffer-base-action
+     '((display-buffer-reuse-window display-buffer-pop-up-frame)
+       (reusable-frames . 0)))
+    ```
 
 *   *   `same-window-buffer-names`
     *   `same-window-regexps`
 
     Instead of adding a buffer name or a regular expression to one of these options use a `display-buffer-alist` entry for that buffer specifying the action function `display-buffer-same-window`.
 
-        (customize-set-variable
-         'display-buffer-alist
-         (cons '("\\*foo\\*" (display-buffer-same-window))
-                display-buffer-alist))
+    ```lisp
+    (customize-set-variable
+     'display-buffer-alist
+     (cons '("\\*foo\\*" (display-buffer-same-window))
+            display-buffer-alist))
+    ```
 
 Next: [Precedence of Action Functions](Precedence-of-Action-Functions.html), Previous: [Buffer Display Action Alists](Buffer-Display-Action-Alists.html), Up: [Displaying Buffers](Displaying-Buffers.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]

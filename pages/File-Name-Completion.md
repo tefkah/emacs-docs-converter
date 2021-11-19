@@ -1,22 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
 
 Next: [Standard File Names](Standard-File-Names.html), Previous: [Unique File Names](Unique-File-Names.html), Up: [File Names](File-Names.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
@@ -32,15 +14,19 @@ This section describes low-level subroutines for completing a file name. For hig
 
     In the following example, suppose that `~rms/lewis` is the current default directory, and has five files whose names begin with ‘`f`’: `foo`, `file~`, `file.c`, `file.c.~1~`, and `file.c.~2~`.
 
-        (file-name-all-completions "f" "")
-             ⇒ ("foo" "file~" "file.c.~2~"
-                        "file.c.~1~" "file.c")
-
+    ```lisp
+    (file-name-all-completions "f" "")
+         ⇒ ("foo" "file~" "file.c.~2~"
+                    "file.c.~1~" "file.c")
     ```
+
+    ```lisp
     ```
 
-        (file-name-all-completions "fo" "")
-             ⇒ ("foo")
+    ```lisp
+    (file-name-all-completions "fo" "")
+         ⇒ ("foo")
+    ```
 
 <!---->
 
@@ -52,26 +38,34 @@ This section describes low-level subroutines for completing a file name. For hig
 
     In the following example, suppose that the current default directory has five files whose names begin with ‘`f`’: `foo`, `file~`, `file.c`, `file.c.~1~`, and `file.c.~2~`.
 
-        (file-name-completion "fi" "")
-             ⇒ "file"
-
-    ```
-    ```
-
-        (file-name-completion "file.c.~1" "")
-             ⇒ "file.c.~1~"
-
-    ```
+    ```lisp
+    (file-name-completion "fi" "")
+         ⇒ "file"
     ```
 
-        (file-name-completion "file.c.~1~" "")
-             ⇒ t
-
-    ```
+    ```lisp
     ```
 
-        (file-name-completion "file.c.~3" "")
-             ⇒ nil
+    ```lisp
+    (file-name-completion "file.c.~1" "")
+         ⇒ "file.c.~1~"
+    ```
+
+    ```lisp
+    ```
+
+    ```lisp
+    (file-name-completion "file.c.~1~" "")
+         ⇒ t
+    ```
+
+    ```lisp
+    ```
+
+    ```lisp
+    (file-name-completion "file.c.~3" "")
+         ⇒ nil
+    ```
 
 <!---->
 
@@ -81,8 +75,10 @@ This section describes low-level subroutines for completing a file name. For hig
 
     A typical value might look like this:
 
-        completion-ignored-extensions
-             ⇒ (".o" ".elc" "~" ".dvi")
+    ```lisp
+    completion-ignored-extensions
+         ⇒ (".o" ".elc" "~" ".dvi")
+    ```
 
     If an element of `completion-ignored-extensions` ends in a slash ‘`/`’, it signals a directory. The elements which do *not* end in a slash will never match a directory; thus, the above value will not filter out a directory named `foo.elc`.
 

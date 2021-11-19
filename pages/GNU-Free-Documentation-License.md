@@ -1,22 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
 
 Next: [GPL](GPL.html), Previous: [Antinews](Antinews.html), Up: [Top](index.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
@@ -24,11 +6,13 @@ Next: [GPL](GPL.html), Previous: [Antinews](Antinews.html), Up: [Top](index.html
 
 Version 1.3, 3 November 2008
 
-    Copyright © 2000, 2001, 2002, 2007, 2008 Free Software Foundation, Inc.
-    https://fsf.org/
+```lisp
+Copyright © 2000, 2001, 2002, 2007, 2008 Free Software Foundation, Inc.
+https://fsf.org/
 
-    Everyone is permitted to copy and distribute verbatim copies
-    of this license document, but changing it is not allowed.
+Everyone is permitted to copy and distribute verbatim copies
+of this license document, but changing it is not allowed.
+```
 
 0.  PREAMBLE
 
@@ -164,19 +148,23 @@ Version 1.3, 3 November 2008
 
 To use this License in a document you have written, include a copy of the License in the document and put the following copyright and license notices just after the title page:
 
-      Copyright (C)  year  your name.
-      Permission is granted to copy, distribute and/or modify this document
-      under the terms of the GNU Free Documentation License, Version 1.3
-      or any later version published by the Free Software Foundation;
-      with no Invariant Sections, no Front-Cover Texts, and no Back-Cover
-      Texts.  A copy of the license is included in the section entitled ``GNU
-      Free Documentation License''.
+```lisp
+  Copyright (C)  year  your name.
+  Permission is granted to copy, distribute and/or modify this document
+  under the terms of the GNU Free Documentation License, Version 1.3
+  or any later version published by the Free Software Foundation;
+  with no Invariant Sections, no Front-Cover Texts, and no Back-Cover
+  Texts.  A copy of the license is included in the section entitled ``GNU
+  Free Documentation License''.
+```
 
 If you have Invariant Sections, Front-Cover Texts and Back-Cover Texts, replace the “with…Texts.” line with this:
 
-        with the Invariant Sections being list their titles, with
-        the Front-Cover Texts being list, and with the Back-Cover Texts
-        being list.
+```lisp
+    with the Invariant Sections being list their titles, with
+    the Front-Cover Texts being list, and with the Back-Cover Texts
+    being list.
+```
 
 If you have Invariant Sections without Cover Texts, or some other combination of the three, merge those two alternatives to suit the situation.
 

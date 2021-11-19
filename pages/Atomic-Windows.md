@@ -1,22 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
 
 Next: [Window Point](Window-Point.html), Previous: [Side Windows](Side-Windows.html), Up: [Windows](Windows.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
@@ -70,12 +52,14 @@ Atomic windows automatically cease to exist when one of their constituents gets 
 
 The following code snippet, when applied to a single-window frame, first splits the selected window and makes the selected and the new window constituents of an atomic window with their parent as root. It then displays the buffer `*Messages*` in a new window at the frame’s bottom and makes that new window part of the atomic window just created.
 
-    (let ((window (split-window-right)))
-      (window-make-atom (window-parent window))
-      (display-buffer-in-atom-window
-       (get-buffer-create "*Messages*")
-       `((window . ,(window-parent window)) (window-height . 5))))
+```lisp
+(let ((window (split-window-right)))
+  (window-make-atom (window-parent window))
+  (display-buffer-in-atom-window
+   (get-buffer-create "*Messages*")
+   `((window . ,(window-parent window)) (window-height . 5))))
+```
 
-At this moment typing `C-x 2`<!-- /@w --> in any window of that frame produces a new window at the bottom of the frame. Typing `C-x 3`<!-- /@w --> instead will put the new window at the frame’s right. In either case, typing now `C-x 1`<!-- /@w --> in any window of the atomic window will remove the new window only. Typing `C-x 0`<!-- /@w --> in any window of the atomic window will make that new window fill the frame.
+At this moment typing `C-x 2` in any window of that frame produces a new window at the bottom of the frame. Typing `C-x 3` instead will put the new window at the frame’s right. In either case, typing now `C-x 1` in any window of the atomic window will remove the new window only. Typing `C-x 0` in any window of the atomic window will make that new window fill the frame.
 
 Next: [Window Point](Window-Point.html), Previous: [Side Windows](Side-Windows.html), Up: [Windows](Windows.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]

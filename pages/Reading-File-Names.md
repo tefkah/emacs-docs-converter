@@ -1,22 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
 
 Next: [Completion Variables](Completion-Variables.html), Previous: [High-Level Completion](High_002dLevel-Completion.html), Up: [Completion](Completion.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
@@ -55,23 +37,29 @@ The high-level completion functions `read-file-name`, `read-directory-name`, and
 
     Here is an example of using `read-file-name`:
 
-        (read-file-name "The file is ")
+    ```lisp
+    (read-file-name "The file is ")
 
-        ;; After evaluation of the preceding expression,
-        ;;   the following appears in the minibuffer:
-
+    ;; After evaluation of the preceding expression,
+    ;;   the following appears in the minibuffer:
     ```
+
+    ```lisp
     ```
 
-        ---------- Buffer: Minibuffer ----------
-        The file is /gp/gnu/elisp/∗
-        ---------- Buffer: Minibuffer ----------
+    ```lisp
+    ---------- Buffer: Minibuffer ----------
+    The file is /gp/gnu/elisp/∗
+    ---------- Buffer: Minibuffer ----------
+    ```
 
     Typing `manual TAB` results in the following:
 
-        ---------- Buffer: Minibuffer ----------
-        The file is /gp/gnu/elisp/manual.texi∗
-        ---------- Buffer: Minibuffer ----------
+    ```lisp
+    ---------- Buffer: Minibuffer ----------
+    The file is /gp/gnu/elisp/manual.texi∗
+    ---------- Buffer: Minibuffer ----------
+    ```
 
     If the user types `RET`, `read-file-name` returns the file name as the string `"/gp/gnu/elisp/manual.texi"`.
 
@@ -105,31 +93,39 @@ The high-level completion functions `read-file-name`, `read-directory-name`, and
 
     For example:
 
-        ;; Here the minibuffer starts out with the default directory.
-        (let ((insert-default-directory t))
-          (read-file-name "The file is "))
-
-    ```
-    ```
-
-        ---------- Buffer: Minibuffer ----------
-        The file is ~lewis/manual/∗
-        ---------- Buffer: Minibuffer ----------
-
-    ```
+    ```lisp
+    ;; Here the minibuffer starts out with the default directory.
+    (let ((insert-default-directory t))
+      (read-file-name "The file is "))
     ```
 
-        ;; Here the minibuffer is empty and only the prompt
-        ;;   appears on its line.
-        (let ((insert-default-directory nil))
-          (read-file-name "The file is "))
-
-    ```
+    ```lisp
     ```
 
-        ---------- Buffer: Minibuffer ----------
-        The file is ∗
-        ---------- Buffer: Minibuffer ----------
+    ```lisp
+    ---------- Buffer: Minibuffer ----------
+    The file is ~lewis/manual/∗
+    ---------- Buffer: Minibuffer ----------
+    ```
+
+    ```lisp
+    ```
+
+    ```lisp
+    ;; Here the minibuffer is empty and only the prompt
+    ;;   appears on its line.
+    (let ((insert-default-directory nil))
+      (read-file-name "The file is "))
+    ```
+
+    ```lisp
+    ```
+
+    ```lisp
+    ---------- Buffer: Minibuffer ----------
+    The file is ∗
+    ---------- Buffer: Minibuffer ----------
+    ```
 
 <!---->
 

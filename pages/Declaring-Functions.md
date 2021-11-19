@@ -1,22 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
 
 Next: [Function Safety](Function-Safety.html), Previous: [Declare Form](Declare-Form.html), Up: [Functions](Functions.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
@@ -24,14 +6,18 @@ Next: [Function Safety](Function-Safety.html), Previous: [Declare Form](Declare-
 
 Byte-compiling a file often produces warnings about functions that the compiler doesn’t know about (see [Compiler Errors](Compiler-Errors.html)). Sometimes this indicates a real problem, but usually the functions in question are defined in other files which would be loaded if that code is run. For example, byte-compiling `simple.el` used to warn:
 
-    simple.el:8727:1:Warning: the function ‘shell-mode’ is not known to be
-        defined.
+```lisp
+simple.el:8727:1:Warning: the function ‘shell-mode’ is not known to be
+    defined.
+```
 
 In fact, `shell-mode` is used only in a function that executes `(require 'shell)` before calling `shell-mode`, so `shell-mode` will be defined properly at run-time. When you know that such a warning does not indicate a real problem, it is good to suppress the warning. That makes new warnings which might mean real problems more visible. You do that with `declare-function`.
 
 All you need to do is add a `declare-function` statement before the first use of the function in question:
 
-    (declare-function shell-mode "shell" ())
+```lisp
+(declare-function shell-mode "shell" ())
+```
 
 This says that `shell-mode` is defined in `shell.el` (the ‘`.el`’ can be omitted). The compiler takes for granted that that file really defines the function, and does not check.
 

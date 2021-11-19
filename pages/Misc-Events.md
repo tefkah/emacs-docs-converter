@@ -1,22 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
 
 Next: [Event Examples](Event-Examples.html), Previous: [Focus Events](Focus-Events.html), Up: [Input Events](Input-Events.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
@@ -57,7 +39,9 @@ A few other event types represent occurrences within the system.
 
     This kind of event is generated when a mouse pointer moves onto a portion of buffer text which has a `help-echo` text property. The generated event has this form:
 
-        (help-echo frame help window object pos)
+    ```lisp
+    (help-echo frame help window object pos)
+    ```
 
     The precise meaning of the event parameters and the way these parameters are used to display the help-echo text are described in [Text help-echo](Special-Properties.html#Text-help_002decho).
 
@@ -68,31 +52,39 @@ A few other event types represent occurrences within the system.
 
     To catch a user signal, bind the corresponding event to an interactive command in the `special-event-map` (see [Controlling Active Maps](Controlling-Active-Maps.html)). The command is called with no arguments, and the specific signal event is available in `last-input-event` (see [Event Input Misc](Event-Input-Misc.html). For example:
 
-        (defun sigusr-handler ()
-          (interactive)
-          (message "Caught signal %S" last-input-event))
+    ```lisp
+    (defun sigusr-handler ()
+      (interactive)
+      (message "Caught signal %S" last-input-event))
 
-        (define-key special-event-map [sigusr1] 'sigusr-handler)
+    (define-key special-event-map [sigusr1] 'sigusr-handler)
+    ```
 
     To test the signal handler, you can make Emacs send a signal to itself:
 
-        (signal-process (emacs-pid) 'sigusr1)
+    ```lisp
+    (signal-process (emacs-pid) 'sigusr1)
+    ```
 
 *   `language-change`
 
     This kind of event is generated on MS-Windows when the input language has changed. This typically means that the keyboard keys will send to Emacs characters from a different language. The generated event has this form:
 
-        (language-change frame codepage language-id)
+    ```lisp
+    (language-change frame codepage language-id)
+    ```
 
     Here `frame` is the frame which was current when the input language changed; `codepage` is the new codepage number; and `language-id` is the numerical ID of the new input language. The coding-system (see [Coding Systems](Coding-Systems.html)) that corresponds to `codepage` is `cpcodepage` or `windows-codepage`. To convert `language-id` to a string (e.g., to use it for various language-dependent features, such as `set-language-environment`), use the `w32-get-locale-info` function, like this:
 
-        ;; Get the abbreviated language name, such as "ENU" for English
-        (w32-get-locale-info language-id)
-        ;; Get the full English name of the language,
-        ;; such as "English (United States)"
-        (w32-get-locale-info language-id 4097)
-        ;; Get the full localized name of the language
-        (w32-get-locale-info language-id t)
+    ```lisp
+    ;; Get the abbreviated language name, such as "ENU" for English
+    (w32-get-locale-info language-id)
+    ;; Get the full English name of the language,
+    ;; such as "English (United States)"
+    (w32-get-locale-info language-id 4097)
+    ;; Get the full localized name of the language
+    (w32-get-locale-info language-id t)
+    ```
 
 If one of these events arrives in the middle of a key sequence—that is, after a prefix key—then Emacs reorders the events so that this event comes either before or after the multi-event key sequence, not within it.
 
