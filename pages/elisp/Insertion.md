@@ -1,24 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
-
-Next: [Commands for Insertion](Commands-for-Insertion.html), Previous: [Comparing Text](Comparing-Text.html), Up: [Text](Text.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
 ### 32.4 Inserting Text
 
@@ -32,58 +12,52 @@ These functions copy text characters from strings and buffers along with their p
 
 The insertion functions convert text from unibyte to multibyte in order to insert in a multibyte buffer, and vice versa—if the text comes from a string or from a buffer. However, they do not convert unibyte character codes 128 through 255 to multibyte characters, not even if the current buffer is a multibyte buffer. See [Converting Representations](Converting-Representations.html).
 
-*   Function: **insert** *\&rest args*
+### Function: **insert** *\&rest args*
 
-    This function inserts the strings and/or characters `args` into the current buffer, at point, moving point forward. In other words, it inserts the text before point. An error is signaled unless all `args` are either strings or characters. The value is `nil`.
+This function inserts the strings and/or characters `args` into the current buffer, at point, moving point forward. In other words, it inserts the text before point. An error is signaled unless all `args` are either strings or characters. The value is `nil`.
 
-<!---->
+### Function: **insert-before-markers** *\&rest args*
 
-*   Function: **insert-before-markers** *\&rest args*
+This function inserts the strings and/or characters `args` into the current buffer, at point, moving point forward. An error is signaled unless all `args` are either strings or characters. The value is `nil`.
 
-    This function inserts the strings and/or characters `args` into the current buffer, at point, moving point forward. An error is signaled unless all `args` are either strings or characters. The value is `nil`.
+This function is unlike the other insertion functions in that it relocates markers initially pointing at the insertion point, to point after the inserted text. If an overlay begins at the insertion point, the inserted text falls outside the overlay; if a nonempty overlay ends at the insertion point, the inserted text falls inside that overlay.
 
-    This function is unlike the other insertion functions in that it relocates markers initially pointing at the insertion point, to point after the inserted text. If an overlay begins at the insertion point, the inserted text falls outside the overlay; if a nonempty overlay ends at the insertion point, the inserted text falls inside that overlay.
+### Command: **insert-char** *character \&optional count inherit*
 
-<!---->
+This command inserts `count` instances of `character` into the current buffer before point. The argument `count` must be an integer, and `character` must be a character.
 
-*   Command: **insert-char** *character \&optional count inherit*
+If called interactively, this command prompts for `character` using its Unicode name or its code point. See [Inserting Text](https://www.gnu.org/software/emacs/manual/html_node/emacs/Inserting-Text.html#Inserting-Text) in The GNU Emacs Manual.
 
-    This command inserts `count` instances of `character` into the current buffer before point. The argument `count` must be an integer, and `character` must be a character.
+This function does not convert unibyte character codes 128 through 255 to multibyte characters, not even if the current buffer is a multibyte buffer. See [Converting Representations](Converting-Representations.html).
 
-    If called interactively, this command prompts for `character` using its Unicode name or its code point. See [Inserting Text](https://www.gnu.org/software/emacs/manual/html_node/emacs/Inserting-Text.html#Inserting-Text) in The GNU Emacs Manual.
+If `inherit` is non-`nil`, the inserted characters inherit sticky text properties from the two characters before and after the insertion point. See [Sticky Properties](Sticky-Properties.html).
 
-    This function does not convert unibyte character codes 128 through 255 to multibyte characters, not even if the current buffer is a multibyte buffer. See [Converting Representations](Converting-Representations.html).
+### Function: **insert-buffer-substring** *from-buffer-or-name \&optional start end*
 
-    If `inherit` is non-`nil`, the inserted characters inherit sticky text properties from the two characters before and after the insertion point. See [Sticky Properties](Sticky-Properties.html).
+This function inserts a portion of buffer `from-buffer-or-name` into the current buffer before point. The text inserted is the region between `start` (inclusive) and `end` (exclusive). (These arguments default to the beginning and end of the accessible portion of that buffer.) This function returns `nil`.
 
-<!---->
+In this example, the form is executed with buffer ‘`bar`’ as the current buffer. We assume that buffer ‘`bar`’ is initially empty.
 
-*   Function: **insert-buffer-substring** *from-buffer-or-name \&optional start end*
+```lisp
+---------- Buffer: foo ----------
+We hold these truths to be self-evident, that all
+---------- Buffer: foo ----------
+```
 
-    This function inserts a portion of buffer `from-buffer-or-name` into the current buffer before point. The text inserted is the region between `start` (inclusive) and `end` (exclusive). (These arguments default to the beginning and end of the accessible portion of that buffer.) This function returns `nil`.
+```lisp
+```
 
-    In this example, the form is executed with buffer ‘`bar`’ as the current buffer. We assume that buffer ‘`bar`’ is initially empty.
+```lisp
+(insert-buffer-substring "foo" 1 20)
+     ⇒ nil
 
-        ---------- Buffer: foo ----------
-        We hold these truths to be self-evident, that all
-        ---------- Buffer: foo ----------
+---------- Buffer: bar ----------
+We hold these truth∗
+---------- Buffer: bar ----------
+```
 
-    ```
-    ```
+### Function: **insert-buffer-substring-no-properties** *from-buffer-or-name \&optional start end*
 
-        (insert-buffer-substring "foo" 1 20)
-             ⇒ nil
-
-        ---------- Buffer: bar ----------
-        We hold these truth∗
-        ---------- Buffer: bar ----------
-
-<!---->
-
-*   Function: **insert-buffer-substring-no-properties** *from-buffer-or-name \&optional start end*
-
-    This is like `insert-buffer-substring` except that it does not copy any text properties.
+This is like `insert-buffer-substring` except that it does not copy any text properties.
 
 See [Sticky Properties](Sticky-Properties.html), for other insertion functions that inherit text properties from the nearby text in addition to inserting it. Whitespace inserted by indentation functions also inherits text properties.
-
-Next: [Commands for Insertion](Commands-for-Insertion.html), Previous: [Comparing Text](Comparing-Text.html), Up: [Text](Text.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]

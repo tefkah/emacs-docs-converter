@@ -1,24 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
-
-Next: [Command-Line Arguments](Command_002dLine-Arguments.html), Previous: [Init File](Init-File.html), Up: [Starting Up](Starting-Up.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
 #### 40.1.3 Terminal-Specific Initialization
 
@@ -32,28 +12,24 @@ Your init file can prevent the loading of the terminal-specific library by setti
 
 You can also arrange to override some of the actions of the terminal-specific library by using `tty-setup-hook`. This is a normal hook that Emacs runs after initializing a new text terminal. You could use this hook to define initializations for terminals that do not have their own libraries. See [Hooks](Hooks.html).
 
-*   User Option: **term-file-prefix**
+### User Option: **term-file-prefix**
 
-    If the value of this variable is non-`nil`, Emacs loads a terminal-specific initialization file as follows:
+If the value of this variable is non-`nil`, Emacs loads a terminal-specific initialization file as follows:
 
-        (load (concat term-file-prefix (getenv "TERM")))
+```lisp
+(load (concat term-file-prefix (getenv "TERM")))
+```
 
-    You may set the `term-file-prefix` variable to `nil` in your init file if you do not wish to load the terminal-initialization file.
+You may set the `term-file-prefix` variable to `nil` in your init file if you do not wish to load the terminal-initialization file.
 
-    On MS-DOS, Emacs sets the `TERM` environment variable to ‘`internal`’.
+On MS-DOS, Emacs sets the `TERM` environment variable to ‘`internal`’.
 
-<!---->
+### User Option: **term-file-aliases**
 
-*   User Option: **term-file-aliases**
+This variable is an association list mapping terminal types to their aliases. For example, an element of the form `("vt102" . "vt100")` means to treat a terminal of type ‘`vt102`’ like one of type ‘`vt100`’.
 
-    This variable is an association list mapping terminal types to their aliases. For example, an element of the form `("vt102" . "vt100")` means to treat a terminal of type ‘`vt102`’ like one of type ‘`vt100`’.
+### Variable: **tty-setup-hook**
 
-<!---->
+This variable is a normal hook that Emacs runs after initializing a new text terminal. (This applies when Emacs starts up in non-windowed mode, and when making a tty `emacsclient` connection.) The hook runs after loading your init file (if applicable) and the terminal-specific Lisp file, so you can use it to adjust the definitions made by that file.
 
-*   Variable: **tty-setup-hook**
-
-    This variable is a normal hook that Emacs runs after initializing a new text terminal. (This applies when Emacs starts up in non-windowed mode, and when making a tty `emacsclient` connection.) The hook runs after loading your init file (if applicable) and the terminal-specific Lisp file, so you can use it to adjust the definitions made by that file.
-
-    For a related feature, see [window-setup-hook](Init-File.html).
-
-Next: [Command-Line Arguments](Command_002dLine-Arguments.html), Previous: [Init File](Init-File.html), Up: [Starting Up](Starting-Up.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
+For a related feature, see [window-setup-hook](Init-File.html).

@@ -1,24 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
-
-Next: [Terminal-Specific](Terminal_002dSpecific.html), Previous: [Startup Summary](Startup-Summary.html), Up: [Starting Up](Starting-Up.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
 #### 40.1.2 The Init File
 
@@ -32,50 +12,36 @@ An Emacs installation may have a *default init file*, which is a Lisp library na
 
 Another file for site-customization is `site-start.el`. Emacs loads this *before* the user’s init file. You can inhibit the loading of this file with the option ‘`--no-site-file`’.
 
-*   User Option: **site-run-file**
+### User Option: **site-run-file**
 
-    This variable specifies the site-customization file to load before the user’s init file. Its normal value is `"site-start"`. The only way you can change it with real effect is to do so before dumping Emacs.
+This variable specifies the site-customization file to load before the user’s init file. Its normal value is `"site-start"`. The only way you can change it with real effect is to do so before dumping Emacs.
 
 See [Init File Examples](https://www.gnu.org/software/emacs/manual/html_node/emacs/Init-Examples.html#Init-Examples) in The GNU Emacs Manual, for examples of how to make various commonly desired customizations in your `.emacs` file.
 
-*   User Option: **inhibit-default-init**
+### User Option: **inhibit-default-init**
 
-    If this variable is non-`nil`, it prevents Emacs from loading the default initialization library file. The default value is `nil`.
+If this variable is non-`nil`, it prevents Emacs from loading the default initialization library file. The default value is `nil`.
 
-<!---->
+### Variable: **before-init-hook**
 
-*   Variable: **before-init-hook**
+This normal hook is run, once, just before loading all the init files (`site-start.el`, your init file, and `default.el`). (The only way to change it with real effect is before dumping Emacs.)
 
-    This normal hook is run, once, just before loading all the init files (`site-start.el`, your init file, and `default.el`). (The only way to change it with real effect is before dumping Emacs.)
+### Variable: **after-init-hook**
 
-<!---->
+This normal hook is run, once, just after loading all the init files (`site-start.el`, your init file, and `default.el`), before loading the terminal-specific library (if started on a text terminal) and processing the command-line action arguments.
 
-*   Variable: **after-init-hook**
+### Variable: **emacs-startup-hook**
 
-    This normal hook is run, once, just after loading all the init files (`site-start.el`, your init file, and `default.el`), before loading the terminal-specific library (if started on a text terminal) and processing the command-line action arguments.
+This normal hook is run, once, just after handling the command line arguments. In batch mode, Emacs does not run this hook.
 
-<!---->
+### Variable: **window-setup-hook**
 
-*   Variable: **emacs-startup-hook**
+This normal hook is very similar to `emacs-startup-hook`. The only difference is that it runs slightly later, after setting of the frame parameters. See [window-setup-hook](Startup-Summary.html).
 
-    This normal hook is run, once, just after handling the command line arguments. In batch mode, Emacs does not run this hook.
+### Variable: **user-init-file**
 
-<!---->
+This variable holds the absolute file name of the user’s init file. If the actual init file loaded is a compiled file, such as `.emacs.elc`, the value refers to the corresponding source file.
 
-*   Variable: **window-setup-hook**
+### Variable: **user-emacs-directory**
 
-    This normal hook is very similar to `emacs-startup-hook`. The only difference is that it runs slightly later, after setting of the frame parameters. See [window-setup-hook](Startup-Summary.html).
-
-<!---->
-
-*   Variable: **user-init-file**
-
-    This variable holds the absolute file name of the user’s init file. If the actual init file loaded is a compiled file, such as `.emacs.elc`, the value refers to the corresponding source file.
-
-<!---->
-
-*   Variable: **user-emacs-directory**
-
-    This variable holds the name of the Emacs default directory. It defaults to `${XDG_CONFIG_HOME-'~/.config'}/emacs/` if that directory exists and `~/.emacs.d/` and `~/.emacs` do not exist, otherwise to `~/.emacs.d/` on all platforms but MS-DOS. Here, `${XDG_CONFIG_HOME-'~/.config'}` stands for the value of the environment variable `XDG_CONFIG_HOME` if that variable is set, and for `~/.config` otherwise. See [How Emacs Finds Your Init File](https://www.gnu.org/software/emacs/manual/html_node/emacs/Find-Init.html#Find-Init) in The GNU Emacs Manual.
-
-Next: [Terminal-Specific](Terminal_002dSpecific.html), Previous: [Startup Summary](Startup-Summary.html), Up: [Starting Up](Starting-Up.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
+This variable holds the name of the Emacs default directory. It defaults to `${XDG_CONFIG_HOME-'~/.config'}/emacs/` if that directory exists and `~/.emacs.d/` and `~/.emacs` do not exist, otherwise to `~/.emacs.d/` on all platforms but MS-DOS. Here, `${XDG_CONFIG_HOME-'~/.config'}` stands for the value of the environment variable `XDG_CONFIG_HOME` if that variable is set, and for `~/.config` otherwise. See [How Emacs Finds Your Init File](https://www.gnu.org/software/emacs/manual/html_node/emacs/Find-Init.html#Find-Init) in The GNU Emacs Manual.

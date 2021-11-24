@@ -1,24 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
-
-Next: [Symbol Properties](Symbol-Properties.html), Previous: [Definitions](Definitions.html), Up: [Symbols](Symbols.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
 ### 9.3 Creating and Interning Symbols
 
@@ -46,113 +26,109 @@ In an empty obarray, every element is 0, so you can create an obarray with `(mak
 
 Most of the functions below take a name and sometimes an obarray as arguments. A `wrong-type-argument` error is signaled if the name is not a string, or if the obarray is not a vector.
 
-*   Function: **symbol-name** *symbol*
+### Function: **symbol-name** *symbol*
 
-    This function returns the string that is `symbol`’s name. For example:
+This function returns the string that is `symbol`’s name. For example:
 
-        (symbol-name 'foo)
-             ⇒ "foo"
+```lisp
+(symbol-name 'foo)
+     ⇒ "foo"
+```
 
-    **Warning:** Changing the string by substituting characters does change the name of the symbol, but fails to update the obarray, so don’t do it!
+**Warning:** Changing the string by substituting characters does change the name of the symbol, but fails to update the obarray, so don’t do it!
 
-<!---->
+### Function: **make-symbol** *name*
 
-*   Function: **make-symbol** *name*
+This function returns a newly-allocated, uninterned symbol whose name is `name` (which must be a string). Its value and function definition are void, and its property list is `nil`. In the example below, the value of `sym` is not `eq` to `foo` because it is a distinct uninterned symbol whose name is also ‘`foo`’.
 
-    This function returns a newly-allocated, uninterned symbol whose name is `name` (which must be a string). Its value and function definition are void, and its property list is `nil`. In the example below, the value of `sym` is not `eq` to `foo` because it is a distinct uninterned symbol whose name is also ‘`foo`’.
+```lisp
+(setq sym (make-symbol "foo"))
+     ⇒ foo
+(eq sym 'foo)
+     ⇒ nil
+```
 
-        (setq sym (make-symbol "foo"))
-             ⇒ foo
-        (eq sym 'foo)
-             ⇒ nil
+### Function: **gensym** *\&optional prefix*
 
-<!---->
+This function returns a symbol using `make-symbol`, whose name is made by appending `gensym-counter` to `prefix`. The prefix defaults to `"g"`.
 
-*   Function: **gensym** *\&optional prefix*
+### Function: **intern** *name \&optional obarray*
 
-    This function returns a symbol using `make-symbol`, whose name is made by appending `gensym-counter` to `prefix`. The prefix defaults to `"g"`.
+This function returns the interned symbol whose name is `name`. If there is no such symbol in the obarray `obarray`, `intern` creates a new one, adds it to the obarray, and returns it. If `obarray` is omitted, the value of the global variable `obarray` is used.
 
-<!---->
+```lisp
+(setq sym (intern "foo"))
+     ⇒ foo
+(eq sym 'foo)
+     ⇒ t
 
-*   Function: **intern** *name \&optional obarray*
-
-    This function returns the interned symbol whose name is `name`. If there is no such symbol in the obarray `obarray`, `intern` creates a new one, adds it to the obarray, and returns it. If `obarray` is omitted, the value of the global variable `obarray` is used.
-
-        (setq sym (intern "foo"))
-             ⇒ foo
-        (eq sym 'foo)
-             ⇒ t
-
-        (setq sym1 (intern "foo" other-obarray))
-             ⇒ foo
-        (eq sym1 'foo)
-             ⇒ nil
+(setq sym1 (intern "foo" other-obarray))
+     ⇒ foo
+(eq sym1 'foo)
+     ⇒ nil
+```
 
 > **Common Lisp note:** In Common Lisp, you can intern an existing symbol in an obarray. In Emacs Lisp, you cannot do this, because the argument to `intern` must be a string, not a symbol.
 
-*   Function: **intern-soft** *name \&optional obarray*
+### Function: **intern-soft** *name \&optional obarray*
 
-    This function returns the symbol in `obarray` whose name is `name`, or `nil` if `obarray` has no symbol with that name. Therefore, you can use `intern-soft` to test whether a symbol with a given name is already interned. If `obarray` is omitted, the value of the global variable `obarray` is used.
+This function returns the symbol in `obarray` whose name is `name`, or `nil` if `obarray` has no symbol with that name. Therefore, you can use `intern-soft` to test whether a symbol with a given name is already interned. If `obarray` is omitted, the value of the global variable `obarray` is used.
 
-    The argument `name` may also be a symbol; in that case, the function returns `name` if `name` is interned in the specified obarray, and otherwise `nil`.
+The argument `name` may also be a symbol; in that case, the function returns `name` if `name` is interned in the specified obarray, and otherwise `nil`.
 
-        (intern-soft "frazzle")        ; No such symbol exists.
-             ⇒ nil
-        (make-symbol "frazzle")        ; Create an uninterned one.
-             ⇒ frazzle
+```lisp
+(intern-soft "frazzle")        ; No such symbol exists.
+     ⇒ nil
+(make-symbol "frazzle")        ; Create an uninterned one.
+     ⇒ frazzle
+```
 
-    <!---->
+```lisp
+(intern-soft "frazzle")        ; That one cannot be found.
+     ⇒ nil
+```
 
-        (intern-soft "frazzle")        ; That one cannot be found.
-             ⇒ nil
+```lisp
+(setq sym (intern "frazzle"))  ; Create an interned one.
+     ⇒ frazzle
+```
 
-    <!---->
+```lisp
+(intern-soft "frazzle")        ; That one can be found!
+     ⇒ frazzle
+```
 
-        (setq sym (intern "frazzle"))  ; Create an interned one.
-             ⇒ frazzle
+```lisp
+(eq sym 'frazzle)              ; And it is the same one.
+     ⇒ t
+```
 
-    <!---->
+### Variable: **obarray**
 
-        (intern-soft "frazzle")        ; That one can be found!
-             ⇒ frazzle
+This variable is the standard obarray for use by `intern` and `read`.
 
-    <!---->
+### Function: **mapatoms** *function \&optional obarray*
 
-        (eq sym 'frazzle)              ; And it is the same one.
-             ⇒ t
+This function calls `function` once with each symbol in the obarray `obarray`. Then it returns `nil`. If `obarray` is omitted, it defaults to the value of `obarray`, the standard obarray for ordinary symbols.
 
-<!---->
+```lisp
+(setq count 0)
+     ⇒ 0
+(defun count-syms (s)
+  (setq count (1+ count)))
+     ⇒ count-syms
+(mapatoms 'count-syms)
+     ⇒ nil
+count
+     ⇒ 1871
+```
 
-*   Variable: **obarray**
+See `documentation` in [Accessing Documentation](Accessing-Documentation.html), for another example using `mapatoms`.
 
-    This variable is the standard obarray for use by `intern` and `read`.
+### Function: **unintern** *symbol obarray*
 
-<!---->
+This function deletes `symbol` from the obarray `obarray`. If `symbol` is not actually in the obarray, `unintern` does nothing. If `obarray` is `nil`, the current obarray is used.
 
-*   Function: **mapatoms** *function \&optional obarray*
+If you provide a string instead of a symbol as `symbol`, it stands for a symbol name. Then `unintern` deletes the symbol (if any) in the obarray which has that name. If there is no such symbol, `unintern` does nothing.
 
-    This function calls `function` once with each symbol in the obarray `obarray`. Then it returns `nil`. If `obarray` is omitted, it defaults to the value of `obarray`, the standard obarray for ordinary symbols.
-
-        (setq count 0)
-             ⇒ 0
-        (defun count-syms (s)
-          (setq count (1+ count)))
-             ⇒ count-syms
-        (mapatoms 'count-syms)
-             ⇒ nil
-        count
-             ⇒ 1871
-
-    See `documentation` in [Accessing Documentation](Accessing-Documentation.html), for another example using `mapatoms`.
-
-<!---->
-
-*   Function: **unintern** *symbol obarray*
-
-    This function deletes `symbol` from the obarray `obarray`. If `symbol` is not actually in the obarray, `unintern` does nothing. If `obarray` is `nil`, the current obarray is used.
-
-    If you provide a string instead of a symbol as `symbol`, it stands for a symbol name. Then `unintern` deletes the symbol (if any) in the obarray which has that name. If there is no such symbol, `unintern` does nothing.
-
-    If `unintern` does delete a symbol, it returns `t`. Otherwise it returns `nil`.
-
-Next: [Symbol Properties](Symbol-Properties.html), Previous: [Definitions](Definitions.html), Up: [Symbols](Symbols.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
+If `unintern` does delete a symbol, it returns `t`. Otherwise it returns `nil`.

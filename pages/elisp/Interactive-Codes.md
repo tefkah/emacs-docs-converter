@@ -1,191 +1,169 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
-
-Next: [Interactive Examples](Interactive-Examples.html), Previous: [Using Interactive](Using-Interactive.html), Up: [Defining Commands](Defining-Commands.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
 #### 21.2.2 Code Characters for `interactive`
 
 The code character descriptions below contain a number of key words, defined here as follows:
 
-*   **Completion**
+**Completion**
 
-    Provide completion. `TAB`, `SPC`, and `RET` perform name completion because the argument is read using `completing-read` (see [Completion](Completion.html)). `?` displays a list of possible completions.
+Provide completion. `TAB`, `SPC`, and `RET` perform name completion because the argument is read using `completing-read` (see [Completion](Completion.html)). `?` displays a list of possible completions.
 
-*   **Existing**
+**Existing**
 
-    Require the name of an existing object. An invalid name is not accepted; the commands to exit the minibuffer do not exit if the current input is not valid.
+Require the name of an existing object. An invalid name is not accepted; the commands to exit the minibuffer do not exit if the current input is not valid.
 
-*   **Default**
+**Default**
 
-    A default value of some sort is used if the user enters no text in the minibuffer. The default depends on the code character.
+A default value of some sort is used if the user enters no text in the minibuffer. The default depends on the code character.
 
-*   **No I/O**
+**No I/O**
 
-    This code letter computes an argument without reading any input. Therefore, it does not use a prompt string, and any prompt string you supply is ignored.
+This code letter computes an argument without reading any input. Therefore, it does not use a prompt string, and any prompt string you supply is ignored.
 
-    Even though the code letter doesn’t use a prompt string, you must follow it with a newline if it is not the last code character in the string.
+Even though the code letter doesn’t use a prompt string, you must follow it with a newline if it is not the last code character in the string.
 
-*   **Prompt**
+**Prompt**
 
-    A prompt immediately follows the code character. The prompt ends either with the end of the string or with a newline.
+A prompt immediately follows the code character. The prompt ends either with the end of the string or with a newline.
 
-*   **Special**
+**Special**
 
-    This code character is meaningful only at the beginning of the interactive string, and it does not look for a prompt or a newline. It is a single, isolated character.
+This code character is meaningful only at the beginning of the interactive string, and it does not look for a prompt or a newline. It is a single, isolated character.
 
 Here are the code character descriptions for use with `interactive`:
 
-*   ‘`*`’
+‘`*`’
 
-    Signal an error if the current buffer is read-only. Special.
+Signal an error if the current buffer is read-only. Special.
 
-*   ‘`@`’
+‘`@`’
 
-    Select the window mentioned in the first mouse event in the key sequence that invoked this command. Special.
+Select the window mentioned in the first mouse event in the key sequence that invoked this command. Special.
 
-*   ‘`^`’
+‘`^`’
 
-    If the command was invoked through shift-translation, set the mark and activate the region temporarily, or extend an already active region, before the command is run. If the command was invoked without shift-translation, and the region is temporarily active, deactivate the region before the command is run. Special.
+If the command was invoked through shift-translation, set the mark and activate the region temporarily, or extend an already active region, before the command is run. If the command was invoked without shift-translation, and the region is temporarily active, deactivate the region before the command is run. Special.
 
-*   ‘`a`’
+‘`a`’
 
-    A function name (i.e., a symbol satisfying `fboundp`). Existing, Completion, Prompt.
+A function name (i.e., a symbol satisfying `fboundp`). Existing, Completion, Prompt.
 
-*   ‘`b`’
+‘`b`’
 
-    The name of an existing buffer. By default, uses the name of the current buffer (see [Buffers](Buffers.html)). Existing, Completion, Default, Prompt.
+The name of an existing buffer. By default, uses the name of the current buffer (see [Buffers](Buffers.html)). Existing, Completion, Default, Prompt.
 
-*   ‘`B`’
+‘`B`’
 
-    A buffer name. The buffer need not exist. By default, uses the name of a recently used buffer other than the current buffer. Completion, Default, Prompt.
+A buffer name. The buffer need not exist. By default, uses the name of a recently used buffer other than the current buffer. Completion, Default, Prompt.
 
-*   ‘`c`’
+‘`c`’
 
-    A character. The cursor does not move into the echo area. Prompt.
+A character. The cursor does not move into the echo area. Prompt.
 
-*   ‘`C`’
+‘`C`’
 
-    A command name (i.e., a symbol satisfying `commandp`). Existing, Completion, Prompt.
+A command name (i.e., a symbol satisfying `commandp`). Existing, Completion, Prompt.
 
-*   ‘`d`’
+‘`d`’
 
-    The position of point, as an integer (see [Point](Point.html)). No I/O.
+The position of point, as an integer (see [Point](Point.html)). No I/O.
 
-*   ‘`D`’
+‘`D`’
 
-    A directory. The default is the current default directory of the current buffer, `default-directory` (see [File Name Expansion](File-Name-Expansion.html)). Existing, Completion, Default, Prompt.
+A directory. The default is the current default directory of the current buffer, `default-directory` (see [File Name Expansion](File-Name-Expansion.html)). Existing, Completion, Default, Prompt.
 
-*   ‘`e`’
+‘`e`’
 
-    The first or next non-keyboard event in the key sequence that invoked the command. More precisely, ‘`e`’ gets events that are lists, so you can look at the data in the lists. See [Input Events](Input-Events.html). No I/O.
+The first or next non-keyboard event in the key sequence that invoked the command. More precisely, ‘`e`’ gets events that are lists, so you can look at the data in the lists. See [Input Events](Input-Events.html). No I/O.
 
-    You use ‘`e`’ for mouse events and for special system events (see [Misc Events](Misc-Events.html)). The event list that the command receives depends on the event. See [Input Events](Input-Events.html), which describes the forms of the list for each event in the corresponding subsections.
+You use ‘`e`’ for mouse events and for special system events (see [Misc Events](Misc-Events.html)). The event list that the command receives depends on the event. See [Input Events](Input-Events.html), which describes the forms of the list for each event in the corresponding subsections.
 
-    You can use ‘`e`’ more than once in a single command’s interactive specification. If the key sequence that invoked the command has `n` events that are lists, the `n`th ‘`e`’ provides the `n`th such event. Events that are not lists, such as function keys and ASCII characters, do not count where ‘`e`’ is concerned.
+You can use ‘`e`’ more than once in a single command’s interactive specification. If the key sequence that invoked the command has `n` events that are lists, the `n`th ‘`e`’ provides the `n`th such event. Events that are not lists, such as function keys and ASCII characters, do not count where ‘`e`’ is concerned.
 
-*   ‘`f`’
+‘`f`’
 
-    A file name of an existing file (see [File Names](File-Names.html)). The default directory is `default-directory`. Existing, Completion, Default, Prompt.
+A file name of an existing file (see [File Names](File-Names.html)). The default directory is `default-directory`. Existing, Completion, Default, Prompt.
 
-*   ‘`F`’
+‘`F`’
 
-    A file name. The file need not exist. Completion, Default, Prompt.
+A file name. The file need not exist. Completion, Default, Prompt.
 
-*   ‘`G`’
+‘`G`’
 
-    A file name. The file need not exist. If the user enters just a directory name, then the value is just that directory name, with no file name within the directory added. Completion, Default, Prompt.
+A file name. The file need not exist. If the user enters just a directory name, then the value is just that directory name, with no file name within the directory added. Completion, Default, Prompt.
 
-*   ‘`i`’
+‘`i`’
 
-    An irrelevant argument. This code always supplies `nil` as the argument’s value. No I/O.
+An irrelevant argument. This code always supplies `nil` as the argument’s value. No I/O.
 
-*   ‘`k`’
+‘`k`’
 
-    A key sequence (see [Key Sequences](Key-Sequences.html)). This keeps reading events until a command (or undefined command) is found in the current key maps. The key sequence argument is represented as a string or vector. The cursor does not move into the echo area. Prompt.
+A key sequence (see [Key Sequences](Key-Sequences.html)). This keeps reading events until a command (or undefined command) is found in the current key maps. The key sequence argument is represented as a string or vector. The cursor does not move into the echo area. Prompt.
 
-    If ‘`k`’ reads a key sequence that ends with a down-event, it also reads and discards the following up-event. You can get access to that up-event with the ‘`U`’ code character.
+If ‘`k`’ reads a key sequence that ends with a down-event, it also reads and discards the following up-event. You can get access to that up-event with the ‘`U`’ code character.
 
-    This kind of input is used by commands such as `describe-key` and `global-set-key`.
+This kind of input is used by commands such as `describe-key` and `global-set-key`.
 
-*   ‘`K`’
+‘`K`’
 
-    A key sequence, whose definition you intend to change. This works like ‘`k`’, except that it suppresses, for the last input event in the key sequence, the conversions that are normally used (when necessary) to convert an undefined key into a defined one.
+A key sequence, whose definition you intend to change. This works like ‘`k`’, except that it suppresses, for the last input event in the key sequence, the conversions that are normally used (when necessary) to convert an undefined key into a defined one.
 
-*   ‘`m`’
+‘`m`’
 
-    The position of the mark, as an integer. No I/O.
+The position of the mark, as an integer. No I/O.
 
-*   ‘`M`’
+‘`M`’
 
-    Arbitrary text, read in the minibuffer using the current buffer’s input method, and returned as a string (see [Input Methods](https://www.gnu.org/software/emacs/manual/html_node/emacs/Input-Methods.html#Input-Methods) in The GNU Emacs Manual). Prompt.
+Arbitrary text, read in the minibuffer using the current buffer’s input method, and returned as a string (see [Input Methods](https://www.gnu.org/software/emacs/manual/html_node/emacs/Input-Methods.html#Input-Methods) in The GNU Emacs Manual). Prompt.
 
-*   ‘`n`’
+‘`n`’
 
-    A number, read with the minibuffer. If the input is not a number, the user has to try again. ‘`n`’ never uses the prefix argument. Prompt.
+A number, read with the minibuffer. If the input is not a number, the user has to try again. ‘`n`’ never uses the prefix argument. Prompt.
 
-*   ‘`N`’
+‘`N`’
 
-    The numeric prefix argument; but if there is no prefix argument, read a number as with `n`. The value is always a number. See [Prefix Command Arguments](Prefix-Command-Arguments.html). Prompt.
+The numeric prefix argument; but if there is no prefix argument, read a number as with `n`. The value is always a number. See [Prefix Command Arguments](Prefix-Command-Arguments.html). Prompt.
 
-*   ‘`p`’
+‘`p`’
 
-    The numeric prefix argument. (Note that this ‘`p`’ is lower case.) No I/O.
+The numeric prefix argument. (Note that this ‘`p`’ is lower case.) No I/O.
 
-*   ‘`P`’
+‘`P`’
 
-    The raw prefix argument. (Note that this ‘`P`’ is upper case.) No I/O.
+The raw prefix argument. (Note that this ‘`P`’ is upper case.) No I/O.
 
-*   ‘`r`’
+‘`r`’
 
-    Point and the mark, as two numeric arguments, smallest first. This is the only code letter that specifies two successive arguments rather than one. This will signal an error if the mark is not set in the buffer which is current when the command is invoked. If Transient Mark mode is turned on (see [The Mark](The-Mark.html)) — as it is by default — and user option `mark-even-if-inactive` is `nil`, Emacs will signal an error even if the mark *is* set, but is inactive. No I/O.
+Point and the mark, as two numeric arguments, smallest first. This is the only code letter that specifies two successive arguments rather than one. This will signal an error if the mark is not set in the buffer which is current when the command is invoked. If Transient Mark mode is turned on (see [The Mark](The-Mark.html)) — as it is by default — and user option `mark-even-if-inactive` is `nil`, Emacs will signal an error even if the mark *is* set, but is inactive. No I/O.
 
-*   ‘`s`’
+‘`s`’
 
-    Arbitrary text, read in the minibuffer and returned as a string (see [Text from Minibuffer](Text-from-Minibuffer.html)). Terminate the input with either `C-j` or `RET`. (`C-q` may be used to include either of these characters in the input.) Prompt.
+Arbitrary text, read in the minibuffer and returned as a string (see [Text from Minibuffer](Text-from-Minibuffer.html)). Terminate the input with either `C-j` or `RET`. (`C-q` may be used to include either of these characters in the input.) Prompt.
 
-*   ‘`S`’
+‘`S`’
 
-    An interned symbol whose name is read in the minibuffer. Terminate the input with either `C-j` or `RET`. Other characters that normally terminate a symbol (e.g., whitespace, parentheses and brackets) do not do so here. Prompt.
+An interned symbol whose name is read in the minibuffer. Terminate the input with either `C-j` or `RET`. Other characters that normally terminate a symbol (e.g., whitespace, parentheses and brackets) do not do so here. Prompt.
 
-*   ‘`U`’
+‘`U`’
 
-    A key sequence or `nil`. Can be used after a ‘`k`’ or ‘`K`’ argument to get the up-event that was discarded (if any) after ‘`k`’ or ‘`K`’ read a down-event. If no up-event has been discarded, ‘`U`’ provides `nil` as the argument. No I/O.
+A key sequence or `nil`. Can be used after a ‘`k`’ or ‘`K`’ argument to get the up-event that was discarded (if any) after ‘`k`’ or ‘`K`’ read a down-event. If no up-event has been discarded, ‘`U`’ provides `nil` as the argument. No I/O.
 
-*   ‘`v`’
+‘`v`’
 
-    A variable declared to be a user option (i.e., satisfying the predicate `custom-variable-p`). This reads the variable using `read-variable`. See [Definition of read-variable](High_002dLevel-Completion.html#Definition-of-read_002dvariable). Existing, Completion, Prompt.
+A variable declared to be a user option (i.e., satisfying the predicate `custom-variable-p`). This reads the variable using `read-variable`. See [Definition of read-variable](High_002dLevel-Completion.html#Definition-of-read_002dvariable). Existing, Completion, Prompt.
 
-*   ‘`x`’
+‘`x`’
 
-    A Lisp object, specified with its read syntax, terminated with a `C-j` or `RET`. The object is not evaluated. See [Object from Minibuffer](Object-from-Minibuffer.html). Prompt.
+A Lisp object, specified with its read syntax, terminated with a `C-j` or `RET`. The object is not evaluated. See [Object from Minibuffer](Object-from-Minibuffer.html). Prompt.
 
-*   ‘`X`’
+‘`X`’
 
-    A Lisp form’s value. ‘`X`’ reads as ‘`x`’ does, then evaluates the form so that its value becomes the argument for the command. Prompt.
+A Lisp form’s value. ‘`X`’ reads as ‘`x`’ does, then evaluates the form so that its value becomes the argument for the command. Prompt.
 
-*   ‘`z`’
+‘`z`’
 
-    A coding system name (a symbol). If the user enters null input, the argument value is `nil`. See [Coding Systems](Coding-Systems.html). Completion, Existing, Prompt.
+A coding system name (a symbol). If the user enters null input, the argument value is `nil`. See [Coding Systems](Coding-Systems.html). Completion, Existing, Prompt.
 
-*   ‘`Z`’
+‘`Z`’
 
-    A coding system name (a symbol)—but only if this command has a prefix argument. With no prefix argument, ‘`Z`’ provides `nil` as the argument value. Completion, Existing, Prompt.
-
-Next: [Interactive Examples](Interactive-Examples.html), Previous: [Using Interactive](Using-Interactive.html), Up: [Defining Commands](Defining-Commands.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
+A coding system name (a symbol)—but only if this command has a prefix argument. With no prefix argument, ‘`Z`’ provides `nil` as the argument value. Completion, Existing, Prompt.

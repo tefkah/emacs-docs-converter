@@ -1,24 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
-
-Next: [Vector Functions](Vector-Functions.html), Previous: [Array Functions](Array-Functions.html), Up: [Sequences Arrays Vectors](Sequences-Arrays-Vectors.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
 ### 6.4 Vectors
 
@@ -32,9 +12,11 @@ A vector, like a string or a number, is considered a constant for evaluation: th
 
 Here are examples illustrating these principles:
 
-    (setq avector [1 two '(three) "four" [five]])
-         ⇒ [1 two '(three) "four" [five]]
-    (eval avector)
-         ⇒ [1 two '(three) "four" [five]]
-    (eq avector (eval avector))
-         ⇒ t
+```lisp
+(setq avector [1 two '(three) "four" [five]])
+     ⇒ [1 two '(three) "four" [five]]
+(eval avector)
+     ⇒ [1 two '(three) "four" [five]]
+(eq avector (eval avector))
+     ⇒ t
+```

@@ -1,54 +1,34 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
-
-Next: [Printing in Edebug](Printing-in-Edebug.html), Previous: [Edebug Eval](Edebug-Eval.html), Up: [Edebug](Edebug.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
 #### 18.2.10 Evaluation List Buffer
 
 You can use the *evaluation list buffer*, called `*edebug*`, to evaluate expressions interactively. You can also set up the *evaluation list* of expressions to be evaluated automatically each time Edebug updates the display.
 
-*   `E`
+`E`
 
-    Switch to the evaluation list buffer `*edebug*` (`edebug-visit-eval-list`).
+Switch to the evaluation list buffer `*edebug*` (`edebug-visit-eval-list`).
 
 In the `*edebug*` buffer you can use the commands of Lisp Interaction mode (see [Lisp Interaction](https://www.gnu.org/software/emacs/manual/html_node/emacs/Lisp-Interaction.html#Lisp-Interaction) in The GNU Emacs Manual) as well as these special commands:
 
-*   `C-j`
+`C-j`
 
-    Evaluate the expression before point, in the outside context, and insert the value in the buffer (`edebug-eval-print-last-sexp`). With prefix argument of zero (`C-u 0 C-j`), don’t shorten long items (like strings and lists).
+Evaluate the expression before point, in the outside context, and insert the value in the buffer (`edebug-eval-print-last-sexp`). With prefix argument of zero (`C-u 0 C-j`), don’t shorten long items (like strings and lists).
 
-*   `C-x C-e`
+`C-x C-e`
 
-    Evaluate the expression before point, in the context outside of Edebug (`edebug-eval-last-sexp`).
+Evaluate the expression before point, in the context outside of Edebug (`edebug-eval-last-sexp`).
 
-*   `C-c C-u`
+`C-c C-u`
 
-    Build a new evaluation list from the contents of the buffer (`edebug-update-eval-list`).
+Build a new evaluation list from the contents of the buffer (`edebug-update-eval-list`).
 
-*   `C-c C-d`
+`C-c C-d`
 
-    Delete the evaluation list group that point is in (`edebug-delete-eval-item`).
+Delete the evaluation list group that point is in (`edebug-delete-eval-item`).
 
-*   `C-c C-w`
+`C-c C-w`
 
-    Switch back to the source code buffer at the current stop point (`edebug-where`).
+Switch back to the source code buffer at the current stop point (`edebug-where`).
 
 You can evaluate expressions in the evaluation list window with `C-j` or `C-x C-e`, just as you would in `*scratch*`; but they are evaluated in the context outside of Edebug.
 
@@ -64,27 +44,27 @@ If an error occurs during an evaluation from the evaluation list, the error mess
 
 Here is an example of what the evaluation list window looks like after several expressions have been added to it:
 
-    (current-buffer)
-    #<buffer *scratch*>
-    ;---------------------------------------------------------------
-    (selected-window)
-    #<window 16 on *scratch*>
-    ;---------------------------------------------------------------
-    (point)
-    196
-    ;---------------------------------------------------------------
-    bad-var
-    "Symbol's value as variable is void: bad-var"
-    ;---------------------------------------------------------------
-    (recursion-depth)
-    0
-    ;---------------------------------------------------------------
-    this-command
-    eval-last-sexp
-    ;---------------------------------------------------------------
+```lisp
+(current-buffer)
+#<buffer *scratch*>
+;---------------------------------------------------------------
+(selected-window)
+#<window 16 on *scratch*>
+;---------------------------------------------------------------
+(point)
+196
+;---------------------------------------------------------------
+bad-var
+"Symbol's value as variable is void: bad-var"
+;---------------------------------------------------------------
+(recursion-depth)
+0
+;---------------------------------------------------------------
+this-command
+eval-last-sexp
+;---------------------------------------------------------------
+```
 
 To delete a group, move point into it and type `C-c C-d`, or simply delete the text for the group and update the evaluation list with `C-c C-u`. To add a new expression to the evaluation list, insert the expression at a suitable place, insert a new comment line, then type `C-c C-u`. You need not insert dashes in the comment line—its contents don’t matter.
 
 After selecting `*edebug*`, you can return to the source code buffer with `C-c C-w`. The `*edebug*` buffer is killed when you continue execution, and recreated next time it is needed.
-
-Next: [Printing in Edebug](Printing-in-Edebug.html), Previous: [Edebug Eval](Edebug-Eval.html), Up: [Edebug](Edebug.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]

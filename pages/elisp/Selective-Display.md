@@ -1,24 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
-
-Next: [Temporary Displays](Temporary-Displays.html), Previous: [Invisible Text](Invisible-Text.html), Up: [Display](Display.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
 ### 39.7 Selective Display
 
@@ -34,58 +14,60 @@ Selective display does not directly affect editing commands. For example, `C-f` 
 
 When you write a selectively displayed buffer into a file, all the control-m’s are output as newlines. This means that when you next read in the file, it looks OK, with nothing hidden. The selective display effect is seen only within Emacs.
 
-*   Variable: **selective-display**
+### Variable: **selective-display**
 
-    This buffer-local variable enables selective display. This means that lines, or portions of lines, may be made hidden.
+This buffer-local variable enables selective display. This means that lines, or portions of lines, may be made hidden.
 
-    *   If the value of `selective-display` is `t`, then the character control-m marks the start of hidden text; the control-m, and the rest of the line following it, are not displayed. This is explicit selective display.
-    *   If the value of `selective-display` is a positive integer, then lines that start with more than that many columns of indentation are not displayed.
+*   If the value of `selective-display` is `t`, then the character control-m marks the start of hidden text; the control-m, and the rest of the line following it, are not displayed. This is explicit selective display.
+*   If the value of `selective-display` is a positive integer, then lines that start with more than that many columns of indentation are not displayed.
 
-    When some portion of a buffer is hidden, the vertical movement commands operate as if that portion did not exist, allowing a single `next-line` command to skip any number of hidden lines. However, character movement commands (such as `forward-char`) do not skip the hidden portion, and it is possible (if tricky) to insert or delete text in a hidden portion.
+When some portion of a buffer is hidden, the vertical movement commands operate as if that portion did not exist, allowing a single `next-line` command to skip any number of hidden lines. However, character movement commands (such as `forward-char`) do not skip the hidden portion, and it is possible (if tricky) to insert or delete text in a hidden portion.
 
-    In the examples below, we show the *display appearance* of the buffer `foo`, which changes with the value of `selective-display`. The *contents* of the buffer do not change.
+In the examples below, we show the *display appearance* of the buffer `foo`, which changes with the value of `selective-display`. The *contents* of the buffer do not change.
 
-        (setq selective-display nil)
-             ⇒ nil
+```lisp
+(setq selective-display nil)
+     ⇒ nil
 
-        ---------- Buffer: foo ----------
-        1 on this column
-         2on this column
-          3n this column
-          3n this column
-         2on this column
-        1 on this column
-        ---------- Buffer: foo ----------
+---------- Buffer: foo ----------
+1 on this column
+ 2on this column
+  3n this column
+  3n this column
+ 2on this column
+1 on this column
+---------- Buffer: foo ----------
+```
 
-    ```
-    ```
+```lisp
+```
 
-        (setq selective-display 2)
-             ⇒ 2
+```lisp
+(setq selective-display 2)
+     ⇒ 2
 
-        ---------- Buffer: foo ----------
-        1 on this column
-         2on this column
-         2on this column
-        1 on this column
-        ---------- Buffer: foo ----------
+---------- Buffer: foo ----------
+1 on this column
+ 2on this column
+ 2on this column
+1 on this column
+---------- Buffer: foo ----------
+```
 
-<!---->
+### User Option: **selective-display-ellipses**
 
-*   User Option: **selective-display-ellipses**
+If this buffer-local variable is non-`nil`, then Emacs displays ‘`…`’ at the end of a line that is followed by hidden text. This example is a continuation of the previous one.
 
-    If this buffer-local variable is non-`nil`, then Emacs displays ‘`…`’ at the end of a line that is followed by hidden text. This example is a continuation of the previous one.
+```lisp
+(setq selective-display-ellipses t)
+     ⇒ t
 
-        (setq selective-display-ellipses t)
-             ⇒ t
+---------- Buffer: foo ----------
+1 on this column
+ 2on this column ...
+ 2on this column
+1 on this column
+---------- Buffer: foo ----------
+```
 
-        ---------- Buffer: foo ----------
-        1 on this column
-         2on this column ...
-         2on this column
-        1 on this column
-        ---------- Buffer: foo ----------
-
-    You can use a display table to substitute other text for the ellipsis (‘`…`’). See [Display Tables](Display-Tables.html).
-
-Next: [Temporary Displays](Temporary-Displays.html), Previous: [Invisible Text](Invisible-Text.html), Up: [Display](Display.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
+You can use a display table to substitute other text for the ellipsis (‘`…`’). See [Display Tables](Display-Tables.html).

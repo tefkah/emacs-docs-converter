@@ -1,24 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
-
-Next: [Void Variables](Void-Variables.html), Previous: [Constant Variables](Constant-Variables.html), Up: [Variables](Variables.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
 ### 12.3 Local Variables
 
@@ -36,77 +16,85 @@ For most purposes, you can think of the current binding as the innermost local b
 
 The special forms `let` and `let*` exist to create local bindings:
 
-*   Special Form: **let** *(bindings…) forms…*
+### Special Form: **let** *(bindings…) forms…*
 
-    This special form sets up local bindings for a certain set of variables, as specified by `bindings`, and then evaluates all of the `forms` in textual order. Its return value is the value of the last form in `forms`. The local bindings set up by `let` will be in effect only within the body of `forms`.
+This special form sets up local bindings for a certain set of variables, as specified by `bindings`, and then evaluates all of the `forms` in textual order. Its return value is the value of the last form in `forms`. The local bindings set up by `let` will be in effect only within the body of `forms`.
 
-    Each of the `bindings` is either (i) a<!-- /@w --> symbol, in which case that symbol is locally bound to `nil`; or (ii) a<!-- /@w --> list of the form `(symbol value-form)`, in which case `symbol` is locally bound to the result of evaluating `value-form`. If `value-form` is omitted, `nil` is used.
+Each of the `bindings` is either (i) a symbol, in which case that symbol is locally bound to `nil`; or (ii) a list of the form `(symbol value-form)`, in which case `symbol` is locally bound to the result of evaluating `value-form`. If `value-form` is omitted, `nil` is used.
 
-    All of the `value-form`s in `bindings` are evaluated in the order they appear and *before* binding any of the symbols to them. Here is an example of this: `z` is bound to the old value of `y`, which is 2, not the new value of `y`, which is 1.
+All of the `value-form`s in `bindings` are evaluated in the order they appear and *before* binding any of the symbols to them. Here is an example of this: `z` is bound to the old value of `y`, which is 2, not the new value of `y`, which is 1.
 
-        (setq y 2)
-             ⇒ 2
+```lisp
+(setq y 2)
+     ⇒ 2
+```
 
-    ```
-    ```
+```lisp
+```
 
-        (let ((y 1)
-              (z y))
-          (list y z))
-             ⇒ (1 2)
+```lisp
+(let ((y 1)
+      (z y))
+  (list y z))
+     ⇒ (1 2)
+```
 
-    On the other hand, the order of *bindings* is unspecified: in the following example, either 1 or 2 might be printed.
+On the other hand, the order of *bindings* is unspecified: in the following example, either 1 or 2 might be printed.
 
-        (let ((x 1)
-              (x 2))
-          (print x))
+```lisp
+(let ((x 1)
+      (x 2))
+  (print x))
+```
 
-    Therefore, avoid binding a variable more than once in a single `let` form.
+Therefore, avoid binding a variable more than once in a single `let` form.
 
-<!---->
+### Special Form: **let\*** *(bindings…) forms…*
 
-*   Special Form: **let\*** *(bindings…) forms…*
+This special form is like `let`, but it binds each variable right after computing its local value, before computing the local value for the next variable. Therefore, an expression in `bindings` can refer to the preceding symbols bound in this `let*` form. Compare the following example with the example above for `let`.
 
-    This special form is like `let`, but it binds each variable right after computing its local value, before computing the local value for the next variable. Therefore, an expression in `bindings` can refer to the preceding symbols bound in this `let*` form. Compare the following example with the example above for `let`.
+```lisp
+(setq y 2)
+     ⇒ 2
+```
 
-        (setq y 2)
-             ⇒ 2
+```lisp
+```
 
-    ```
-    ```
+```lisp
+(let* ((y 1)
+       (z y))    ; Use the just-established value of y.
+  (list y z))
+     ⇒ (1 1)
+```
 
-        (let* ((y 1)
-               (z y))    ; Use the just-established value of y.
-          (list y z))
-             ⇒ (1 1)
+### Special Form: **letrec** *(bindings…) forms…*
 
-<!---->
+This special form is like `let*`, but all the variables are bound before any of the local values are computed. The values are then assigned to the locally bound variables. This is only useful when lexical binding is in effect, and you want to create closures that refer to bindings that would otherwise not yet be in effect when using `let*`.
 
-*   Special Form: **letrec** *(bindings…) forms…*
+For instance, here’s a closure that removes itself from a hook after being run once:
 
-    This special form is like `let*`, but all the variables are bound before any of the local values are computed. The values are then assigned to the locally bound variables. This is only useful when lexical binding is in effect, and you want to create closures that refer to bindings that would otherwise not yet be in effect when using `let*`.
-
-    For instance, here’s a closure that removes itself from a hook after being run once:
-
-        (letrec ((hookfun (lambda ()
-                            (message "Run once")
-                            (remove-hook 'post-command-hook hookfun))))
-          (add-hook 'post-command-hook hookfun))
+```lisp
+(letrec ((hookfun (lambda ()
+                    (message "Run once")
+                    (remove-hook 'post-command-hook hookfun))))
+  (add-hook 'post-command-hook hookfun))
+```
 
 Here is a complete list of the other facilities that create local bindings:
 
-*   Function calls (see [Functions](Functions.html)).
-*   Macro calls (see [Macros](Macros.html)).
-*   `condition-case` (see [Errors](Errors.html)).
+Function calls (see [Functions](Functions.html)).
+
+Macro calls (see [Macros](Macros.html)).
+
+`condition-case` (see [Errors](Errors.html)).
 
 Variables can also have buffer-local bindings (see [Buffer-Local Variables](Buffer_002dLocal-Variables.html)); a few variables have terminal-local bindings (see [Multiple Terminals](Multiple-Terminals.html)). These kinds of bindings work somewhat like ordinary local bindings, but they are localized depending on where you are in Emacs.
 
-*   User Option: **max-specpdl-size**
+### User Option: **max-specpdl-size**
 
-    This variable defines the limit on the total number of local variable bindings and `unwind-protect` cleanups (see [Cleaning Up from Nonlocal Exits](Cleanups.html)) that are allowed before Emacs signals an error (with data `"Variable binding depth exceeds max-specpdl-size"`).
+This variable defines the limit on the total number of local variable bindings and `unwind-protect` cleanups (see [Cleaning Up from Nonlocal Exits](Cleanups.html)) that are allowed before Emacs signals an error (with data `"Variable binding depth exceeds max-specpdl-size"`).
 
-    This limit, with the associated error when it is exceeded, is one way that Lisp avoids infinite recursion on an ill-defined function. `max-lisp-eval-depth` provides another limit on depth of nesting. See [Eval](Eval.html#Definition-of-max_002dlisp_002deval_002ddepth).
+This limit, with the associated error when it is exceeded, is one way that Lisp avoids infinite recursion on an ill-defined function. `max-lisp-eval-depth` provides another limit on depth of nesting. See [Eval](Eval.html#Definition-of-max_002dlisp_002deval_002ddepth).
 
-    The default value is 1600. Entry to the Lisp debugger increases the value, if there is little room left, to make sure the debugger itself has room to execute.
-
-Next: [Void Variables](Void-Variables.html), Previous: [Constant Variables](Constant-Variables.html), Up: [Variables](Variables.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
+The default value is 1600. Entry to the Lisp debugger increases the value, if there is little room left, to make sure the debugger itself has room to execute.

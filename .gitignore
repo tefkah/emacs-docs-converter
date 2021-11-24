@@ -4,4 +4,4 @@ node_modules
 yarn-error.log
 dist
 examples
-packages
+packagesscripts/elisp\n scripts/org scripts/emacs

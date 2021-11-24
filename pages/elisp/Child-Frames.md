@@ -1,24 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
-
-Next: [Mouse Tracking](Mouse-Tracking.html), Previous: [Frame Configurations](Frame-Configurations.html), Up: [Frames](Frames.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
 ### 29.14 Child Frames
 
@@ -66,35 +46,36 @@ When a child frame is used during minibuffer interaction, for example, to displa
 
 The behavior of child frames deviates from that of top-level frames in a number of other ways as well. Here we sketch a few of them:
 
-*   The semantics of maximizing and iconifying child frames is highly window-system dependent. As a rule, applications should never invoke these operations on child frames. By default, invoking `iconify-frame` on a child frame will try to iconify the top-level frame corresponding to that child frame instead. To obtain a different behavior, users may customize the option `iconify-child-frame` described below.
-*   Raising, lowering and restacking child frames (see [Raising and Lowering](Raising-and-Lowering.html)) or changing the `z-group` (see [Position Parameters](Position-Parameters.html)) of a child frame changes only the stacking order of child frames with the same parent.
-*   Many window-systems are not able to change the opacity (see [Font and Color Parameters](Font-and-Color-Parameters.html)) of child frames.
-*   Transferring focus from a child frame to an ancestor that is not its parent by clicking with the mouse in a visible part of that ancestor’s window may fail with some window-systems. You may have to click into the direct parent’s window-system window first.
-*   Window managers might not bother to extend their focus follows mouse policy to child frames. Customizing `mouse-autoselect-window` can help in this regard (see [Mouse Window Auto-selection](Mouse-Window-Auto_002dselection.html)).
-*   Dropping (see [Drag and Drop](Drag-and-Drop.html)) on child frames is not guaranteed to work on all window-systems. Some will drop the object on the parent frame or on some ancestor instead.
+The semantics of maximizing and iconifying child frames is highly window-system dependent. As a rule, applications should never invoke these operations on child frames. By default, invoking `iconify-frame` on a child frame will try to iconify the top-level frame corresponding to that child frame instead. To obtain a different behavior, users may customize the option `iconify-child-frame` described below.
+
+Raising, lowering and restacking child frames (see [Raising and Lowering](Raising-and-Lowering.html)) or changing the `z-group` (see [Position Parameters](Position-Parameters.html)) of a child frame changes only the stacking order of child frames with the same parent.
+
+Many window-systems are not able to change the opacity (see [Font and Color Parameters](Font-and-Color-Parameters.html)) of child frames.
+
+Transferring focus from a child frame to an ancestor that is not its parent by clicking with the mouse in a visible part of that ancestor’s window may fail with some window-systems. You may have to click into the direct parent’s window-system window first.
+
+Window managers might not bother to extend their focus follows mouse policy to child frames. Customizing `mouse-autoselect-window` can help in this regard (see [Mouse Window Auto-selection](Mouse-Window-Auto_002dselection.html)).
+
+Dropping (see [Drag and Drop](Drag-and-Drop.html)) on child frames is not guaranteed to work on all window-systems. Some will drop the object on the parent frame or on some ancestor instead.
 
 The following two functions can be useful when working with child and parent frames:
 
-*   Function: **frame-parent** *\&optional frame*
+### Function: **frame-parent** *\&optional frame*
 
-    This function returns the parent frame of `frame`. The parent frame of `frame` is the Emacs frame whose window-system window is the parent window of `frame`’s window-system window. If such a frame exists, `frame` is considered a child frame of that frame.
+This function returns the parent frame of `frame`. The parent frame of `frame` is the Emacs frame whose window-system window is the parent window of `frame`’s window-system window. If such a frame exists, `frame` is considered a child frame of that frame.
 
-    This function returns `nil` if `frame` has no parent frame.
+This function returns `nil` if `frame` has no parent frame.
 
-<!---->
+### Function: **frame-ancestor-p** *ancestor descendant*
 
-*   Function: **frame-ancestor-p** *ancestor descendant*
-
-    This functions returns non-`nil` if `ancestor` is an ancestor of `descendant`. `ancestor` is an ancestor of `descendant` when it is either `descendant`’s parent frame or it is an ancestor of `descendant`’s parent frame. Both, `ancestor` and `descendant` must specify live frames.
+This functions returns non-`nil` if `ancestor` is an ancestor of `descendant`. `ancestor` is an ancestor of `descendant` when it is either `descendant`’s parent frame or it is an ancestor of `descendant`’s parent frame. Both, `ancestor` and `descendant` must specify live frames.
 
 Note also the function `window-largest-empty-rectangle` (see [Coordinates and Windows](Coordinates-and-Windows.html)) which can be used to inscribe a child frame in the largest empty area of an existing window. This can be useful to avoid that a child frame obscures any text shown in that window.
 
 Customizing the following option can be useful to tweak the behavior of `iconify-frame` for child frames.
 
-*   User Option: **iconify-child-frame**
+### User Option: **iconify-child-frame**
 
-    This option tells Emacs how to proceed when it is asked to iconify a child frame. If it is `nil`, `iconify-frame` will do nothing when invoked on a child frame. If it is `iconify-top-level`, Emacs will try to iconify the top-level frame that is the ancestor of this child frame instead. If it is `make-invisible`, Emacs will try to make this child frame invisible instead of iconifying it.
+This option tells Emacs how to proceed when it is asked to iconify a child frame. If it is `nil`, `iconify-frame` will do nothing when invoked on a child frame. If it is `iconify-top-level`, Emacs will try to iconify the top-level frame that is the ancestor of this child frame instead. If it is `make-invisible`, Emacs will try to make this child frame invisible instead of iconifying it.
 
-    Any other value means to try iconifying the child frame. Since such an attempt may not be honored by all window managers and can even lead to making the child frame unresponsive to user actions, the default is to iconify the top level frame instead.
-
-Next: [Mouse Tracking](Mouse-Tracking.html), Previous: [Frame Configurations](Frame-Configurations.html), Up: [Frames](Frames.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
+Any other value means to try iconifying the child frame. Since such an attempt may not be honored by all window managers and can even lead to making the child frame unresponsive to user actions, the default is to iconify the top level frame instead.

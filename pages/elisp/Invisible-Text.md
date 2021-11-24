@@ -1,24 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
-
-Next: [Selective Display](Selective-Display.html), Previous: [Warnings](Warnings.html), Up: [Display](Display.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
 ### 39.6 Invisible Text
 
@@ -30,62 +10,62 @@ More generally, you can use the variable `buffer-invisibility-spec` to control w
 
 Controlling visibility with `buffer-invisibility-spec` is especially useful in a program to display the list of entries in a database. It permits the implementation of convenient filtering commands to view just a part of the entries in the database. Setting this variable is very fast, much faster than scanning all the text in the buffer looking for properties to change.
 
-*   Variable: **buffer-invisibility-spec**
+### Variable: **buffer-invisibility-spec**
 
-    This variable specifies which kinds of `invisible` properties actually make a character invisible. Setting this variable makes it buffer-local.
+This variable specifies which kinds of `invisible` properties actually make a character invisible. Setting this variable makes it buffer-local.
 
-    *   `t`
+*   `t`
 
-        A character is invisible if its `invisible` property is non-`nil`. This is the default.
+    A character is invisible if its `invisible` property is non-`nil`. This is the default.
 
-    *   a list
+*   a list
 
-        Each element of the list specifies a criterion for invisibility; if a character’s `invisible` property fits any one of these criteria, the character is invisible. The list can have two kinds of elements:
+    Each element of the list specifies a criterion for invisibility; if a character’s `invisible` property fits any one of these criteria, the character is invisible. The list can have two kinds of elements:
 
-        *   `atom`
+    *   `atom`
 
-            A character is invisible if its `invisible` property value is `atom` or if it is a list with `atom` as a member; comparison is done with `eq`.
+        A character is invisible if its `invisible` property value is `atom` or if it is a list with `atom` as a member; comparison is done with `eq`.
 
-        *   `(atom . t)`
+    *   `(atom . t)`
 
-            A character is invisible if its `invisible` property value is `atom` or if it is a list with `atom` as a member; comparison is done with `eq`. Moreover, a sequence of such characters displays as an ellipsis.
+        A character is invisible if its `invisible` property value is `atom` or if it is a list with `atom` as a member; comparison is done with `eq`. Moreover, a sequence of such characters displays as an ellipsis.
 
 Two functions are specifically provided for adding elements to `buffer-invisibility-spec` and removing elements from it.
 
-*   Function: **add-to-invisibility-spec** *element*
+### Function: **add-to-invisibility-spec** *element*
 
-    This function adds the element `element` to `buffer-invisibility-spec`. If `buffer-invisibility-spec` was `t`, it changes to a list, `(t)`, so that text whose `invisible` property is `t` remains invisible.
+This function adds the element `element` to `buffer-invisibility-spec`. If `buffer-invisibility-spec` was `t`, it changes to a list, `(t)`, so that text whose `invisible` property is `t` remains invisible.
 
-<!---->
+### Function: **remove-from-invisibility-spec** *element*
 
-*   Function: **remove-from-invisibility-spec** *element*
-
-    This removes the element `element` from `buffer-invisibility-spec`. This does nothing if `element` is not in the list.
+This removes the element `element` from `buffer-invisibility-spec`. This does nothing if `element` is not in the list.
 
 A convention for use of `buffer-invisibility-spec` is that a major mode should use the mode’s own name as an element of `buffer-invisibility-spec` and as the value of the `invisible` property:
 
-    ;; If you want to display an ellipsis:
-    (add-to-invisibility-spec '(my-symbol . t))
-    ;; If you don’t want ellipsis:
-    (add-to-invisibility-spec 'my-symbol)
+```lisp
+;; If you want to display an ellipsis:
+(add-to-invisibility-spec '(my-symbol . t))
+;; If you don’t want ellipsis:
+(add-to-invisibility-spec 'my-symbol)
 
-    (overlay-put (make-overlay beginning end)
-                 'invisible 'my-symbol)
+(overlay-put (make-overlay beginning end)
+             'invisible 'my-symbol)
 
-    ;; When done with the invisibility:
-    (remove-from-invisibility-spec '(my-symbol . t))
-    ;; Or respectively:
-    (remove-from-invisibility-spec 'my-symbol)
+;; When done with the invisibility:
+(remove-from-invisibility-spec '(my-symbol . t))
+;; Or respectively:
+(remove-from-invisibility-spec 'my-symbol)
+```
 
 You can check for invisibility using the following function:
 
-*   Function: **invisible-p** *pos-or-prop*
+### Function: **invisible-p** *pos-or-prop*
 
-    If `pos-or-prop` is a marker or number, this function returns a non-`nil` value if the text at that position is currently invisible.
+If `pos-or-prop` is a marker or number, this function returns a non-`nil` value if the text at that position is currently invisible.
 
-    If `pos-or-prop` is any other kind of Lisp object, that is taken to mean a possible value of the `invisible` text or overlay property. In that case, this function returns a non-`nil` value if that value would cause text to become invisible, based on the current value of `buffer-invisibility-spec`.
+If `pos-or-prop` is any other kind of Lisp object, that is taken to mean a possible value of the `invisible` text or overlay property. In that case, this function returns a non-`nil` value if that value would cause text to become invisible, based on the current value of `buffer-invisibility-spec`.
 
-    The return value of this function is `t` if the text would be completely hidden on display, or a non-`nil`, non-`t` value if the text would be replaced by an ellipsis.
+The return value of this function is `t` if the text would be completely hidden on display, or a non-`nil`, non-`t` value if the text would be replaced by an ellipsis.
 
 Ordinarily, functions that operate on text or move point do not care whether the text is invisible, they process invisible characters and visible characters alike. The user-level line motion commands, such as `next-line`, `previous-line`, ignore invisible newlines if `line-move-ignore-invisible` is non-`nil` (the default), i.e., behave like these invisible newlines didn’t exist in the buffer, but only because they are explicitly programmed to do so.
 
@@ -98,5 +78,3 @@ These *adjustments* of point that ended up in the middle of invisible text can b
 Incremental search can make invisible overlays visible temporarily and/or permanently when a match includes invisible text. To enable this, the overlay should have a non-`nil` `isearch-open-invisible` property. The property value should be a function to be called with the overlay as an argument. This function should make the overlay visible permanently; it is used when the match overlaps the overlay on exit from the search.
 
 During the search, such overlays are made temporarily visible by temporarily modifying their invisible and intangible properties. If you want this to be done differently for a certain overlay, give it an `isearch-open-invisible-temporary` property which is a function. The function is called with two arguments: the first is the overlay, and the second is `nil` to make the overlay visible, or `t` to make it invisible again.
-
-Next: [Selective Display](Selective-Display.html), Previous: [Warnings](Warnings.html), Up: [Display](Display.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]

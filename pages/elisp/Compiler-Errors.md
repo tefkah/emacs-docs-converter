@@ -1,70 +1,54 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
-
-Next: [Byte-Code Objects](Byte_002dCode-Objects.html), Previous: [Eval During Compile](Eval-During-Compile.html), Up: [Byte Compilation](Byte-Compilation.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
 ### 17.6 Compiler Errors
 
 Error and warning messages from byte compilation are printed in a buffer named `*Compile-Log*`. These messages include file names and line numbers identifying the location of the problem. The usual Emacs commands for operating on compiler output can be used on these messages.
 
-When an error is due to invalid syntax in the program, the byte compiler might get confused about the error’s exact location. One way to investigate is to switch to the buffer ` *Compiler Input*`<!-- /@w -->. (This buffer name starts with a space, so it does not show up in the Buffer Menu.) This buffer contains the program being compiled, and point shows how far the byte compiler was able to read; the cause of the error might be nearby. See [Syntax Errors](Syntax-Errors.html), for some tips for locating syntax errors.
+When an error is due to invalid syntax in the program, the byte compiler might get confused about the error’s exact location. One way to investigate is to switch to the buffer ` *Compiler Input*`. (This buffer name starts with a space, so it does not show up in the Buffer Menu.) This buffer contains the program being compiled, and point shows how far the byte compiler was able to read; the cause of the error might be nearby. See [Syntax Errors](Syntax-Errors.html), for some tips for locating syntax errors.
 
 A common type of warning issued by the byte compiler is for functions and variables that were used but not defined. Such warnings report the line number for the end of the file, not the locations where the missing functions or variables were used; to find these, you must search the file manually.
 
 If you are sure that a warning message about a missing function or variable is unjustified, there are several ways to suppress it:
 
-*   You can suppress the warning for a specific call to a function `func` by conditionalizing it on an `fboundp` test, like this:
+You can suppress the warning for a specific call to a function `func` by conditionalizing it on an `fboundp` test, like this:
 
-        (if (fboundp 'func) ...(func ...)...)
+```lisp
+(if (fboundp 'func) ...(func ...)...)
+```
 
-    The call to `func` must be in the `then-form` of the `if`, and `func` must appear quoted in the call to `fboundp`. (This feature operates for `cond` as well.)
+The call to `func` must be in the `then-form` of the `if`, and `func` must appear quoted in the call to `fboundp`. (This feature operates for `cond` as well.)
 
-*   Likewise, you can suppress the warning for a specific use of a variable `variable` by conditionalizing it on a `boundp` test:
+Likewise, you can suppress the warning for a specific use of a variable `variable` by conditionalizing it on a `boundp` test:
 
-        (if (boundp 'variable) ...variable...)
+```lisp
+(if (boundp 'variable) ...variable...)
+```
 
-    The reference to `variable` must be in the `then-form` of the `if`, and `variable` must appear quoted in the call to `boundp`.
+The reference to `variable` must be in the `then-form` of the `if`, and `variable` must appear quoted in the call to `boundp`.
 
-*   You can tell the compiler that a function is defined using `declare-function`. See [Declaring Functions](Declaring-Functions.html).
+You can tell the compiler that a function is defined using `declare-function`. See [Declaring Functions](Declaring-Functions.html).
 
-*   Likewise, you can tell the compiler that a variable is defined using `defvar` with no initial value. (Note that this marks the variable as special, i.e. dynamically bound, but only within the current lexical scope, or file if at top-level.) See [Defining Variables](Defining-Variables.html).
+Likewise, you can tell the compiler that a variable is defined using `defvar` with no initial value. (Note that this marks the variable as special, i.e. dynamically bound, but only within the current lexical scope, or file if at top-level.) See [Defining Variables](Defining-Variables.html).
 
 You can also suppress compiler warnings within a certain expression using the `with-suppressed-warnings` macro:
 
-*   Special Form: **with-suppressed-warnings** *warnings body…*
+### Special Form: **with-suppressed-warnings** *warnings body…*
 
-    In execution, this is equivalent to `(progn body...)`, but the compiler does not issue warnings for the specified conditions in `body`. `warnings` is an associative list of warning symbols and function/variable symbols they apply to. For instance, if you wish to call an obsolete function called `foo`, but want to suppress the compilation warning, say:
+In execution, this is equivalent to `(progn body...)`, but the compiler does not issue warnings for the specified conditions in `body`. `warnings` is an associative list of warning symbols and function/variable symbols they apply to. For instance, if you wish to call an obsolete function called `foo`, but want to suppress the compilation warning, say:
 
-        (with-suppressed-warnings ((obsolete foo))
-          (foo ...))
+```lisp
+(with-suppressed-warnings ((obsolete foo))
+  (foo ...))
+```
 
 For more coarse-grained suppression of compiler warnings, you can use the `with-no-warnings` construct:
 
-*   Special Form: **with-no-warnings** *body…*
+### Special Form: **with-no-warnings** *body…*
 
-    In execution, this is equivalent to `(progn body...)`, but the compiler does not issue warnings for anything that occurs inside `body`.
+In execution, this is equivalent to `(progn body...)`, but the compiler does not issue warnings for anything that occurs inside `body`.
 
-    We recommend that you use `with-suppressed-warnings` instead, but if you do use this construct, that you use it around the smallest possible piece of code to avoid missing possible warnings other than one you intend to suppress.
+We recommend that you use `with-suppressed-warnings` instead, but if you do use this construct, that you use it around the smallest possible piece of code to avoid missing possible warnings other than one you intend to suppress.
 
 Byte compiler warnings can be controlled more precisely by setting the variable `byte-compile-warnings`. See its documentation string for details.
 
 Sometimes you may wish the byte-compiler warnings to be reported using `error`. If so, set `byte-compile-error-on-warn` to a non-`nil` value.
-
-Next: [Byte-Code Objects](Byte_002dCode-Objects.html), Previous: [Eval During Compile](Eval-During-Compile.html), Up: [Byte Compilation](Byte-Compilation.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]

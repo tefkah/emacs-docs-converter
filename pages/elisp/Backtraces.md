@@ -1,24 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
-
-Next: [Debugger Commands](Debugger-Commands.html), Previous: [Using Debugger](Using-Debugger.html), Up: [Debugger](Debugger.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
 #### 18.1.7 Backtraces
 
@@ -34,36 +14,34 @@ In backtraces, the tails of long lists and the ends of long strings, vectors or 
 
 Here is a list of commands for navigating and viewing backtraces:
 
-*   `v`
+`v`
 
-    Toggle the display of local variables of the current stack frame.
+Toggle the display of local variables of the current stack frame.
 
-*   `p`
+`p`
 
-    Move to the beginning of the frame, or to the beginning of the previous frame.
+Move to the beginning of the frame, or to the beginning of the previous frame.
 
-*   `n`
+`n`
 
-    Move to the beginning of the next frame.
+Move to the beginning of the next frame.
 
-*   `+`
+`+`
 
-    Add line breaks and indentation to the top-level Lisp form at point to make it more readable.
+Add line breaks and indentation to the top-level Lisp form at point to make it more readable.
 
-*   `-`
+`-`
 
-    Collapse the top-level Lisp form at point back to a single line.
+Collapse the top-level Lisp form at point back to a single line.
 
-*   `#`
+`#`
 
-    Toggle `print-circle` for the frame at point.
+Toggle `print-circle` for the frame at point.
 
-*   `:`
+### `:`
 
-    Toggle `print-gensym` for the frame at point.
+Toggle `print-gensym` for the frame at point.
 
-*   `.`
+`.`
 
-    Expand all the forms abbreviated with “...” in the frame at point.
-
-Next: [Debugger Commands](Debugger-Commands.html), Previous: [Using Debugger](Using-Debugger.html), Up: [Debugger](Debugger.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
+Expand all the forms abbreviated with “...” in the frame at point.

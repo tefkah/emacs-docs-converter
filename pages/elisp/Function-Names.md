@@ -1,24 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
-
-Next: [Defining Functions](Defining-Functions.html), Previous: [Lambda Expressions](Lambda-Expressions.html), Up: [Functions](Functions.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
 ### 13.3 Naming a Function
 
@@ -35,5 +15,3 @@ A function need not have a unique name. A given function object *usually* appear
 Note that a symbol used as a function name may also be used as a variable; these two uses of a symbol are independent and do not conflict. (This is not the case in some dialects of Lisp, like Scheme.)
 
 By convention, if a function’s symbol consists of two names separated by ‘`--`’, the function is intended for internal use and the first part names the file defining the function. For example, a function named `vc-git--rev-parse` is an internal function defined in `vc-git.el`. Internal-use functions written in C have names ending in ‘`-internal`’, e.g., `bury-buffer-internal`. Emacs code contributed before 2018 may follow other internal-use naming conventions, which are being phased out.
-
-Next: [Defining Functions](Defining-Functions.html), Previous: [Lambda Expressions](Lambda-Expressions.html), Up: [Functions](Functions.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]

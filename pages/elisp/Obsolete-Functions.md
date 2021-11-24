@@ -1,24 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
-
-Next: [Inline Functions](Inline-Functions.html), Previous: [Advising Functions](Advising-Functions.html), Up: [Functions](Functions.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
 ### 13.12 Declaring Functions Obsolete
 
@@ -28,36 +8,38 @@ The easiest way to mark a function as obsolete is to put a `(declare (obsolete �
 
 A macro (see [Macros](Macros.html)) can also be marked obsolete with `make-obsolete`; this has the same effects as for a function. An alias for a function or macro can also be marked as obsolete; this makes the alias itself obsolete, not the function or macro which it resolves to.
 
-*   Function: **make-obsolete** *obsolete-name current-name when*
+### Function: **make-obsolete** *obsolete-name current-name when*
 
-    This function marks `obsolete-name` as obsolete. `obsolete-name` should be a symbol naming a function or macro, or an alias for a function or macro.
+This function marks `obsolete-name` as obsolete. `obsolete-name` should be a symbol naming a function or macro, or an alias for a function or macro.
 
-    If `current-name` is a symbol, the warning message says to use `current-name` instead of `obsolete-name`. `current-name` does not need to be an alias for `obsolete-name`; it can be a different function with similar functionality. `current-name` can also be a string, which serves as the warning message. The message should begin in lower case, and end with a period. It can also be `nil`, in which case the warning message provides no additional details.
+If `current-name` is a symbol, the warning message says to use `current-name` instead of `obsolete-name`. `current-name` does not need to be an alias for `obsolete-name`; it can be a different function with similar functionality. `current-name` can also be a string, which serves as the warning message. The message should begin in lower case, and end with a period. It can also be `nil`, in which case the warning message provides no additional details.
 
-    The argument `when` should be a string indicating when the function was first made obsolete—for example, a date or a release number.
+The argument `when` should be a string indicating when the function was first made obsolete—for example, a date or a release number.
 
-<!---->
+### Macro: **define-obsolete-function-alias** *obsolete-name current-name when \&optional doc*
 
-*   Macro: **define-obsolete-function-alias** *obsolete-name current-name when \&optional doc*
+This convenience macro marks the function `obsolete-name` obsolete and also defines it as an alias for the function `current-name`. It is equivalent to the following:
 
-    This convenience macro marks the function `obsolete-name` obsolete and also defines it as an alias for the function `current-name`. It is equivalent to the following:
-
-        (defalias obsolete-name current-name doc)
-        (make-obsolete obsolete-name current-name when)
+```lisp
+(defalias obsolete-name current-name doc)
+(make-obsolete obsolete-name current-name when)
+```
 
 In addition, you can mark a particular calling convention for a function as obsolete:
 
-*   Function: **set-advertised-calling-convention** *function signature when*
+### Function: **set-advertised-calling-convention** *function signature when*
 
-    This function specifies the argument list `signature` as the correct way to call `function`. This causes the Emacs byte compiler to issue a warning whenever it comes across an Emacs Lisp program that calls `function` any other way (however, it will still allow the code to be byte compiled). `when` should be a string indicating when the variable was first made obsolete (usually a version number string).
+This function specifies the argument list `signature` as the correct way to call `function`. This causes the Emacs byte compiler to issue a warning whenever it comes across an Emacs Lisp program that calls `function` any other way (however, it will still allow the code to be byte compiled). `when` should be a string indicating when the variable was first made obsolete (usually a version number string).
 
-    For instance, in old versions of Emacs the `sit-for` function accepted three arguments, like this
+For instance, in old versions of Emacs the `sit-for` function accepted three arguments, like this
 
-          (sit-for seconds milliseconds nodisp)
+```lisp
+  (sit-for seconds milliseconds nodisp)
+```
 
-    However, calling `sit-for` this way is considered obsolete (see [Waiting](Waiting.html)). The old calling convention is deprecated like this:
+However, calling `sit-for` this way is considered obsolete (see [Waiting](Waiting.html)). The old calling convention is deprecated like this:
 
-        (set-advertised-calling-convention
-          'sit-for '(seconds &optional nodisp) "22.1")
-
-Next: [Inline Functions](Inline-Functions.html), Previous: [Advising Functions](Advising-Functions.html), Up: [Functions](Functions.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
+```lisp
+(set-advertised-calling-convention
+  'sit-for '(seconds &optional nodisp) "22.1")
+```

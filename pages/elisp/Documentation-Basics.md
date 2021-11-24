@@ -1,24 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
-
-Next: [Accessing Documentation](Accessing-Documentation.html), Up: [Documentation](Documentation.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
 ### 24.1 Documentation Basics
 
@@ -33,5 +13,3 @@ Sometimes, Emacs does not keep documentation strings in memory. There are two su
 Documentation strings can contain special *key substitution sequences*, referring to key bindings which are looked up only when the user views the documentation. This allows the help commands to display the correct keys even if a user rearranges the default key bindings. See [Keys in Documentation](Keys-in-Documentation.html).
 
 In the documentation string of an autoloaded command (see [Autoload](Autoload.html)), these key-substitution sequences have an additional special effect: they cause `C-h f` on the command to trigger autoloading. (This is needed for correctly setting up the hyperlinks in the `*Help*` buffer.)
-
-Next: [Accessing Documentation](Accessing-Documentation.html), Up: [Documentation](Documentation.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]

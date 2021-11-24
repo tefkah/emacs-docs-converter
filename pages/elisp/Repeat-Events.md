@@ -1,24 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
-
-Next: [Motion Events](Motion-Events.html), Previous: [Button-Down Events](Button_002dDown-Events.html), Up: [Input Events](Input-Events.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
 #### 21.7.7 Repeat Events
 
@@ -42,22 +22,16 @@ If you click a button twice and then press it again, all in quick succession, Em
 
 If you click a button three or more times and then press it again, the events for the presses beyond the third are all triple events. Emacs does not have separate event types for quadruple, quintuple, etc. events. However, you can look at the event list to find out precisely how many times the button was pressed.
 
-*   Function: **event-click-count** *event*
+### Function: **event-click-count** *event*
 
-    This function returns the number of consecutive button presses that led up to `event`. If `event` is a double-down, double-click or double-drag event, the value is 2. If `event` is a triple event, the value is 3 or greater. If `event` is an ordinary mouse event (not a repeat event), the value is 1.
+This function returns the number of consecutive button presses that led up to `event`. If `event` is a double-down, double-click or double-drag event, the value is 2. If `event` is a triple event, the value is 3 or greater. If `event` is an ordinary mouse event (not a repeat event), the value is 1.
 
-<!---->
+### User Option: **double-click-fuzz**
 
-*   User Option: **double-click-fuzz**
+To generate repeat events, successive mouse button presses must be at approximately the same screen position. The value of `double-click-fuzz` specifies the maximum number of pixels the mouse may be moved (horizontally or vertically) between two successive clicks to make a double-click.
 
-    To generate repeat events, successive mouse button presses must be at approximately the same screen position. The value of `double-click-fuzz` specifies the maximum number of pixels the mouse may be moved (horizontally or vertically) between two successive clicks to make a double-click.
+This variable is also the threshold for motion of the mouse to count as a drag.
 
-    This variable is also the threshold for motion of the mouse to count as a drag.
+### User Option: **double-click-time**
 
-<!---->
-
-*   User Option: **double-click-time**
-
-    To generate repeat events, the number of milliseconds between successive button presses must be less than the value of `double-click-time`. Setting `double-click-time` to `nil` disables multi-click detection entirely. Setting it to `t` removes the time limit; Emacs then detects multi-clicks by position only.
-
-Next: [Motion Events](Motion-Events.html), Previous: [Button-Down Events](Button_002dDown-Events.html), Up: [Input Events](Input-Events.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
+To generate repeat events, the number of milliseconds between successive button presses must be less than the value of `double-click-time`. Setting `double-click-time` to `nil` disables multi-click detection entirely. Setting it to `t` removes the time limit; Emacs then detects multi-clicks by position only.

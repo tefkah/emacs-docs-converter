@@ -1,30 +1,12 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
-
-Next: [Advice Combinators](Advice-Combinators.html), Previous: [Core Advising Primitives](Core-Advising-Primitives.html), Up: [Advising Functions](Advising-Functions.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
 #### 13.11.2 Advising Named Functions
 
 A common use of advice is for named functions and macros. You could just use `add-function` as in:
 
-    (add-function :around (symbol-function 'fun) #'his-tracing-function)
+```lisp
+(add-function :around (symbol-function 'fun) #'his-tracing-function)
+```
 
 But you should use `advice-add` and `advice-remove` for that instead. This separate set of functions to manipulate pieces of advice applied to named functions, offers the following extra features compared to `add-function`: they know how to deal with macros and autoloaded functions, they let `describe-function` preserve the original docstring as well as document the added advice, and they let you add and remove advice before a function is even defined.
 
@@ -38,32 +20,22 @@ Special forms (see [Special Forms](Special-Forms.html)) cannot be advised, howev
 
 It is possible to advise a primitive (see [What Is a Function](What-Is-a-Function.html)), but one should typically *not* do so, for two reasons. Firstly, some primitives are used by the advice mechanism, and advising them could cause an infinite recursion. Secondly, many primitives are called directly from C, and such calls ignore advice; hence, one ends up in a confusing situation where some calls (occurring from Lisp code) obey the advice and other calls (from C code) do not.
 
-*   Macro: **define-advice** *symbol (where lambda-list \&optional name depth) \&rest body*
+### Macro: **define-advice** *symbol (where lambda-list \&optional name depth) \&rest body*
 
-    This macro defines a piece of advice and adds it to the function named `symbol`. The advice is an anonymous function if `name` is `nil` or a function named `symbol@name`. See `advice-add` for explanation of other arguments.
+This macro defines a piece of advice and adds it to the function named `symbol`. The advice is an anonymous function if `name` is `nil` or a function named `symbol@name`. See `advice-add` for explanation of other arguments.
 
-<!---->
+### Function: **advice-add** *symbol where function \&optional props*
 
-*   Function: **advice-add** *symbol where function \&optional props*
+Add the advice `function` to the named function `symbol`. `where` and `props` have the same meaning as for `add-function` (see [Core Advising Primitives](Core-Advising-Primitives.html)).
 
-    Add the advice `function` to the named function `symbol`. `where` and `props` have the same meaning as for `add-function` (see [Core Advising Primitives](Core-Advising-Primitives.html)).
+### Function: **advice-remove** *symbol function*
 
-<!---->
+Remove the advice `function` from the named function `symbol`. `function` can also be the `name` of a piece of advice.
 
-*   Function: **advice-remove** *symbol function*
+### Function: **advice-member-p** *function symbol*
 
-    Remove the advice `function` from the named function `symbol`. `function` can also be the `name` of a piece of advice.
+Return non-`nil` if the advice `function` is already in the named function `symbol`. `function` can also be the `name` of a piece of advice.
 
-<!---->
+### Function: **advice-mapc** *function symbol*
 
-*   Function: **advice-member-p** *function symbol*
-
-    Return non-`nil` if the advice `function` is already in the named function `symbol`. `function` can also be the `name` of a piece of advice.
-
-<!---->
-
-*   Function: **advice-mapc** *function symbol*
-
-    Call `function` for every piece of advice that was added to the named function `symbol`. `function` is called with two arguments: the advice function and its properties.
-
-Next: [Advice Combinators](Advice-Combinators.html), Previous: [Core Advising Primitives](Core-Advising-Primitives.html), Up: [Advising Functions](Advising-Functions.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
+Call `function` for every piece of advice that was added to the named function `symbol`. `function` is called with two arguments: the advice function and its properties.

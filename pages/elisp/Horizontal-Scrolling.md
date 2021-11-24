@@ -1,24 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
-
-Next: [Coordinates and Windows](Coordinates-and-Windows.html), Previous: [Vertical Scrolling](Vertical-Scrolling.html), Up: [Windows](Windows.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
 ### 28.23 Horizontal Scrolling
 
@@ -34,66 +14,64 @@ If `auto-hscroll-mode` is set, redisplay automatically alters the horizontal scr
 
 The default value of `auto-hscroll-mode` is `t`; setting it to `current-line` activates a variant of automatic horizontal scrolling whereby only the line showing the cursor is horizontally scrolled to make point visible, the rest of the window is left either unscrolled, or at the minimum scroll amount set by `scroll-left` and `scroll-right`, see below.
 
-*   Command: **scroll-left** *\&optional count set-minimum*
+### Command: **scroll-left** *\&optional count set-minimum*
 
-    This function scrolls the selected window `count` columns to the left (or to the right if `count` is negative). The default for `count` is the window width, minus 2.
+This function scrolls the selected window `count` columns to the left (or to the right if `count` is negative). The default for `count` is the window width, minus 2.
 
-    The return value is the total amount of leftward horizontal scrolling in effect after the change—just like the value returned by `window-hscroll` (below).
+The return value is the total amount of leftward horizontal scrolling in effect after the change—just like the value returned by `window-hscroll` (below).
 
-    Note that text in paragraphs whose base direction is right-to-left (see [Bidirectional Display](Bidirectional-Display.html)) moves in the opposite direction: e.g., it moves to the right when `scroll-left` is invoked with a positive value of `count`.
+Note that text in paragraphs whose base direction is right-to-left (see [Bidirectional Display](Bidirectional-Display.html)) moves in the opposite direction: e.g., it moves to the right when `scroll-left` is invoked with a positive value of `count`.
 
-    Once you scroll a window as far right as it can go, back to its normal position where the total leftward scrolling is zero, attempts to scroll any farther right have no effect.
+Once you scroll a window as far right as it can go, back to its normal position where the total leftward scrolling is zero, attempts to scroll any farther right have no effect.
 
-    If `set-minimum` is non-`nil`, the new scroll amount becomes the lower bound for automatic scrolling; that is, automatic scrolling will not scroll a window to a column less than the value returned by this function. Interactive calls pass non-`nil` for `set-minimum`.
+If `set-minimum` is non-`nil`, the new scroll amount becomes the lower bound for automatic scrolling; that is, automatic scrolling will not scroll a window to a column less than the value returned by this function. Interactive calls pass non-`nil` for `set-minimum`.
 
-<!---->
+### Command: **scroll-right** *\&optional count set-minimum*
 
-*   Command: **scroll-right** *\&optional count set-minimum*
+This function scrolls the selected window `count` columns to the right (or to the left if `count` is negative). The default for `count` is the window width, minus 2. Aside from the direction of scrolling, this works just like `scroll-left`.
 
-    This function scrolls the selected window `count` columns to the right (or to the left if `count` is negative). The default for `count` is the window width, minus 2. Aside from the direction of scrolling, this works just like `scroll-left`.
+### Function: **window-hscroll** *\&optional window*
 
-<!---->
+This function returns the total leftward horizontal scrolling of `window`—the number of columns by which the text in `window` is scrolled left past the left margin. (In right-to-left paragraphs, the value is the total amount of the rightward scrolling instead.) The default for `window` is the selected window.
 
-*   Function: **window-hscroll** *\&optional window*
+The return value is never negative. It is zero when no horizontal scrolling has been done in `window` (which is usually the case).
 
-    This function returns the total leftward horizontal scrolling of `window`—the number of columns by which the text in `window` is scrolled left past the left margin. (In right-to-left paragraphs, the value is the total amount of the rightward scrolling instead.) The default for `window` is the selected window.
+```lisp
+(window-hscroll)
+     ⇒ 0
+```
 
-    The return value is never negative. It is zero when no horizontal scrolling has been done in `window` (which is usually the case).
+```lisp
+(scroll-left 5)
+     ⇒ 5
+```
 
-        (window-hscroll)
-             ⇒ 0
+```lisp
+(window-hscroll)
+     ⇒ 5
+```
 
-    <!---->
+### Function: **set-window-hscroll** *window columns*
 
-        (scroll-left 5)
-             ⇒ 5
+This function sets horizontal scrolling of `window`. The value of `columns` specifies the amount of scrolling, in terms of columns from the left margin (right margin in right-to-left paragraphs). The argument `columns` should be zero or positive; if not, it is taken as zero. Fractional values of `columns` are not supported at present.
 
-    <!---->
+Note that `set-window-hscroll` may appear not to work if you test it by evaluating a call with `M-:` in a simple way. What happens is that the function sets the horizontal scroll value and returns, but then redisplay adjusts the horizontal scrolling to make point visible, and this overrides what the function did. You can observe the function’s effect if you call it while point is sufficiently far from the left margin that it will remain visible.
 
-        (window-hscroll)
-             ⇒ 5
+The value returned is `columns`.
 
-<!---->
-
-*   Function: **set-window-hscroll** *window columns*
-
-    This function sets horizontal scrolling of `window`. The value of `columns` specifies the amount of scrolling, in terms of columns from the left margin (right margin in right-to-left paragraphs). The argument `columns` should be zero or positive; if not, it is taken as zero. Fractional values of `columns` are not supported at present.
-
-    Note that `set-window-hscroll` may appear not to work if you test it by evaluating a call with `M-:` in a simple way. What happens is that the function sets the horizontal scroll value and returns, but then redisplay adjusts the horizontal scrolling to make point visible, and this overrides what the function did. You can observe the function’s effect if you call it while point is sufficiently far from the left margin that it will remain visible.
-
-    The value returned is `columns`.
-
-        (set-window-hscroll (selected-window) 10)
-             ⇒ 10
+```lisp
+(set-window-hscroll (selected-window) 10)
+     ⇒ 10
+```
 
 Here is how you can determine whether a given position `position` is off the screen due to horizontal scrolling:
 
-    (defun hscroll-on-screen (window position)
-      (save-excursion
-        (goto-char position)
-        (and
-         (>= (- (current-column) (window-hscroll window)) 0)
-         (< (- (current-column) (window-hscroll window))
-            (window-width window)))))
-
-Next: [Coordinates and Windows](Coordinates-and-Windows.html), Previous: [Vertical Scrolling](Vertical-Scrolling.html), Up: [Windows](Windows.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
+```lisp
+(defun hscroll-on-screen (window position)
+  (save-excursion
+    (goto-char position)
+    (and
+     (>= (- (current-column) (window-hscroll window)) 0)
+     (< (- (current-column) (window-hscroll window))
+        (window-width window)))))
+```

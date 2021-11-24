@@ -1,150 +1,142 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
-
-Next: [Unique File Names](Unique-File-Names.html), Previous: [Directory Names](Directory-Names.html), Up: [File Names](File-Names.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
 #### 25.9.4 Functions that Expand Filenames
 
 *Expanding* a file name means converting a relative file name to an absolute one. Since this is done relative to a default directory, you must specify the default directory as well as the file name to be expanded. It also involves expanding abbreviations like `~/` (see [abbreviate-file-name](Directory-Names.html#abbreviate_002dfile_002dname)), and eliminating redundancies like `./` and `name/../`.
 
-*   Function: **expand-file-name** *filename \&optional directory*
+### Function: **expand-file-name** *filename \&optional directory*
 
-    This function converts `filename` to an absolute file name. If `directory` is supplied, it is the default directory to start with if `filename` is relative and does not start with ‘`~`’. (The value of `directory` should itself be an absolute directory name or directory file name; it may start with ‘`~`’.) Otherwise, the current buffer’s value of `default-directory` is used. For example:
+This function converts `filename` to an absolute file name. If `directory` is supplied, it is the default directory to start with if `filename` is relative and does not start with ‘`~`’. (The value of `directory` should itself be an absolute directory name or directory file name; it may start with ‘`~`’.) Otherwise, the current buffer’s value of `default-directory` is used. For example:
 
-        (expand-file-name "foo")
-             ⇒ "/xcssun/users/rms/lewis/foo"
+```lisp
+(expand-file-name "foo")
+     ⇒ "/xcssun/users/rms/lewis/foo"
+```
 
-    <!---->
+```lisp
+(expand-file-name "../foo")
+     ⇒ "/xcssun/users/rms/foo"
+```
 
-        (expand-file-name "../foo")
-             ⇒ "/xcssun/users/rms/foo"
+```lisp
+(expand-file-name "foo" "/usr/spool/")
+     ⇒ "/usr/spool/foo"
+```
 
-    <!---->
+If the part of `filename` before the first slash is ‘`~`’, it expands to your home directory, which is typically specified by the value of the `HOME` environment variable (see [General Variables](https://www.gnu.org/software/emacs/manual/html_node/emacs/General-Variables.html#General-Variables) in The GNU Emacs Manual). If the part before the first slash is ‘`~user`’ and if `user` is a valid login name, it expands to `user`’s home directory. If you do not want this expansion for a relative `filename` that might begin with a literal ‘`~`’, you can use `(concat (file-name-as-directory directory) filename)` instead of `(expand-file-name filename directory)`.
 
-        (expand-file-name "foo" "/usr/spool/")
-             ⇒ "/usr/spool/foo"
+Filenames containing ‘`.`’ or ‘`..`’ are simplified to their canonical form:
 
-    If the part of `filename` before the first slash is ‘`~`’, it expands to your home directory, which is typically specified by the value of the `HOME` environment variable (see [General Variables](https://www.gnu.org/software/emacs/manual/html_node/emacs/General-Variables.html#General-Variables) in The GNU Emacs Manual). If the part before the first slash is ‘`~user`’ and if `user` is a valid login name, it expands to `user`’s home directory. If you do not want this expansion for a relative `filename` that might begin with a literal ‘`~`’, you can use `(concat (file-name-as-directory directory) filename)` instead of `(expand-file-name filename directory)`.
+```lisp
+(expand-file-name "bar/../foo")
+     ⇒ "/xcssun/users/rms/lewis/foo"
+```
 
-    Filenames containing ‘`.`’ or ‘`..`’ are simplified to their canonical form:
+In some cases, a leading ‘`..`’ component can remain in the output:
 
-        (expand-file-name "bar/../foo")
-             ⇒ "/xcssun/users/rms/lewis/foo"
+```lisp
+(expand-file-name "../home" "/")
+     ⇒ "/../home"
+```
 
-    In some cases, a leading ‘`..`’ component can remain in the output:
+This is for the sake of filesystems that have the concept of a superroot above the root directory `/`. On other filesystems, `/../` is interpreted exactly the same as `/`.
 
-        (expand-file-name "../home" "/")
-             ⇒ "/../home"
+Expanding `.` or the empty string returns the default directory:
 
-    This is for the sake of filesystems that have the concept of a superroot above the root directory `/`. On other filesystems, `/../` is interpreted exactly the same as `/`.
+```lisp
+(expand-file-name "." "/usr/spool/")
+     ⇒ "/usr/spool"
+(expand-file-name "" "/usr/spool/")
+     ⇒ "/usr/spool"
+```
 
-    Expanding `.` or the empty string returns the default directory:
+Note that `expand-file-name` does *not* expand environment variables; only `substitute-in-file-name` does that:
 
-        (expand-file-name "." "/usr/spool/")
-             ⇒ "/usr/spool"
-        (expand-file-name "" "/usr/spool/")
-             ⇒ "/usr/spool"
+```lisp
+(expand-file-name "$HOME/foo")
+     ⇒ "/xcssun/users/rms/lewis/$HOME/foo"
+```
 
-    Note that `expand-file-name` does *not* expand environment variables; only `substitute-in-file-name` does that:
+Note also that `expand-file-name` does not follow symbolic links at any level. This results in a difference between the way `file-truename` and `expand-file-name` treat ‘`..`’. Assuming that ‘`/tmp/bar`’ is a symbolic link to the directory ‘`/tmp/foo/bar`’ we get:
 
-        (expand-file-name "$HOME/foo")
-             ⇒ "/xcssun/users/rms/lewis/$HOME/foo"
+```lisp
+(file-truename "/tmp/bar/../myfile")
+     ⇒ "/tmp/foo/myfile"
+```
 
-    Note also that `expand-file-name` does not follow symbolic links at any level. This results in a difference between the way `file-truename` and `expand-file-name` treat ‘`..`’. Assuming that ‘`/tmp/bar`’ is a symbolic link to the directory ‘`/tmp/foo/bar`’ we get:
+```lisp
+(expand-file-name "/tmp/bar/../myfile")
+     ⇒ "/tmp/myfile"
+```
 
-        (file-truename "/tmp/bar/../myfile")
-             ⇒ "/tmp/foo/myfile"
+If you may need to follow symbolic links preceding ‘`..`’, you should make sure to call `file-truename` without prior direct or indirect calls to `expand-file-name`. See [Truenames](Truenames.html).
 
-    <!---->
+### Variable: **default-directory**
 
-        (expand-file-name "/tmp/bar/../myfile")
-             ⇒ "/tmp/myfile"
+The value of this buffer-local variable is the default directory for the current buffer. It should be an absolute directory name; it may start with ‘`~`’. This variable is buffer-local in every buffer.
 
-    If you may need to follow symbolic links preceding ‘`..`’, you should make sure to call `file-truename` without prior direct or indirect calls to `expand-file-name`. See [Truenames](Truenames.html).
+`expand-file-name` uses the default directory when its second argument is `nil`.
 
-<!---->
+The value is always a string ending with a slash.
 
-*   Variable: **default-directory**
+```lisp
+default-directory
+     ⇒ "/user/lewis/manual/"
+```
 
-    The value of this buffer-local variable is the default directory for the current buffer. It should be an absolute directory name; it may start with ‘`~`’. This variable is buffer-local in every buffer.
+### Function: **substitute-in-file-name** *filename*
 
-    `expand-file-name` uses the default directory when its second argument is `nil`.
+This function replaces environment variable references in `filename` with the environment variable values. Following standard Unix shell syntax, ‘`$`’ is the prefix to substitute an environment variable value. If the input contains ‘`$$`’, that is converted to ‘`$`’; this gives the user a way to quote a ‘`$`’.
 
-    The value is always a string ending with a slash.
+The environment variable name is the series of alphanumeric characters (including underscores) that follow the ‘`$`’. If the character following the ‘`$`’ is a ‘`{`’, then the variable name is everything up to the matching ‘`}`’.
 
-        default-directory
-             ⇒ "/user/lewis/manual/"
+Calling `substitute-in-file-name` on output produced by `substitute-in-file-name` tends to give incorrect results. For instance, use of ‘`$$`’ to quote a single ‘`$`’ won’t work properly, and ‘`$`’ in an environment variable’s value could lead to repeated substitution. Therefore, programs that call this function and put the output where it will be passed to this function need to double all ‘`$`’ characters to prevent subsequent incorrect results.
 
-<!---->
+Here we assume that the environment variable `HOME`, which holds the user’s home directory, has value ‘`/xcssun/users/rms`’.
 
-*   Function: **substitute-in-file-name** *filename*
+```lisp
+(substitute-in-file-name "$HOME/foo")
+     ⇒ "/xcssun/users/rms/foo"
+```
 
-    This function replaces environment variable references in `filename` with the environment variable values. Following standard Unix shell syntax, ‘`$`’ is the prefix to substitute an environment variable value. If the input contains ‘`$$`’, that is converted to ‘`$`’; this gives the user a way to quote a ‘`$`’.
+After substitution, if a ‘`~`’ or a ‘`/`’ appears immediately after another ‘`/`’, the function discards everything before it (up through the immediately preceding ‘`/`’).
 
-    The environment variable name is the series of alphanumeric characters (including underscores) that follow the ‘`$`’. If the character following the ‘`$`’ is a ‘`{`’, then the variable name is everything up to the matching ‘`}`’.
+```lisp
+(substitute-in-file-name "bar/~/foo")
+     ⇒ "~/foo"
+```
 
-    Calling `substitute-in-file-name` on output produced by `substitute-in-file-name` tends to give incorrect results. For instance, use of ‘`$$`’ to quote a single ‘`$`’ won’t work properly, and ‘`$`’ in an environment variable’s value could lead to repeated substitution. Therefore, programs that call this function and put the output where it will be passed to this function need to double all ‘`$`’ characters to prevent subsequent incorrect results.
-
-    Here we assume that the environment variable `HOME`, which holds the user’s home directory, has value ‘`/xcssun/users/rms`’.
-
-        (substitute-in-file-name "$HOME/foo")
-             ⇒ "/xcssun/users/rms/foo"
-
-    After substitution, if a ‘`~`’ or a ‘`/`’ appears immediately after another ‘`/`’, the function discards everything before it (up through the immediately preceding ‘`/`’).
-
-        (substitute-in-file-name "bar/~/foo")
-             ⇒ "~/foo"
-
-    <!---->
-
-        (substitute-in-file-name "/usr/local/$HOME/foo")
-             ⇒ "/xcssun/users/rms/foo"
-             ;; /usr/local/ has been discarded.
+```lisp
+(substitute-in-file-name "/usr/local/$HOME/foo")
+     ⇒ "/xcssun/users/rms/foo"
+     ;; /usr/local/ has been discarded.
+```
 
 Sometimes, it is not desired to expand file names. In such cases, the file name can be quoted to suppress the expansion, and to handle the file name literally. Quoting happens by prefixing the file name with ‘`/:`’.
 
-*   Macro: **file-name-quote** *name*
+### Macro: **file-name-quote** *name*
 
-    This macro adds the quotation prefix ‘`/:`’ to the file `name`. For a local file `name`, it prefixes `name` with ‘`/:`’. If `name` is a remote file name, the local part of `name` (see [Magic File Names](Magic-File-Names.html)) is quoted. If `name` is already a quoted file name, `name` is returned unchanged.
+This macro adds the quotation prefix ‘`/:`’ to the file `name`. For a local file `name`, it prefixes `name` with ‘`/:`’. If `name` is a remote file name, the local part of `name` (see [Magic File Names](Magic-File-Names.html)) is quoted. If `name` is already a quoted file name, `name` is returned unchanged.
 
-        (substitute-in-file-name (file-name-quote "bar/~/foo"))
-             ⇒ "/:bar/~/foo"
+```lisp
+(substitute-in-file-name (file-name-quote "bar/~/foo"))
+     ⇒ "/:bar/~/foo"
+```
 
-    ```
-    ```
+```lisp
+```
 
-        (substitute-in-file-name (file-name-quote "/ssh:host:bar/~/foo"))
-             ⇒ "/ssh:host:/:bar/~/foo"
+```lisp
+(substitute-in-file-name (file-name-quote "/ssh:host:bar/~/foo"))
+     ⇒ "/ssh:host:/:bar/~/foo"
+```
 
-    The macro cannot be used to suppress file name handlers from magic file names (see [Magic File Names](Magic-File-Names.html)).
+The macro cannot be used to suppress file name handlers from magic file names (see [Magic File Names](Magic-File-Names.html)).
 
-<!---->
+### Macro: **file-name-unquote** *name*
 
-*   Macro: **file-name-unquote** *name*
+This macro removes the quotation prefix ‘`/:`’ from the file `name`, if any. If `name` is a remote file name, the local part of `name` is unquoted.
 
-    This macro removes the quotation prefix ‘`/:`’ from the file `name`, if any. If `name` is a remote file name, the local part of `name` is unquoted.
+### Macro: **file-name-quoted-p** *name*
 
-<!---->
-
-*   Macro: **file-name-quoted-p** *name*
-
-    This macro returns non-`nil`, when `name` is quoted with the prefix ‘`/:`’. If `name` is a remote file name, the local part of `name` is checked.
-
-Next: [Unique File Names](Unique-File-Names.html), Previous: [Directory Names](Directory-Names.html), Up: [File Names](File-Names.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
+This macro returns non-`nil`, when `name` is quoted with the prefix ‘`/:`’. If `name` is a remote file name, the local part of `name` is checked.

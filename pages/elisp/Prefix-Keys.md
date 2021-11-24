@@ -1,24 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
-
-Next: [Active Keymaps](Active-Keymaps.html), Previous: [Inheritance and Keymaps](Inheritance-and-Keymaps.html), Up: [Keymaps](Keymaps.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
 ### 22.6 Prefix Keys
 
@@ -26,20 +6,33 @@ A *prefix key* is a key sequence whose binding is a keymap. The keymap defines w
 
 Some of the standard Emacs prefix keys use keymaps that are also found in Lisp variables:
 
-*   `esc-map` is the global keymap for the `ESC` prefix key. Thus, the global definitions of all meta characters are actually found here. This map is also the function definition of `ESC-prefix`.
-*   `help-map` is the global keymap for the `C-h` prefix key.
-*   `mode-specific-map` is the global keymap for the prefix key `C-c`. This map is actually global, not mode-specific, but its name provides useful information about `C-c` in the output of `C-h b` (`display-bindings`), since the main use of this prefix key is for mode-specific bindings.
-*   `ctl-x-map` is the global keymap used for the `C-x` prefix key. This map is found via the function cell of the symbol `Control-X-prefix`.
-*   `mule-keymap` is the global keymap used for the `C-x RET` prefix key.
-*   `ctl-x-4-map` is the global keymap used for the `C-x 4` prefix key.
-*   `ctl-x-5-map` is the global keymap used for the `C-x 5` prefix key.
-*   `2C-mode-map` is the global keymap used for the `C-x 6` prefix key.
-*   `tab-prefix-map` is the global keymap used for the `C-x t` prefix key.
-*   `vc-prefix-map` is the global keymap used for the `C-x v` prefix key.
-*   `goto-map` is the global keymap used for the `M-g` prefix key.
-*   `search-map` is the global keymap used for the `M-s` prefix key.
-*   `facemenu-keymap` is the global keymap used for the `M-o` prefix key.
-*   The other Emacs prefix keys are `C-x @`, `C-x a i`, `C-x ESC` and `ESC ESC`. They use keymaps that have no special names.
+`esc-map` is the global keymap for the `ESC` prefix key. Thus, the global definitions of all meta characters are actually found here. This map is also the function definition of `ESC-prefix`.
+
+`help-map` is the global keymap for the `C-h` prefix key.
+
+`mode-specific-map` is the global keymap for the prefix key `C-c`. This map is actually global, not mode-specific, but its name provides useful information about `C-c` in the output of `C-h b` (`display-bindings`), since the main use of this prefix key is for mode-specific bindings.
+
+`ctl-x-map` is the global keymap used for the `C-x` prefix key. This map is found via the function cell of the symbol `Control-X-prefix`.
+
+`mule-keymap` is the global keymap used for the `C-x RET` prefix key.
+
+`ctl-x-4-map` is the global keymap used for the `C-x 4` prefix key.
+
+`ctl-x-5-map` is the global keymap used for the `C-x 5` prefix key.
+
+`2C-mode-map` is the global keymap used for the `C-x 6` prefix key.
+
+`tab-prefix-map` is the global keymap used for the `C-x t` prefix key.
+
+`vc-prefix-map` is the global keymap used for the `C-x v` prefix key.
+
+`goto-map` is the global keymap used for the `M-g` prefix key.
+
+`search-map` is the global keymap used for the `M-s` prefix key.
+
+`facemenu-keymap` is the global keymap used for the `M-o` prefix key.
+
+The other Emacs prefix keys are `C-x @`, `C-x a i`, `C-x ESC` and `ESC ESC`. They use keymaps that have no special names.
 
 The keymap binding of a prefix key is used for looking up the event that follows the prefix key. (It may instead be a symbol whose function definition is a keymap. The effect is the same, but the symbol serves as a name for the prefix key.) Thus, the binding of `C-x` is the symbol `Control-X-prefix`, whose function cell holds the keymap for `C-x` commands. (The same keymap is also the value of `ctl-x-map`.)
 
@@ -49,31 +42,33 @@ If a key is defined as a prefix in more than one active map, then its various de
 
 In the following example, we make `C-p` a prefix key in the local keymap, in such a way that `C-p` is identical to `C-x`. Then the binding for `C-p C-f` is the function `find-file`, just like `C-x C-f`. The key sequence `C-p 6` is not found in any active keymap.
 
-    (use-local-map (make-sparse-keymap))
-        ⇒ nil
-
-<!---->
-
-    (local-set-key "\C-p" ctl-x-map)
-        ⇒ nil
-
-<!---->
-
-    (key-binding "\C-p\C-f")
-        ⇒ find-file
-
-```
+```lisp
+(use-local-map (make-sparse-keymap))
+    ⇒ nil
 ```
 
-    (key-binding "\C-p6")
-        ⇒ nil
+```lisp
+(local-set-key "\C-p" ctl-x-map)
+    ⇒ nil
+```
 
-*   Function: **define-prefix-command** *symbol \&optional mapvar prompt*
+```lisp
+(key-binding "\C-p\C-f")
+    ⇒ find-file
+```
 
-    This function prepares `symbol` for use as a prefix key’s binding: it creates a sparse keymap and stores it as `symbol`’s function definition. Subsequently binding a key sequence to `symbol` will make that key sequence into a prefix key. The return value is `symbol`.
+```lisp
+```
 
-    This function also sets `symbol` as a variable, with the keymap as its value. But if `mapvar` is non-`nil`, it sets `mapvar` as a variable instead.
+```lisp
+(key-binding "\C-p6")
+    ⇒ nil
+```
 
-    If `prompt` is non-`nil`, that becomes the overall prompt string for the keymap. The prompt string should be given for menu keymaps (see [Defining Menus](Defining-Menus.html)).
+### Function: **define-prefix-command** *symbol \&optional mapvar prompt*
 
-Next: [Active Keymaps](Active-Keymaps.html), Previous: [Inheritance and Keymaps](Inheritance-and-Keymaps.html), Up: [Keymaps](Keymaps.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
+This function prepares `symbol` for use as a prefix key’s binding: it creates a sparse keymap and stores it as `symbol`’s function definition. Subsequently binding a key sequence to `symbol` will make that key sequence into a prefix key. The return value is `symbol`.
+
+This function also sets `symbol` as a variable, with the keymap as its value. But if `mapvar` is non-`nil`, it sets `mapvar` as a variable instead.
+
+If `prompt` is non-`nil`, that becomes the overall prompt string for the keymap. The prompt string should be given for menu keymaps (see [Defining Menus](Defining-Menus.html)).

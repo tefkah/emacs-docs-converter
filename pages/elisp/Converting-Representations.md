@@ -1,24 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
-
-Next: [Selecting a Representation](Selecting-a-Representation.html), Previous: [Disabling Multibyte](Disabling-Multibyte.html), Up: [Non-ASCII Characters](Non_002dASCII-Characters.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
 ### 33.3 Converting Text Representations
 
@@ -34,32 +14,22 @@ Converting multibyte text to unibyte converts all ASCII and eight-bit characters
 
 The next two functions either return the argument `string`, or a newly created string with no text properties.
 
-*   Function: **string-to-multibyte** *string*
+### Function: **string-to-multibyte** *string*
 
-    This function returns a multibyte string containing the same sequence of characters as `string`. If `string` is a multibyte string, it is returned unchanged. The function assumes that `string` includes only ASCII characters and raw 8-bit bytes; the latter are converted to their multibyte representation corresponding to the codepoints `#x3FFF80` through `#x3FFFFF`, inclusive (see [codepoints](Text-Representations.html)).
+This function returns a multibyte string containing the same sequence of characters as `string`. If `string` is a multibyte string, it is returned unchanged. The function assumes that `string` includes only ASCII characters and raw 8-bit bytes; the latter are converted to their multibyte representation corresponding to the codepoints `#x3FFF80` through `#x3FFFFF`, inclusive (see [codepoints](Text-Representations.html)).
 
-<!---->
+### Function: **string-to-unibyte** *string*
 
-*   Function: **string-to-unibyte** *string*
+This function returns a unibyte string containing the same sequence of characters as `string`. It signals an error if `string` contains a non-ASCII character. If `string` is a unibyte string, it is returned unchanged. Use this function for `string` arguments that contain only ASCII and eight-bit characters.
 
-    This function returns a unibyte string containing the same sequence of characters as `string`. It signals an error if `string` contains a non-ASCII character. If `string` is a unibyte string, it is returned unchanged. Use this function for `string` arguments that contain only ASCII and eight-bit characters.
+### Function: **byte-to-string** *byte*
 
-<!---->
+This function returns a unibyte string containing a single byte of character data, `byte`. It signals an error if `byte` is not an integer between 0 and 255.
 
-*   Function: **byte-to-string** *byte*
+### Function: **multibyte-char-to-unibyte** *char*
 
-    This function returns a unibyte string containing a single byte of character data, `byte`. It signals an error if `byte` is not an integer between 0 and 255.
+This converts the multibyte character `char` to a unibyte character, and returns that character. If `char` is neither ASCII nor eight-bit, the function returns -1.
 
-<!---->
+### Function: **unibyte-char-to-multibyte** *char*
 
-*   Function: **multibyte-char-to-unibyte** *char*
-
-    This converts the multibyte character `char` to a unibyte character, and returns that character. If `char` is neither ASCII nor eight-bit, the function returns -1.
-
-<!---->
-
-*   Function: **unibyte-char-to-multibyte** *char*
-
-    This convert the unibyte character `char` to a multibyte character, assuming `char` is either ASCII or raw 8-bit byte.
-
-Next: [Selecting a Representation](Selecting-a-Representation.html), Previous: [Disabling Multibyte](Disabling-Multibyte.html), Up: [Non-ASCII Characters](Non_002dASCII-Characters.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
+This convert the unibyte character `char` to a multibyte character, assuming `char` is either ASCII or raw 8-bit byte.

@@ -1,24 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
-
-Next: [Invoking the Debugger](Invoking-the-Debugger.html), Previous: [Backtraces](Backtraces.html), Up: [Debugger](Debugger.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
 #### 18.1.8 Debugger Commands
 
@@ -28,52 +8,50 @@ Some of the debugger commands operate on the current frame. If a frame starts wi
 
 Here is a list of Debugger mode commands:
 
-*   `c`
+`c`
 
-    Exit the debugger and continue execution. This resumes execution of the program as if the debugger had never been entered (aside from any side-effects that you caused by changing variable values or data structures while inside the debugger).
+Exit the debugger and continue execution. This resumes execution of the program as if the debugger had never been entered (aside from any side-effects that you caused by changing variable values or data structures while inside the debugger).
 
-*   `d`
+`d`
 
-    Continue execution, but enter the debugger the next time any Lisp function is called. This allows you to step through the subexpressions of an expression, seeing what values the subexpressions compute, and what else they do.
+Continue execution, but enter the debugger the next time any Lisp function is called. This allows you to step through the subexpressions of an expression, seeing what values the subexpressions compute, and what else they do.
 
-    The stack frame made for the function call which enters the debugger in this way will be flagged automatically so that the debugger will be called again when the frame is exited. You can use the `u` command to cancel this flag.
+The stack frame made for the function call which enters the debugger in this way will be flagged automatically so that the debugger will be called again when the frame is exited. You can use the `u` command to cancel this flag.
 
-*   `b`
+`b`
 
-    Flag the current frame so that the debugger will be entered when the frame is exited. Frames flagged in this way are marked with stars in the backtrace buffer.
+Flag the current frame so that the debugger will be entered when the frame is exited. Frames flagged in this way are marked with stars in the backtrace buffer.
 
-*   `u`
+`u`
 
-    Don’t enter the debugger when the current frame is exited. This cancels a `b` command on that frame. The visible effect is to remove the star from the line in the backtrace buffer.
+Don’t enter the debugger when the current frame is exited. This cancels a `b` command on that frame. The visible effect is to remove the star from the line in the backtrace buffer.
 
-*   `j`
+`j`
 
-    Flag the current frame like `b`. Then continue execution like `c`, but temporarily disable break-on-entry for all functions that are set up to do so by `debug-on-entry`.
+Flag the current frame like `b`. Then continue execution like `c`, but temporarily disable break-on-entry for all functions that are set up to do so by `debug-on-entry`.
 
-*   `e`
+`e`
 
-    Read a Lisp expression in the minibuffer, evaluate it (with the relevant lexical environment, if applicable), and print the value in the echo area. The debugger alters certain important variables, and the current buffer, as part of its operation; `e` temporarily restores their values from outside the debugger, so you can examine and change them. This makes the debugger more transparent. By contrast, `M-:` does nothing special in the debugger; it shows you the variable values within the debugger.
+Read a Lisp expression in the minibuffer, evaluate it (with the relevant lexical environment, if applicable), and print the value in the echo area. The debugger alters certain important variables, and the current buffer, as part of its operation; `e` temporarily restores their values from outside the debugger, so you can examine and change them. This makes the debugger more transparent. By contrast, `M-:` does nothing special in the debugger; it shows you the variable values within the debugger.
 
-*   `R`
+`R`
 
-    Like `e`, but also save the result of evaluation in the buffer `*Debugger-record*`.
+Like `e`, but also save the result of evaluation in the buffer `*Debugger-record*`.
 
-*   `q`
+`q`
 
-    Terminate the program being debugged; return to top-level Emacs command execution.
+Terminate the program being debugged; return to top-level Emacs command execution.
 
-    If the debugger was entered due to a `C-g` but you really want to quit, and not debug, use the `q` command.
+If the debugger was entered due to a `C-g` but you really want to quit, and not debug, use the `q` command.
 
-*   `r`
+`r`
 
-    Return a value from the debugger. The value is computed by reading an expression with the minibuffer and evaluating it.
+Return a value from the debugger. The value is computed by reading an expression with the minibuffer and evaluating it.
 
-    The `r` command is useful when the debugger was invoked due to exit from a Lisp call frame (as requested with `b` or by entering the frame with `d`); then the value specified in the `r` command is used as the value of that frame. It is also useful if you call `debug` and use its return value. Otherwise, `r` has the same effect as `c`, and the specified return value does not matter.
+The `r` command is useful when the debugger was invoked due to exit from a Lisp call frame (as requested with `b` or by entering the frame with `d`); then the value specified in the `r` command is used as the value of that frame. It is also useful if you call `debug` and use its return value. Otherwise, `r` has the same effect as `c`, and the specified return value does not matter.
 
-    You can’t use `r` when the debugger was entered due to an error.
+You can’t use `r` when the debugger was entered due to an error.
 
-*   `l`
+`l`
 
-    Display a list of functions that will invoke the debugger when called. This is a list of functions that are set to break on entry by means of `debug-on-entry`.
-
-Next: [Invoking the Debugger](Invoking-the-Debugger.html), Previous: [Backtraces](Backtraces.html), Up: [Debugger](Debugger.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
+Display a list of functions that will invoke the debugger when called. This is a list of functions that are set to break on entry by means of `debug-on-entry`.

@@ -1,24 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
-
-Next: [Creating Buffer-Local](Creating-Buffer_002dLocal.html), Up: [Buffer-Local Variables](Buffer_002dLocal-Variables.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
 #### 12.11.1 Introduction to Buffer-Local Variables
 
@@ -36,33 +16,33 @@ A more powerful operation is to mark the variable as *automatically buffer-local
 
 **Warning:** When a variable has buffer-local bindings in one or more buffers, `let` rebinds the binding that’s currently in effect. For instance, if the current buffer has a buffer-local value, `let` temporarily rebinds that. If no buffer-local bindings are in effect, `let` rebinds the default value. If inside the `let` you then change to a different current buffer in which a different binding is in effect, you won’t see the `let` binding any more. And if you exit the `let` while still in the other buffer, you won’t see the unbinding occur (though it will occur properly). Here is an example to illustrate:
 
-    (setq foo 'g)
-    (set-buffer "a")
-    (make-local-variable 'foo)
+```lisp
+(setq foo 'g)
+(set-buffer "a")
+(make-local-variable 'foo)
+```
 
-<!---->
+```lisp
+(setq foo 'a)
+(let ((foo 'temp))
+  ;; foo ⇒ 'temp  ; let binding in buffer ‘a’
+  (set-buffer "b")
+  ;; foo ⇒ 'g     ; the global value since foo is not local in ‘b’
+  body…)
+```
 
-    (setq foo 'a)
-    (let ((foo 'temp))
-      ;; foo ⇒ 'temp  ; let binding in buffer ‘a’
-      (set-buffer "b")
-      ;; foo ⇒ 'g     ; the global value since foo is not local in ‘b’
-      body…)
+```lisp
+foo ⇒ 'g        ; exiting restored the local value in buffer ‘a’,
+                 ; but we don’t see that in buffer ‘b’
+```
 
-<!---->
-
-    foo ⇒ 'g        ; exiting restored the local value in buffer ‘a’,
-                     ; but we don’t see that in buffer ‘b’
-
-<!---->
-
-    (set-buffer "a") ; verify the local value was restored
-    foo ⇒ 'a
+```lisp
+(set-buffer "a") ; verify the local value was restored
+foo ⇒ 'a
+```
 
 Note that references to `foo` in `body` access the buffer-local binding of buffer ‘`b`’.
 
 When a file specifies local variable values, these become buffer-local values when you visit the file. See [File Variables](https://www.gnu.org/software/emacs/manual/html_node/emacs/File-Variables.html#File-Variables) in The GNU Emacs Manual.
 
 A buffer-local variable cannot be made terminal-local (see [Multiple Terminals](Multiple-Terminals.html)).
-
-Next: [Creating Buffer-Local](Creating-Buffer_002dLocal.html), Up: [Buffer-Local Variables](Buffer_002dLocal-Variables.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]

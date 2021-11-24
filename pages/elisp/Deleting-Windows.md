@@ -1,24 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
-
-Next: [Recombining Windows](Recombining-Windows.html), Previous: [Splitting Windows](Splitting-Windows.html), Up: [Windows](Windows.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
 ### 28.7 Deleting Windows
 
@@ -26,42 +6,36 @@ Next: [Recombining Windows](Recombining-Windows.html), Previous: [Splitting Wind
 
 Even after a window is deleted, it continues to exist as a Lisp object, until there are no more references to it. Window deletion can be reversed, by restoring a saved window configuration (see [Window Configurations](Window-Configurations.html)).
 
-*   Command: **delete-window** *\&optional window*
+### Command: **delete-window** *\&optional window*
 
-    This function removes `window` from display and returns `nil`. If `window` is omitted or `nil`, it defaults to the selected window.
+This function removes `window` from display and returns `nil`. If `window` is omitted or `nil`, it defaults to the selected window.
 
-    If deleting the window would leave no more windows in the window tree (e.g., if it is the only live window in the frame) or all remaining windows on `window`’s frame are side windows (see [Side Windows](Side-Windows.html)), an error is signaled. If `window` is part of an atomic window (see [Atomic Windows](Atomic-Windows.html)), this function tries to delete the root of that atomic window instead.
+If deleting the window would leave no more windows in the window tree (e.g., if it is the only live window in the frame) or all remaining windows on `window`’s frame are side windows (see [Side Windows](Side-Windows.html)), an error is signaled. If `window` is part of an atomic window (see [Atomic Windows](Atomic-Windows.html)), this function tries to delete the root of that atomic window instead.
 
-    By default, the space taken up by `window` is given to one of its adjacent sibling windows, if any. However, if the variable `window-combination-resize` is non-`nil`, the space is proportionally distributed among any remaining windows in the same window combination. See [Recombining Windows](Recombining-Windows.html).
+By default, the space taken up by `window` is given to one of its adjacent sibling windows, if any. However, if the variable `window-combination-resize` is non-`nil`, the space is proportionally distributed among any remaining windows in the same window combination. See [Recombining Windows](Recombining-Windows.html).
 
-    The behavior of this function may be altered by the window parameters of `window`, so long as the variable `ignore-window-parameters` is `nil`. If the value of the `delete-window` window parameter is `t`, this function ignores all other window parameters. Otherwise, if the value of the `delete-window` window parameter is a function, that function is called with the argument `window`, in lieu of the usual action of `delete-window`. See [Window Parameters](Window-Parameters.html).
+The behavior of this function may be altered by the window parameters of `window`, so long as the variable `ignore-window-parameters` is `nil`. If the value of the `delete-window` window parameter is `t`, this function ignores all other window parameters. Otherwise, if the value of the `delete-window` window parameter is a function, that function is called with the argument `window`, in lieu of the usual action of `delete-window`. See [Window Parameters](Window-Parameters.html).
 
-<!---->
+### Command: **delete-other-windows** *\&optional window*
 
-*   Command: **delete-other-windows** *\&optional window*
+This function makes `window` fill its frame, deleting other windows as necessary. If `window` is omitted or `nil`, it defaults to the selected window. An error is signaled if `window` is a side window (see [Side Windows](Side-Windows.html)). If `window` is part of an atomic window (see [Atomic Windows](Atomic-Windows.html)), this function tries to make the root of that atomic window fill its frame. The return value is `nil`.
 
-    This function makes `window` fill its frame, deleting other windows as necessary. If `window` is omitted or `nil`, it defaults to the selected window. An error is signaled if `window` is a side window (see [Side Windows](Side-Windows.html)). If `window` is part of an atomic window (see [Atomic Windows](Atomic-Windows.html)), this function tries to make the root of that atomic window fill its frame. The return value is `nil`.
+The behavior of this function may be altered by the window parameters of `window`, so long as the variable `ignore-window-parameters` is `nil`. If the value of the `delete-other-windows` window parameter is `t`, this function ignores all other window parameters. Otherwise, if the value of the `delete-other-windows` window parameter is a function, that function is called with the argument `window`, in lieu of the usual action of `delete-other-windows`. See [Window Parameters](Window-Parameters.html).
 
-    The behavior of this function may be altered by the window parameters of `window`, so long as the variable `ignore-window-parameters` is `nil`. If the value of the `delete-other-windows` window parameter is `t`, this function ignores all other window parameters. Otherwise, if the value of the `delete-other-windows` window parameter is a function, that function is called with the argument `window`, in lieu of the usual action of `delete-other-windows`. See [Window Parameters](Window-Parameters.html).
+Also, if `ignore-window-parameters` is `nil`, this function does not delete any window whose `no-delete-other-windows` parameter is non-`nil`.
 
-    Also, if `ignore-window-parameters` is `nil`, this function does not delete any window whose `no-delete-other-windows` parameter is non-`nil`.
+### Command: **delete-windows-on** *\&optional buffer-or-name frame*
 
-<!---->
+This function deletes all windows showing `buffer-or-name`, by calling `delete-window` on those windows. `buffer-or-name` should be a buffer, or the name of a buffer; if omitted or `nil`, it defaults to the current buffer. If there are no windows showing the specified buffer, this function does nothing. If the specified buffer is a minibuffer, an error is signaled.
 
-*   Command: **delete-windows-on** *\&optional buffer-or-name frame*
+If there is a dedicated window showing the buffer, and that window is the only one on its frame, this function also deletes that frame if it is not the only frame on the terminal.
 
-    This function deletes all windows showing `buffer-or-name`, by calling `delete-window` on those windows. `buffer-or-name` should be a buffer, or the name of a buffer; if omitted or `nil`, it defaults to the current buffer. If there are no windows showing the specified buffer, this function does nothing. If the specified buffer is a minibuffer, an error is signaled.
+The optional argument `frame` specifies which frames to operate on:
 
-    If there is a dedicated window showing the buffer, and that window is the only one on its frame, this function also deletes that frame if it is not the only frame on the terminal.
+*   `nil` means operate on all frames.
+*   `t` means operate on the selected frame.
+*   `visible` means operate on all visible frames.
+*   `0` means operate on all visible or iconified frames.
+*   A frame means operate on that frame.
 
-    The optional argument `frame` specifies which frames to operate on:
-
-    *   `nil` means operate on all frames.
-    *   `t` means operate on the selected frame.
-    *   `visible` means operate on all visible frames.
-    *   `0` means operate on all visible or iconified frames.
-    *   A frame means operate on that frame.
-
-    Note that this argument does not have the same meaning as in other functions which scan all live windows (see [Cyclic Window Ordering](Cyclic-Window-Ordering.html)). Specifically, the meanings of `t` and `nil` here are the opposite of what they are in those other functions.
-
-Next: [Recombining Windows](Recombining-Windows.html), Previous: [Splitting Windows](Splitting-Windows.html), Up: [Windows](Windows.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
+Note that this argument does not have the same meaning as in other functions which scan all live windows (see [Cyclic Window Ordering](Cyclic-Window-Ordering.html)). Specifically, the meanings of `t` and `nil` here are the opposite of what they are in those other functions.

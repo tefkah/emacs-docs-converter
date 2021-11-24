@@ -1,24 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
-
-Next: [Text Terminal Colors](Text-Terminal-Colors.html), Previous: [Drag and Drop](Drag-and-Drop.html), Up: [Frames](Frames.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
 ### 29.22 Color Names
 
@@ -28,59 +8,51 @@ These functions provide a way to determine which color names are valid, and what
 
 To read user input of color names with completion, use `read-color` (see [read-color](High_002dLevel-Completion.html)).
 
-*   Function: **color-defined-p** *color \&optional frame*
+### Function: **color-defined-p** *color \&optional frame*
 
-    This function reports whether a color name is meaningful. It returns `t` if so; otherwise, `nil`. The argument `frame` says which frame’s display to ask about; if `frame` is omitted or `nil`, the selected frame is used.
+This function reports whether a color name is meaningful. It returns `t` if so; otherwise, `nil`. The argument `frame` says which frame’s display to ask about; if `frame` is omitted or `nil`, the selected frame is used.
 
-    Note that this does not tell you whether the display you are using really supports that color. When using X, you can ask for any defined color on any kind of display, and you will get some result—typically, the closest it can do. To determine whether a frame can really display a certain color, use `color-supported-p` (see below).
+Note that this does not tell you whether the display you are using really supports that color. When using X, you can ask for any defined color on any kind of display, and you will get some result—typically, the closest it can do. To determine whether a frame can really display a certain color, use `color-supported-p` (see below).
 
-    This function used to be called `x-color-defined-p`, and that name is still supported as an alias.
+This function used to be called `x-color-defined-p`, and that name is still supported as an alias.
 
-<!---->
+### Function: **defined-colors** *\&optional frame*
 
-*   Function: **defined-colors** *\&optional frame*
+This function returns a list of the color names that are defined and supported on frame `frame` (default, the selected frame). If `frame` does not support colors, the value is `nil`.
 
-    This function returns a list of the color names that are defined and supported on frame `frame` (default, the selected frame). If `frame` does not support colors, the value is `nil`.
+This function used to be called `x-defined-colors`, and that name is still supported as an alias.
 
-    This function used to be called `x-defined-colors`, and that name is still supported as an alias.
+### Function: **color-supported-p** *color \&optional frame background-p*
 
-<!---->
+This returns `t` if `frame` can really display the color `color` (or at least something close to it). If `frame` is omitted or `nil`, the question applies to the selected frame.
 
-*   Function: **color-supported-p** *color \&optional frame background-p*
+Some terminals support a different set of colors for foreground and background. If `background-p` is non-`nil`, that means you are asking whether `color` can be used as a background; otherwise you are asking whether it can be used as a foreground.
 
-    This returns `t` if `frame` can really display the color `color` (or at least something close to it). If `frame` is omitted or `nil`, the question applies to the selected frame.
+The argument `color` must be a valid color name.
 
-    Some terminals support a different set of colors for foreground and background. If `background-p` is non-`nil`, that means you are asking whether `color` can be used as a background; otherwise you are asking whether it can be used as a foreground.
+### Function: **color-gray-p** *color \&optional frame*
 
-    The argument `color` must be a valid color name.
+This returns `t` if `color` is a shade of gray, as defined on `frame`’s display. If `frame` is omitted or `nil`, the question applies to the selected frame. If `color` is not a valid color name, this function returns `nil`.
 
-<!---->
+### Function: **color-values** *color \&optional frame*
 
-*   Function: **color-gray-p** *color \&optional frame*
+This function returns a value that describes what `color` should ideally look like on `frame`. If `color` is defined, the value is a list of three integers, which give the amount of red, the amount of green, and the amount of blue. Each integer ranges in principle from 0 to 65535, but some displays may not use the full range. This three-element list is called the *rgb values* of the color.
 
-    This returns `t` if `color` is a shade of gray, as defined on `frame`’s display. If `frame` is omitted or `nil`, the question applies to the selected frame. If `color` is not a valid color name, this function returns `nil`.
+If `color` is not defined, the value is `nil`.
 
-<!---->
+```lisp
+(color-values "black")
+     ⇒ (0 0 0)
+(color-values "white")
+     ⇒ (65280 65280 65280)
+(color-values "red")
+     ⇒ (65280 0 0)
+(color-values "pink")
+     ⇒ (65280 49152 51968)
+(color-values "hungry")
+     ⇒ nil
+```
 
-*   Function: **color-values** *color \&optional frame*
+The color values are returned for `frame`’s display. If `frame` is omitted or `nil`, the information is returned for the selected frame’s display. If the frame cannot display colors, the value is `nil`.
 
-    This function returns a value that describes what `color` should ideally look like on `frame`. If `color` is defined, the value is a list of three integers, which give the amount of red, the amount of green, and the amount of blue. Each integer ranges in principle from 0 to 65535, but some displays may not use the full range. This three-element list is called the *rgb values* of the color.
-
-    If `color` is not defined, the value is `nil`.
-
-        (color-values "black")
-             ⇒ (0 0 0)
-        (color-values "white")
-             ⇒ (65280 65280 65280)
-        (color-values "red")
-             ⇒ (65280 0 0)
-        (color-values "pink")
-             ⇒ (65280 49152 51968)
-        (color-values "hungry")
-             ⇒ nil
-
-    The color values are returned for `frame`’s display. If `frame` is omitted or `nil`, the information is returned for the selected frame’s display. If the frame cannot display colors, the value is `nil`.
-
-    This function used to be called `x-color-values`, and that name is still supported as an alias.
-
-Next: [Text Terminal Colors](Text-Terminal-Colors.html), Previous: [Drag and Drop](Drag-and-Drop.html), Up: [Frames](Frames.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
+This function used to be called `x-color-values`, and that name is still supported as an alias.

@@ -1,24 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
-
-Next: [Index](Index.html), Previous: [Standard Keymaps](Standard-Keymaps.html), Up: [Top](index.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
 ## Appendix H Standard Hooks
 
@@ -32,226 +12,224 @@ This is not an exhaustive list, it only covers the more general hooks. For examp
 
 A special feature allows you to specify expressions to evaluate if and when a file is loaded (see [Hooks for Loading](Hooks-for-Loading.html)). That feature is not exactly a hook, but does a similar job.
 
-*   *   `activate-mark-hook`
-    *   `deactivate-mark-hook`
+*   `activate-mark-hook`
+*   `deactivate-mark-hook`
 
-    See [The Mark](The-Mark.html).
+See [The Mark](The-Mark.html).
 
-*   *   `after-change-functions`
-    *   `before-change-functions`
-    *   `first-change-hook`
+*   `after-change-functions`
+*   `before-change-functions`
+*   `first-change-hook`
 
-    See [Change Hooks](Change-Hooks.html).
+See [Change Hooks](Change-Hooks.html).
 
-*   *   `after-change-major-mode-hook`
-    *   `change-major-mode-after-body-hook`
+*   `after-change-major-mode-hook`
+*   `change-major-mode-after-body-hook`
 
-    See [Mode Hooks](Mode-Hooks.html).
+See [Mode Hooks](Mode-Hooks.html).
 
-*   *   `after-init-hook`
-    *   `before-init-hook`
-    *   `emacs-startup-hook`
-    *   `window-setup-hook`
+*   `after-init-hook`
+*   `before-init-hook`
+*   `emacs-startup-hook`
+*   `window-setup-hook`
 
-    See [Init File](Init-File.html).
+See [Init File](Init-File.html).
 
-*   *   `after-insert-file-functions`
-    *   `write-region-annotate-functions`
-    *   `write-region-post-annotation-function`
+*   `after-insert-file-functions`
+*   `write-region-annotate-functions`
+*   `write-region-post-annotation-function`
 
-    See [Format Conversion](Format-Conversion.html).
+See [Format Conversion](Format-Conversion.html).
 
-*   *   `after-make-frame-functions`
-    *   `before-make-frame-hook`
-    *   `server-after-make-frame-hook`
+*   `after-make-frame-functions`
+*   `before-make-frame-hook`
+*   `server-after-make-frame-hook`
 
-    See [Creating Frames](Creating-Frames.html).
+See [Creating Frames](Creating-Frames.html).
 
-*   *   `after-save-hook`
-    *   `before-save-hook`
-    *   `write-contents-functions`
-    *   `write-file-functions`
+*   `after-save-hook`
+*   `before-save-hook`
+*   `write-contents-functions`
+*   `write-file-functions`
 
-    See [Saving Buffers](Saving-Buffers.html).
+See [Saving Buffers](Saving-Buffers.html).
 
-*   `after-setting-font-hook`
+`after-setting-font-hook`
 
-    Hook run after a frame’s font changes.
+Hook run after a frame’s font changes.
 
-*   `auto-save-hook`
+`auto-save-hook`
 
-    See [Auto-Saving](Auto_002dSaving.html).
+See [Auto-Saving](Auto_002dSaving.html).
 
-*   *   `before-hack-local-variables-hook`
-    *   `hack-local-variables-hook`
+*   `before-hack-local-variables-hook`
+*   `hack-local-variables-hook`
 
-    See [File Local Variables](File-Local-Variables.html).
+See [File Local Variables](File-Local-Variables.html).
 
-*   `buffer-access-fontify-functions`
+`buffer-access-fontify-functions`
 
-    See [Lazy Properties](Lazy-Properties.html).
+See [Lazy Properties](Lazy-Properties.html).
 
-*   `buffer-list-update-hook`
+`buffer-list-update-hook`
 
-    Hook run when the buffer list changes (see [Buffer List](Buffer-List.html)).
+Hook run when the buffer list changes (see [Buffer List](Buffer-List.html)).
 
-*   `buffer-quit-function`
+`buffer-quit-function`
 
-    Function to call to quit the current buffer.
+Function to call to quit the current buffer.
 
-*   `change-major-mode-hook`
+`change-major-mode-hook`
 
-    See [Creating Buffer-Local](Creating-Buffer_002dLocal.html).
+See [Creating Buffer-Local](Creating-Buffer_002dLocal.html).
 
-*   `comint-password-function`
+`comint-password-function`
 
-    This abnormal hook permits a derived mode to supply a password for the underlying command interpreter without prompting the user.
+This abnormal hook permits a derived mode to supply a password for the underlying command interpreter without prompting the user.
 
-*   `command-line-functions`
+`command-line-functions`
 
-    See [Command-Line Arguments](Command_002dLine-Arguments.html).
+See [Command-Line Arguments](Command_002dLine-Arguments.html).
 
-*   `delayed-warnings-hook`
+`delayed-warnings-hook`
 
-    The command loop runs this soon after `post-command-hook` (q.v.).
+The command loop runs this soon after `post-command-hook` (q.v.).
 
-*   `focus-in-hook`
+`focus-in-hook`
 
-*   `focus-out-hook`
+`focus-out-hook`
 
-    See [Input Focus](Input-Focus.html).
+See [Input Focus](Input-Focus.html).
 
-*   *   `delete-frame-functions`
-    *   `after-delete-frame-functions`
+*   `delete-frame-functions`
+*   `after-delete-frame-functions`
 
-    See [Deleting Frames](Deleting-Frames.html).
+See [Deleting Frames](Deleting-Frames.html).
 
-*   `delete-terminal-functions`
+`delete-terminal-functions`
 
-    See [Multiple Terminals](Multiple-Terminals.html).
+See [Multiple Terminals](Multiple-Terminals.html).
 
-*   *   `pop-up-frame-function`
-    *   `split-window-preferred-function`
+*   `pop-up-frame-function`
+*   `split-window-preferred-function`
 
-    See [Choosing Window Options](Choosing-Window-Options.html).
+See [Choosing Window Options](Choosing-Window-Options.html).
 
-*   `echo-area-clear-hook`
+`echo-area-clear-hook`
 
-    See [Echo Area Customization](Echo-Area-Customization.html).
+See [Echo Area Customization](Echo-Area-Customization.html).
 
-*   *   `find-file-hook`
-    *   `find-file-not-found-functions`
+*   `find-file-hook`
+*   `find-file-not-found-functions`
 
-    See [Visiting Functions](Visiting-Functions.html).
+See [Visiting Functions](Visiting-Functions.html).
 
-*   `font-lock-extend-after-change-region-function`
+`font-lock-extend-after-change-region-function`
 
-    See [Region to Refontify](Region-to-Refontify.html).
+See [Region to Refontify](Region-to-Refontify.html).
 
-*   `font-lock-extend-region-functions`
+`font-lock-extend-region-functions`
 
-    See [Multiline Font Lock](Multiline-Font-Lock.html).
+See [Multiline Font Lock](Multiline-Font-Lock.html).
 
-*   *   `font-lock-fontify-buffer-function`
-    *   `font-lock-fontify-region-function`
-    *   `font-lock-mark-block-function`
-    *   `font-lock-unfontify-buffer-function`
-    *   `font-lock-unfontify-region-function`
+*   `font-lock-fontify-buffer-function`
+*   `font-lock-fontify-region-function`
+*   `font-lock-mark-block-function`
+*   `font-lock-unfontify-buffer-function`
+*   `font-lock-unfontify-region-function`
 
-    See [Other Font Lock Variables](Other-Font-Lock-Variables.html).
+See [Other Font Lock Variables](Other-Font-Lock-Variables.html).
 
-*   `fontification-functions`
+`fontification-functions`
 
-    See [Automatic Face Assignment](Auto-Faces.html).
+See [Automatic Face Assignment](Auto-Faces.html).
 
-*   `frame-auto-hide-function`
+`frame-auto-hide-function`
 
-    See [Quitting Windows](Quitting-Windows.html).
+See [Quitting Windows](Quitting-Windows.html).
 
-*   `quit-window-hook`
+`quit-window-hook`
 
-    See [Quitting Windows](Quitting-Windows.html).
+See [Quitting Windows](Quitting-Windows.html).
 
-*   *   `kill-buffer-hook`
-    *   `kill-buffer-query-functions`
+*   `kill-buffer-hook`
+*   `kill-buffer-query-functions`
 
-    See [Killing Buffers](Killing-Buffers.html).
+See [Killing Buffers](Killing-Buffers.html).
 
-*   *   `kill-emacs-hook`
-    *   `kill-emacs-query-functions`
+*   `kill-emacs-hook`
+*   `kill-emacs-query-functions`
 
-    See [Killing Emacs](Killing-Emacs.html).
+See [Killing Emacs](Killing-Emacs.html).
 
-*   `menu-bar-update-hook`
+`menu-bar-update-hook`
 
-    See [Menu Bar](Menu-Bar.html).
+See [Menu Bar](Menu-Bar.html).
 
-*   *   `minibuffer-setup-hook`
-    *   `minibuffer-exit-hook`
+*   `minibuffer-setup-hook`
+*   `minibuffer-exit-hook`
 
-    See [Minibuffer Misc](Minibuffer-Misc.html).
+See [Minibuffer Misc](Minibuffer-Misc.html).
 
-*   `mouse-leave-buffer-hook`
+`mouse-leave-buffer-hook`
 
-    Hook run when about to switch windows with a mouse command.
+Hook run when about to switch windows with a mouse command.
 
-*   `mouse-position-function`
+`mouse-position-function`
 
-    See [Mouse Position](Mouse-Position.html).
+See [Mouse Position](Mouse-Position.html).
 
-*   `prefix-command-echo-keystrokes-functions`
+`prefix-command-echo-keystrokes-functions`
 
-    An abnormal hook run by prefix commands (such as `C-u`) which should return a string describing the current prefix state. For example, `C-u` produces ‘`C-u-`’ and ‘`C-u 1 2 3-`’. Each hook function is called with no arguments and should return a string describing the current prefix state, or `nil` if there’s no prefix state. See [Prefix Command Arguments](Prefix-Command-Arguments.html).
+An abnormal hook run by prefix commands (such as `C-u`) which should return a string describing the current prefix state. For example, `C-u` produces ‘`C-u-`’ and ‘`C-u 1 2 3-`’. Each hook function is called with no arguments and should return a string describing the current prefix state, or `nil` if there’s no prefix state. See [Prefix Command Arguments](Prefix-Command-Arguments.html).
 
-*   `prefix-command-preserve-state-hook`
+`prefix-command-preserve-state-hook`
 
-    Hook run when a prefix command needs to preserve the prefix by passing the current prefix command state to the next command. For example, `C-u` needs to pass the state to the next command when the user types `C-u -` or follows `C-u` with a digit.
+Hook run when a prefix command needs to preserve the prefix by passing the current prefix command state to the next command. For example, `C-u` needs to pass the state to the next command when the user types `C-u -` or follows `C-u` with a digit.
 
-*   `pre-redisplay-functions`
+`pre-redisplay-functions`
 
-    Hook run in each window just before redisplaying it. See [Forcing Redisplay](Forcing-Redisplay.html).
+Hook run in each window just before redisplaying it. See [Forcing Redisplay](Forcing-Redisplay.html).
 
-*   *   `post-command-hook`
-    *   `pre-command-hook`
+*   `post-command-hook`
+*   `pre-command-hook`
 
-    See [Command Overview](Command-Overview.html).
+See [Command Overview](Command-Overview.html).
 
-*   `post-gc-hook`
+`post-gc-hook`
 
-    See [Garbage Collection](Garbage-Collection.html).
+See [Garbage Collection](Garbage-Collection.html).
 
-*   `post-self-insert-hook`
+`post-self-insert-hook`
 
-    See [Keymaps and Minor Modes](Keymaps-and-Minor-Modes.html).
+See [Keymaps and Minor Modes](Keymaps-and-Minor-Modes.html).
 
-*   *   `suspend-hook`
-    *   `suspend-resume-hook`
-    *   `suspend-tty-functions`
-    *   `resume-tty-functions`
+*   `suspend-hook`
+*   `suspend-resume-hook`
+*   `suspend-tty-functions`
+*   `resume-tty-functions`
 
-    See [Suspending Emacs](Suspending-Emacs.html).
+See [Suspending Emacs](Suspending-Emacs.html).
 
-*   *   `syntax-begin-function`
-    *   `syntax-propertize-extend-region-functions`
-    *   `syntax-propertize-function`
-    *   `font-lock-syntactic-face-function`
+*   `syntax-begin-function`
+*   `syntax-propertize-extend-region-functions`
+*   `syntax-propertize-function`
+*   `font-lock-syntactic-face-function`
 
-    See [Syntactic Font Lock](Syntactic-Font-Lock.html). See [Syntax Properties](Syntax-Properties.html).
+See [Syntactic Font Lock](Syntactic-Font-Lock.html). See [Syntax Properties](Syntax-Properties.html).
 
-*   *   `temp-buffer-setup-hook`
-    *   `temp-buffer-show-function`
-    *   `temp-buffer-show-hook`
+*   `temp-buffer-setup-hook`
+*   `temp-buffer-show-function`
+*   `temp-buffer-show-hook`
 
-    See [Temporary Displays](Temporary-Displays.html).
+See [Temporary Displays](Temporary-Displays.html).
 
-*   `tty-setup-hook`
+`tty-setup-hook`
 
-    See [Terminal-Specific](Terminal_002dSpecific.html).
+See [Terminal-Specific](Terminal_002dSpecific.html).
 
-*   *   `window-configuration-change-hook`
-    *   `window-scroll-functions`
-    *   `window-size-change-functions`
+*   `window-configuration-change-hook`
+*   `window-scroll-functions`
+*   `window-size-change-functions`
 
-    See [Window Hooks](Window-Hooks.html).
-
-Next: [Index](Index.html), Previous: [Standard Keymaps](Standard-Keymaps.html), Up: [Top](index.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
+See [Window Hooks](Window-Hooks.html).

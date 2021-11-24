@@ -1,24 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
-
-Next: [Predicates for Strings](Predicates-for-Strings.html), Up: [Strings and Characters](Strings-and-Characters.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
 ### 4.1 String and Character Basics
 
@@ -37,5 +17,3 @@ Strings are useful for holding regular expressions. You can also match regular e
 Like a buffer, a string can contain text properties for the characters in it, as well as the characters themselves. See [Text Properties](Text-Properties.html). All the Lisp primitives that copy text from strings to buffers or other strings also copy the properties of the characters being copied.
 
 See [Text](Text.html), for information about functions that display strings or copy them into buffers. See [Character Type](Character-Type.html), and [String Type](String-Type.html), for information about the syntax of characters and strings. See [Non-ASCII Characters](Non_002dASCII-Characters.html), for functions to convert between text representations and to encode and decode character codes. Also, note that `length` should *not* be used for computing the width of a string on display; use `string-width` (see [Size of Displayed Text](Size-of-Displayed-Text.html)) instead.
-
-Next: [Predicates for Strings](Predicates-for-Strings.html), Up: [Strings and Characters](Strings-and-Characters.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]

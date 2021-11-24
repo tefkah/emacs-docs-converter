@@ -1,24 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
-
-Next: [Horizontal Scrolling](Horizontal-Scrolling.html), Previous: [Textual Scrolling](Textual-Scrolling.html), Up: [Windows](Windows.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
 ### 28.22 Vertical Fractional Scrolling
 
@@ -28,32 +8,30 @@ The vertical scroll position is measured in units of the normal line height, whi
 
 What fraction of a line the vertical scrolling covers, or how many lines, depends on what the lines contain. A value of .5 could scroll a line whose height is very short off the screen, while a value of 3.3 could scroll just part of the way through a tall line or an image.
 
-*   Function: **window-vscroll** *\&optional window pixels-p*
+### Function: **window-vscroll** *\&optional window pixels-p*
 
-    This function returns the current vertical scroll position of `window`. The default for `window` is the selected window. If `pixels-p` is non-`nil`, the return value is measured in pixels, rather than in units of the normal line height.
+This function returns the current vertical scroll position of `window`. The default for `window` is the selected window. If `pixels-p` is non-`nil`, the return value is measured in pixels, rather than in units of the normal line height.
 
-        (window-vscroll)
-             ⇒ 0
+```lisp
+(window-vscroll)
+     ⇒ 0
+```
 
-<!---->
+### Function: **set-window-vscroll** *window lines \&optional pixels-p*
 
-*   Function: **set-window-vscroll** *window lines \&optional pixels-p*
+This function sets `window`’s vertical scroll position to `lines`. If `window` is `nil`, the selected window is used. The argument `lines` should be zero or positive; if not, it is taken as zero.
 
-    This function sets `window`’s vertical scroll position to `lines`. If `window` is `nil`, the selected window is used. The argument `lines` should be zero or positive; if not, it is taken as zero.
+The actual vertical scroll position must always correspond to an integral number of pixels, so the value you specify is rounded accordingly.
 
-    The actual vertical scroll position must always correspond to an integral number of pixels, so the value you specify is rounded accordingly.
+The return value is the result of this rounding.
 
-    The return value is the result of this rounding.
+```lisp
+(set-window-vscroll (selected-window) 1.2)
+     ⇒ 1.13
+```
 
-        (set-window-vscroll (selected-window) 1.2)
-             ⇒ 1.13
+If `pixels-p` is non-`nil`, `lines` specifies a number of pixels. In this case, the return value is `lines`.
 
-    If `pixels-p` is non-`nil`, `lines` specifies a number of pixels. In this case, the return value is `lines`.
+### Variable: **auto-window-vscroll**
 
-<!---->
-
-*   Variable: **auto-window-vscroll**
-
-    If this variable is non-`nil`, the `line-move`, `scroll-up`, and `scroll-down` functions will automatically modify the vertical scroll position to scroll through display rows that are taller than the height of the window, for example in the presence of large images.
-
-Next: [Horizontal Scrolling](Horizontal-Scrolling.html), Previous: [Textual Scrolling](Textual-Scrolling.html), Up: [Windows](Windows.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
+If this variable is non-`nil`, the `line-move`, `scroll-up`, and `scroll-down` functions will automatically modify the vertical scroll position to scroll through display rows that are taller than the height of the window, for example in the presence of large images.

@@ -1,24 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
-
-Next: [Shell Arguments](Shell-Arguments.html), Up: [Processes](Processes.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
 ### 38.1 Functions that Create Subprocesses
 
@@ -30,9 +10,9 @@ In all cases, the functions specify the program to be run. An error is signaled 
 
 Executing a program can also try adding suffixes to the specified name:
 
-*   User Option: **exec-suffixes**
+### User Option: **exec-suffixes**
 
-    This variable is a list of suffixes (strings) to try adding to the specified program file name. The list should include `""` if you want the name to be tried exactly as specified. The default value is system-dependent.
+This variable is a list of suffixes (strings) to try adding to the specified program file name. The list should include `""` if you want the name to be tried exactly as specified. The default value is system-dependent.
 
 **Please note:** The argument `program` contains only the name of the program file; it may not contain any command-line arguments. You must use a separate argument, `args`, to provide those, as described below.
 
@@ -42,24 +22,18 @@ All three of the subprocess-creating functions allow to specify command-line arg
 
 The subprocess inherits its environment from Emacs, but you can specify overrides for it with `process-environment`. See [System Environment](System-Environment.html). The subprocess gets its current directory from the value of `default-directory`.
 
-*   Variable: **exec-directory**
+### Variable: **exec-directory**
 
-    The value of this variable is a string, the name of a directory that contains programs that come with GNU Emacs and are intended for Emacs to invoke. The program `movemail` is an example of such a program; Rmail uses it to fetch new mail from an inbox.
+The value of this variable is a string, the name of a directory that contains programs that come with GNU Emacs and are intended for Emacs to invoke. The program `movemail` is an example of such a program; Rmail uses it to fetch new mail from an inbox.
 
-<!---->
+### User Option: **exec-path**
 
-*   User Option: **exec-path**
+The value of this variable is a list of directories to search for programs to run in subprocesses. Each element is either the name of a directory (i.e., a string), or `nil`, which stands for the default directory (which is the value of `default-directory`). See [executable-find](Locating-Files.html), for the details of this search.
 
-    The value of this variable is a list of directories to search for programs to run in subprocesses. Each element is either the name of a directory (i.e., a string), or `nil`, which stands for the default directory (which is the value of `default-directory`). See [executable-find](Locating-Files.html), for the details of this search.
+The value of `exec-path` is used by `call-process` and `start-process` when the `program` argument is not an absolute file name.
 
-    The value of `exec-path` is used by `call-process` and `start-process` when the `program` argument is not an absolute file name.
+Generally, you should not modify `exec-path` directly. Instead, ensure that your `PATH` environment variable is set appropriately before starting Emacs. Trying to modify `exec-path` independently of `PATH` can lead to confusing results.
 
-    Generally, you should not modify `exec-path` directly. Instead, ensure that your `PATH` environment variable is set appropriately before starting Emacs. Trying to modify `exec-path` independently of `PATH` can lead to confusing results.
+### Function: **exec-path**
 
-<!---->
-
-*   Function: **exec-path**
-
-    This function is an extension of the variable `exec-path`. If `default-directory` indicates a remote directory, this function returns a list of directories used for searching programs on the respective remote host. In case of a local `default-directory`, the function returns just the value of the variable `exec-path`.
-
-Next: [Shell Arguments](Shell-Arguments.html), Up: [Processes](Processes.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
+This function is an extension of the variable `exec-path`. If `default-directory` indicates a remote directory, this function returns a list of directories used for searching programs on the respective remote host. In case of a local `default-directory`, the function returns just the value of the variable `exec-path`.

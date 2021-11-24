@@ -1,24 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
-
-Next: [Docs and Compilation](Docs-and-Compilation.html), Previous: [Speed of Byte-Code](Speed-of-Byte_002dCode.html), Up: [Byte Compilation](Byte-Compilation.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
 ### 17.2 Byte-Compilation Functions
 
@@ -30,88 +10,90 @@ Be careful when writing macro calls in files that you intend to byte-compile. Si
 
 Inline (`defsubst`) functions are less troublesome; if you compile a call to such a function before its definition is known, the call will still work right, it will just run slower.
 
-*   Function: **byte-compile** *symbol*
+### Function: **byte-compile** *symbol*
 
-    This function byte-compiles the function definition of `symbol`, replacing the previous definition with the compiled one. The function definition of `symbol` must be the actual code for the function; `byte-compile` does not handle function indirection. The return value is the byte-code function object which is the compiled definition of `symbol` (see [Byte-Code Objects](Byte_002dCode-Objects.html)).
+This function byte-compiles the function definition of `symbol`, replacing the previous definition with the compiled one. The function definition of `symbol` must be the actual code for the function; `byte-compile` does not handle function indirection. The return value is the byte-code function object which is the compiled definition of `symbol` (see [Byte-Code Objects](Byte_002dCode-Objects.html)).
 
-        (defun factorial (integer)
-          "Compute factorial of INTEGER."
-          (if (= 1 integer) 1
-            (* integer (factorial (1- integer)))))
-        ⇒ factorial
+```lisp
+(defun factorial (integer)
+  "Compute factorial of INTEGER."
+  (if (= 1 integer) 1
+    (* integer (factorial (1- integer)))))
+⇒ factorial
+```
 
-    ```
-    ```
+```lisp
+```
 
-        (byte-compile 'factorial)
-        ⇒
-        #[(integer)
-          "^H\301U\203^H^@\301\207\302^H\303^HS!\"\207"
-          [integer 1 * factorial]
-          4 "Compute factorial of INTEGER."]
+```lisp
+(byte-compile 'factorial)
+⇒
+#[(integer)
+  "^H\301U\203^H^@\301\207\302^H\303^HS!\"\207"
+  [integer 1 * factorial]
+  4 "Compute factorial of INTEGER."]
+```
 
-    If `symbol`’s definition is a byte-code function object, `byte-compile` does nothing and returns `nil`. It does not compile the symbol’s definition again, since the original (non-compiled) code has already been replaced in the symbol’s function cell by the byte-compiled code.
+If `symbol`’s definition is a byte-code function object, `byte-compile` does nothing and returns `nil`. It does not compile the symbol’s definition again, since the original (non-compiled) code has already been replaced in the symbol’s function cell by the byte-compiled code.
 
-    The argument to `byte-compile` can also be a `lambda` expression. In that case, the function returns the corresponding compiled code but does not store it anywhere.
+The argument to `byte-compile` can also be a `lambda` expression. In that case, the function returns the corresponding compiled code but does not store it anywhere.
 
-<!---->
+### Command: **compile-defun** *\&optional arg*
 
-*   Command: **compile-defun** *\&optional arg*
+This command reads the defun containing point, compiles it, and evaluates the result. If you use this on a defun that is actually a function definition, the effect is to install a compiled version of that function.
 
-    This command reads the defun containing point, compiles it, and evaluates the result. If you use this on a defun that is actually a function definition, the effect is to install a compiled version of that function.
+`compile-defun` normally displays the result of evaluation in the echo area, but if `arg` is non-`nil`, it inserts the result in the current buffer after the form it has compiled.
 
-    `compile-defun` normally displays the result of evaluation in the echo area, but if `arg` is non-`nil`, it inserts the result in the current buffer after the form it has compiled.
+### Command: **byte-compile-file** *filename \&optional load*
 
-<!---->
+This function compiles a file of Lisp code named `filename` into a file of byte-code. The output file’s name is made by changing the ‘`.el`’ suffix into ‘`.elc`’; if `filename` does not end in ‘`.el`’, it adds ‘`.elc`’ to the end of `filename`.
 
-*   Command: **byte-compile-file** *filename \&optional load*
+Compilation works by reading the input file one form at a time. If it is a definition of a function or macro, the compiled function or macro definition is written out. Other forms are batched together, then each batch is compiled, and written so that its compiled code will be executed when the file is read. All comments are discarded when the input file is read.
 
-    This function compiles a file of Lisp code named `filename` into a file of byte-code. The output file’s name is made by changing the ‘`.el`’ suffix into ‘`.elc`’; if `filename` does not end in ‘`.el`’, it adds ‘`.elc`’ to the end of `filename`.
+This command returns `t` if there were no errors and `nil` otherwise. When called interactively, it prompts for the file name.
 
-    Compilation works by reading the input file one form at a time. If it is a definition of a function or macro, the compiled function or macro definition is written out. Other forms are batched together, then each batch is compiled, and written so that its compiled code will be executed when the file is read. All comments are discarded when the input file is read.
+If `load` is non-`nil`, this command loads the compiled file after compiling it. Interactively, `load` is the prefix argument.
 
-    This command returns `t` if there were no errors and `nil` otherwise. When called interactively, it prompts for the file name.
+```lisp
+$ ls -l push*
+-rw-r--r-- 1 lewis lewis 791 Oct  5 20:31 push.el
+```
 
-    If `load` is non-`nil`, this command loads the compiled file after compiling it. Interactively, `load` is the prefix argument.
+```lisp
+```
 
-        $ ls -l push*
-        -rw-r--r-- 1 lewis lewis 791 Oct  5 20:31 push.el
+```lisp
+(byte-compile-file "~/emacs/push.el")
+     ⇒ t
+```
 
-    ```
-    ```
+```lisp
+```
 
-        (byte-compile-file "~/emacs/push.el")
-             ⇒ t
+```lisp
+$ ls -l push*
+-rw-r--r-- 1 lewis lewis 791 Oct  5 20:31 push.el
+-rw-rw-rw- 1 lewis lewis 638 Oct  8 20:25 push.elc
+```
 
-    ```
-    ```
+### Command: **byte-recompile-directory** *directory \&optional flag force*
 
-        $ ls -l push*
-        -rw-r--r-- 1 lewis lewis 791 Oct  5 20:31 push.el
-        -rw-rw-rw- 1 lewis lewis 638 Oct  8 20:25 push.elc
+This command recompiles every ‘`.el`’ file in `directory` (or its subdirectories) that needs recompilation. A file needs recompilation if a ‘`.elc`’ file exists but is older than the ‘`.el`’ file.
 
-<!---->
+When a ‘`.el`’ file has no corresponding ‘`.elc`’ file, `flag` says what to do. If it is `nil`, this command ignores these files. If `flag` is 0, it compiles them. If it is neither `nil` nor 0, it asks the user whether to compile each such file, and asks about each subdirectory as well.
 
-*   Command: **byte-recompile-directory** *directory \&optional flag force*
+Interactively, `byte-recompile-directory` prompts for `directory` and `flag` is the prefix argument.
 
-    This command recompiles every ‘`.el`’ file in `directory` (or its subdirectories) that needs recompilation. A file needs recompilation if a ‘`.elc`’ file exists but is older than the ‘`.el`’ file.
+If `force` is non-`nil`, this command recompiles every ‘`.el`’ file that has a ‘`.elc`’ file.
 
-    When a ‘`.el`’ file has no corresponding ‘`.elc`’ file, `flag` says what to do. If it is `nil`, this command ignores these files. If `flag` is 0, it compiles them. If it is neither `nil` nor 0, it asks the user whether to compile each such file, and asks about each subdirectory as well.
+The returned value is unpredictable.
 
-    Interactively, `byte-recompile-directory` prompts for `directory` and `flag` is the prefix argument.
+### Function: **batch-byte-compile** *\&optional noforce*
 
-    If `force` is non-`nil`, this command recompiles every ‘`.el`’ file that has a ‘`.elc`’ file.
+This function runs `byte-compile-file` on files specified on the command line. This function must be used only in a batch execution of Emacs, as it kills Emacs on completion. An error in one file does not prevent processing of subsequent files, but no output file will be generated for it, and the Emacs process will terminate with a nonzero status code.
 
-    The returned value is unpredictable.
+If `noforce` is non-`nil`, this function does not recompile files that have an up-to-date ‘`.elc`’ file.
 
-<!---->
-
-*   Function: **batch-byte-compile** *\&optional noforce*
-
-    This function runs `byte-compile-file` on files specified on the command line. This function must be used only in a batch execution of Emacs, as it kills Emacs on completion. An error in one file does not prevent processing of subsequent files, but no output file will be generated for it, and the Emacs process will terminate with a nonzero status code.
-
-    If `noforce` is non-`nil`, this function does not recompile files that have an up-to-date ‘`.elc`’ file.
-
-        $ emacs -batch -f batch-byte-compile *.el
-
-Next: [Docs and Compilation](Docs-and-Compilation.html), Previous: [Speed of Byte-Code](Speed-of-Byte_002dCode.html), Up: [Byte Compilation](Byte-Compilation.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
+```lisp
+$ emacs -batch -f batch-byte-compile *.el
+```

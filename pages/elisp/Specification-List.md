@@ -1,24 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
-
-Next: [Backtracking](Backtracking.html), Previous: [Instrumenting Macro Calls](Instrumenting-Macro-Calls.html), Up: [Edebug and Macros](Edebug-and-Macros.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
 #### 18.2.15.2 Specification List
 
@@ -32,122 +12,120 @@ Edebug specifications provide the power of regular expression matching, plus som
 
 Here’s a table of the possible elements of a specification list, with their meanings (see [Specification Examples](Specification-Examples.html), for the referenced examples):
 
-*   `sexp`
+`sexp`
 
-    A single unevaluated Lisp object, which is not instrumented.
+A single unevaluated Lisp object, which is not instrumented.
 
-*   `form`
+`form`
 
-    A single evaluated expression, which is instrumented. If your macro wraps the expression with `lambda` before it is evaluated, use `def-form` instead. See `def-form` below.
+A single evaluated expression, which is instrumented. If your macro wraps the expression with `lambda` before it is evaluated, use `def-form` instead. See `def-form` below.
 
-*   `place`
+`place`
 
-    A generalized variable. See [Generalized Variables](Generalized-Variables.html).
+A generalized variable. See [Generalized Variables](Generalized-Variables.html).
 
-*   `body`
+`body`
 
-    Short for `&rest form`. See `&rest` below. If your macro wraps its body of code with `lambda` before it is evaluated, use `def-body` instead. See `def-body` below.
+Short for `&rest form`. See `&rest` below. If your macro wraps its body of code with `lambda` before it is evaluated, use `def-body` instead. See `def-body` below.
 
-*   `function-form`
+`function-form`
 
-    A function form: either a quoted function symbol, a quoted lambda expression, or a form (that should evaluate to a function symbol or lambda expression). This is useful when an argument that’s a lambda expression might be quoted with `quote` rather than `function`, since it instruments the body of the lambda expression either way.
+A function form: either a quoted function symbol, a quoted lambda expression, or a form (that should evaluate to a function symbol or lambda expression). This is useful when an argument that’s a lambda expression might be quoted with `quote` rather than `function`, since it instruments the body of the lambda expression either way.
 
-*   `lambda-expr`
+`lambda-expr`
 
-    A lambda expression with no quoting.
+A lambda expression with no quoting.
 
-*   `&optional`
+`&optional`
 
-    All following elements in the specification list are optional; as soon as one does not match, Edebug stops matching at this level.
+All following elements in the specification list are optional; as soon as one does not match, Edebug stops matching at this level.
 
-    To make just a few elements optional, followed by non-optional elements, use `[&optional specs…]`. To specify that several elements must all match or none, use `&optional [specs…]`. See the `defun` example.
+To make just a few elements optional, followed by non-optional elements, use `[&optional specs…]`. To specify that several elements must all match or none, use `&optional [specs…]`. See the `defun` example.
 
-*   `&rest`
+`&rest`
 
-    All following elements in the specification list are repeated zero or more times. In the last repetition, however, it is not a problem if the expression runs out before matching all of the elements of the specification list.
+All following elements in the specification list are repeated zero or more times. In the last repetition, however, it is not a problem if the expression runs out before matching all of the elements of the specification list.
 
-    To repeat only a few elements, use `[&rest specs…]`. To specify several elements that must all match on every repetition, use `&rest [specs…]`.
+To repeat only a few elements, use `[&rest specs…]`. To specify several elements that must all match on every repetition, use `&rest [specs…]`.
 
-*   `&or`
+`&or`
 
-    Each of the following elements in the specification list is an alternative. One of the alternatives must match, or the `&or` specification fails.
+Each of the following elements in the specification list is an alternative. One of the alternatives must match, or the `&or` specification fails.
 
-    Each list element following `&or` is a single alternative. To group two or more list elements as a single alternative, enclose them in `[…]`.
+Each list element following `&or` is a single alternative. To group two or more list elements as a single alternative, enclose them in `[…]`.
 
-*   `&not`
+`&not`
 
-    Each of the following elements is matched as alternatives as if by using `&or`, but if any of them match, the specification fails. If none of them match, nothing is matched, but the `&not` specification succeeds.
+Each of the following elements is matched as alternatives as if by using `&or`, but if any of them match, the specification fails. If none of them match, nothing is matched, but the `&not` specification succeeds.
 
-*   `&define`
+`&define`
 
-    Indicates that the specification is for a defining form. Edebug’s definition of a defining form is a form containing one or more code forms which are saved and executed later, after the execution of the defining form.
+Indicates that the specification is for a defining form. Edebug’s definition of a defining form is a form containing one or more code forms which are saved and executed later, after the execution of the defining form.
 
-    The defining form itself is not instrumented (that is, Edebug does not stop before and after the defining form), but forms inside it typically will be instrumented. The `&define` keyword should be the first element in a list specification.
+The defining form itself is not instrumented (that is, Edebug does not stop before and after the defining form), but forms inside it typically will be instrumented. The `&define` keyword should be the first element in a list specification.
 
-*   `nil`
+`nil`
 
-    This is successful when there are no more arguments to match at the current argument list level; otherwise it fails. See sublist specifications and the backquote example.
+This is successful when there are no more arguments to match at the current argument list level; otherwise it fails. See sublist specifications and the backquote example.
 
-*   `gate`
+`gate`
 
-    No argument is matched but backtracking through the gate is disabled while matching the remainder of the specifications at this level. This is primarily used to generate more specific syntax error messages. See [Backtracking](Backtracking.html), for more details. Also see the `let` example.
+No argument is matched but backtracking through the gate is disabled while matching the remainder of the specifications at this level. This is primarily used to generate more specific syntax error messages. See [Backtracking](Backtracking.html), for more details. Also see the `let` example.
 
-*   `other-symbol`
+`other-symbol`
 
-    Any other symbol in a specification list may be a predicate or an indirect specification.
+Any other symbol in a specification list may be a predicate or an indirect specification.
 
-    If the symbol has an Edebug specification, this *indirect specification* should be either a list specification that is used in place of the symbol, or a function that is called to process the arguments. The specification may be defined with `def-edebug-spec` just as for macros. See the `defun` example.
+If the symbol has an Edebug specification, this *indirect specification* should be either a list specification that is used in place of the symbol, or a function that is called to process the arguments. The specification may be defined with `def-edebug-spec` just as for macros. See the `defun` example.
 
-    Otherwise, the symbol should be a predicate. The predicate is called with the argument, and if the predicate returns `nil`, the specification fails and the argument is not instrumented.
+Otherwise, the symbol should be a predicate. The predicate is called with the argument, and if the predicate returns `nil`, the specification fails and the argument is not instrumented.
 
-    Some suitable predicates include `symbolp`, `integerp`, `stringp`, `vectorp`, and `atom`.
+Some suitable predicates include `symbolp`, `integerp`, `stringp`, `vectorp`, and `atom`.
 
-*   `[elements…]`
+`[elements…]`
 
-    A vector of elements groups the elements into a single *group specification*. Its meaning has nothing to do with vectors.
+A vector of elements groups the elements into a single *group specification*. Its meaning has nothing to do with vectors.
 
-*   `"string"`
+`"string"`
 
-    The argument should be a symbol named `string`. This specification is equivalent to the quoted symbol, `'symbol`, where the name of `symbol` is the `string`, but the string form is preferred.
+The argument should be a symbol named `string`. This specification is equivalent to the quoted symbol, `'symbol`, where the name of `symbol` is the `string`, but the string form is preferred.
 
-*   `(vector elements…)`
+`(vector elements…)`
 
-    The argument should be a vector whose elements must match the `elements` in the specification. See the backquote example.
+The argument should be a vector whose elements must match the `elements` in the specification. See the backquote example.
 
-*   `(elements…)`
+`(elements…)`
 
-    Any other list is a *sublist specification* and the argument must be a list whose elements match the specification `elements`.
+Any other list is a *sublist specification* and the argument must be a list whose elements match the specification `elements`.
 
-    A sublist specification may be a dotted list and the corresponding list argument may then be a dotted list. Alternatively, the last CDR of a dotted list specification may be another sublist specification (via a grouping or an indirect specification, e.g., `(spec . [(more specs…)])`) whose elements match the non-dotted list arguments. This is useful in recursive specifications such as in the backquote example. Also see the description of a `nil` specification above for terminating such recursion.
+A sublist specification may be a dotted list and the corresponding list argument may then be a dotted list. Alternatively, the last CDR of a dotted list specification may be another sublist specification (via a grouping or an indirect specification, e.g., `(spec . [(more specs…)])`) whose elements match the non-dotted list arguments. This is useful in recursive specifications such as in the backquote example. Also see the description of a `nil` specification above for terminating such recursion.
 
-    Note that a sublist specification written as `(specs . nil)` is equivalent to `(specs)`, and `(specs . (sublist-elements…))` is equivalent to `(specs sublist-elements…)`.
+Note that a sublist specification written as `(specs . nil)` is equivalent to `(specs)`, and `(specs . (sublist-elements…))` is equivalent to `(specs sublist-elements…)`.
 
 Here is a list of additional specifications that may appear only after `&define`. See the `defun` example.
 
-*   `name`
+`name`
 
-    The argument, a symbol, is the name of the defining form.
+The argument, a symbol, is the name of the defining form.
 
-    A defining form is not required to have a name field; and it may have multiple name fields.
+A defining form is not required to have a name field; and it may have multiple name fields.
 
-*   `:name`
+### `:name`
 
-    This construct does not actually match an argument. The element following `:name` should be a symbol; it is used as an additional name component for the definition. You can use this to add a unique, static component to the name of the definition. It may be used more than once.
+This construct does not actually match an argument. The element following `:name` should be a symbol; it is used as an additional name component for the definition. You can use this to add a unique, static component to the name of the definition. It may be used more than once.
 
-*   `arg`
+`arg`
 
-    The argument, a symbol, is the name of an argument of the defining form. However, lambda-list keywords (symbols starting with ‘`&`’) are not allowed.
+The argument, a symbol, is the name of an argument of the defining form. However, lambda-list keywords (symbols starting with ‘`&`’) are not allowed.
 
-*   `lambda-list`
+`lambda-list`
 
-    This matches a lambda list—the argument list of a lambda expression.
+This matches a lambda list—the argument list of a lambda expression.
 
-*   `def-body`
+`def-body`
 
-    The argument is the body of code in a definition. This is like `body`, described above, but a definition body must be instrumented with a different Edebug call that looks up information associated with the definition. Use `def-body` for the highest level list of forms within the definition.
+The argument is the body of code in a definition. This is like `body`, described above, but a definition body must be instrumented with a different Edebug call that looks up information associated with the definition. Use `def-body` for the highest level list of forms within the definition.
 
-*   `def-form`
+`def-form`
 
-    The argument is a single, highest-level form in a definition. This is like `def-body`, except it is used to match a single form rather than a list of forms. As a special case, `def-form` also means that tracing information is not output when the form is executed. See the `interactive` example.
-
-Next: [Backtracking](Backtracking.html), Previous: [Instrumenting Macro Calls](Instrumenting-Macro-Calls.html), Up: [Edebug and Macros](Edebug-and-Macros.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
+The argument is a single, highest-level form in a definition. This is like `def-body`, except it is used to match a single form rather than a list of forms. As a special case, `def-form` also means that tracing information is not output when the form is executed. See the `interactive` example.

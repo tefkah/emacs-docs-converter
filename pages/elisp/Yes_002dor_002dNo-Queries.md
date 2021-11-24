@@ -1,24 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
-
-Next: [Multiple Queries](Multiple-Queries.html), Previous: [Completion](Completion.html), Up: [Minibuffers](Minibuffers.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
 ### 20.7 Yes-or-No Queries
 
@@ -28,52 +8,52 @@ If either of these functions is called in a command that was invoked using the m
 
 Both `yes-or-no-p` and `y-or-n-p` use the minibuffer.
 
-*   Function: **y-or-n-p** *prompt*
+### Function: **y-or-n-p** *prompt*
 
-    This function asks the user a question, expecting input in the minibuffer. It returns `t` if the user types `y`, `nil` if the user types `n`. This function also accepts `SPC` to mean yes and `DEL` to mean no. It accepts `C-]` and `C-g` to quit, because the question uses the minibuffer and for that reason the user might try to use `C-]` to get out. The answer is a single character, with no `RET` needed to terminate it. Upper and lower case are equivalent.
+This function asks the user a question, expecting input in the minibuffer. It returns `t` if the user types `y`, `nil` if the user types `n`. This function also accepts `SPC` to mean yes and `DEL` to mean no. It accepts `C-]` and `C-g` to quit, because the question uses the minibuffer and for that reason the user might try to use `C-]` to get out. The answer is a single character, with no `RET` needed to terminate it. Upper and lower case are equivalent.
 
-    “Asking the question” means printing `prompt` in the minibuffer, followed by the string ‘`(y or n) `’<!-- /@w -->. If the input is not one of the expected answers (`y`, `n`, `SPC`, `DEL`, or something that quits), the function responds ‘`Please answer y or n.`’, and repeats the request.
+“Asking the question” means printing `prompt` in the minibuffer, followed by the string ‘`(y or n) `’. If the input is not one of the expected answers (`y`, `n`, `SPC`, `DEL`, or something that quits), the function responds ‘`Please answer y or n.`’, and repeats the request.
 
-    This function actually uses the minibuffer, but does not allow editing of the answer. The cursor moves to the minibuffer while the question is being asked.
+This function actually uses the minibuffer, but does not allow editing of the answer. The cursor moves to the minibuffer while the question is being asked.
 
-    The answers and their meanings, even ‘`y`’ and ‘`n`’, are not hardwired, and are specified by the keymap `query-replace-map` (see [Search and Replace](Search-and-Replace.html)). In particular, if the user enters the special responses `recenter`, `scroll-up`, `scroll-down`, `scroll-other-window`, or `scroll-other-window-down` (respectively bound to `C-l`, `C-v`, `M-v`, `C-M-v` and `C-M-S-v` in `query-replace-map`), this function performs the specified window recentering or scrolling operation, and poses the question again.
+The answers and their meanings, even ‘`y`’ and ‘`n`’, are not hardwired, and are specified by the keymap `query-replace-map` (see [Search and Replace](Search-and-Replace.html)). In particular, if the user enters the special responses `recenter`, `scroll-up`, `scroll-down`, `scroll-other-window`, or `scroll-other-window-down` (respectively bound to `C-l`, `C-v`, `M-v`, `C-M-v` and `C-M-S-v` in `query-replace-map`), this function performs the specified window recentering or scrolling operation, and poses the question again.
 
-<!---->
+### Function: **y-or-n-p-with-timeout** *prompt seconds default*
 
-*   Function: **y-or-n-p-with-timeout** *prompt seconds default*
+Like `y-or-n-p`, except that if the user fails to answer within `seconds` seconds, this function stops waiting and returns `default`. It works by setting up a timer; see [Timers](Timers.html). The argument `seconds` should be a number.
 
-    Like `y-or-n-p`, except that if the user fails to answer within `seconds` seconds, this function stops waiting and returns `default`. It works by setting up a timer; see [Timers](Timers.html). The argument `seconds` should be a number.
+### Function: **yes-or-no-p** *prompt*
 
-<!---->
+This function asks the user a question, expecting input in the minibuffer. It returns `t` if the user enters ‘`yes`’, `nil` if the user types ‘`no`’. The user must type `RET` to finalize the response. Upper and lower case are equivalent.
 
-*   Function: **yes-or-no-p** *prompt*
+`yes-or-no-p` starts by displaying `prompt` in the minibuffer, followed by ‘`(yes or no) `’. The user must type one of the expected responses; otherwise, the function responds ‘`Please answer yes or no.`’, waits about two seconds and repeats the request.
 
-    This function asks the user a question, expecting input in the minibuffer. It returns `t` if the user enters ‘`yes`’, `nil` if the user types ‘`no`’. The user must type `RET` to finalize the response. Upper and lower case are equivalent.
+`yes-or-no-p` requires more work from the user than `y-or-n-p` and is appropriate for more crucial decisions.
 
-    `yes-or-no-p` starts by displaying `prompt` in the minibuffer, followed by ‘`(yes or no) `’<!-- /@w -->. The user must type one of the expected responses; otherwise, the function responds ‘`Please answer yes or no.`’, waits about two seconds and repeats the request.
+Here is an example:
 
-    `yes-or-no-p` requires more work from the user than `y-or-n-p` and is appropriate for more crucial decisions.
+```lisp
+(yes-or-no-p "Do you really want to remove everything? ")
 
-    Here is an example:
+;; After evaluation of the preceding expression,
+;;   the following prompt appears,
+;;   with an empty minibuffer:
+```
 
-        (yes-or-no-p "Do you really want to remove everything? ")
+```lisp
+```
 
-        ;; After evaluation of the preceding expression,
-        ;;   the following prompt appears,
-        ;;   with an empty minibuffer:
+```lisp
+---------- Buffer: minibuffer ----------
+Do you really want to remove everything? (yes or no)
+---------- Buffer: minibuffer ----------
+```
 
-    ```
-    ```
+If the user first types `y RET`, which is invalid because this function demands the entire word ‘`yes`’, it responds by displaying these prompts, with a brief pause between them:
 
-        ---------- Buffer: minibuffer ----------
-        Do you really want to remove everything? (yes or no)
-        ---------- Buffer: minibuffer ----------
-
-    If the user first types `y RET`, which is invalid because this function demands the entire word ‘`yes`’, it responds by displaying these prompts, with a brief pause between them:
-
-        ---------- Buffer: minibuffer ----------
-        Please answer yes or no.
-        Do you really want to remove everything? (yes or no)
-        ---------- Buffer: minibuffer ----------
-
-Next: [Multiple Queries](Multiple-Queries.html), Previous: [Completion](Completion.html), Up: [Minibuffers](Minibuffers.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
+```lisp
+---------- Buffer: minibuffer ----------
+Please answer yes or no.
+Do you really want to remove everything? (yes or no)
+---------- Buffer: minibuffer ----------
+```

@@ -1,24 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
-
-Next: [Encoding and I/O](Encoding-and-I_002fO.html), Up: [Coding Systems](Coding-Systems.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
 #### 33.10.1 Basic Concepts of Coding Systems
 
@@ -42,23 +22,21 @@ The coding system `raw-text` is special in that it prevents character code conve
 
 The coding system `utf-8-emacs` specifies that the data is represented in the internal Emacs encoding (see [Text Representations](Text-Representations.html)). This is like `raw-text` in that no code conversion happens, but different in that the result is multibyte data. The name `emacs-internal` is an alias for `utf-8-emacs-unix` (so it forces no conversion of end-of-line, unlike `utf-8-emacs`, which can decode all 3 kinds of end-of-line conventions).
 
-*   Function: **coding-system-get** *coding-system property*
+### Function: **coding-system-get** *coding-system property*
 
-    This function returns the specified property of the coding system `coding-system`. Most coding system properties exist for internal purposes, but one that you might find useful is `:mime-charset`. That property’s value is the name used in MIME for the character coding which this coding system can read and write. Examples:
+This function returns the specified property of the coding system `coding-system`. Most coding system properties exist for internal purposes, but one that you might find useful is `:mime-charset`. That property’s value is the name used in MIME for the character coding which this coding system can read and write. Examples:
 
-        (coding-system-get 'iso-latin-1 :mime-charset)
-             ⇒ iso-8859-1
-        (coding-system-get 'iso-2022-cn :mime-charset)
-             ⇒ iso-2022-cn
-        (coding-system-get 'cyrillic-koi8 :mime-charset)
-             ⇒ koi8-r
+```lisp
+(coding-system-get 'iso-latin-1 :mime-charset)
+     ⇒ iso-8859-1
+(coding-system-get 'iso-2022-cn :mime-charset)
+     ⇒ iso-2022-cn
+(coding-system-get 'cyrillic-koi8 :mime-charset)
+     ⇒ koi8-r
+```
 
-    The value of the `:mime-charset` property is also defined as an alias for the coding system.
+The value of the `:mime-charset` property is also defined as an alias for the coding system.
 
-<!---->
+### Function: **coding-system-aliases** *coding-system*
 
-*   Function: **coding-system-aliases** *coding-system*
-
-    This function returns the list of aliases of `coding-system`.
-
-Next: [Encoding and I/O](Encoding-and-I_002fO.html), Up: [Coding Systems](Coding-Systems.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
+This function returns the list of aliases of `coding-system`.

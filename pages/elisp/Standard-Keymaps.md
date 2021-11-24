@@ -1,24 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
-
-Next: [Standard Hooks](Standard-Hooks.html), Previous: [Standard Errors](Standard-Errors.html), Up: [Top](index.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
 ## Appendix G Standard Keymaps
 
@@ -26,176 +6,174 @@ In this section we list some of the more general keymaps. Many of these exist wh
 
 There are many other, more specialized, maps than these; in particular those associated with major and minor modes. The minibuffer uses several keymaps (see [Completion Commands](Completion-Commands.html)). For more details on keymaps, see [Keymaps](Keymaps.html).
 
-*   `2C-mode-map`
+`2C-mode-map`
 
-    A sparse keymap for subcommands of the prefix `C-x 6`.\
-    See [Two-Column Editing](https://www.gnu.org/software/emacs/manual/html_node/emacs/Two_002dColumn.html#Two_002dColumn) in The GNU Emacs Manual.
+A sparse keymap for subcommands of the prefix `C-x 6`.\
+See [Two-Column Editing](https://www.gnu.org/software/emacs/manual/html_node/emacs/Two_002dColumn.html#Two_002dColumn) in The GNU Emacs Manual.
 
-*   `abbrev-map`
+`abbrev-map`
 
-    A sparse keymap for subcommands of the prefix `C-x a`.\
-    See [Defining Abbrevs](https://www.gnu.org/software/emacs/manual/html_node/emacs/Defining-Abbrevs.html#Defining-Abbrevs) in The GNU Emacs Manual.
+A sparse keymap for subcommands of the prefix `C-x a`.\
+See [Defining Abbrevs](https://www.gnu.org/software/emacs/manual/html_node/emacs/Defining-Abbrevs.html#Defining-Abbrevs) in The GNU Emacs Manual.
 
-*   `button-buffer-map`
+`button-buffer-map`
 
-    A sparse keymap useful for buffers containing buffers.\
-    You may want to use this as a parent keymap. See [Buttons](Buttons.html).
+A sparse keymap useful for buffers containing buffers.\
+You may want to use this as a parent keymap. See [Buttons](Buttons.html).
 
-*   `button-map`
+`button-map`
 
-    A sparse keymap used by buttons.
+A sparse keymap used by buttons.
 
-*   `ctl-x-4-map`
+`ctl-x-4-map`
 
-    A sparse keymap for subcommands of the prefix `C-x 4`.
+A sparse keymap for subcommands of the prefix `C-x 4`.
 
-*   `ctl-x-5-map`
+`ctl-x-5-map`
 
-    A sparse keymap for subcommands of the prefix `C-x 5`.
+A sparse keymap for subcommands of the prefix `C-x 5`.
 
-*   `ctl-x-map`
+`ctl-x-map`
 
-    A full keymap for `C-x` commands.
+A full keymap for `C-x` commands.
 
-*   `ctl-x-r-map`
+`ctl-x-r-map`
 
-    A sparse keymap for subcommands of the prefix `C-x r`.\
-    See [Registers](https://www.gnu.org/software/emacs/manual/html_node/emacs/Registers.html#Registers) in The GNU Emacs Manual.
+A sparse keymap for subcommands of the prefix `C-x r`.\
+See [Registers](https://www.gnu.org/software/emacs/manual/html_node/emacs/Registers.html#Registers) in The GNU Emacs Manual.
 
-*   `esc-map`
+`esc-map`
 
-    A full keymap for `ESC` (or `Meta`) commands.
+A full keymap for `ESC` (or `Meta`) commands.
 
-*   `facemenu-keymap`
+`facemenu-keymap`
 
-    A sparse keymap used for the `M-o` prefix key.
+A sparse keymap used for the `M-o` prefix key.
 
-*   `function-key-map`
+`function-key-map`
 
-    The parent keymap of all `local-function-key-map` (q.v.) instances.
+The parent keymap of all `local-function-key-map` (q.v.) instances.
 
-*   `global-map`
+`global-map`
 
-    The full keymap containing default global key bindings.\
-    Modes should not modify the Global map.
+The full keymap containing default global key bindings.\
+Modes should not modify the Global map.
 
-*   `goto-map`
+`goto-map`
 
-    A sparse keymap used for the `M-g` prefix key.
+A sparse keymap used for the `M-g` prefix key.
 
-*   `help-map`
+`help-map`
 
-    A sparse keymap for the keys following the help character `C-h`.\
-    See [Help Functions](Help-Functions.html).
+A sparse keymap for the keys following the help character `C-h`.\
+See [Help Functions](Help-Functions.html).
 
-*   `Helper-help-map`
+`Helper-help-map`
 
-    A full keymap used by the help utility package.\
-    It has the same keymap in its value cell and in its function cell.
+A full keymap used by the help utility package.\
+It has the same keymap in its value cell and in its function cell.
 
-*   `input-decode-map`
+`input-decode-map`
 
-    The keymap for translating keypad and function keys.\
-    If there are none, then it contains an empty sparse keymap. See [Translation Keymaps](Translation-Keymaps.html).
+The keymap for translating keypad and function keys.\
+If there are none, then it contains an empty sparse keymap. See [Translation Keymaps](Translation-Keymaps.html).
 
-*   `key-translation-map`
+`key-translation-map`
 
-    A keymap for translating keys. This one overrides ordinary key bindings, unlike `local-function-key-map`. See [Translation Keymaps](Translation-Keymaps.html).
+A keymap for translating keys. This one overrides ordinary key bindings, unlike `local-function-key-map`. See [Translation Keymaps](Translation-Keymaps.html).
 
-*   `kmacro-keymap`
+`kmacro-keymap`
 
-    A sparse keymap for keys that follows the `C-x C-k` prefix search.\
-    See [Keyboard Macros](https://www.gnu.org/software/emacs/manual/html_node/emacs/Keyboard-Macros.html#Keyboard-Macros) in The GNU Emacs Manual.
+A sparse keymap for keys that follows the `C-x C-k` prefix search.\
+See [Keyboard Macros](https://www.gnu.org/software/emacs/manual/html_node/emacs/Keyboard-Macros.html#Keyboard-Macros) in The GNU Emacs Manual.
 
-*   `local-function-key-map`
+`local-function-key-map`
 
-    The keymap for translating key sequences to preferred alternatives.\
-    If there are none, then it contains an empty sparse keymap. See [Translation Keymaps](Translation-Keymaps.html).
+The keymap for translating key sequences to preferred alternatives.\
+If there are none, then it contains an empty sparse keymap. See [Translation Keymaps](Translation-Keymaps.html).
 
-*   *   `menu-bar-file-menu`
-    *   `menu-bar-edit-menu`
-    *   `menu-bar-options-menu`
-    *   `global-buffers-menu-map`
-    *   `menu-bar-tools-menu`
-    *   `menu-bar-help-menu`
+*   `menu-bar-file-menu`
+*   `menu-bar-edit-menu`
+*   `menu-bar-options-menu`
+*   `global-buffers-menu-map`
+*   `menu-bar-tools-menu`
+*   `menu-bar-help-menu`
 
-    These keymaps display the main, top-level menus in the menu bar.\
-    Some of them contain sub-menus. For example, the Edit menu contains `menu-bar-search-menu`, etc. See [Menu Bar](Menu-Bar.html).
+These keymaps display the main, top-level menus in the menu bar.\
+Some of them contain sub-menus. For example, the Edit menu contains `menu-bar-search-menu`, etc. See [Menu Bar](Menu-Bar.html).
 
-*   `minibuffer-inactive-mode-map`
+`minibuffer-inactive-mode-map`
 
-    A full keymap used in the minibuffer when it is not active.\
-    See [Editing in the Minibuffer](https://www.gnu.org/software/emacs/manual/html_node/emacs/Minibuffer-Edit.html#Minibuffer-Edit) in The GNU Emacs Manual.
+A full keymap used in the minibuffer when it is not active.\
+See [Editing in the Minibuffer](https://www.gnu.org/software/emacs/manual/html_node/emacs/Minibuffer-Edit.html#Minibuffer-Edit) in The GNU Emacs Manual.
 
-*   *   `mode-line-coding-system-map`
-    *   `mode-line-input-method-map`
-    *   `mode-line-column-line-number-mode-map`
+*   `mode-line-coding-system-map`
+*   `mode-line-input-method-map`
+*   `mode-line-column-line-number-mode-map`
 
-    These keymaps control various areas of the mode line.\
-    See [Mode Line Format](Mode-Line-Format.html).
+These keymaps control various areas of the mode line.\
+See [Mode Line Format](Mode-Line-Format.html).
 
-*   `mode-specific-map`
+`mode-specific-map`
 
-    The keymap for characters following `C-c`. Note, this is in the global map. This map is not actually mode-specific: its name was chosen to be informative in `C-h b` (`display-bindings`), where it describes the main use of the `C-c` prefix key.
+The keymap for characters following `C-c`. Note, this is in the global map. This map is not actually mode-specific: its name was chosen to be informative in `C-h b` (`display-bindings`), where it describes the main use of the `C-c` prefix key.
 
-*   `mouse-appearance-menu-map`
+`mouse-appearance-menu-map`
 
-    A sparse keymap used for the `S-mouse-1` key.
+A sparse keymap used for the `S-mouse-1` key.
 
-*   `mule-keymap`
+`mule-keymap`
 
-    The global keymap used for the `C-x RET` prefix key.
+The global keymap used for the `C-x RET` prefix key.
 
-*   `narrow-map`
+`narrow-map`
 
-    A sparse keymap for subcommands of the prefix `C-x n`.
+A sparse keymap for subcommands of the prefix `C-x n`.
 
-*   `prog-mode-map`
+`prog-mode-map`
 
-    The keymap used by Prog mode.\
-    See [Basic Major Modes](Basic-Major-Modes.html).
+The keymap used by Prog mode.\
+See [Basic Major Modes](Basic-Major-Modes.html).
 
-*   *   `query-replace-map`
-    *   `multi-query-replace-map`
+*   `query-replace-map`
+*   `multi-query-replace-map`
 
-    A sparse keymap used for responses in `query-replace` and related commands; also for `y-or-n-p` and `map-y-or-n-p`. The functions that use this map do not support prefix keys; they look up one event at a time. `multi-query-replace-map` extends `query-replace-map` for multi-buffer replacements. See [query-replace-map](Search-and-Replace.html).
+A sparse keymap used for responses in `query-replace` and related commands; also for `y-or-n-p` and `map-y-or-n-p`. The functions that use this map do not support prefix keys; they look up one event at a time. `multi-query-replace-map` extends `query-replace-map` for multi-buffer replacements. See [query-replace-map](Search-and-Replace.html).
 
-*   `search-map`
+`search-map`
 
-    A sparse keymap that provides global bindings for search-related commands.
+A sparse keymap that provides global bindings for search-related commands.
 
-*   `special-mode-map`
+`special-mode-map`
 
-    The keymap used by Special mode.\
-    See [Basic Major Modes](Basic-Major-Modes.html).
+The keymap used by Special mode.\
+See [Basic Major Modes](Basic-Major-Modes.html).
 
-*   `tab-prefix-map`
+`tab-prefix-map`
 
-    The global keymap used for the `C-x t` prefix key for tab-bar related commands.\
-    See [Tab Bars](https://www.gnu.org/software/emacs/manual/html_node/emacs/Tab-Bars.html#Tab-Bars) in The GNU Emacs Manual.
+The global keymap used for the `C-x t` prefix key for tab-bar related commands.\
+See [Tab Bars](https://www.gnu.org/software/emacs/manual/html_node/emacs/Tab-Bars.html#Tab-Bars) in The GNU Emacs Manual.
 
-*   `tab-bar-map`
+`tab-bar-map`
 
-    The keymap defining the contents of the tab bar.\
-    See [Tab Bars](https://www.gnu.org/software/emacs/manual/html_node/emacs/Tab-Bars.html#Tab-Bars) in The GNU Emacs Manual.
+The keymap defining the contents of the tab bar.\
+See [Tab Bars](https://www.gnu.org/software/emacs/manual/html_node/emacs/Tab-Bars.html#Tab-Bars) in The GNU Emacs Manual.
 
-*   `tool-bar-map`
+`tool-bar-map`
 
-    The keymap defining the contents of the tool bar.\
-    See [Tool Bar](Tool-Bar.html).
+The keymap defining the contents of the tool bar.\
+See [Tool Bar](Tool-Bar.html).
 
-*   `universal-argument-map`
+`universal-argument-map`
 
-    A sparse keymap used while processing `C-u`.\
-    See [Prefix Command Arguments](Prefix-Command-Arguments.html).
+A sparse keymap used while processing `C-u`.\
+See [Prefix Command Arguments](Prefix-Command-Arguments.html).
 
-*   `vc-prefix-map`
+`vc-prefix-map`
 
-    The global keymap used for the `C-x v` prefix key.
+The global keymap used for the `C-x v` prefix key.
 
-*   `x-alternatives-map`
+`x-alternatives-map`
 
-    A sparse keymap used to map certain keys under graphical frames.\
-    The function `x-setup-function-keys` uses this.
-
-Next: [Standard Hooks](Standard-Hooks.html), Previous: [Standard Errors](Standard-Errors.html), Up: [Top](index.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
+A sparse keymap used to map certain keys under graphical frames.\
+The function `x-setup-function-keys` uses this.

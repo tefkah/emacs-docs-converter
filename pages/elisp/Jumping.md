@@ -1,24 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
-
-Next: [Edebug Misc](Edebug-Misc.html), Previous: [Edebug Execution Modes](Edebug-Execution-Modes.html), Up: [Edebug](Edebug.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
 #### 18.2.4 Jumping
 
@@ -26,21 +6,21 @@ The commands described in this section execute until they reach a specified loca
 
 These commands may fail to work as expected in case of nonlocal exit, as that can bypass the temporary breakpoint where you expected the program to stop.
 
-*   `h`
+`h`
 
-    Proceed to the stop point near where point is (`edebug-goto-here`).
+Proceed to the stop point near where point is (`edebug-goto-here`).
 
-*   `f`
+`f`
 
-    Run the program for one expression (`edebug-forward-sexp`).
+Run the program for one expression (`edebug-forward-sexp`).
 
-*   `o`
+`o`
 
-    Run the program until the end of the containing sexp (`edebug-step-out`).
+Run the program until the end of the containing sexp (`edebug-step-out`).
 
-*   `i`
+`i`
 
-    Step into the function or macro called by the form after point (`edebug-step-in`).
+Step into the function or macro called by the form after point (`edebug-step-in`).
 
 The `h` command proceeds to the stop point at or after the current location of point, using a temporary breakpoint.
 
@@ -59,5 +39,3 @@ Normally, the `h`, `f`, and `o` commands display “Break” and pause for `edeb
 The `i` command steps into the function or macro called by the list form after point, and stops at its first stop point. Note that the form need not be the one about to be evaluated. But if the form is a function call about to be evaluated, remember to use this command before any of the arguments are evaluated, since otherwise it will be too late.
 
 The `i` command instruments the function or macro it’s supposed to step into, if it isn’t instrumented already. This is convenient, but keep in mind that the function or macro remains instrumented unless you explicitly arrange to deinstrument it.
-
-Next: [Edebug Misc](Edebug-Misc.html), Previous: [Edebug Execution Modes](Edebug-Execution-Modes.html), Up: [Edebug](Edebug.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]

@@ -1,24 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
-
-Next: [Standard Keymaps](Standard-Keymaps.html), Previous: [GNU Emacs Internals](GNU-Emacs-Internals.html), Up: [Top](index.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
 ## Appendix F Standard Errors
 
@@ -32,172 +12,170 @@ Most of these error symbols are defined in C (mainly `data.c`), but some are def
 
 See [Errors](Errors.html), for an explanation of how errors are generated and handled.
 
-*   `error`
+`error`
 
-    The message is ‘`error`’. See [Errors](Errors.html).
+The message is ‘`error`’. See [Errors](Errors.html).
 
-*   `quit`
+`quit`
 
-    The message is ‘`Quit`’. See [Quitting](Quitting.html).
+The message is ‘`Quit`’. See [Quitting](Quitting.html).
 
-*   `args-out-of-range`
+`args-out-of-range`
 
-    The message is ‘`Args out of range`’. This happens when trying to access an element beyond the range of a sequence, buffer, or other container-like object. See [Sequences Arrays Vectors](Sequences-Arrays-Vectors.html), and see [Text](Text.html).
+The message is ‘`Args out of range`’. This happens when trying to access an element beyond the range of a sequence, buffer, or other container-like object. See [Sequences Arrays Vectors](Sequences-Arrays-Vectors.html), and see [Text](Text.html).
 
-*   `arith-error`
+`arith-error`
 
-    The message is ‘`Arithmetic error`’. This occurs when trying to perform integer division by zero. See [Numeric Conversions](Numeric-Conversions.html), and see [Arithmetic Operations](Arithmetic-Operations.html).
+The message is ‘`Arithmetic error`’. This occurs when trying to perform integer division by zero. See [Numeric Conversions](Numeric-Conversions.html), and see [Arithmetic Operations](Arithmetic-Operations.html).
 
-*   `beginning-of-buffer`
+`beginning-of-buffer`
 
-    The message is ‘`Beginning of buffer`’. See [Character Motion](Character-Motion.html).
+The message is ‘`Beginning of buffer`’. See [Character Motion](Character-Motion.html).
 
-*   `buffer-read-only`
+`buffer-read-only`
 
-    The message is ‘`Buffer is read-only`’. See [Read Only Buffers](Read-Only-Buffers.html).
+The message is ‘`Buffer is read-only`’. See [Read Only Buffers](Read-Only-Buffers.html).
 
-*   `circular-list`
+`circular-list`
 
-    The message is ‘`List contains a loop`’. This happens when a circular structure is encountered. See [Circular Objects](Circular-Objects.html).
+The message is ‘`List contains a loop`’. This happens when a circular structure is encountered. See [Circular Objects](Circular-Objects.html).
 
-*   `cl-assertion-failed`
+`cl-assertion-failed`
 
-    The message is ‘`Assertion failed`’. This happens when the `cl-assert` macro fails a test. See [Assertions](https://www.gnu.org/software/emacs/manual/html_node/cl/Assertions.html#Assertions) in Common Lisp Extensions.
+The message is ‘`Assertion failed`’. This happens when the `cl-assert` macro fails a test. See [Assertions](https://www.gnu.org/software/emacs/manual/html_node/cl/Assertions.html#Assertions) in Common Lisp Extensions.
 
-*   `coding-system-error`
+`coding-system-error`
 
-    The message is ‘`Invalid coding system`’. See [Lisp and Coding Systems](Lisp-and-Coding-Systems.html).
+The message is ‘`Invalid coding system`’. See [Lisp and Coding Systems](Lisp-and-Coding-Systems.html).
 
-*   `cyclic-function-indirection`
+`cyclic-function-indirection`
 
-    The message is ‘`Symbol's chain of function indirections contains a loop`’. See [Function Indirection](Function-Indirection.html).
+The message is ‘`Symbol's chain of function indirections contains a loop`’. See [Function Indirection](Function-Indirection.html).
 
-*   `cyclic-variable-indirection`
+`cyclic-variable-indirection`
 
-    The message is ‘`Symbol's chain of variable indirections contains a loop`’. See [Variable Aliases](Variable-Aliases.html).
+The message is ‘`Symbol's chain of variable indirections contains a loop`’. See [Variable Aliases](Variable-Aliases.html).
 
-*   `dbus-error`
+`dbus-error`
 
-    The message is ‘`D-Bus error`’. See [Errors and Events](../dbus/Errors-and-Events.html#Errors-and-Events) in D-Bus integration in Emacs.
+The message is ‘`D-Bus error`’. See [Errors and Events](../dbus/Errors-and-Events.html#Errors-and-Events) in D-Bus integration in Emacs.
 
-*   `end-of-buffer`
+`end-of-buffer`
 
-    The message is ‘`End of buffer`’. See [Character Motion](Character-Motion.html).
+The message is ‘`End of buffer`’. See [Character Motion](Character-Motion.html).
 
-*   `end-of-file`
+`end-of-file`
 
-    The message is ‘`End of file during parsing`’. Note that this is not a subcategory of `file-error`, because it pertains to the Lisp reader, not to file I/O. See [Input Functions](Input-Functions.html).
+The message is ‘`End of file during parsing`’. Note that this is not a subcategory of `file-error`, because it pertains to the Lisp reader, not to file I/O. See [Input Functions](Input-Functions.html).
 
-*   `file-already-exists`
+`file-already-exists`
 
-    This is a subcategory of `file-error`. See [Writing to Files](Writing-to-Files.html).
+This is a subcategory of `file-error`. See [Writing to Files](Writing-to-Files.html).
 
-*   `file-date-error`
+`file-date-error`
 
-    This is a subcategory of `file-error`. It occurs when `copy-file` tries and fails to set the last-modification time of the output file. See [Changing Files](Changing-Files.html).
+This is a subcategory of `file-error`. It occurs when `copy-file` tries and fails to set the last-modification time of the output file. See [Changing Files](Changing-Files.html).
 
-*   `file-error`
+`file-error`
 
-    We do not list the error-strings of this error and its subcategories, because the error message is normally constructed from the data items alone when the error condition `file-error` is present. Thus, the error-strings are not very relevant. However, these error symbols do have `error-message` properties, and if no data is provided, the `error-message` property *is* used. See [Files](Files.html).
+We do not list the error-strings of this error and its subcategories, because the error message is normally constructed from the data items alone when the error condition `file-error` is present. Thus, the error-strings are not very relevant. However, these error symbols do have `error-message` properties, and if no data is provided, the `error-message` property *is* used. See [Files](Files.html).
 
-*   `file-missing`
+`file-missing`
 
-    This is a subcategory of `file-error`. It occurs when an operation attempts to act on a file that is missing. See [Changing Files](Changing-Files.html).
+This is a subcategory of `file-error`. It occurs when an operation attempts to act on a file that is missing. See [Changing Files](Changing-Files.html).
 
-*   `compression-error`
+`compression-error`
 
-    This is a subcategory of `file-error`, which results from problems handling a compressed file. See [How Programs Do Loading](How-Programs-Do-Loading.html).
+This is a subcategory of `file-error`, which results from problems handling a compressed file. See [How Programs Do Loading](How-Programs-Do-Loading.html).
 
-*   `file-locked`
+`file-locked`
 
-    This is a subcategory of `file-error`. See [File Locks](File-Locks.html).
+This is a subcategory of `file-error`. See [File Locks](File-Locks.html).
 
-*   `file-supersession`
+`file-supersession`
 
-    This is a subcategory of `file-error`. See [Modification Time](Modification-Time.html).
+This is a subcategory of `file-error`. See [Modification Time](Modification-Time.html).
 
-*   `file-notify-error`
+`file-notify-error`
 
-    This is a subcategory of `file-error`. It happens, when a file could not be watched for changes. See [File Notifications](File-Notifications.html).
+This is a subcategory of `file-error`. It happens, when a file could not be watched for changes. See [File Notifications](File-Notifications.html).
 
-*   `ftp-error`
+`ftp-error`
 
-    This is a subcategory of `file-error`, which results from problems in accessing a remote file using ftp. See [Remote Files](https://www.gnu.org/software/emacs/manual/html_node/emacs/Remote-Files.html#Remote-Files) in The GNU Emacs Manual.
+This is a subcategory of `file-error`, which results from problems in accessing a remote file using ftp. See [Remote Files](https://www.gnu.org/software/emacs/manual/html_node/emacs/Remote-Files.html#Remote-Files) in The GNU Emacs Manual.
 
-*   `invalid-function`
+`invalid-function`
 
-    The message is ‘`Invalid function`’. See [Function Indirection](Function-Indirection.html).
+The message is ‘`Invalid function`’. See [Function Indirection](Function-Indirection.html).
 
-*   `invalid-read-syntax`
+`invalid-read-syntax`
 
-    The message is usually ‘`Invalid read syntax`’. See [Printed Representation](Printed-Representation.html). This error can also be raised by commands like `eval-expression` when there’s text following an expression. In that case, the message is ‘`Trailing garbage following expression`’.
+The message is usually ‘`Invalid read syntax`’. See [Printed Representation](Printed-Representation.html). This error can also be raised by commands like `eval-expression` when there’s text following an expression. In that case, the message is ‘`Trailing garbage following expression`’.
 
-*   `invalid-regexp`
+`invalid-regexp`
 
-    The message is ‘`Invalid regexp`’. See [Regular Expressions](Regular-Expressions.html).
+The message is ‘`Invalid regexp`’. See [Regular Expressions](Regular-Expressions.html).
 
-*   `mark-inactive`
+`mark-inactive`
 
-    The message is ‘`The mark is not active now`’. See [The Mark](The-Mark.html).
+The message is ‘`The mark is not active now`’. See [The Mark](The-Mark.html).
 
-*   `no-catch`
+`no-catch`
 
-    The message is ‘`No catch for tag`’. See [Catch and Throw](Catch-and-Throw.html).
+The message is ‘`No catch for tag`’. See [Catch and Throw](Catch-and-Throw.html).
 
-*   `range-error`
+`range-error`
 
-    The message is `Arithmetic range error`.
+The message is `Arithmetic range error`.
 
-*   `overflow-error`
+`overflow-error`
 
-    The message is ‘`Arithmetic overflow error`’. This is a subcategory of `range-error`. This can happen with integers exceeding the `integer-width` limit. See [Integer Basics](Integer-Basics.html).
+The message is ‘`Arithmetic overflow error`’. This is a subcategory of `range-error`. This can happen with integers exceeding the `integer-width` limit. See [Integer Basics](Integer-Basics.html).
 
-*   `scan-error`
+`scan-error`
 
-    The message is ‘`Scan error`’. This happens when certain syntax-parsing functions find invalid syntax or mismatched parentheses. Conventionally raised with three argument: a human-readable error message, the start of the obstacle that cannot be moved over, and the end of the obstacle. See [List Motion](List-Motion.html), and see [Parsing Expressions](Parsing-Expressions.html).
+The message is ‘`Scan error`’. This happens when certain syntax-parsing functions find invalid syntax or mismatched parentheses. Conventionally raised with three argument: a human-readable error message, the start of the obstacle that cannot be moved over, and the end of the obstacle. See [List Motion](List-Motion.html), and see [Parsing Expressions](Parsing-Expressions.html).
 
-*   `search-failed`
+`search-failed`
 
-    The message is ‘`Search failed`’. See [Searching and Matching](Searching-and-Matching.html).
+The message is ‘`Search failed`’. See [Searching and Matching](Searching-and-Matching.html).
 
-*   `setting-constant`
+`setting-constant`
 
-    The message is ‘`Attempt to set a constant symbol`’. This happens when attempting to assign values to `nil`, `t`, `most-positive-fixnum`, `most-negative-fixnum`, and keyword symbols. It also happens when attempting to assign values to `enable-multibyte-characters` and some other symbols whose direct assignment is not allowed for some reason. See [Constant Variables](Constant-Variables.html).
+The message is ‘`Attempt to set a constant symbol`’. This happens when attempting to assign values to `nil`, `t`, `most-positive-fixnum`, `most-negative-fixnum`, and keyword symbols. It also happens when attempting to assign values to `enable-multibyte-characters` and some other symbols whose direct assignment is not allowed for some reason. See [Constant Variables](Constant-Variables.html).
 
-*   `text-read-only`
+`text-read-only`
 
-    The message is ‘`Text is read-only`’. This is a subcategory of `buffer-read-only`. See [Special Properties](Special-Properties.html).
+The message is ‘`Text is read-only`’. This is a subcategory of `buffer-read-only`. See [Special Properties](Special-Properties.html).
 
-*   `undefined-color`
+`undefined-color`
 
-    The message is ‘`Undefined color`’. See [Color Names](Color-Names.html).
+The message is ‘`Undefined color`’. See [Color Names](Color-Names.html).
 
-*   `user-error`
+`user-error`
 
-    The message is the empty string. See [Signaling Errors](Signaling-Errors.html).
+The message is the empty string. See [Signaling Errors](Signaling-Errors.html).
 
-*   `user-search-failed`
+`user-search-failed`
 
-    This is like ‘`search-failed`’, but doesn’t trigger the debugger, like ‘`user-error`’. See [Signaling Errors](Signaling-Errors.html), and see [Searching and Matching](Searching-and-Matching.html). This is used for searching in Info files, see [Search Text](../info/Search-Text.html#Search-Text) in Info.
+This is like ‘`search-failed`’, but doesn’t trigger the debugger, like ‘`user-error`’. See [Signaling Errors](Signaling-Errors.html), and see [Searching and Matching](Searching-and-Matching.html). This is used for searching in Info files, see [Search Text](../info/Search-Text.html#Search-Text) in Info.
 
-*   `void-function`
+`void-function`
 
-    The message is ‘`Symbol's function definition is void`’. See [Function Cells](Function-Cells.html).
+The message is ‘`Symbol's function definition is void`’. See [Function Cells](Function-Cells.html).
 
-*   `void-variable`
+`void-variable`
 
-    The message is ‘`Symbol's value as variable is void`’. See [Accessing Variables](Accessing-Variables.html).
+The message is ‘`Symbol's value as variable is void`’. See [Accessing Variables](Accessing-Variables.html).
 
-*   `wrong-number-of-arguments`
+`wrong-number-of-arguments`
 
-    The message is ‘`Wrong number of arguments`’. See [Argument List](Argument-List.html).
+The message is ‘`Wrong number of arguments`’. See [Argument List](Argument-List.html).
 
-*   `wrong-type-argument`
+`wrong-type-argument`
 
-    The message is ‘`Wrong type argument`’. See [Type Predicates](Type-Predicates.html).
+The message is ‘`Wrong type argument`’. See [Type Predicates](Type-Predicates.html).
 
-*   `unknown-image-type`
+`unknown-image-type`
 
-    The message is ‘`Cannot determine image type`’. See [Images](Images.html).
-
-Next: [Standard Keymaps](Standard-Keymaps.html), Previous: [GNU Emacs Internals](GNU-Emacs-Internals.html), Up: [Top](index.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
+The message is ‘`Cannot determine image type`’. See [Images](Images.html).

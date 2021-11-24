@@ -1,24 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
-
-Next: [Text Quoting Style](Text-Quoting-Style.html), Previous: [Accessing Documentation](Accessing-Documentation.html), Up: [Documentation](Documentation.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
 ### 24.3 Substituting Key Bindings in Documentation
 
@@ -26,65 +6,69 @@ When documentation strings refer to key sequences, they should use the current, 
 
 Here is a list of the special sequences and what they mean:
 
-*   `\[command]`
+`\[command]`
 
-    stands for a key sequence that will invoke `command`, or ‘`M-x command`’ if `command` has no key bindings.
+stands for a key sequence that will invoke `command`, or ‘`M-x command`’ if `command` has no key bindings.
 
-*   `\{mapvar}`
+`\{mapvar}`
 
-    stands for a summary of the keymap which is the value of the variable `mapvar`. The summary is made using `describe-bindings`.
+stands for a summary of the keymap which is the value of the variable `mapvar`. The summary is made using `describe-bindings`.
 
-*   `\<mapvar>`
+`\<mapvar>`
 
-    stands for no text itself. It is used only for a side effect: it specifies `mapvar`’s value as the keymap for any following ‘`\[command]`’ sequences in this documentation string.
+stands for no text itself. It is used only for a side effect: it specifies `mapvar`’s value as the keymap for any following ‘`\[command]`’ sequences in this documentation string.
 
-*   `` ` ``
+`` ` ``
 
-    (grave accent) stands for a left quote. This generates a left single quotation mark, an apostrophe, or a grave accent depending on the value of `text-quoting-style`. See [Text Quoting Style](Text-Quoting-Style.html).
+(grave accent) stands for a left quote. This generates a left single quotation mark, an apostrophe, or a grave accent depending on the value of `text-quoting-style`. See [Text Quoting Style](Text-Quoting-Style.html).
 
-*   `'`
+`'`
 
-    (apostrophe) stands for a right quote. This generates a right single quotation mark or an apostrophe depending on the value of `text-quoting-style`.
+(apostrophe) stands for a right quote. This generates a right single quotation mark or an apostrophe depending on the value of `text-quoting-style`.
 
-*   `\=`
+`\=`
 
-    quotes the following character and is discarded; thus, ‘`` \=` ``’ puts ‘`` ` ``’ into the output, ‘`\=\[`’ puts ‘`\[`’ into the output, and ‘`\=\=`’ puts ‘`\=`’ into the output.
+quotes the following character and is discarded; thus, ‘`` \=` ``’ puts ‘`` ` ``’ into the output, ‘`\=\[`’ puts ‘`\[`’ into the output, and ‘`\=\=`’ puts ‘`\=`’ into the output.
 
 **Please note:** Each ‘`\`’ must be doubled when written in a string in Emacs Lisp.
 
-*   User Option: **text-quoting-style**
+### User Option: **text-quoting-style**
 
-    The value of this variable is a symbol that specifies the style Emacs should use for single quotes in the wording of help and messages. If the variable’s value is `curve`, the style is `‘like this’` with curved single quotes. If the value is `straight`, the style is `'like this'` with straight apostrophes. If the value is `grave`, quotes are not translated and the style is `` `like this' `` with grave accent and apostrophe, the standard style before Emacs version 25. The default value `nil` acts like `curve` if curved single quotes seem to be displayable, and like `grave` otherwise.
+The value of this variable is a symbol that specifies the style Emacs should use for single quotes in the wording of help and messages. If the variable’s value is `curve`, the style is `‘like this’` with curved single quotes. If the value is `straight`, the style is `'like this'` with straight apostrophes. If the value is `grave`, quotes are not translated and the style is `` `like this' `` with grave accent and apostrophe, the standard style before Emacs version 25. The default value `nil` acts like `curve` if curved single quotes seem to be displayable, and like `grave` otherwise.
 
-    This option is useful on platforms that have problems with curved quotes. You can customize it freely according to your personal preference.
+This option is useful on platforms that have problems with curved quotes. You can customize it freely according to your personal preference.
 
-<!---->
+### Function: **substitute-command-keys** *string*
 
-*   Function: **substitute-command-keys** *string*
+This function scans `string` for the above special sequences and replaces them by what they stand for, returning the result as a string. This permits display of documentation that refers accurately to the user’s own customized key bindings.
 
-    This function scans `string` for the above special sequences and replaces them by what they stand for, returning the result as a string. This permits display of documentation that refers accurately to the user’s own customized key bindings.
+If a command has multiple bindings, this function normally uses the first one it finds. You can specify one particular key binding by assigning an `:advertised-binding` symbol property to the command, like this:
 
-    If a command has multiple bindings, this function normally uses the first one it finds. You can specify one particular key binding by assigning an `:advertised-binding` symbol property to the command, like this:
+```lisp
+(put 'undo :advertised-binding [?\C-/])
+```
 
-        (put 'undo :advertised-binding [?\C-/])
-
-    The `:advertised-binding` property also affects the binding shown in menu items (see [Menu Bar](Menu-Bar.html)). The property is ignored if it specifies a key binding that the command does not actually have.
+The `:advertised-binding` property also affects the binding shown in menu items (see [Menu Bar](Menu-Bar.html)). The property is ignored if it specifies a key binding that the command does not actually have.
 
 Here are examples of the special sequences:
 
-    (substitute-command-keys
-       "To abort recursive edit, type `\\[abort-recursive-edit]'.")
-    ⇒ "To abort recursive edit, type ‘C-]’."
-
+```lisp
+(substitute-command-keys
+   "To abort recursive edit, type `\\[abort-recursive-edit]'.")
+⇒ "To abort recursive edit, type ‘C-]’."
 ```
+
+```lisp
 ```
 
-    (substitute-command-keys
-       "The keys that are defined for the minibuffer here are:
-      \\{minibuffer-local-must-match-map}")
-    ⇒ "The keys that are defined for the minibuffer here are:
-
+```lisp
+(substitute-command-keys
+   "The keys that are defined for the minibuffer here are:
+  \\{minibuffer-local-must-match-map}")
+⇒ "The keys that are defined for the minibuffer here are:
 ```
+
+```lisp
 
 ?               minibuffer-completion-help
 SPC             minibuffer-complete-word
@@ -95,11 +79,11 @@ C-g             abort-recursive-edit
 "
 ```
 
-    (substitute-command-keys
-       "To abort a recursive edit from the minibuffer, type \
-    `\\<minibuffer-local-must-match-map>\\[abort-recursive-edit]'.")
-    ⇒ "To abort a recursive edit from the minibuffer, type ‘C-g’."
+```lisp
+(substitute-command-keys
+   "To abort a recursive edit from the minibuffer, type \
+`\\<minibuffer-local-must-match-map>\\[abort-recursive-edit]'.")
+⇒ "To abort a recursive edit from the minibuffer, type ‘C-g’."
+```
 
 There are other special conventions for the text in documentation strings—for instance, you can refer to functions, variables, and sections of this manual. See [Documentation Tips](Documentation-Tips.html), for details.
-
-Next: [Text Quoting Style](Text-Quoting-Style.html), Previous: [Accessing Documentation](Accessing-Documentation.html), Up: [Documentation](Documentation.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]

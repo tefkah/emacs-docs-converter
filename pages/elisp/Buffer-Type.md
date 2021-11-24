@@ -1,24 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
-
-Next: [Marker Type](Marker-Type.html), Up: [Editing Types](Editing-Types.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
 #### 2.5.1 Buffer Type
 
@@ -30,11 +10,15 @@ Many of the standard Emacs functions manipulate or test the characters in the cu
 
 Several other data structures are associated with each buffer:
 
-*   a local syntax table (see [Syntax Tables](Syntax-Tables.html));
-*   a local keymap (see [Keymaps](Keymaps.html)); and,
-*   a list of buffer-local variable bindings (see [Buffer-Local Variables](Buffer_002dLocal-Variables.html)).
-*   overlays (see [Overlays](Overlays.html)).
-*   text properties for the text in the buffer (see [Text Properties](Text-Properties.html)).
+a local syntax table (see [Syntax Tables](Syntax-Tables.html));
+
+a local keymap (see [Keymaps](Keymaps.html)); and,
+
+a list of buffer-local variable bindings (see [Buffer-Local Variables](Buffer_002dLocal-Variables.html)).
+
+overlays (see [Overlays](Overlays.html)).
+
+text properties for the text in the buffer (see [Text Properties](Text-Properties.html)).
 
 The local keymap and variable list contain entries that individually override global bindings or values. These are used to customize the behavior of programs in different buffers, without actually changing the programs.
 
@@ -42,7 +26,7 @@ A buffer may be *indirect*, which means it shares the text of another buffer, bu
 
 Buffers have no read syntax. They print in hash notation, showing the buffer name.
 
-    (current-buffer)
-         ⇒ #<buffer objects.texi>
-
-Next: [Marker Type](Marker-Type.html), Up: [Editing Types](Editing-Types.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
+```lisp
+(current-buffer)
+     ⇒ #<buffer objects.texi>
+```

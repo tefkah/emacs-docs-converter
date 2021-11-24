@@ -1,24 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
-
-Next: [Predicates on Numbers](Predicates-on-Numbers.html), Previous: [Integer Basics](Integer-Basics.html), Up: [Numbers](Numbers.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
 ### 3.2 Floating-Point Basics
 
@@ -34,51 +14,43 @@ When NaNs and signed zeros are involved, non-numeric functions like `eql`, `equa
 
 Here are read syntaxes for these special floating-point values:
 
-*   infinity
+infinity
 
-    ‘`1.0e+INF`’ and ‘`-1.0e+INF`’
+‘`1.0e+INF`’ and ‘`-1.0e+INF`’
 
-*   not-a-number
+not-a-number
 
-    ‘`0.0e+NaN`’ and ‘`-0.0e+NaN`’
+‘`0.0e+NaN`’ and ‘`-0.0e+NaN`’
 
 The following functions are specialized for handling floating-point numbers:
 
-*   Function: **isnan** *x*
+### Function: **isnan** *x*
 
-    This predicate returns `t` if its floating-point argument is a NaN, `nil` otherwise.
+This predicate returns `t` if its floating-point argument is a NaN, `nil` otherwise.
 
-<!---->
+### Function: **frexp** *x*
 
-*   Function: **frexp** *x*
+This function returns a cons cell `(s . e)`, where `s` and `e` are respectively the significand and exponent of the floating-point number `x`.
 
-    This function returns a cons cell `(s . e)`, where `s` and `e` are respectively the significand and exponent of the floating-point number `x`.
+If `x` is finite, then `s` is a floating-point number between 0.5 (inclusive) and 1.0 (exclusive), `e` is an integer, and `x` = `s` \* 2\*\*`e`. If `x` is zero or infinity, then `s` is the same as `x`. If `x` is a NaN, then `s` is also a NaN. If `x` is zero, then `e` is 0.
 
-    If `x` is finite, then `s` is a floating-point number between 0.5 (inclusive) and 1.0 (exclusive), `e` is an integer, and `x` = `s` \* 2\*\*`e`. If `x` is zero or infinity, then `s` is the same as `x`. If `x` is a NaN, then `s` is also a NaN. If `x` is zero, then `e` is 0.
+### Function: **ldexp** *s e*
 
-<!---->
+Given a numeric significand `s` and an integer exponent `e`, this function returns the floating point number `s` \* 2\*\*`e`.
 
-*   Function: **ldexp** *s e*
+### Function: **copysign** *x1 x2*
 
-    Given a numeric significand `s` and an integer exponent `e`, this function returns the floating point number `s` \* 2\*\*`e`.
+This function copies the sign of `x2` to the value of `x1`, and returns the result. `x1` and `x2` must be floating point.
 
-<!---->
+### Function: **logb** *x*
 
-*   Function: **copysign** *x1 x2*
+This function returns the binary exponent of `x`. More precisely, if `x` is finite and nonzero, the value is the logarithm base 2 of *|x|*, rounded down to an integer. If `x` is zero or infinite, the value is infinity; if `x` is a NaN, the value is a NaN.
 
-    This function copies the sign of `x2` to the value of `x1`, and returns the result. `x1` and `x2` must be floating point.
-
-<!---->
-
-*   Function: **logb** *x*
-
-    This function returns the binary exponent of `x`. More precisely, if `x` is finite and nonzero, the value is the logarithm base 2 of *|x|*, rounded down to an integer. If `x` is zero or infinite, the value is infinity; if `x` is a NaN, the value is a NaN.
-
-        (logb 10)
-             ⇒ 3
-        (logb 10.0e20)
-             ⇒ 69
-        (logb 0)
-             ⇒ -1.0e+INF
-
-Next: [Predicates on Numbers](Predicates-on-Numbers.html), Previous: [Integer Basics](Integer-Basics.html), Up: [Numbers](Numbers.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
+```lisp
+(logb 10)
+     ⇒ 3
+(logb 10.0e20)
+     ⇒ 69
+(logb 0)
+     ⇒ -1.0e+INF
+```

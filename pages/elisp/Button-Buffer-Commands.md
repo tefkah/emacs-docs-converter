@@ -1,24 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
-
-Previous: [Manipulating Buttons](Manipulating-Buttons.html), Up: [Buttons](Buttons.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
 #### 39.19.5 Button Buffer Commands
 
@@ -28,27 +8,19 @@ These are commands and functions for locating and operating on buttons in an Ema
 
 If the button has a non-`nil` `follow-link` property, and `mouse-1-click-follows-link` is set, a quick `mouse-1` click will also activate the `push-button` command. See [Clickable Text](Clickable-Text.html).
 
-*   Command: **push-button** *\&optional pos use-mouse-action*
+### Command: **push-button** *\&optional pos use-mouse-action*
 
-    Perform the action specified by a button at location `pos`. `pos` may be either a buffer position or a mouse-event. If `use-mouse-action` is non-`nil`, or `pos` is a mouse-event (see [Mouse Events](Mouse-Events.html)), try to invoke the button’s `mouse-action` property instead of `action`; if the button has no `mouse-action` property, use `action` as normal. `pos` defaults to point, except when `push-button` is invoked interactively as the result of a mouse-event, in which case, the mouse event’s position is used. If there’s no button at `pos`, do nothing and return `nil`, otherwise return `t`.
+Perform the action specified by a button at location `pos`. `pos` may be either a buffer position or a mouse-event. If `use-mouse-action` is non-`nil`, or `pos` is a mouse-event (see [Mouse Events](Mouse-Events.html)), try to invoke the button’s `mouse-action` property instead of `action`; if the button has no `mouse-action` property, use `action` as normal. `pos` defaults to point, except when `push-button` is invoked interactively as the result of a mouse-event, in which case, the mouse event’s position is used. If there’s no button at `pos`, do nothing and return `nil`, otherwise return `t`.
 
-<!---->
+### Command: **forward-button** *n \&optional wrap display-message no-error*
 
-*   Command: **forward-button** *n \&optional wrap display-message no-error*
+Move to the `n`th next button, or `n`th previous button if `n` is negative. If `n` is zero, move to the start of any button at point. If `wrap` is non-`nil`, moving past either end of the buffer continues from the other end. If `display-message` is non-`nil`, the button’s help-echo string is displayed. Any button with a non-`nil` `skip` property is skipped over. Returns the button found, and signals an error if no buttons can be found. If `no-error` is non-`nil`, return nil instead of signaling the error.
 
-    Move to the `n`th next button, or `n`th previous button if `n` is negative. If `n` is zero, move to the start of any button at point. If `wrap` is non-`nil`, moving past either end of the buffer continues from the other end. If `display-message` is non-`nil`, the button’s help-echo string is displayed. Any button with a non-`nil` `skip` property is skipped over. Returns the button found, and signals an error if no buttons can be found. If `no-error` is non-`nil`, return nil instead of signaling the error.
+### Command: **backward-button** *n \&optional wrap display-message no-error*
 
-<!---->
+Move to the `n`th previous button, or `n`th next button if `n` is negative. If `n` is zero, move to the start of any button at point. If `wrap` is non-`nil`, moving past either end of the buffer continues from the other end. If `display-message` is non-`nil`, the button’s help-echo string is displayed. Any button with a non-`nil` `skip` property is skipped over. Returns the button found, and signals an error if no buttons can be found. If `no-error` is non-`nil`, return nil instead of signaling the error.
 
-*   Command: **backward-button** *n \&optional wrap display-message no-error*
+*   Function: **next-button** *pos \&optional count-current*
+*   Function: **previous-button** *pos \&optional count-current*
 
-    Move to the `n`th previous button, or `n`th next button if `n` is negative. If `n` is zero, move to the start of any button at point. If `wrap` is non-`nil`, moving past either end of the buffer continues from the other end. If `display-message` is non-`nil`, the button’s help-echo string is displayed. Any button with a non-`nil` `skip` property is skipped over. Returns the button found, and signals an error if no buttons can be found. If `no-error` is non-`nil`, return nil instead of signaling the error.
-
-<!---->
-
-*   *   Function: **next-button** *pos \&optional count-current*
-    *   Function: **previous-button** *pos \&optional count-current*
-
-    Return the next button after (for `next-button`) or before (for `previous-button`) position `pos` in the current buffer. If `count-current` is non-`nil`, count any button at `pos` in the search, instead of starting at the next button.
-
-Previous: [Manipulating Buttons](Manipulating-Buttons.html), Up: [Buttons](Buttons.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
+Return the next button after (for `next-button`) or before (for `previous-button`) position `pos` in the current buffer. If `count-current` is non-`nil`, count any button at `pos` in the search, instead of starting at the next button.

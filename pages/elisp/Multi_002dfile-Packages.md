@@ -1,24 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
-
-Next: [Package Archives](Package-Archives.html), Previous: [Simple Packages](Simple-Packages.html), Up: [Packaging](Packaging.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
 ### 41.3 Multi-file Packages
 
@@ -30,11 +10,11 @@ One of the files in the content directory must be named `name-pkg.el`. It must c
 
 For example, if we distribute version 1.3 of the superfrobnicator as a multi-file package, the tar file would be `superfrobnicator-1.3.tar`. Its contents would extract into the directory `superfrobnicator-1.3`, and one of these would be the file `superfrobnicator-pkg.el`.
 
-*   Function: **define-package** *name version \&optional docstring requirements*
+### Function: **define-package** *name version \&optional docstring requirements*
 
-    This function defines a package. `name` is the package name, a string. `version` is the version, as a string of a form that can be understood by the function `version-to-list`. `docstring` is the brief description.
+This function defines a package. `name` is the package name, a string. `version` is the version, as a string of a form that can be understood by the function `version-to-list`. `docstring` is the brief description.
 
-    `requirements` is a list of required packages and their versions. Each element in this list should have the form `(dep-name dep-version)`, where `dep-name` is a symbol whose name is the dependency’s package name, and `dep-version` is the dependency’s version (a string).
+`requirements` is a list of required packages and their versions. Each element in this list should have the form `(dep-name dep-version)`, where `dep-name` is a symbol whose name is the dependency’s package name, and `dep-version` is the dependency’s version (a string).
 
 If the content directory contains a file named `README`, this file is used as the long description (overriding any ‘`;;; Commentary:`’ section).
 
@@ -46,9 +26,9 @@ Do not include any file named `name-autoloads.el`. This file is reserved for the
 
 If the multi-file package contains auxiliary data files (such as images), the package’s Lisp code can refer to these files via the variable `load-file-name` (see [Loading](Loading.html)). Here is an example:
 
-    (defconst superfrobnicator-base (file-name-directory load-file-name))
+```lisp
+(defconst superfrobnicator-base (file-name-directory load-file-name))
 
-    (defun superfrobnicator-fetch-image (file)
-      (expand-file-name file superfrobnicator-base))
-
-Next: [Package Archives](Package-Archives.html), Previous: [Simple Packages](Simple-Packages.html), Up: [Packaging](Packaging.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
+(defun superfrobnicator-fetch-image (file)
+  (expand-file-name file superfrobnicator-base))
+```

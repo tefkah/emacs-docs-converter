@@ -1,24 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
-
-Next: [Init File](Init-File.html), Up: [Starting Up](Starting-Up.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
 #### 40.1.1 Summary: Sequence of Actions at Startup
 
@@ -58,65 +38,59 @@ When Emacs is started up, it performs the following operations (see `normal-top-
 
 The following options affect some aspects of the startup sequence.
 
-*   User Option: **inhibit-startup-screen**
+### User Option: **inhibit-startup-screen**
 
-    This variable, if non-`nil`, inhibits the startup screen. In that case, Emacs typically displays the `*scratch*` buffer; but see `initial-buffer-choice`, below.
+This variable, if non-`nil`, inhibits the startup screen. In that case, Emacs typically displays the `*scratch*` buffer; but see `initial-buffer-choice`, below.
 
-    Do not set this variable in the init file of a new user, or in a way that affects more than one user, as that would prevent new users from receiving information about copyleft and basic Emacs usage.
+Do not set this variable in the init file of a new user, or in a way that affects more than one user, as that would prevent new users from receiving information about copyleft and basic Emacs usage.
 
-    `inhibit-startup-message` and `inhibit-splash-screen` are aliases for this variable.
+`inhibit-startup-message` and `inhibit-splash-screen` are aliases for this variable.
 
-<!---->
+### User Option: **initial-buffer-choice**
 
-*   User Option: **initial-buffer-choice**
+If non-`nil`, this variable is a string that specifies a file or directory for Emacs to display after starting up, instead of the startup screen. If its value is a function, Emacs calls that function which must return a buffer which is then displayed. If its value is `t`, Emacs displays the `*scratch*` buffer.
 
-    If non-`nil`, this variable is a string that specifies a file or directory for Emacs to display after starting up, instead of the startup screen. If its value is a function, Emacs calls that function which must return a buffer which is then displayed. If its value is `t`, Emacs displays the `*scratch*` buffer.
+### User Option: **inhibit-startup-echo-area-message**
 
-<!---->
+This variable controls the display of the startup echo area message. You can suppress the startup echo area message by adding text with this form to your init file:
 
-*   User Option: **inhibit-startup-echo-area-message**
+```lisp
+(setq inhibit-startup-echo-area-message
+      "your-login-name")
+```
 
-    This variable controls the display of the startup echo area message. You can suppress the startup echo area message by adding text with this form to your init file:
+Emacs explicitly checks for an expression as shown above in your init file; your login name must appear in the expression as a Lisp string constant. You can also use the Customize interface. Other methods of setting `inhibit-startup-echo-area-message` to the same value do not inhibit the startup message. This way, you can easily inhibit the message for yourself if you wish, but thoughtless copying of your init file will not inhibit the message for someone else.
 
-        (setq inhibit-startup-echo-area-message
-              "your-login-name")
+### User Option: **initial-scratch-message**
 
-    Emacs explicitly checks for an expression as shown above in your init file; your login name must appear in the expression as a Lisp string constant. You can also use the Customize interface. Other methods of setting `inhibit-startup-echo-area-message` to the same value do not inhibit the startup message. This way, you can easily inhibit the message for yourself if you wish, but thoughtless copying of your init file will not inhibit the message for someone else.
-
-<!---->
-
-*   User Option: **initial-scratch-message**
-
-    This variable, if non-`nil`, should be a string, which is treated as documentation to be inserted into the `*scratch*` buffer when Emacs starts up. If it is `nil`, the `*scratch*` buffer is empty.
+This variable, if non-`nil`, should be a string, which is treated as documentation to be inserted into the `*scratch*` buffer when Emacs starts up. If it is `nil`, the `*scratch*` buffer is empty.
 
 The following command-line options affect some aspects of the startup sequence. See [Initial Options](https://www.gnu.org/software/emacs/manual/html_node/emacs/Initial-Options.html#Initial-Options) in The GNU Emacs Manual.
 
-*   `--no-splash`
+`--no-splash`
 
-    Do not display a splash screen.
+Do not display a splash screen.
 
-*   `--batch`
+`--batch`
 
-    Run without an interactive terminal. See [Batch Mode](Batch-Mode.html).
+Run without an interactive terminal. See [Batch Mode](Batch-Mode.html).
 
-*   *   `--daemon`
-    *   `--bg-daemon`
-    *   `--fg-daemon`
+*   `--daemon`
+*   `--bg-daemon`
+*   `--fg-daemon`
 
-    Do not initialize any display; just start a server. (A “background” daemon automatically runs in the background.)
+Do not initialize any display; just start a server. (A “background” daemon automatically runs in the background.)
 
-*   *   `--no-init-file`
-    *   `-q`
+*   `--no-init-file`
+*   `-q`
 
-    Do not load either the init file, or the `default` library.
+Do not load either the init file, or the `default` library.
 
-*   `--no-site-file`
+`--no-site-file`
 
-    Do not load the `site-start` library.
+Do not load the `site-start` library.
 
-*   *   `--quick`
-    *   `-Q`
+*   `--quick`
+*   `-Q`
 
-    Equivalent to ‘`-q --no-site-file --no-splash`’.
-
-Next: [Init File](Init-File.html), Up: [Starting Up](Starting-Up.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
+Equivalent to ‘`-q --no-site-file --no-splash`’.

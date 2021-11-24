@@ -1,24 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
-
-Next: [Query Before Exit](Query-Before-Exit.html), Previous: [Output from Processes](Output-from-Processes.html), Up: [Processes](Processes.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
 ### 38.10 Sentinels: Detecting Process Status Changes
 
@@ -28,15 +8,23 @@ If no sentinel function was specified for a process, it will use the default sen
 
 The string describing the event looks like one of the following (but this is not an exhaustive list of event strings):
 
-*   `"finished\n"`.
-*   `"deleted\n"`.
-*   `"exited abnormally with code exitcode (core dumped)\n"`. The “core dumped” part is optional, and only appears if the process dumped core.
-*   `"failed with code fail-code\n"`.
-*   `"signal-description (core dumped)\n"`. The `signal-description` is a system-dependent textual description of a signal, e.g., `"killed"` for `SIGKILL`. The “core dumped” part is optional, and only appears if the process dumped core.
-*   `"open from host-name\n"`.
-*   `"open\n"`.
-*   `"run\n"`.
-*   `"connection broken by remote peer\n"`.
+`"finished\n"`.
+
+`"deleted\n"`.
+
+`"exited abnormally with code exitcode (core dumped)\n"`. The “core dumped” part is optional, and only appears if the process dumped core.
+
+`"failed with code fail-code\n"`.
+
+`"signal-description (core dumped)\n"`. The `signal-description` is a system-dependent textual description of a signal, e.g., `"killed"` for `SIGKILL`. The “core dumped” part is optional, and only appears if the process dumped core.
+
+`"open from host-name\n"`.
+
+`"open\n"`.
+
+`"run\n"`.
+
+`"connection broken by remote peer\n"`.
 
 A sentinel runs only while Emacs is waiting (e.g., for terminal input, or for time to elapse, or for process output). This avoids the timing errors that could result from running sentinels at random places in the middle of other Lisp programs. A program can wait, so that sentinels will run, by calling `sit-for` or `sleep-for` (see [Waiting](Waiting.html)), or `accept-process-output` (see [Accepting Output](Accepting-Output.html)). Emacs also allows sentinels to run when the command loop is reading input. `delete-process` calls the sentinel when it terminates a running process.
 
@@ -54,34 +42,32 @@ While a sentinel is running, the process sentinel is temporarily set to `nil` so
 
 Note that Emacs automatically saves and restores the match data while executing sentinels. See [Match Data](Match-Data.html).
 
-*   Function: **set-process-sentinel** *process sentinel*
+### Function: **set-process-sentinel** *process sentinel*
 
-    This function associates `sentinel` with `process`. If `sentinel` is `nil`, then the process will have the default sentinel, which inserts a message in the process’s buffer when the process status changes.
+This function associates `sentinel` with `process`. If `sentinel` is `nil`, then the process will have the default sentinel, which inserts a message in the process’s buffer when the process status changes.
 
-    Changes in process sentinels take effect immediately—if the sentinel is slated to be run but has not been called yet, and you specify a new sentinel, the eventual call to the sentinel will use the new one.
+Changes in process sentinels take effect immediately—if the sentinel is slated to be run but has not been called yet, and you specify a new sentinel, the eventual call to the sentinel will use the new one.
 
-        (defun msg-me (process event)
-           (princ
-             (format "Process: %s had the event '%s'" process event)))
-        (set-process-sentinel (get-process "shell") 'msg-me)
-             ⇒ msg-me
+```lisp
+(defun msg-me (process event)
+   (princ
+     (format "Process: %s had the event '%s'" process event)))
+(set-process-sentinel (get-process "shell") 'msg-me)
+     ⇒ msg-me
+```
 
-    <!---->
+```lisp
+(kill-process (get-process "shell"))
+     -| Process: #<process shell> had the event 'killed'
+     ⇒ #<process shell>
+```
 
-        (kill-process (get-process "shell"))
-             -| Process: #<process shell> had the event 'killed'
-             ⇒ #<process shell>
+### Function: **process-sentinel** *process*
 
-<!---->
-
-*   Function: **process-sentinel** *process*
-
-    This function returns the sentinel of `process`.
+This function returns the sentinel of `process`.
 
 In case a process status changes need to be passed to several sentinels, you can use `add-function` to combine an existing sentinel with a new one. See [Advising Functions](Advising-Functions.html).
 
-*   Function: **waiting-for-user-input-p**
+### Function: **waiting-for-user-input-p**
 
-    While a sentinel or filter function is running, this function returns non-`nil` if Emacs was waiting for keyboard input from the user at the time the sentinel or filter function was called, or `nil` if it was not.
-
-Next: [Query Before Exit](Query-Before-Exit.html), Previous: [Output from Processes](Output-from-Processes.html), Up: [Processes](Processes.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
+While a sentinel or filter function is running, this function returns non-`nil` if Emacs was waiting for keyboard input from the user at the time the sentinel or filter function was called, or `nil` if it was not.

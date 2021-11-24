@@ -1,24 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
-
-Next: [Stack-allocated Objects](Stack_002dallocated-Objects.html), Previous: [Pure Storage](Pure-Storage.html), Up: [GNU Emacs Internals](GNU-Emacs-Internals.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
 ### E.3 Garbage Collection
 
@@ -36,211 +16,195 @@ The sweep phase puts unused cons cells onto a *free list* for future allocation;
 >
 > This means that you can make sure that the garbage collector will not run during a certain portion of a Lisp program by calling the garbage collector explicitly just before it (provided that portion of the program does not use so much space as to force a second garbage collection).
 
-*   Command: **garbage-collect**
+### Command: **garbage-collect**
 
-    This command runs a garbage collection, and returns information on the amount of space in use. (Garbage collection can also occur spontaneously if you use more than `gc-cons-threshold` bytes of Lisp data since the previous garbage collection.)
+This command runs a garbage collection, and returns information on the amount of space in use. (Garbage collection can also occur spontaneously if you use more than `gc-cons-threshold` bytes of Lisp data since the previous garbage collection.)
 
-    `garbage-collect` returns a list with information on amount of space in use, where each entry has the form ‘`(name size used)`’ or ‘`(name size used free)`’. In the entry, `name` is a symbol describing the kind of objects this entry represents, `size` is the number of bytes used by each one, `used` is the number of those objects that were found live in the heap, and optional `free` is the number of those objects that are not live but that Emacs keeps around for future allocations. So an overall result is:
+`garbage-collect` returns a list with information on amount of space in use, where each entry has the form ‘`(name size used)`’ or ‘`(name size used free)`’. In the entry, `name` is a symbol describing the kind of objects this entry represents, `size` is the number of bytes used by each one, `used` is the number of those objects that were found live in the heap, and optional `free` is the number of those objects that are not live but that Emacs keeps around for future allocations. So an overall result is:
 
-        ((conses cons-size used-conses free-conses)
-         (symbols symbol-size used-symbols free-symbols)
-         (strings string-size used-strings free-strings)
-         (string-bytes byte-size used-bytes)
-         (vectors vector-size used-vectors)
-         (vector-slots slot-size used-slots free-slots)
-         (floats float-size used-floats free-floats)
-         (intervals interval-size used-intervals free-intervals)
-         (buffers buffer-size used-buffers)
-         (heap unit-size total-size free-size))
+```lisp
+((conses cons-size used-conses free-conses)
+ (symbols symbol-size used-symbols free-symbols)
+ (strings string-size used-strings free-strings)
+ (string-bytes byte-size used-bytes)
+ (vectors vector-size used-vectors)
+ (vector-slots slot-size used-slots free-slots)
+ (floats float-size used-floats free-floats)
+ (intervals interval-size used-intervals free-intervals)
+ (buffers buffer-size used-buffers)
+ (heap unit-size total-size free-size))
+```
 
-    Here is an example:
+Here is an example:
 
-        (garbage-collect)
-              ⇒ ((conses 16 49126 8058) (symbols 48 14607 0)
-                         (strings 32 2942 2607)
-                         (string-bytes 1 78607) (vectors 16 7247)
-                         (vector-slots 8 341609 29474) (floats 8 71 102)
-                         (intervals 56 27 26) (buffers 944 8)
-                         (heap 1024 11715 2678))
+```lisp
+(garbage-collect)
+      ⇒ ((conses 16 49126 8058) (symbols 48 14607 0)
+                 (strings 32 2942 2607)
+                 (string-bytes 1 78607) (vectors 16 7247)
+                 (vector-slots 8 341609 29474) (floats 8 71 102)
+                 (intervals 56 27 26) (buffers 944 8)
+                 (heap 1024 11715 2678))
+```
 
-    Below is a table explaining each element. Note that last `heap` entry is optional and present only if an underlying `malloc` implementation provides `mallinfo` function.
+Below is a table explaining each element. Note that last `heap` entry is optional and present only if an underlying `malloc` implementation provides `mallinfo` function.
 
-    *   `cons-size`
+*   `cons-size`
 
-        Internal size of a cons cell, i.e., `sizeof (struct Lisp_Cons)`.
+    Internal size of a cons cell, i.e., `sizeof (struct Lisp_Cons)`.
 
-    *   `used-conses`
+*   `used-conses`
 
-        The number of cons cells in use.
+    The number of cons cells in use.
 
-    *   `free-conses`
+*   `free-conses`
 
-        The number of cons cells for which space has been obtained from the operating system, but that are not currently being used.
+    The number of cons cells for which space has been obtained from the operating system, but that are not currently being used.
 
-    *   `symbol-size`
+*   `symbol-size`
 
-        Internal size of a symbol, i.e., `sizeof (struct Lisp_Symbol)`.
+    Internal size of a symbol, i.e., `sizeof (struct Lisp_Symbol)`.
 
-    *   `used-symbols`
+*   `used-symbols`
 
-        The number of symbols in use.
+    The number of symbols in use.
 
-    *   `free-symbols`
+*   `free-symbols`
 
-        The number of symbols for which space has been obtained from the operating system, but that are not currently being used.
+    The number of symbols for which space has been obtained from the operating system, but that are not currently being used.
 
-    *   `string-size`
+*   `string-size`
 
-        Internal size of a string header, i.e., `sizeof (struct Lisp_String)`.
+    Internal size of a string header, i.e., `sizeof (struct Lisp_String)`.
 
-    *   `used-strings`
+*   `used-strings`
 
-        The number of string headers in use.
+    The number of string headers in use.
 
-    *   `free-strings`
+*   `free-strings`
 
-        The number of string headers for which space has been obtained from the operating system, but that are not currently being used.
+    The number of string headers for which space has been obtained from the operating system, but that are not currently being used.
 
-    *   `byte-size`
+*   `byte-size`
 
-        This is used for convenience and equals to `sizeof (char)`.
+    This is used for convenience and equals to `sizeof (char)`.
 
-    *   `used-bytes`
+*   `used-bytes`
 
-        The total size of all string data in bytes.
+    The total size of all string data in bytes.
 
-    *   `vector-size`
+*   `vector-size`
 
-        Size in bytes of a vector of length 1, including its header.
+    Size in bytes of a vector of length 1, including its header.
 
-    *   `used-vectors`
+*   `used-vectors`
 
-        The number of vector headers allocated from the vector blocks.
+    The number of vector headers allocated from the vector blocks.
 
-    *   `slot-size`
+*   `slot-size`
 
-        Internal size of a vector slot, always equal to `sizeof (Lisp_Object)`.
+    Internal size of a vector slot, always equal to `sizeof (Lisp_Object)`.
 
-    *   `used-slots`
+*   `used-slots`
 
-        The number of slots in all used vectors. Slot counts might include some or all overhead from vector headers, depending on the platform.
+    The number of slots in all used vectors. Slot counts might include some or all overhead from vector headers, depending on the platform.
 
-    *   `free-slots`
+*   `free-slots`
 
-        The number of free slots in all vector blocks.
+    The number of free slots in all vector blocks.
 
-    *   `float-size`
+*   `float-size`
 
-        Internal size of a float object, i.e., `sizeof (struct Lisp_Float)`. (Do not confuse it with the native platform `float` or `double`.)
+    Internal size of a float object, i.e., `sizeof (struct Lisp_Float)`. (Do not confuse it with the native platform `float` or `double`.)
 
-    *   `used-floats`
+*   `used-floats`
 
-        The number of floats in use.
+    The number of floats in use.
 
-    *   `free-floats`
+*   `free-floats`
 
-        The number of floats for which space has been obtained from the operating system, but that are not currently being used.
+    The number of floats for which space has been obtained from the operating system, but that are not currently being used.
 
-    *   `interval-size`
+*   `interval-size`
 
-        Internal size of an interval object, i.e., `sizeof (struct interval)`.
+    Internal size of an interval object, i.e., `sizeof (struct interval)`.
 
-    *   `used-intervals`
+*   `used-intervals`
 
-        The number of intervals in use.
+    The number of intervals in use.
 
-    *   `free-intervals`
+*   `free-intervals`
 
-        The number of intervals for which space has been obtained from the operating system, but that are not currently being used.
+    The number of intervals for which space has been obtained from the operating system, but that are not currently being used.
 
-    *   `buffer-size`
+*   `buffer-size`
 
-        Internal size of a buffer, i.e., `sizeof (struct buffer)`. (Do not confuse with the value returned by `buffer-size` function.)
+    Internal size of a buffer, i.e., `sizeof (struct buffer)`. (Do not confuse with the value returned by `buffer-size` function.)
 
-    *   `used-buffers`
+*   `used-buffers`
 
-        The number of buffer objects in use. This includes killed buffers invisible to users, i.e., all buffers in `all_buffers` list.
+    The number of buffer objects in use. This includes killed buffers invisible to users, i.e., all buffers in `all_buffers` list.
 
-    *   `unit-size`
+*   `unit-size`
 
-        The unit of heap space measurement, always equal to 1024 bytes.
+    The unit of heap space measurement, always equal to 1024 bytes.
 
-    *   `total-size`
+*   `total-size`
 
-        Total heap size, in `unit-size` units.
+    Total heap size, in `unit-size` units.
 
-    *   `free-size`
+*   `free-size`
 
-        Heap space which is not currently used, in `unit-size` units.
+    Heap space which is not currently used, in `unit-size` units.
 
-    If there was overflow in pure space (see [Pure Storage](Pure-Storage.html)), and Emacs was dumped using the (now obsolete) `unexec` method (see [Building Emacs](Building-Emacs.html)), then `garbage-collect` returns `nil`, because a real garbage collection cannot be done in that case.
+If there was overflow in pure space (see [Pure Storage](Pure-Storage.html)), and Emacs was dumped using the (now obsolete) `unexec` method (see [Building Emacs](Building-Emacs.html)), then `garbage-collect` returns `nil`, because a real garbage collection cannot be done in that case.
 
-<!---->
+### User Option: **garbage-collection-messages**
 
-*   User Option: **garbage-collection-messages**
+If this variable is non-`nil`, Emacs displays a message at the beginning and end of garbage collection. The default value is `nil`.
 
-    If this variable is non-`nil`, Emacs displays a message at the beginning and end of garbage collection. The default value is `nil`.
+### Variable: **post-gc-hook**
 
-<!---->
+This is a normal hook that is run at the end of garbage collection. Garbage collection is inhibited while the hook functions run, so be careful writing them.
 
-*   Variable: **post-gc-hook**
+### User Option: **gc-cons-threshold**
 
-    This is a normal hook that is run at the end of garbage collection. Garbage collection is inhibited while the hook functions run, so be careful writing them.
+The value of this variable is the number of bytes of storage that must be allocated for Lisp objects after one garbage collection in order to trigger another garbage collection. You can use the result returned by `garbage-collect` to get an information about size of the particular object type; space allocated to the contents of buffers does not count.
 
-<!---->
+The initial threshold value is `GC_DEFAULT_THRESHOLD`, defined in `alloc.c`. Since it’s defined in `word_size` units, the value is 400,000 for the default 32-bit configuration and 800,000 for the 64-bit one. If you specify a larger value, garbage collection will happen less often. This reduces the amount of time spent garbage collecting, but increases total memory use. You may want to do this when running a program that creates lots of Lisp data.
 
-*   User Option: **gc-cons-threshold**
+You can make collections more frequent by specifying a smaller value, down to 1/10th of `GC_DEFAULT_THRESHOLD`. A value less than this minimum will remain in effect only until the subsequent garbage collection, at which time `garbage-collect` will set the threshold back to the minimum.
 
-    The value of this variable is the number of bytes of storage that must be allocated for Lisp objects after one garbage collection in order to trigger another garbage collection. You can use the result returned by `garbage-collect` to get an information about size of the particular object type; space allocated to the contents of buffers does not count.
+### User Option: **gc-cons-percentage**
 
-    The initial threshold value is `GC_DEFAULT_THRESHOLD`, defined in `alloc.c`. Since it’s defined in `word_size` units, the value is 400,000 for the default 32-bit configuration and 800,000 for the 64-bit one. If you specify a larger value, garbage collection will happen less often. This reduces the amount of time spent garbage collecting, but increases total memory use. You may want to do this when running a program that creates lots of Lisp data.
+The value of this variable specifies the amount of consing before a garbage collection occurs, as a fraction of the current heap size. This criterion and `gc-cons-threshold` apply in parallel, and garbage collection occurs only when both criteria are satisfied.
 
-    You can make collections more frequent by specifying a smaller value, down to 1/10th of `GC_DEFAULT_THRESHOLD`. A value less than this minimum will remain in effect only until the subsequent garbage collection, at which time `garbage-collect` will set the threshold back to the minimum.
-
-<!---->
-
-*   User Option: **gc-cons-percentage**
-
-    The value of this variable specifies the amount of consing before a garbage collection occurs, as a fraction of the current heap size. This criterion and `gc-cons-threshold` apply in parallel, and garbage collection occurs only when both criteria are satisfied.
-
-    As the heap size increases, the time to perform a garbage collection increases. Thus, it can be desirable to do them less frequently in proportion.
+As the heap size increases, the time to perform a garbage collection increases. Thus, it can be desirable to do them less frequently in proportion.
 
 Control over the garbage collector via `gc-cons-threshold` and `gc-cons-percentage` is only approximate. Although Emacs checks for threshold exhaustion regularly, for efficiency reasons it does not do so immediately after every change to the heap or to `gc-cons-threshold` or `gc-cons-percentage`, so exhausting the threshold does not immediately trigger garbage collection. Also, for efficiency in threshold calculations Emacs approximates the heap size, which counts the bytes used by currently-accessible objects in the heap.
 
 The value returned by `garbage-collect` describes the amount of memory used by Lisp data, broken down by data type. By contrast, the function `memory-limit` provides information on the total amount of memory Emacs is currently using.
 
-*   Function: **memory-limit**
+### Function: **memory-limit**
 
-    This function returns an estimate of the total amount of bytes of virtual memory that Emacs is currently using, divided by 1024. You can use this to get a general idea of how your actions affect the memory usage.
+This function returns an estimate of the total amount of bytes of virtual memory that Emacs is currently using, divided by 1024. You can use this to get a general idea of how your actions affect the memory usage.
 
-<!---->
+### Variable: **memory-full**
 
-*   Variable: **memory-full**
+This variable is `t` if Emacs is nearly out of memory for Lisp objects, and `nil` otherwise.
 
-    This variable is `t` if Emacs is nearly out of memory for Lisp objects, and `nil` otherwise.
+### Function: **memory-use-counts**
 
-<!---->
+This returns a list of numbers that count the number of objects created in this Emacs session. Each of these counters increments for a certain kind of object. See the documentation string for details.
 
-*   Function: **memory-use-counts**
+### Function: **memory-info**
 
-    This returns a list of numbers that count the number of objects created in this Emacs session. Each of these counters increments for a certain kind of object. See the documentation string for details.
+This functions returns an amount of total system memory and how much of it is free. On an unsupported system, the value may be `nil`.
 
-<!---->
+### Variable: **gcs-done**
 
-*   Function: **memory-info**
+This variable contains the total number of garbage collections done so far in this Emacs session.
 
-    This functions returns an amount of total system memory and how much of it is free. On an unsupported system, the value may be `nil`.
+### Variable: **gc-elapsed**
 
-<!---->
-
-*   Variable: **gcs-done**
-
-    This variable contains the total number of garbage collections done so far in this Emacs session.
-
-<!---->
-
-*   Variable: **gc-elapsed**
-
-    This variable contains the total number of seconds of elapsed time during garbage collection so far in this Emacs session, as a floating-point number.
-
-Next: [Stack-allocated Objects](Stack_002dallocated-Objects.html), Previous: [Pure Storage](Pure-Storage.html), Up: [GNU Emacs Internals](GNU-Emacs-Internals.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
+This variable contains the total number of seconds of elapsed time during garbage collection so far in this Emacs session, as a floating-point number.

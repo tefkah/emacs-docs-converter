@@ -1,24 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
-
-Next: [Compiling Macros](Compiling-Macros.html), Previous: [Simple Macro](Simple-Macro.html), Up: [Macros](Macros.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
 ### 14.2 Expansion of a Macro Call
 
@@ -36,52 +16,56 @@ Note that Emacs tries to expand macros when loading an uncompiled Lisp file. Thi
 
 You can see the expansion of a given macro call by calling `macroexpand`.
 
-*   Function: **macroexpand** *form \&optional environment*
+### Function: **macroexpand** *form \&optional environment*
 
-    This function expands `form`, if it is a macro call. If the result is another macro call, it is expanded in turn, until something which is not a macro call results. That is the value returned by `macroexpand`. If `form` is not a macro call to begin with, it is returned as given.
+This function expands `form`, if it is a macro call. If the result is another macro call, it is expanded in turn, until something which is not a macro call results. That is the value returned by `macroexpand`. If `form` is not a macro call to begin with, it is returned as given.
 
-    Note that `macroexpand` does not look at the subexpressions of `form` (although some macro definitions may do so). Even if they are macro calls themselves, `macroexpand` does not expand them.
+Note that `macroexpand` does not look at the subexpressions of `form` (although some macro definitions may do so). Even if they are macro calls themselves, `macroexpand` does not expand them.
 
-    The function `macroexpand` does not expand calls to inline functions. Normally there is no need for that, since a call to an inline function is no harder to understand than a call to an ordinary function.
+The function `macroexpand` does not expand calls to inline functions. Normally there is no need for that, since a call to an inline function is no harder to understand than a call to an ordinary function.
 
-    If `environment` is provided, it specifies an alist of macro definitions that shadow the currently defined macros. Byte compilation uses this feature.
+If `environment` is provided, it specifies an alist of macro definitions that shadow the currently defined macros. Byte compilation uses this feature.
 
-        (defmacro inc (var)
-            (list 'setq var (list '1+ var)))
+```lisp
+(defmacro inc (var)
+    (list 'setq var (list '1+ var)))
+```
 
-    ```
-    ```
+```lisp
+```
 
-        (macroexpand '(inc r))
-             ⇒ (setq r (1+ r))
+```lisp
+(macroexpand '(inc r))
+     ⇒ (setq r (1+ r))
+```
 
-    ```
-    ```
+```lisp
+```
 
-        (defmacro inc2 (var1 var2)
-            (list 'progn (list 'inc var1) (list 'inc var2)))
+```lisp
+(defmacro inc2 (var1 var2)
+    (list 'progn (list 'inc var1) (list 'inc var2)))
+```
 
-    ```
-    ```
+```lisp
+```
 
-        (macroexpand '(inc2 r s))
-             ⇒ (progn (inc r) (inc s))  ; inc not expanded here.
+```lisp
+(macroexpand '(inc2 r s))
+     ⇒ (progn (inc r) (inc s))  ; inc not expanded here.
+```
 
-<!---->
+### Function: **macroexpand-all** *form \&optional environment*
 
-*   Function: **macroexpand-all** *form \&optional environment*
+`macroexpand-all` expands macros like `macroexpand`, but will look for and expand all macros in `form`, not just at the top-level. If no macros are expanded, the return value is `eq` to `form`.
 
-    `macroexpand-all` expands macros like `macroexpand`, but will look for and expand all macros in `form`, not just at the top-level. If no macros are expanded, the return value is `eq` to `form`.
+Repeating the example used for `macroexpand` above with `macroexpand-all`, we see that `macroexpand-all` *does* expand the embedded calls to `inc`:
 
-    Repeating the example used for `macroexpand` above with `macroexpand-all`, we see that `macroexpand-all` *does* expand the embedded calls to `inc`:
+```lisp
+(macroexpand-all '(inc2 r s))
+     ⇒ (progn (setq r (1+ r)) (setq s (1+ s)))
+```
 
-        (macroexpand-all '(inc2 r s))
-             ⇒ (progn (setq r (1+ r)) (setq s (1+ s)))
+### Function: **macroexpand-1** *form \&optional environment*
 
-<!---->
-
-*   Function: **macroexpand-1** *form \&optional environment*
-
-    This function expands macros like `macroexpand`, but it only performs one step of the expansion: if the result is another macro call, `macroexpand-1` will not expand it.
-
-Next: [Compiling Macros](Compiling-Macros.html), Previous: [Simple Macro](Simple-Macro.html), Up: [Macros](Macros.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
+This function expands macros like `macroexpand`, but it only performs one step of the expansion: if the result is another macro call, `macroexpand-1` will not expand it.

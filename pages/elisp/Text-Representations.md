@@ -1,24 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
-
-Next: [Disabling Multibyte](Disabling-Multibyte.html), Up: [Non-ASCII Characters](Non_002dASCII-Characters.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
 ### 33.1 Text Representations
 
@@ -36,65 +16,53 @@ Encoded text is not really text, as far as Emacs is concerned, but rather a sequ
 
 In a buffer, the buffer-local value of the variable `enable-multibyte-characters` specifies the representation used. The representation for a string is determined and recorded in the string when the string is constructed.
 
-*   Variable: **enable-multibyte-characters**
+### Variable: **enable-multibyte-characters**
 
-    This variable specifies the current buffer’s text representation. If it is non-`nil`, the buffer contains multibyte text; otherwise, it contains unibyte encoded text or binary non-text data.
+This variable specifies the current buffer’s text representation. If it is non-`nil`, the buffer contains multibyte text; otherwise, it contains unibyte encoded text or binary non-text data.
 
-    You cannot set this variable directly; instead, use the function `set-buffer-multibyte` to change a buffer’s representation.
+You cannot set this variable directly; instead, use the function `set-buffer-multibyte` to change a buffer’s representation.
 
-<!---->
+### Function: **position-bytes** *position*
 
-*   Function: **position-bytes** *position*
+Buffer positions are measured in character units. This function returns the byte-position corresponding to buffer position `position` in the current buffer. This is 1 at the start of the buffer, and counts upward in bytes. If `position` is out of range, the value is `nil`.
 
-    Buffer positions are measured in character units. This function returns the byte-position corresponding to buffer position `position` in the current buffer. This is 1 at the start of the buffer, and counts upward in bytes. If `position` is out of range, the value is `nil`.
+### Function: **byte-to-position** *byte-position*
 
-<!---->
-
-*   Function: **byte-to-position** *byte-position*
-
-    Return the buffer position, in character units, corresponding to given `byte-position` in the current buffer. If `byte-position` is out of range, the value is `nil`. In a multibyte buffer, an arbitrary value of `byte-position` can be not at character boundary, but inside a multibyte sequence representing a single character; in this case, this function returns the buffer position of the character whose multibyte sequence includes `byte-position`. In other words, the value does not change for all byte positions that belong to the same character.
+Return the buffer position, in character units, corresponding to given `byte-position` in the current buffer. If `byte-position` is out of range, the value is `nil`. In a multibyte buffer, an arbitrary value of `byte-position` can be not at character boundary, but inside a multibyte sequence representing a single character; in this case, this function returns the buffer position of the character whose multibyte sequence includes `byte-position`. In other words, the value does not change for all byte positions that belong to the same character.
 
 The following two functions are useful when a Lisp program needs to map buffer positions to byte offsets in a file visited by the buffer.
 
-*   Function: **bufferpos-to-filepos** *position \&optional quality coding-system*
+### Function: **bufferpos-to-filepos** *position \&optional quality coding-system*
 
-    This function is similar to `position-bytes`, but instead of byte position in the current buffer it returns the offset from the beginning of the current buffer’s file of the byte that corresponds to the given character `position` in the buffer. The conversion requires to know how the text is encoded in the buffer’s file; this is what the `coding-system` argument is for, defaulting to the value of `buffer-file-coding-system`. The optional argument `quality` specifies how accurate the result should be; it should be one of the following:
+This function is similar to `position-bytes`, but instead of byte position in the current buffer it returns the offset from the beginning of the current buffer’s file of the byte that corresponds to the given character `position` in the buffer. The conversion requires to know how the text is encoded in the buffer’s file; this is what the `coding-system` argument is for, defaulting to the value of `buffer-file-coding-system`. The optional argument `quality` specifies how accurate the result should be; it should be one of the following:
 
-    *   `exact`
+*   `exact`
 
-        The result must be accurate. The function may need to encode and decode a large part of the buffer, which is expensive and can be slow.
+    The result must be accurate. The function may need to encode and decode a large part of the buffer, which is expensive and can be slow.
 
-    *   `approximate`
+*   `approximate`
 
-        The value can be an approximation. The function may avoid expensive processing and return an inexact result.
+    The value can be an approximation. The function may avoid expensive processing and return an inexact result.
 
-    *   `nil`
+*   `nil`
 
-        If the exact result needs expensive processing, the function will return `nil` rather than an approximation. This is the default if the argument is omitted.
+    If the exact result needs expensive processing, the function will return `nil` rather than an approximation. This is the default if the argument is omitted.
 
-<!---->
+### Function: **filepos-to-bufferpos** *byte \&optional quality coding-system*
 
-*   Function: **filepos-to-bufferpos** *byte \&optional quality coding-system*
+This function returns the buffer position corresponding to a file position specified by `byte`, a zero-base byte offset from the file’s beginning. The function performs the conversion opposite to what `bufferpos-to-filepos` does. Optional arguments `quality` and `coding-system` have the same meaning and values as for `bufferpos-to-filepos`.
 
-    This function returns the buffer position corresponding to a file position specified by `byte`, a zero-base byte offset from the file’s beginning. The function performs the conversion opposite to what `bufferpos-to-filepos` does. Optional arguments `quality` and `coding-system` have the same meaning and values as for `bufferpos-to-filepos`.
+### Function: **multibyte-string-p** *string*
 
-<!---->
+Return `t` if `string` is a multibyte string, `nil` otherwise. This function also returns `nil` if `string` is some object other than a string.
 
-*   Function: **multibyte-string-p** *string*
+### Function: **string-bytes** *string*
 
-    Return `t` if `string` is a multibyte string, `nil` otherwise. This function also returns `nil` if `string` is some object other than a string.
+This function returns the number of bytes in `string`. If `string` is a multibyte string, this can be greater than `(length string)`.
 
-<!---->
+### Function: **unibyte-string** *\&rest bytes*
 
-*   Function: **string-bytes** *string*
-
-    This function returns the number of bytes in `string`. If `string` is a multibyte string, this can be greater than `(length string)`.
-
-<!---->
-
-*   Function: **unibyte-string** *\&rest bytes*
-
-    This function concatenates all its argument `bytes` and makes the result a unibyte string.
+This function concatenates all its argument `bytes` and makes the result a unibyte string.
 
 ***
 
@@ -103,5 +71,3 @@ The following two functions are useful when a Lisp program needs to map buffer p
 ##### [(17)](#DOCF17)
 
 This internal representation is based on one of the encodings defined by the Unicode Standard, called *UTF-8*, for representing any Unicode codepoint, but Emacs extends UTF-8 to represent the additional codepoints it uses for raw 8-bit bytes and characters not unified with Unicode.
-
-Next: [Disabling Multibyte](Disabling-Multibyte.html), Up: [Non-ASCII Characters](Non_002dASCII-Characters.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]

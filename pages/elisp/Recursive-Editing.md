@@ -1,24 +1,4 @@
-<!-- This is the GNU Emacs Lisp Reference Manual
-corresponding to Emacs version 27.2.
 
-Copyright (C) 1990-1996, 1998-2021 Free Software Foundation,
-Inc.
-
-Permission is granted to copy, distribute and/or modify this document
-under the terms of the GNU Free Documentation License, Version 1.3 or
-any later version published by the Free Software Foundation; with the
-Invariant Sections being "GNU General Public License," with the
-Front-Cover Texts being "A GNU Manual," and with the Back-Cover
-Texts as in (a) below.  A copy of the license is included in the
-section entitled "GNU Free Documentation License."
-
-(a) The FSF's Back-Cover Text is: "You have the freedom to copy and
-modify this GNU manual.  Buying copies from the FSF supports it in
-developing GNU and promoting software freedom." -->
-
-<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
-
-Next: [Disabling Commands](Disabling-Commands.html), Previous: [Prefix Command Arguments](Prefix-Command-Arguments.html), Up: [Command Loop](Command-Loop.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
 
 ### 21.13 Recursive Editing
 
@@ -38,45 +18,37 @@ Recursive edits are useful in debugging. You can insert a call to `debug` into a
 
 Recursive editing levels are also used when you type `C-r` in `query-replace` or use `C-x q` (`kbd-macro-query`).
 
-*   Command: **recursive-edit**
+### Command: **recursive-edit**
 
-    This function invokes the editor command loop. It is called automatically by the initialization of Emacs, to let the user begin editing. When called from a Lisp program, it enters a recursive editing level.
+This function invokes the editor command loop. It is called automatically by the initialization of Emacs, to let the user begin editing. When called from a Lisp program, it enters a recursive editing level.
 
-    If the current buffer is not the same as the selected window’s buffer, `recursive-edit` saves and restores the current buffer. Otherwise, if you switch buffers, the buffer you switched to is current after `recursive-edit` returns.
+If the current buffer is not the same as the selected window’s buffer, `recursive-edit` saves and restores the current buffer. Otherwise, if you switch buffers, the buffer you switched to is current after `recursive-edit` returns.
 
-    In the following example, the function `simple-rec` first advances point one word, then enters a recursive edit, printing out a message in the echo area. The user can then do any editing desired, and then type `C-M-c` to exit and continue executing `simple-rec`.
+In the following example, the function `simple-rec` first advances point one word, then enters a recursive edit, printing out a message in the echo area. The user can then do any editing desired, and then type `C-M-c` to exit and continue executing `simple-rec`.
 
-        (defun simple-rec ()
-          (forward-word 1)
-          (message "Recursive edit in progress")
-          (recursive-edit)
-          (forward-word 1))
-             ⇒ simple-rec
-        (simple-rec)
-             ⇒ nil
+```lisp
+(defun simple-rec ()
+  (forward-word 1)
+  (message "Recursive edit in progress")
+  (recursive-edit)
+  (forward-word 1))
+     ⇒ simple-rec
+(simple-rec)
+     ⇒ nil
+```
 
-<!---->
+### Command: **exit-recursive-edit**
 
-*   Command: **exit-recursive-edit**
+This function exits from the innermost recursive edit (including minibuffer input). Its definition is effectively `(throw 'exit nil)`.
 
-    This function exits from the innermost recursive edit (including minibuffer input). Its definition is effectively `(throw 'exit nil)`.
+### Command: **abort-recursive-edit**
 
-<!---->
+This function aborts the command that requested the innermost recursive edit (including minibuffer input), by signaling `quit` after exiting the recursive edit. Its definition is effectively `(throw 'exit t)`. See [Quitting](Quitting.html).
 
-*   Command: **abort-recursive-edit**
+### Command: **top-level**
 
-    This function aborts the command that requested the innermost recursive edit (including minibuffer input), by signaling `quit` after exiting the recursive edit. Its definition is effectively `(throw 'exit t)`. See [Quitting](Quitting.html).
+This function exits all recursive editing levels; it does not return a value, as it jumps completely out of any computation directly back to the main command loop.
 
-<!---->
+### Function: **recursion-depth**
 
-*   Command: **top-level**
-
-    This function exits all recursive editing levels; it does not return a value, as it jumps completely out of any computation directly back to the main command loop.
-
-<!---->
-
-*   Function: **recursion-depth**
-
-    This function returns the current depth of recursive edits. When no recursive edit is active, it returns 0.
-
-Next: [Disabling Commands](Disabling-Commands.html), Previous: [Prefix Command Arguments](Prefix-Command-Arguments.html), Up: [Command Loop](Command-Loop.html)   \[[Contents](index.html#SEC_Contents "Table of contents")]\[[Index](Index.html "Index")]
+This function returns the current depth of recursive edits. When no recursive edit is active, it returns 0.
