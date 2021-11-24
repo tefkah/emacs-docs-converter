@@ -33,9 +33,9 @@ const rehypeProcessor = unified()
   .use(rehypeRemark, {
     handlers: {
       comment: (h, node) => h(node, 'text', ''),
-      footNoteReference: (h, node) =>
+      footnoteReference: (h, node) =>
         h(node, 'footnoteReference', '', node.children),
-      footNoteDefinition: (h, node) =>
+      footnoteDefinition: (h, node) =>
         h(node, 'footnoteDefinition', '', node.children),
     },
   })
