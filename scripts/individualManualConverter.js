@@ -33,10 +33,11 @@ const rehypeProcessor = unified()
   .use(rehypeRemark, {
     handlers: {
       comment: (h, node) => h(node, 'text', ''),
-      footnoteReference: (h, node) =>
-        h(node, 'footnoteReference', '', node.children),
-      footnoteDefinition: (h, node) =>
-        h(node, 'footnoteDefinition', '', node.children),
+      footnoteReference: (h, node) => {
+        console.log(node)
+        return node
+      },
+      footnoteDefinition: (h, node) => node,
     },
   })
 
@@ -256,7 +257,10 @@ const bigFileProcessor = (f, dir) =>
 
           if (!isHeader) {
             if (!slugId) {
-              slugId = content[index - 2]
+              console.log(content[index - 2])
+              slugId = content[index - 2]?.properties?.id
+
+              //   slugId && console.log(content[index - 2])
             }
             if (
               ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'].includes(item.tagName) &&
@@ -289,11 +293,12 @@ const bigFileProcessor = (f, dir) =>
 
           let footNoteCounter = 0
           let footNoteLinks = []
+
           visit(newTreeBeforeFootNotes, 'element', (footnote) => {
             const href = footnote?.properties?.href
             if (!href) return
             if (!href.includes('#FOOT')) return
-            console.log(footnote)
+            //console.log(footnote)
 
             footNoteLinks.push(href.replaceAll(/#/g, ''))
             footNoteCounter++
@@ -314,7 +319,7 @@ const bigFileProcessor = (f, dir) =>
 
               return {
                 type: 'element',
-                tagName: 'footNoteDefinition',
+                tagName: 'footnoteDefinition',
                 children: textnode,
                 properties: { id: `f${index}` },
               }
@@ -332,32 +337,35 @@ const bigFileProcessor = (f, dir) =>
           isCollecting = false
           if (!firstHeader) return
 
-          slugId = content[index - 1]?.properties?.id
+          //slugId = content[index - 1]?.properties?.id
 
           //paste footnotes at the bottom of the files
 
           nodes = []
           firstHeader = null
 
+          if (title === 'empty') return
+
+          if (alreadyDone.includes(title)) return
+          alreadyDone.push(title)
+
+          let cleanTitle = title.replaceAll(/\?/g, '')
+          cleanTitle = cleanTitle.replaceAll(/\//g, ' and ')
+          cleanTitle = cleanTitle.replaceAll(/\%/g, 'precentage')
+          cleanTitle = cleanTitle.replaceAll(/Appendix /g, '')
+          const { prefix, title: formattedTitle } = getPrefix(cleanTitle)
+          const titles = formattedTitle || cleanTitle
+
+          let newSlug = slugId
+          slugId = ''
+
           rehypeProcessor.run(newTree).then((f) => {
-            if (title === 'empty') return
-
-            if (alreadyDone.includes(title)) return
-            alreadyDone.push(title)
-            let cleanTitle = title.replaceAll(/\?/g, '')
-            cleanTitle = cleanTitle.replaceAll(/\//g, ' and ')
-            cleanTitle = cleanTitle.replaceAll(/\%/g, 'precentage')
-            cleanTitle = cleanTitle.replaceAll(/Appendix /g, '')
-            const { prefix, title: formattedTitle } = getPrefix(cleanTitle)
-            const titles = formattedTitle || cleanTitle
-
             const rawFile = rehypeProcessor.stringify(f)
             const formattedTitleWithDashes = titles?.replaceAll(/ /g, '-')
             const fileWithMetadata = `---\nslug: ${
-              slugId || formattedTitleWithDashes
+              newSlug || formattedTitleWithDashes
             }\n---\n\n${String(rawFile)}`
 
-            slugId = null
             if (prefix.length > 3) {
               const directory = fs.readdirSync(dir)
               const ogFile = directory.find((file) => {
