@@ -58,10 +58,10 @@ const rehypeProcessor = unified()
   //   })
   // })
   .use(() => (node) => {
-    visit(node, 'header', (heading) => {
+    visit(node, 'heading', (heading) => {
       const headingWord = heading?.children?.[0]?.value
 
-      if (!headingWord?.includes(':')) return listItem.children
+      if (!headingWord?.includes(':')) return
       const [keyword, word] = headingWord
         .replaceAll(/(\w+):(.*?)/g, '$1@$2')
         .split('@')
@@ -83,13 +83,7 @@ const rehypeProcessor = unified()
 
       const kids = [mdxEl, ...heading.children]
 
-      const newHeading = Object.fromEntries([
-        ['type', 'heading'],
-        ['depth', 3],
-        ['children', kids || []],
-      ])
-
-      heading = newHeading
+      heading.children = kids
     })
     // visit from unist-util-visit
     // visit(node, 'root', (root) => {
