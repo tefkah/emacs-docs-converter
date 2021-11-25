@@ -58,58 +58,70 @@ const rehypeProcessor = unified()
   //   })
   // })
   .use(() => (node) => {
-    // visit from unist-util-visit
-    visit(node, 'root', (root) => {
-      const childs = root.children
+    visit(node, 'header', (heading) => {
+      const headingWord = heading?.children?.[0]?.value
 
-      const newChilds = childs.flatMap((child) => {
-        if (child.type !== 'list') return child
+      if (!headingWord?.includes(':')) return listItem.children
+      const [keyword, word] = headingWord
+        .replaceAll(/(\w+):(.*?)/g, '$1@$2')
+        .split('@')
 
-        if (child.ordered) return child
-        const items = child.children
+      heading.children[0].value = word
 
-        const reworkedList = items.flatMap((listItem) => {
-          const listItemContents = listItem?.children
+      const mdxEl = {
+        type: 'mdxJsxTextElement',
+        name: 'span',
+        attributes: [
+          {
+            type: 'mdxJsXAttribute',
+            name: 'className',
+            value: `tag ${keyword.toLowerCase().replaceAll(/ /g, '')}`,
+          },
+        ],
+        children: [{ type: 'inlineCode', value: keyword.toLowerCase() }],
+      }
 
-          const heading = listItemContents?.[0]
-          const headingWord = heading?.children?.[0]?.value
+      const kids = [mdxEl, ...heading.children]
 
-          if (!headingWord?.includes(':')) return listItem.children
-          const [keyword, word] = headingWord
-            .replaceAll(/(\w+):(.*?)/g, '$1@$2')
-            .split('@')
+      const newHeading = Object.fromEntries([
+        ['type', 'heading'],
+        ['depth', 3],
+        ['children', kids || []],
+      ])
 
-          heading.children[0].value = word
-
-          const mdxEl = {
-            type: 'mdxJsxTextElement',
-            name: 'span',
-            attributes: [
-              {
-                type: 'mdxJsXAttribute',
-                name: 'className',
-                value: `tag ${keyword.toLowerCase().replaceAll(/ /g, '')}`,
-              },
-            ],
-            children: [{ type: 'inlineCode', value: keyword.toLowerCase() }],
-          }
-
-          const kids = [mdxEl, ...heading.children]
-          // if (heading?.type !== 'paragraph') return listItemContents
-
-          const newHeading = Object.fromEntries([
-            ['type', 'heading'],
-            ['depth', 3],
-            ['children', kids || []],
-          ])
-
-          return [newHeading, ...listItemContents.slice(1)]
-        })
-
-        return reworkedList
-      })
-      root.children = newChilds
+      heading = newHeading
     })
+    // visit from unist-util-visit
+    // visit(node, 'root', (root) => {
+    //   const childs = root.children
+
+    //   const newChilds = childs.flatMap((child) => {
+    //     if (child.type !== 'list') return child
+
+    //     if (child.ordered) return child
+    //     const items = child.children
+
+    //     const reworkedList = items.flatMap((listItem) => {
+    //       const listItemContents = listItem?.children
+
+    //       const heading = listItemContents?.[0]
+
+    //       const kids = [mdxEl, ...heading.children]
+    //       // if (heading?.type !== 'paragraph') return listItemContents
+
+    //       const newHeading = Object.fromEntries([
+    //         ['type', 'heading'],
+    //         ['depth', 3],
+    //         ['children', kids || []],
+    //       ])
+
+    //       return [newHeading, ...listItemContents.slice(1)]
+    //     })
+
+    //     return reworkedList
+    //   })
+    //   root.children = newChilds
+    // })
     // fix the last fucking mistakes
     findAndReplace(node, '”', '"')
     findAndReplace(node, '>', '﹥')
